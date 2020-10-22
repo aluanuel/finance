@@ -13,9 +13,9 @@ class CreateClientGroupsTable extends Migration {
 	public function up() {
 		Schema::create('client_groups', function (Blueprint $table) {
 			$table->id();
-			$table->string('name');
-			$table->string('code');
-			$table->boolean('status');
+			$table->string('group_name');
+			$table->string('group_code');
+			$table->boolean('group_status')->default(0);
 			$table->timestamps();
 		});
 	}

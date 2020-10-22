@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,28 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $individualLoans = DB::table('loan_applications')
+        ->where('loan_status','=','started')
+        ->where('id_group','=',null)
+        ->count('id');
+
+        $groupLoans = DB::table('loan_applications')
+        ->where('loan_status','=','started')
+        ->where('id_group','!=',null)
+        ->count('id');  
+
+        $newIndividualClients = DB::table('register_clients')
+        ->where('id_group','=',null)
+        ->count('id');
+
+        $groups = DB::table('client_groups')
+        ->where('group_status','=',1)
+        ->count();
+
+        $groupClients = DB::table('register_clients')
+        ->where('id_group','!=',null)
+        ->count('id');  
+
+        return view('home',compact('individualLoans','groupLoans','newIndividualClients','groupClients','groups'));
     }
 }

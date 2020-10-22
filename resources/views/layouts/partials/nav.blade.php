@@ -57,15 +57,9 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/apply/grp" class="nav-link">
+                <a href="/apply/admin/processed" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Running Loans</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/apply/grp" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Ledger</p>
+                  <p>Processed Loan</p>
                 </a>
               </li>
             </ul>
@@ -166,9 +160,51 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="fas fa-circle nav-icon"></i>
-              <p>Reports</p>
+              <i class="nav-icon fas fa-circle"></i>
+              <p>
+                Reports
+                <i class="fas fa-angle-left right"></i>
+              </p>
             </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/apply/report/collections" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Collections</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/apply/report/expenses" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Expenses</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/apply/report/incomes" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Incomes</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/apply/report/sales" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Sales</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/apply/ind/assess" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Cashbook</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/apply/grp" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Balance Sheet</p>
+                </a>
+              </li>
+              
+            </ul>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
@@ -187,10 +223,9 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/apply/grp" class="nav-link">
+                <a href="/apply/settings/groups" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Group Loan
-                    <span class="badge badge-primary right">4</span>
+                  <p>Loan Groups
                   </p>
                 </a>
               </li>

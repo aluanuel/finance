@@ -33,6 +33,7 @@ class CreateIndividualLoanAssessmentsTable extends Migration {
 			$table->boolean('borrowed_money');
 			$table->date('start_date')->nullable();
 			$table->date('end_date')->nullable();
+			$table->double('loan_period_borrowed');
 			$table->string('money_lender')->nullable();
 			$table->double('amount_borrowed')->nullable();
 			$table->double('loan_period')->nullable();

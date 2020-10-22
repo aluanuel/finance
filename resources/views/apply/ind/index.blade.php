@@ -97,7 +97,7 @@
                             </div>
                             <div class="col-2">
                                 <label>Interest Rate (%)</label>
-                                <input type="text" name="interest_rate" autocomplete="off" class="form-control" placeholder="Application fee" required="required" value="{{ ($interest->interest_rate)*100}}">
+                                <input type="text" name="interest_rate" autocomplete="off" class="form-control" placeholder="Interest rate" required="required" value="{{ ($interest->interest_rate)}}">
                             </div>
                           </div>
                           <input type="hidden" name="application_date" autocomplete="off" class="form-control" placeholder="Application date" value="<?php echo date('Y-m-d h:i:s'); ?>">
@@ -137,7 +137,7 @@
                             </div>
                             <div class="col-2">
                                 <label>Interest Rate (%)</label>
-                                <input type="text" name="interest_rate" autocomplete="off" class="form-control" placeholder="Application fee" required="required" value="{{ ($interest->interest_rate)*100}}">
+                                <input type="text" name="interest_rate" autocomplete="off" class="form-control" placeholder="Application fee" required="required" value="{{ ($interest->interest_rate)}}">
                             </div>
                               <input type="hidden" name="application_date" autocomplete="off" class="form-control" placeholder="Application date" value="<?php echo date('Y-m-d h:i:s'); ?>">
                               <input type="hidden" name="loan_number" autocomplete="off" class="form-control" value="{{ $loan }}">

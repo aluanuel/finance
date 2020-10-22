@@ -14,6 +14,7 @@ class CreateLoanApplicationsTable extends Migration {
 		Schema::create('loan_applications', function (Blueprint $table) {
 			$table->id();
 			$table->unsignedBigInteger('id_client');
+			$table->unsignedBigInteger('id_group')->nullable();
 			$table->integer('loan_number');
 			$table->double('application_fee');
 			$table->datetime('application_date');

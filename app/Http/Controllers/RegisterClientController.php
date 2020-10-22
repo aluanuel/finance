@@ -32,10 +32,7 @@ class RegisterClientController extends Controller {
 
 		return view('apply.ind.index', compact('clients', 'loan', 'register', 'interest'));
 	}
-	public function GroupApplication() {
 
-		return view('apply.grp.index');
-	}
 	public function NewIndividualApplication() {
 
 		$loanApp = new LoanApplication();
@@ -117,6 +114,11 @@ class RegisterClientController extends Controller {
 			'registered_by' => 'required',
 			'registration_date' => 'required',
 		]);
+	}
+
+	public function ViewGroupMembers() {
+
+		return view('apply.settings.groups.members');
 	}
 	private function loanNumber() {
 

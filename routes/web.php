@@ -23,7 +23,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('/apply/ind', [App\Http\Controllers\RegisterClientController::class, 'singleApplication'])->name('viewSingle');
-	Route::get('/apply/grp', [App\Http\Controllers\RegisterClientController::class, 'GroupApplication']);
+	Route::get('/apply/settings/members/{id}', [App\Http\Controllers\RegisterClientController::class, 'ViewGroupMembers']);
 	Route::post('/apply/ind', [App\Http\Controllers\RegisterClientController::class, 'NewIndividualApplication']);
 
 	Route::get('/apply/view/ind', [App\Http\Controllers\LoanApplicationController::class, 'viewIndividualApplication'])->name('tellerSingleViewApplications');
@@ -54,7 +54,20 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/apply/trans/search/payment', [App\Http\Controllers\LoanRepaymentController::class, 'SearchPayment']);
 	Route::get('/trans/record', [App\Http\Controllers\OtherPaymentController::class, 'index']);
 	Route::post('/trans/record', [App\Http\Controllers\OtherPaymentController::class, 'recordTransaction']);
+	Route::post('/apply/trans/search/income',[App\Http\Controllers\OtherPaymentController::class,'SearchIncome']);
+	Route::post('/apply/trans/search/expense',[App\Http\Controllers\OtherPaymentController::class,'SearchExpense']);
 	Route::get('generate/loan/application/{id}', [App\Http\Controllers\PDFController::class, 'CreateLoanApplicationReceipt']);
 	Route::get('generate/loan/payment/receipt/{id}', [App\Http\Controllers\PDFController::class, 'CreateLoanPaymentReceipt']);
 	Route::get('/apply/view/profile/{id}', [App\Http\Controllers\LoanApplicationController::class, 'viewClientProfile'])->name('clientProfile');
+	Route::get('/apply/report/collections',[App\Http\Controllers\ReportController::class,'Collections']);
+	Route::get('/apply/report/sales',[App\Http\Controllers\ReportController::class,'Sales']);
+	Route::get('/apply/report/incomes',[App\Http\Controllers\ReportController::class,'Incomes']);
+	Route::get('/apply/report/expenses',[App\Http\Controllers\ReportController::class,'Expenses']);
+	Route::post('/apply/report/incomes/search',[App\Http\Controllers\ReportController::class,'SearchIncome']);
+	Route::post('/apply/report/expenses/search',[App\Http\Controllers\ReportController::class,'SearchExpense']);
+	Route::get('/apply/settings/groups',[App\Http\Controllers\ClientGroupController::class,'index']);
+	Route::post('/apply/settings/groups',[App\Http\Controllers\ClientGroupController::class,'newLoanGroup']);
+
+
+
 });

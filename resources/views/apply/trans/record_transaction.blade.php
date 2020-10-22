@@ -77,10 +77,35 @@
 					                <div class="col-8">
 					                    <div class="card">
 					                      <div class="card-header">
-					                        <h3 class="card-title">View Transaction History</h3>
+					                        <h3 class="card-title">{{$headIncome}}</h3>
+					                        <div class="card-tools">
+								              <a href="#" class="btn btn-primary btn-sm" title="Download" onclick="printContent('printArea')">
+								                <i class="fa fa-download"></i>
+								               </a>
+								            </div>
 					                      </div>
 					                              <!-- /.card-header -->
 					                      <div class="card-body">
+					                      <form action="/apply/trans/search/income" method="post">
+						                    @csrf
+						                    <div class="row">
+						                      <div class="input-group col-4">
+						                        <div class="input-group-prepend">
+						                          <span class="input-group-text">Start date</span>
+						                        </div>
+						                        <input type="date" name="start_date" class="form-control" data-mask required="required">
+						                      </div>
+						                      <div class="input-group col-4">
+						                        <div class="input-group-prepend">
+						                          <span class="input-group-text">End date</span>
+						                        </div>
+						                        <input type="date" name="end_date" class="form-control"  data-mask required="required">
+						                      </div>
+						                      <div class="col-2">
+						                        <button class="btn btn-outline-primary">Search</button>
+						                      </div>
+						                    </div>
+						                  </form>
 					                      	<table id="example2" class="table table-bordered table-hover">
 								                <thead>
 								                  <tr>
@@ -91,17 +116,31 @@
 								                  </tr>
 								                </thead>
 								                <tbody>
-								                	<?php $i = 1;?>
+								                	<?php 
+								                		$i = 1;
+								                		$totalIncome = null;
+								                	?>
 								                	@foreach($income as $inc)
 								                	<tr>
 								                		<td>{{ $i }}</td>
 								                		<td>{{ date('Y-m-d',strtotime($inc->created_at)) }}</td>
 								                		<td>{{ $inc->payment_name }}</td>
 								                		<td>{{ number_format($inc->payment_amount) }}</td>
+								                		<?php 
+								                			$totalIncome += $inc->payment_amount;
+								                		?>
 								                	</tr>
 								                	<?php $i++;?>
 								                	@endforeach
 								                </tbody>
+								                <tfoot>
+								                	<tr>
+								                		<th>#</th>
+								                		<th>#</th>
+								                		<th>Total</th>
+								                		<th>{{ number_format($totalIncome) }}</th>
+								                	</tr>
+								                </tfoot>
 								            </table>
 					                      </div>
 					                      <!-- card-body -->
@@ -148,11 +187,36 @@
 					                <div class="col-8">
 					                    <div class="card">
 					                      <div class="card-header">
-					                        <h3 class="card-title">View Transaction History</h3>
+					                        <h3 class="card-title">{{$headExpense}}</h3>
+					                        <div class="card-tools">
+								              <a href="#" class="btn btn-primary btn-sm" title="Download" onclick="printContent('printArea')">
+								                <i class="fa fa-download"></i>
+								               </a>
+								            </div>
 					                      </div>
 					                              <!-- /.card-header -->
 					                      <div class="card-body">
-					                      	<table id="example2" class="table table-bordered table-hover">
+					                      	<form action="/apply/trans/search/expense" method="post">
+						                    @csrf
+						                    <div class="row">
+						                      <div class="input-group col-5">
+						                        <div class="input-group-prepend">
+						                          <span class="input-group-text">Start date</span>
+						                        </div>
+						                        <input type="date" name="start_date" class="form-control" data-mask required="required">
+						                      </div>
+						                      <div class="input-group col-5">
+						                        <div class="input-group-prepend">
+						                          <span class="input-group-text">End date</span>
+						                        </div>
+						                        <input type="date" name="end_date" class="form-control"  data-mask required="required">
+						                      </div>
+						                      <div class="col-2">
+						                        <button class="btn btn-outline-primary">Search</button>
+						                      </div>
+						                    </div>
+						                  </form>
+					                      	<table id="example4" class="table table-bordered table-hover">
 								                <thead>
 								                  <tr>
 								                    <th style="width: 12px;">#</th>
