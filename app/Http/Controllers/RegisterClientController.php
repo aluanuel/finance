@@ -6,6 +6,7 @@ use DB;
 use Illuminate\Http\Request;
 use \App\Models\LoanApplication;
 use \App\Models\RegisterClient;
+use \App\Models\ClientGroup;
 
 class RegisterClientController extends Controller {
 	//
@@ -116,10 +117,26 @@ class RegisterClientController extends Controller {
 		]);
 	}
 
-	public function ViewGroupMembers() {
+	public function ViewGroupMembers(Request $request) {
 
-		return view('apply.settings.groups.members');
+		$id = DB::table('client_groups')->find($request->id);
+
+		if($id){
+			$group = DB::table('client_groups')
+			->where('id','=',$request->id)
+			->first();
+			$members = RegisterClient::where('id_group','=',$request->id)
+			->get();
+		}
+
+		return view('apply.settings.groups.members',compact('group','members'));
 	}
+
+	public function showGroupApplicationForm(){
+		$groups = ClientGroup::all();
+		return view('apply.grp.index',compact('groups'));
+	}
+
 	private function loanNumber() {
 
 		$id = LoanApplication::latest('loan_number')->first();

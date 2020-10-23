@@ -13,6 +13,7 @@ class CreateRegisterClientsTable extends Migration {
 	public function up() {
 		Schema::create('register_clients', function (Blueprint $table) {
 			$table->id();
+			$table->string('account',10);
 			$table->string('name');
 			$table->string('telephone');
 			$table->string('gender');
@@ -26,7 +27,7 @@ class CreateRegisterClientsTable extends Migration {
 			$table->string('resident_district')->nullable();
 			$table->string('next_of_kin')->nullable();
 			$table->unsignedBigInteger('id_group')->nullable();
-			$table->string('id_member')->nullable();
+			$table->string('role')->nullable();
 			$table->date('dob')->nullable();
 			$table->string('house_head')->nullable();
 			$table->boolean('ever_borrowed_loan')->nullable();

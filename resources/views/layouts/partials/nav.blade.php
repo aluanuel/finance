@@ -62,6 +62,13 @@
                   <p>Processed Loan</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="/apply/grp" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Clients
+                  </p>
+                </a>
+              </li>
             </ul>
           </li>
           <li class="nav-item">
@@ -70,23 +77,34 @@
               <p>
                 Group Loan
                 <i class="fas fa-angle-left right"></i>
-                <span class="badge badge-info right">6</span>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/apply/ind" class="nav-link">
+                <a href="/apply/grp" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Individual Loan
-                    <span class="badge badge-primary right">2</span>
+                  <p>Application
                   </p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="/apply/grp" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Group Loan
-                    <span class="badge badge-primary right">4</span>
+                  <p>Assessment
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/apply/grp" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Processed Loan
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/apply/grp/list" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Loan Groups
                   </p>
                 </a>
               </li>

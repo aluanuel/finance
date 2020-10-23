@@ -45,7 +45,7 @@
                   <div class="active tab-pane" id="nw_ind_ln">
                     <div class="card">
                       <div class="card-header">
-                        <h3 class="card-title text-uppercase">personal data</h3>
+                        <h3 class="card-title">Personal Data</h3>
                       </div>
                       <div class="card-body">
                         <form action="/apply/ind" method="post">
@@ -115,7 +115,7 @@
                   <div class="tab-pane" id="cont_ind_ln">
                     <div class="card">
                       <div class="card-header">
-                        <h3 class="card-title text-uppercase">personal data</h3>
+                        <h3 class="card-title">Personal Data</h3>
                       </div>
                       <div class="card-body">
                         <form action="/apply/ind" method="post">
