@@ -6,6 +6,7 @@ use DB;
 use Illuminate\Http\Request;
 use \App\Models\LoanApplication;
 use \App\Models\RegisterClient;
+use Carbon\Carbon;
 
 class LoanApplicationController extends Controller {
 
@@ -143,11 +144,16 @@ class LoanApplicationController extends Controller {
 
 		$loan = LoanApplication::find($request->id);
 		if ($loan) {
+			$loan_period = request('loan_period');
+			$today = Carbon::now();
 			$loan->loan_status = 'started';
-			$loan->start_date = date('Y-m-d');
-			$loan->end_date = $this->getEndDate(request('loan_period'));
+			$loan->start_date = $today->toDateString();
+			$loan->end_date = $this->getEndDate($loan_period);
 			$loan->issued_by = Auth::id();
 			$loan->save();
+
+			$today = $today->addDays(30);
+
 			return redirect()->back()->with('success', 'Loan issued successfully');
 		}
 	}

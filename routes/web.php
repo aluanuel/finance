@@ -69,8 +69,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/apply/settings/groups',[App\Http\Controllers\ClientGroupController::class,'newLoanGroup']);
 
 
-	Route::get('/apply/grp', [App\Http\Controllers\RegisterClientController::class, 'showGroupApplicationForm']);
+	Route::get('/apply/grp', [App\Http\Controllers\Auth\RegisterController::class, 'showGroupApplicationForm']);
 
-
+	Route::get('/apply/settings/users', [App\Http\Controllers\SystemUserController::class, 'index']);
+	Route::post('/apply/settings/user', [App\Http\Controllers\SystemUserController::class, 'create']);
 
 });
+

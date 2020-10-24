@@ -75,7 +75,7 @@
 					                  <tbody>
 					                  	@foreach($instalment as $instal)
 					                  	<tr>
-					                  		<td></td>
+					                  		<td>{{ $instal->deadline }}</td>
 					                  		<td>{{ number_format($instal->instalment) }}</td>
 					                  	</tr>
 					                  	@endforeach

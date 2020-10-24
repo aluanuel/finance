@@ -73,7 +73,7 @@
                     <b><i class="fas fa-user-friends mr-1"></i>Loan Group</b> <a class="float-right">{{$loan->id_group }}</a>
                   </li>
                   <li class="list-group-item">
-                    <b><i class="fas fa-user mr-1"></i> Group Leader</b> <a class="float-right">{{$loan->id_member }}</a>
+                    <b><i class="fas fa-user mr-1"></i> Group Leader</b> <a class="float-right">{{$loan->role }}</a>
                   </li>
                 </ul>
 

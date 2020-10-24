@@ -105,7 +105,7 @@
   });
 
   // DropzoneJS Demo Code Start
-  Dropzone.autoDiscover = false;
+  Dropzone.autoDiscover = true;
 
   // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
   var previewNode = document.querySelector("#template");
@@ -240,6 +240,7 @@
       }else{
         $('#business_type').hide();
       }
-    });
+    });  
+
 });
 </script>

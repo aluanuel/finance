@@ -12,7 +12,7 @@
         <form action="{{ route('login') }}" method="post">
           @csrf
           <div class="input-group mb-3">
-            <input type="email" name="email" class="form-control" placeholder="Email" required="required">
+            <input type="email" name="email" class="form-control" placeholder="Email" required="required" autocomplete="off">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
@@ -20,7 +20,7 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="password" class="form-control" placeholder="Password" name="password" required="required">
+            <input type="password" class="form-control" placeholder="Password" name="password" required="required" autocomplete="off">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
@@ -35,7 +35,7 @@
             <!-- /.col -->
             <div class="col-8">
               <p class="mb-1 pl-5">
-                <a href="{{ route('password.request') }}">I forgot my password</a>
+                <a href="{{ route('register') }}">I forgot my password</a>
               </p>
             </div>
             <!-- col -->

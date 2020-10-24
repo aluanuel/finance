@@ -32,7 +32,8 @@
             <div class="card card-default">
               <div class="card-header">
                 <ul class="nav nav-pills">
-                  <li class="nav-item"><a class="nav-link active" href="#admin_nw_approve" data-toggle="tab">Loans Awating Approval</a></li>
+                  <li class="nav-item"><a class="nav-link active" href="#admin_nw_assess" data-toggle="tab">Loans Awating Assessment</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#admin_nw_approve" data-toggle="tab">Loans Awating Approval</a></li>
                   <li class="nav-item"><a class="nav-link" href="#admn_approved" data-toggle="tab">Approved Loans</a></li>
                   <li class="nav-item"><a class="nav-link" href="#admn_cancelled" data-toggle="tab">Cancelled Loans</a></li>
                 </ul>
@@ -40,7 +41,41 @@
               </div>
               <div class="card-body">
                 <div class="tab-content">
-                  <div class="active tab-pane" id="admin_nw_approve">
+                  <div class="active tab-pane" id="admin_nw_assess">
+                    <div class="card">
+                      <div class="card-header">
+                        <h3 class="card-title">Loans Awaiting Assessment</h3>
+                      </div>
+                              <!-- /.card-header -->
+                      <div class="card-body">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th style="width: 12px;">#</th>
+                                    <th style="width: 30px;">Number</th>
+                                    <th>Applicant</th>
+                                    <th>Amount</th>
+                                    <th style="width: 120px;">#</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                              <?php $x = 1;?>
+                              @foreach($loan as $loans)
+                                <tr>
+                                  <td>{{ $x }}</td>
+                                  <td>{{ $loans->loan_number }}</td>
+                                  <td>{{ $loans->name }}</td>
+                                  <td>{{ number_format($loans->proposed_amount) }}</td>
+                                  <td></td>
+                                </tr>
+                              <?php $x++;?>
+                              @endforeach
+                            </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane" id="admin_nw_approve">
                     <div class="card">
                       <div class="card-header">
                         <h3 class="card-title">Loans Awaiting Approval</h3>
@@ -118,7 +153,7 @@
                                   <td>{{ $app->telephone}}</td>
                                   <td>
                                     <a href="/app/ind/schedule/{{$app->id}}">
-                                      <button type="submit" class="btn btn-block btn-outline-primary">Schedule</button>
+                                      <button type="submit" class="btn btn-block btn-outline-primary btn-sm">Schedule</button>
                                     </a>
                                   </td>
                                 </tr>

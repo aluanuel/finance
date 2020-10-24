@@ -23,7 +23,7 @@ class CreateIndividualLoanAssessmentsTable extends Migration {
 			$table->double('total_monthly_income');
 			$table->double('food');
 			$table->double('rent')->nullable();
-			$table->double('medical');
+			$table->double('medical')->nullable();
 			$table->double('electricity')->nullable();
 			$table->double('school_fees')->nullable();
 			$table->double('leisure')->nullable();
@@ -33,7 +33,7 @@ class CreateIndividualLoanAssessmentsTable extends Migration {
 			$table->boolean('borrowed_money');
 			$table->date('start_date')->nullable();
 			$table->date('end_date')->nullable();
-			$table->double('loan_period_borrowed');
+			$table->double('loan_period_borrowed')->nullable();
 			$table->string('money_lender')->nullable();
 			$table->double('amount_borrowed')->nullable();
 			$table->double('loan_period')->nullable();

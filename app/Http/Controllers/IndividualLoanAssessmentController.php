@@ -10,6 +10,7 @@ use \App\Models\IndividualLoanAssessment;
 use \App\Models\LoanApplication;
 use \App\Models\LoanSchedule;
 use \App\Models\LoanSecurity;
+use Carbon\Carbon;
 
 class IndividualLoanAssessmentController extends Controller {
 
@@ -20,6 +21,12 @@ class IndividualLoanAssessmentController extends Controller {
 			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone')
 			->where('loan_applications.proposed_amount', '!=', NULL)
 			->where('loan_applications.assessment_status', '=', NULL)->orderBy('loan_applications.created_at', 'desc')->get();
+
+		$approve = DB::table('loan_applications')
+			->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
+			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone')
+			->where('loan_applications.approval_status', '=', NULL)
+			->where('loan_applications.assessment_status', '=', '0')->orderBy('loan_applications.created_at', 'desc')->get();
 
 		$approved = DB::table('loan_applications')
 			->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
@@ -34,10 +41,16 @@ class IndividualLoanAssessmentController extends Controller {
 			->where('loan_applications.approval_status', '=', '0')
 			->where('loan_applications.assessment_status', '=', '0')->orderBy('loan_applications.created_at', 'desc')->get();
 
-		return view('apply.ind.assess.index', compact('loan', 'approved', 'cancelled'));
+		return view('apply.ind.assess.index', compact('loan','approve', 'approved', 'cancelled'));
 	}
 
 	public function adminViewLoan() {
+
+		$loan = DB::table('loan_applications')
+			->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
+			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone')
+			->where('loan_applications.proposed_amount', '!=', NULL)
+			->where('loan_applications.assessment_status', '=', NULL)->orderBy('loan_applications.created_at', 'desc')->get();
 
 		$approve = DB::table('loan_applications')
 			->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
@@ -57,7 +70,7 @@ class IndividualLoanAssessmentController extends Controller {
 			->where('loan_applications.approval_status', '=', '0')
 			->where('loan_applications.assessment_status', '=', '0')->orderBy('loan_applications.created_at', 'desc')->get();
 
-		return view('apply.admin.ind.assess', compact('approve', 'approved', 'cancelled'));
+		return view('apply.admin.ind.assess', compact('loan','approve', 'approved', 'cancelled'));
 	}
 
 	public function viewAssessmentForm(Request $request) {
@@ -239,11 +252,15 @@ class IndividualLoanAssessmentController extends Controller {
 
 			$data = array();
 
+			$today = Carbon::now();
+
 			for ($x = 1; $x <= $loan_period; $x++) {
 
 				$data[] = array('id_loan' => $request->id,
 					'instalment' => $instalment,
+					'deadline' => $today->toDateString(),
 				);
+				$today = $today->addDays(30);
 			}
 			LoanSchedule::insert($data);
 

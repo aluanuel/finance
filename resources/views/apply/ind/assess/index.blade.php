@@ -34,6 +34,7 @@
                 <ul class="nav nav-pills">
                   <li class="nav-item"><a class="nav-link active" href="#nw_assess" data-toggle="tab">Loans Awaiting Assessment
                   </a></li>
+                  <li class="nav-item"><a class="nav-link" href="#ln_to_approve" data-toggle="tab">Loans Awaiting Approval</a></li>
                   <li class="nav-item"><a class="nav-link" href="#nw_approve" data-toggle="tab">Approved Loans</a></li>
                   <li class="nav-item"><a class="nav-link" href="#nw_cancel" data-toggle="tab">Cancelled Loans</a></li>
                 </ul>
@@ -89,6 +90,43 @@
                       </div>
                     </div>
                   </div>
+
+                  <div class="tab-pane" id="ln_to_approve">
+                    <div class="card">
+                      <div class="card-header">
+                        <h3 class="card-title">Loans Awaiting Approval</h3>
+                      </div>
+                              <!-- /.card-header -->
+                      <div class="card-body">
+                        <table id="example3" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th style="width: 12px;">#</th>
+                                    <th style="width: 30px;">Number</th>
+                                    <th>Applicant</th>
+                                    <th>Amount</th>
+                                    <th>#</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                              <?php $x = 1;?>
+                              @foreach($approve as $app)
+                                <tr>
+                                  <td>{{ $x }}</td>
+                                  <td>{{ $app->loan_number }}</td>
+                                  <td>{{ $app->name }}</td>
+                                  <td>{{ number_format($app->proposed_amount) }}</td>
+                                  <td></td>
+                                </tr>
+                              <?php $x++;?>
+                              @endforeach
+                            </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+
                   <div class="tab-pane" id="nw_approve">
                     <div class="card">
                       <div class="card-header">
@@ -119,7 +157,7 @@
                                   <td>{{ $app->name}}</td>
                                   <td>{{ $app->telephone}}</td>
                                   <td>
-                                    <a href="/apply/view/profile/{{$app->id}}"><button class="btn btn-outline-primary">View</button></a>
+                                    <a href="/app/ind/schedule/{{$app->id}}"><button class="btn btn-outline-primary btn-sm">Schedule</button></a>
                                   </td>
                                 </tr>
                               <?php $x++;?>
