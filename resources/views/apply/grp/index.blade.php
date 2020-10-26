@@ -140,6 +140,16 @@
                             </div>
                           </div>
                           <div class="row form-group">
+                            <div class="col-3">
+                              <label>Interest rate (%)</label>
+                              <input type="text" name="interest_rate" autocomplete="off" class="form-control" placeholder="Interest rate" value="{{ $interest->interest_rate}}" required="required">
+                            </div>
+                            <div class="col-3">
+                              <label>Appraisal Fee</label>
+                              <input type="text" name="application_fee" autocomplete="off" class="form-control" placeholder="Appraisal Fee" value="{{ $appraisal->appraisal_amount}}" readonly="readonly">
+                            </div>
+                          </div>
+                          <div class="row form-group">
                             <button class="btn btn-primary ml-2">Submit</button>
                           </div>
                         </form>
@@ -161,7 +171,7 @@
                   </div>
                   <!-- tab-pane -->
                   <div class="tab-pane" id="grp_apply">
-                    <div class="card">
+                   <!--  <div class="card">
                       <div class="card-header">
                         <h3 class="card-title">Showing Loan Applications</h3>
                       </div>
@@ -169,6 +179,56 @@
                         <form action="/apply/ind" method="post">
                           @csrf
                         </form>
+                      </div>
+                    </div> -->
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="card">
+                          <div class="card-header">
+                            <h3 class="card-title">Showing Loan Applications</h3>
+                          </div>
+                          <!-- /.card-header -->
+                          <div class="card-body" style="overflow-x: scroll;">
+                            <table id="example2" class="table table-bordered table-hover">
+                              <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>Number</th>
+                                <th>Group</th>
+                                <th>Group Code</th>
+                                <th>Name</th>
+                                <th>Telephone</th>
+                                <th>Gender</th>
+                                <th>Marital Status</th>
+                                <th>Workplace</th>
+                                <th>Occupation</th>
+                                <th>#</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                                <?php $i = 1;?>
+                                @foreach($loan as $ln) 
+                                <tr>
+                                  <td>{{ $i }}</td>
+                                  <td>{{ $ln->loan_number }}</td>
+                                  <td>{{ $ln->group_name }}</td>
+                                  <td>{{ $ln->group_code }}</td>
+                                  <td>{{ $ln->name }}</td>
+                                  <td>{{ $ln->telephone }}</td>
+                                  <td>{{ $ln->gender }}</td>
+                                  <td>{{ $ln->marital_status }}</td>
+                                  <td>{{ $ln->work_place }}</td>
+                                  <td>{{ $ln->occupation }}</td>
+                                  <td><a href="/apply/grp/assess/{{$ln->id}}" class="btn btn-outline-primary">Assess</a></td>
+                                </tr>
+                                <?php $i++;?>
+                                @endforeach
+                              </tbody>
+                            </table>
+                          </div>
+                          <!-- card-body -->
+                        </div>
+                          <!-- card -->
                       </div>
                     </div>
                   </div>

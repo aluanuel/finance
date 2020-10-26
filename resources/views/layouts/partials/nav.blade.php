@@ -13,7 +13,7 @@
           <img src="{{ asset('theme/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+          <a href="/apply/user/{{Auth::user()->id}}" class="d-block">{{ Auth::user()->name }}</a>
         </div>
       </div>
 
@@ -34,7 +34,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          @if(Auth::user()->usertype == 'loanOfficer')
+          @if(Auth::user()->usertype == 'Loan Officer')
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-circle"></i>
@@ -110,12 +110,12 @@
                 </li>
               </ul>
             </li>
-          @elseif(Auth::user()->usertype == 'teller')
+          @elseif(Auth::user()->usertype == 'Teller')
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-circle"></i>
                 <p>
-                  Individual Loan (Sales)
+                  Individual Loan
                   <i class="fas fa-angle-left right"></i>
                 </p>
               </a>
@@ -132,22 +132,44 @@
                     <p>Processed Loan</p>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a href="/apply/trans" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Loan Payments</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/trans/record" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Record</p>
-                  </a>
-                </li>
-
               </ul>
             </li>
-          @elseif(Auth::user()->usertype == 'manager')
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-circle"></i>
+                <p>
+                  Group Loan
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/apply/view/grp" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Applications</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/view" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Processed Loan</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="/apply/trans" class="nav-link">
+                <i class="nav-icon fas fa-circle"></i>
+               <p>Loan Payments</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/trans/record" class="nav-link">
+                <i class="nav-icon fas fa-circle"></i>
+                <p>Record</p>
+              </a>
+            </li>
+          @elseif(Auth::user()->usertype == 'Manager')
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-circle"></i>
@@ -165,7 +187,7 @@
                 </li>
                 <li class="nav-item">
                   <a href="/apply/admin/ind/assess" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
+                    <i class="fas fa-circle nav-icon"></i>
                     <p>Loan Assessment
                     </p>
                   </a>
@@ -235,6 +257,13 @@
                 </p>
               </a>
               <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/apply/settings/appraisal" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Appraisal Fee
+                    </p>
+                  </a>
+                </li>
                 <li class="nav-item">
                   <a href="/apply/settings/interest" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>

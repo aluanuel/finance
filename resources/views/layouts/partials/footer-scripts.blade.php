@@ -241,6 +241,25 @@
         $('#business_type').hide();
       }
     });  
+    $('#btnChangePassword').click(function(){
+      $('#formChangePassword').show();
+      $('#formChangePhoto').hide();
+       $('#infoPassword').hide();
+    });
+    $('#btnChangePhoto').click(function(){
+      $('#formChangePhoto').show();
+      $('#formChangePassword').hide();
+    });
+
+    $('#password2').blur(function(){
+      var password1 = $('#password1').val();
+      var password2 = $('#password2').val();
+      if(password1 != password2){
+        $('#infoPassword').show();
+        $('#password1').focus();
+      }
+    });
+
 
 });
 </script>

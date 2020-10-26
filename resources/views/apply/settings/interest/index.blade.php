@@ -82,7 +82,7 @@
                               	<tr>
                               		<td>{{ $i }}</td>
                               		<td>{{ $int->loan_type }}</td>
-                              		<td>{{ ($int->interest_rate) *  100 }}</td>
+                              		<td>{{ ($int->interest_rate) }}</td>
                               		<td>{{ date('Y-m-d',strtotime($int->created_at))}}</td>
                               	</tr>
                               	<?php $i++;?>

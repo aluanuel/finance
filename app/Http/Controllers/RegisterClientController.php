@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use \App\Models\LoanApplication;
 use \App\Models\RegisterClient;
 use \App\Models\ClientGroup;
+use Carbon\Carbon;
 
 class RegisterClientController extends Controller {
 	//
@@ -44,7 +45,7 @@ class RegisterClientController extends Controller {
 
 			$loanApp->application_fee = request('application_fee');
 
-			$loanApp->application_date = request('application_date');
+			$loanApp->application_date = Carbon::now()->toDateTimeString();
 
 			$loanApp->loan_number = request('loan_number');
 
@@ -65,7 +66,7 @@ class RegisterClientController extends Controller {
 
 			$loanApp->application_fee = request('application_fee');
 
-			$loanApp->application_date = request('application_date');
+			$loanApp->application_date = Carbon::now()->toDateTimeString();
 
 			$loanApp->loan_number = request('loan_number');
 
@@ -75,14 +76,13 @@ class RegisterClientController extends Controller {
 
 			$loanApp->save();
 
-			return redirect()->back()->with('success', 'Client Registerd Successfully');
+			return redirect()->back()->with('success', 'Registered Successfully');
 
 		}
 
 	}
-	public function updateIndividualApplication(Request $request) {
 
-		// try(){
+	public function updateIndividualApplication(Request $request) {
 
 		$loan = LoanApplication::find($request->id);
 
@@ -97,12 +97,8 @@ class RegisterClientController extends Controller {
 			return redirect()->back()->with('success', 'Transaction successful');
 		}
 
-		// }catch(Exception $e){
-
-		// 	return redirect()->back()->with('error', 'Transaction unsuccessful');
-		// }
-
 	}
+
 	protected function validateApplication() {
 
 		return $data = request()->validate([
@@ -132,9 +128,76 @@ class RegisterClientController extends Controller {
 		return view('apply.settings.groups.members',compact('group','members'));
 	}
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	public function showGroupApplicationForm(){
 		$groups = ClientGroup::all();
-		return view('apply.grp.index',compact('groups'));
+		$interest = DB::table('interest_on_loans')
+			->select('interest_rate')
+			->where('loan_type', '=', 'Group')
+			->latest()
+			->first();
+		$appraisal = DB::table('appraisal_fees')
+			->select('appraisal_amount')
+			->where('appraisal_type', '=', 'Group')
+			->latest()
+			->first();
+		$loan = DB::table('loan_applications')
+		->join('register_clients','loan_applications.id_client','register_clients.id')
+		->join('client_groups','loan_applications.id_group','client_groups.id')
+		->select('client_groups.group_name','client_groups.group_code','register_clients.name','register_clients.telephone', 'register_clients.gender', 'register_clients.marital_status', 'register_clients.work_place', 'register_clients.occupation','loan_applications.*')
+		->where('loan_applications.id_group','!=',NULL)
+		->where('loan_applications.application_status','=',1)
+		->orderBy('loan_applications.created_at','desc')
+		->get();
+		return view('apply.grp.index',compact('groups','interest','appraisal','loan'));
+	}
+
+	public function NewGroupApplication(){
+
+		$client = new RegisterClient();
+		$client->name = request('name');
+		$client->gender = request('gender');
+		$client->dob = request('dob');
+		$client->marital_status = request('marital_status');
+		$client->telephone = request('telephone');
+		$client->next_of_kin = request('next_of_kin');
+		$client->id_group = request('id_group');
+		$client->house_head = request('house_head');
+		$client->work_place = request('work_place');
+		$client->occupation = request('occupation');
+		$client->district = request('district');
+		$client->resident_district = request('resident_district');
+		$client->resident_division = request('resident_division');
+		$client->resident_parish = request('resident_parish');
+		$client->resident_village = request('resident_village');
+		$client->registration_date = Carbon::now()->toDateTimeString();
+		$client->registered_by = Auth::id();
+		$client->save();
+
+		$loanApp = new LoanApplication();
+
+		$id_client = RegisterClient::latest('id')->where('id_group', '=',request('id_group') )->first();
+
+		$loanApp->id_client = $id_client->id;
+
+		$loanApp->id_group = request('id_group');
+
+		$loanApp->application_fee = request('application_fee');
+
+		$loanApp->application_date = Carbon::now()->toDateTimeString();
+
+		$loanApp->loan_number =$this->loanNumber();
+
+		$loanApp->interest_rate = request('interest_rate');
+
+		$loanApp->application_by = Auth::id();
+
+		$loanApp->save();
+
+		return redirect()->back()->with('success', 'Registered Successfully');
+
 	}
 
 	private function loanNumber() {

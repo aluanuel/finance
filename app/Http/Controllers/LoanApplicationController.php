@@ -15,6 +15,8 @@ class LoanApplicationController extends Controller {
 		$apps = DB::table('loan_applications')
 			->join('register_clients', 'loan_applications.id_client', '=', 'register_clients.id')
 			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone', 'register_clients.gender')
+			->where('loan_applications.assessment_status','=',NULL)
+			->where('loan_applications.id_group','=',NULL)
 			->orderBy('loan_applications.created_at', 'desc')
 			->get();
 
@@ -176,6 +178,28 @@ class LoanApplicationController extends Controller {
 
 		return view('apply.view.client_profile', compact('loan', 'ledger', 'history'));
 	}
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public function viewGroupApplication() {
+
+		$apps = DB::table('loan_applications')
+			->join('register_clients', 'loan_applications.id_client', '=', 'register_clients.id')
+			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone', 'register_clients.gender')
+			->where('loan_applications.assessment_status','=',NULL)
+			->where('loan_applications.id_group','!=',NULL)
+			->orderBy('loan_applications.created_at', 'desc')
+			->get();
+
+		return view('apply.view.grp.index', compact('apps'));
+	}
+
+
+
+
+
+
+
+
 
 	protected function getEndDate($period) {
 

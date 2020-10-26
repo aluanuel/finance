@@ -69,10 +69,20 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/apply/settings/groups',[App\Http\Controllers\ClientGroupController::class,'newLoanGroup']);
 
 
-	Route::get('/apply/grp', [App\Http\Controllers\Auth\RegisterController::class, 'showGroupApplicationForm']);
+	Route::get('/apply/grp', [App\Http\Controllers\RegisterClientController::class, 'showGroupApplicationForm']);
+	Route::post('/apply/grp',[App\Http\Controllers\RegisterClientController::class, 'NewGroupApplication']);
 
 	Route::get('/apply/settings/users', [App\Http\Controllers\SystemUserController::class, 'index']);
 	Route::post('/apply/settings/user', [App\Http\Controllers\SystemUserController::class, 'create']);
+	Route::get('apply/user/{id}',[App\Http\Controllers\SystemUserController::class, 'profile']);
+	Route::post('apply/user/update/{id}',[App\Http\Controllers\SystemUserController::class, 'updateProfile']);
+
+	Route::get('/apply/settings/appraisal',[App\Http\Controllers\AppraisalFeeController::class, 'index']);
+	Route::post('/apply/settings/appraisal',[App\Http\Controllers\AppraisalFeeController::class, 'create']);
+
+
+	Route::get('/apply/view/grp', [App\Http\Controllers\LoanApplicationController::class, 'viewGroupApplication'])->name('tellerGroupViewApplications');
+	Route::get('/apply/grp/assess/{id}',[App\Http\Controllers\GroupLoanAssessmentController::class, 'index']);
 
 });
 
