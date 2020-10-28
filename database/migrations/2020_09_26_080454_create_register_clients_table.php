@@ -28,6 +28,9 @@ class CreateRegisterClientsTable extends Migration {
 			$table->string('next_of_kin')->nullable();
 			$table->unsignedBigInteger('id_group')->nullable();
 			$table->string('role')->nullable();
+			$table->boolean('member_status')->nullable();
+			$table->date('member_joined_on')->nullable();
+			$table->unsignedBigInteger('group_administrator')->nullable();
 			$table->date('dob')->nullable();
 			$table->string('house_head')->nullable();
 			$table->boolean('ever_borrowed_loan')->nullable();
