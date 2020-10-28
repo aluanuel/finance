@@ -18,6 +18,7 @@ class CreateGuarantorsTable extends Migration {
 			$table->string('guarantor_name');
 			$table->string('guarantor_address');
 			$table->string('guarantor_telephone');
+			$table->string('guarantor_relationship')->nullable();
 			$table->timestamps();
 		});
 	}

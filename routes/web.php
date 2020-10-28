@@ -83,6 +83,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/apply/view/grp', [App\Http\Controllers\LoanApplicationController::class, 'viewGroupApplication'])->name('tellerGroupViewApplications');
 	Route::get('/apply/grp/assess/{id}',[App\Http\Controllers\GroupLoanAssessmentController::class, 'index']);
+	Route::post('/apply/grp/assess/{id}',[App\Http\Controllers\GroupLoanAssessmentController::class, 'fillAssessment']);
 
 });
 

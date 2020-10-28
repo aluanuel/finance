@@ -26,6 +26,7 @@
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
+        @include('layouts.flash')
       	<div class="row">
           <!-- right column -->
           <div class="col-md-12">
@@ -48,6 +49,223 @@
                         <h3 class="card-title">Loan Assessment Entry Form</h3>
                       </div>
                       <div class="card-body">
+                        <form action="/apply/grp/assess/{{$cont->id}}" method="post">
+                          @csrf
+                          <div class="row form-group">
+                            <div class="col-6">
+                              <label>Applicant Name</label>
+                              <input type="text" name="name"  autocomplete="off" class="form-control" placeholder="Name" required="required" value="{{$cont->name}}">  
+                            </div>
+                            <div class="col-2">
+                              <label>Gender</label>
+                              <select class="form-control select2bs4" name="marital_status" style="width: 100%;" required="required">
+                                <option>{{$cont->gender}}</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                              </select>  
+                            </div>
+                            <div class="col-2">
+                              <label>Marital Status</label>
+                              <select class="form-control select2bs4" name="marital_status" style="width: 100%;" required="required">
+                                <option>{{$cont->marital_status}}</option>
+                                <option value="Single">Single</option>
+                                <option value="Married">Married</option>
+                                <option value="Widowed">Widowed</option>
+                                <option value="Divorced">Divorced</option>
+                              </select> 
+                            </div>
+                            <div class="col-2">
+                              <label>Telephone</label>
+                              <input type="text" name="telephone"  autocomplete="off" class="form-control" placeholder="Telephone" value="{{$cont->telephone}}">  
+                            </div>
+                          </div>
+                          <div class="row form-group">
+                            <div class="col-3">
+                              <label>Workplace</label>
+                              <input type="text" name="work_place" autocomplete="off" class="form-control" placeholder="Workplace" value="{{ $cont->work_place }}" required="required">
+                            </div>
+                            <div class="col-3">
+                              <label>Occupation</label>
+                              <input type="text" name="occupation" autocomplete="off" class="form-control" placeholder="Occupation" value="{{ $cont->occupation }}" required="required">
+                            </div>
+                            <div class="col-3">
+                              <label>District</label>
+                              <input type="text" name="district" autocomplete="off" class="form-control" placeholder="District of work" value="{{ $cont->district }}" required="required">
+                            </div>
+                            <div class="col-3">
+                              <label>Permanent Resident Village/Cell</label>
+                              <input type="text" name="resident_village" autocomplete="off" class="form-control" placeholder="Village of residence" value="{{ $cont->resident_village}}" required="required">
+                            </div>
+                          </div>
+                          <div class="row form-group">
+                            <div class="col-3">
+                              <label>Parish/Ward</label>
+                              <input type="text" name="resident_parish" autocomplete="off" class="form-control" placeholder="Parish" value="{{ $cont->resident_parish }}" required="required">
+                            </div>
+                            <div class="col-3">
+                              <label>Subcounty/Division</label>
+                              <input type="text" name="resident_division" autocomplete="off" class="form-control" placeholder="Subcounty" value="{{ $cont->resident_division }}" required="required">
+                            </div>
+                            <div class="col-3">
+                              <label>District of residence</label>
+                              <input type="text" name="resident_district" autocomplete="off" class="form-control" placeholder="District of residence" value="{{ $cont->resident_district }}" required="required">
+                            </div>
+                            <div class="col-3">
+                              <label>Household Head</label>
+                              <input type="text" name="next_of_kin" autocomplete="off" class="form-control" placeholder="Next of Kin" value="{{ $cont->house_head }}" required="required">
+                            </div>
+                          </div>
+                          <div class="card-header">
+                            <h3 class="card-title text-uppercase text-primary">loan applied for</h3>
+                          </div>
+                          <div class="row form-group">
+                            <div class="col-2">
+                              <label>Loan Number</label>
+                              <input type="text" name="loan_number" autocomplete="off" class="form-control" readonly="readonly" value="{{ $cont->loan_number }}">
+                            </div>
+                            <div class="col-3">
+                              <label>Loan Amount</label>
+                              <input type="number" name="proposed_amount" autocomplete="off" class="form-control" placeholder="Loan amount to borrow" required="required">
+                            </div>
+                            <div class="col-2">
+                              <label>Loan Period (Weeks)</label>
+                              <input type="number" name="loan_period" autocomplete="off" class="form-control" placeholder="Loan period" required="required">
+                            </div>
+                            <div class="col-5">
+                              <label>Purpose of the loan</label>
+                              <textarea class="form-control" name="borrowing_purpose" placeholder="Purpose of borrowing" required="required"></textarea>
+                            </div>
+                          </div>
+                          <div class="row form-group">
+                            <div class="col-3">
+                              <label>Principle owner of business</label>
+                              <input type="text" name="business_location" autocomplete="off" class="form-control" placeholder="Location of the business" required="required">
+                            </div>
+                            <div class="col-3">
+                              <label>Location of the business</label>
+                              <input type="text" name="business_owner" autocomplete="off" class="form-control" placeholder="Name of business owner" required="required">
+                            </div>
+                            <div class="col-3">
+                              <label>Who will use the loan?</label>
+                              <input type="text" name="loan_user" autocomplete="off" class="form-control" placeholder="Loan user" required="required">
+                            </div>
+                            <div class="col-3">
+                              <label>Present Investment</label>
+                              <input type="number" name="present_investment" autocomplete="off" class="form-control" placeholder="Present Investment" required="required">
+                            </div>
+                          </div>
+                          <div class="row form-group">
+                            <div class="col-3">
+                              <label>Present Profits</label>
+                              <input type="number" name="present_profit" autocomplete="off" class="form-control" placeholder="Present Profit" required="required">
+                            </div>
+                            <div class="col-3">
+                              <label>Monthly Family Expenditure</label>
+                              <input type="number" name="monthly_expenditure" autocomplete="off" class="form-control" placeholder="Family Expenditure" required="required">
+                            </div>
+                          </div>
+                          <div class="row form-group">
+                            <div class="col-3">
+                              <label>Source of Capital</label>
+                              <textarea class="form-control" name="capital_source" placeholder="Enter sources of capital and separate them with comma (,)" required="required"></textarea>
+                            </div>
+                            <div class="col-3">
+                              <label>Inventory that day</label>
+                              <input type="number" name="present_inventory" autocomplete="off" class="form-control" placeholder="Inventory" required="required">
+                            </div>
+                            <div class="col-3">
+                              <label>Cash at hand that day</label>
+                              <input type="number" name="cash_at_hand" autocomplete="off" class="form-control" placeholder="Cash at hand" required="required">
+                            </div>
+                            <div class="col-3">
+                              <label>Cash at hand that day</label>
+                              <input type="number" name="cash_at_hand" autocomplete="off" class="form-control" placeholder="Cash at hand" required="required">
+                            </div>
+                          </div>
+                          <div class="row form-group">
+                            <div class="col-3">
+                              <label>Total sales in last 7 days</label>
+                              <input type="number" name="sales_seven_days" autocomplete="off" class="form-control" placeholder="Sales in last 7 days" required="required">
+                            </div>
+                            <div class="col-3">
+                              <label>Member's Residence</label>
+                              <input type="text" name="member_location" autocomplete="off" class="form-control" placeholder="Member's residence" required="required">
+                            </div>
+                            <div class="col-3">
+                              <label>Name of known person</label>
+                              <input type="text" name="known_person_name" autocomplete="off" class="form-control" placeholder="Name of any person known in the community" required="required">
+                            </div>
+                            <div class="col-3">
+                              <label>Telephone of known person</label>
+                              <input type="text" name="known_person_telephone" autocomplete="off" class="form-control" placeholder="Telephone" required="required">
+                            </div>
+                          </div>
+                          <div class="card-header">
+                            <h6 class="card-title text-uppercase text-primary">witnesses</h6>
+                          </div>
+                          <div class="row form-group">
+                            <div class="col-4">
+                              <label>Name</label>
+                              <input type="text" name="witness_name[]" autocomplete="off" class="form-control" placeholder="Name" required="required">
+                            </div>
+                            <div class="col-4">
+                              <label>Relationship</label>
+                              <input type="text" name="witness_relationship[]" autocomplete="off" class="form-control" placeholder="Relationship" required="required">
+                            </div>
+                            <div class="col-4">
+                              <label>Date</label>
+                              <input type="date" name="witness_date[]" autocomplete="off" class="form-control" placeholder="Telephone" required="required">
+                            </div>
+                          </div>
+                          <div class="row form-group">
+                            <div class="col-4">
+                              <label>Name</label>
+                              <input type="text" name="witness_name[]" autocomplete="off" class="form-control" placeholder="Name" required="required">
+                            </div>
+                            <div class="col-4">
+                              <label>Relationship</label>
+                              <input type="text" name="witness_relationship[]" autocomplete="off" class="form-control" placeholder="Relationship" required="required">
+                            </div>
+                            <div class="col-4">
+                              <label>Date</label>
+                              <input type="date" name="witness_date[]" autocomplete="off" class="form-control" placeholder="Telephone" required="required">
+                            </div>
+                          </div>
+                          <div class="card-header">
+                              <h6 class="card-title text-uppercase text-primary">guarantors</h6>
+                          </div>
+                          <div class="row form-group mt-1">
+                            <div class="input-group col-5">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">1</span>
+                              </div>
+                              <input type="text" class="form-control" placeholder="Guarantor name" name="guarantor_name[]" autocomplete="off" required="required">
+                            </div>
+                            <div class="col-4">
+                              <input type="text" name="guarantor_address[]" autocomplete="off" class="form-control" placeholder="Address" required="required">
+                            </div>
+                            <div class="col-3">
+                              <input type="text" class="form-control" name="guarantor_telephone[]" autocomplete="off" placeholder="Telephone number" required="required">
+                            </div>
+                          </div>
+                          <div class="row form-group">
+                            <div class="input-group col-5">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">2</span>
+                              </div>
+                              <input type="text" class="form-control" placeholder="Guarantor name" name="guarantor_name[]" autocomplete="off" required="required">
+                            </div>
+                            <div class="col-4">
+                              <input type="text" name="guarantor_address[]" autocomplete="off" class="form-control" placeholder="Address" required="required">
+                            </div>
+                            <div class="col-3">
+                              <input type="text" class="form-control" name="guarantor_telephone[]" autocomplete="off" placeholder="Telephone number" required="required">
+                            </div>
+                          </div>
+                          <div class="row form-group">
+                              <button class="btn btn-outline-primary ml-2">Save</button>
+                          </div>
+                        </form>
                       </div>
                       <!-- card-body -->
                     </div>
@@ -331,7 +549,7 @@
                                 ....................................................................................................................................................................................................................................................
                             </p>
                             <p>
-                                7. Location of meber's residence <br>
+                                7. Location of member's residence <br>
                                 ....................................................................................................................................................................................................................................................
                             </p>
                             <p>

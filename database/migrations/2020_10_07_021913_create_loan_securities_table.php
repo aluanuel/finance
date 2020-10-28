@@ -15,6 +15,7 @@ class CreateLoanSecuritiesTable extends Migration {
 			$table->id();
 			$table->unsignedBigInteger('id_client');
 			$table->unsignedBigInteger('id_loan');
+			$table->unsignedBigInteger('id_guarantor')->nullable();
 			$table->string('security_name');
 			$table->double('security_value');
 			$table->text('security_attachment');

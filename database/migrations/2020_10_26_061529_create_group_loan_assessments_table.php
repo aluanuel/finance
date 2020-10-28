@@ -30,6 +30,10 @@ class CreateGroupLoanAssessmentsTable extends Migration
             $table->double('cash_at_hand');
             $table->double('sales_seven_days');
             $table->string('member_location');
+            $table->string('known_person_name');
+            $table->string('known_person_telephone')->nullable();
+            $table->unsignedBigInteger('credit_officer');
+            $table->unsignedBigInteger('branch_manager');
 
         });
     }
