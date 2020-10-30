@@ -246,7 +246,7 @@ class IndividualLoanAssessmentController extends Controller {
 
 			$loan->save();
 
-			$schedule = new LoanSchedule();
+			//$schedule = new LoanSchedule();
 
 			$instalment = round(($total_loan / $loan_period), 2);
 

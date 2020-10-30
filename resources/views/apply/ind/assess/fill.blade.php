@@ -181,7 +181,6 @@
                    	<div class="row form-group">
                       <h4 class="title col-11 text-primary">Collaterals / Security attachments</h4>
                       <button class="btn btn-outline-primary btn-sm ml-12" id="add_new_row" title="Add new row"><i class="fa fa-plus"></i></button>
-                      <!-- <button class="btn btn-outline-danger btn-sm mr-0" id="remove_row" title="Remove row"><i class="fa fa-minus"></i></button> -->
                     </div>
                    	<div class="row form-group">
   						        <div class="input-group col-6">
@@ -199,7 +198,7 @@
   	                        <label class="custom-file-label" for="exampleInputFile">Upload security</label>
   	                      </div>
   	                    </div>
-                   	  </div>
+                   	</div>
                     <div class="add_security"></div>
                    	<div class="row form-group"><h4 class="title col-12 text-primary">Guarantors</h4></div>
                    	<div class="row form-group">

@@ -193,6 +193,35 @@ class LoanApplicationController extends Controller {
 		return view('apply.view.grp.index', compact('apps'));
 	}
 
+	public function adminViewGroupProcessedLoans(){
+		$apps = DB::table('loan_applications')
+			->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
+			->join('client_groups','client_groups.id','register_clients.id_group')
+			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone', 'register_clients.gender','client_groups.group_code')
+			->where('register_clients.id_group','!=',NULL)
+			->where('loan_applications.approval_status', '=', '1')
+			->where('loan_applications.assessment_status', '=', '1')
+			->where('loan_applications.loan_status', '=', NULL)->orderBy('loan_applications.created_at', 'desc')->get();
+
+		$running = DB::table('loan_applications')
+			->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
+			->join('client_groups','client_groups.id','register_clients.id_group')
+			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone', 'register_clients.gender','client_groups.group_code')
+			->where('register_clients.id_group','!=',NULL)
+			->where('loan_applications.approval_status', '=', '1')
+			->where('loan_applications.assessment_status', '=', '1')
+			->where('loan_applications.loan_status', '=', 'started')->orderBy('loan_applications.created_at', 'desc')->get();
+		$completed = DB::table('loan_applications')
+			->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
+			->join('client_groups','client_groups.id','register_clients.id_group')
+			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone', 'register_clients.gender','client_groups.group_code')
+			->where('register_clients.id_group','!=',NULL)
+			->where('loan_applications.approval_status', '=', '1')
+			->where('loan_applications.assessment_status', '=', '1')
+			->where('loan_applications.loan_status', '=', 'completed')->orderBy('loan_applications.created_at', 'desc')->get();
+		return view('apply.admin.grp.processed',compact('apps', 'running', 'completed'));
+	}
+
 
 
 

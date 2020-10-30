@@ -58,8 +58,8 @@
                             </div>
                             <div class="col-2">
                               <label>Gender</label>
-                              <select class="form-control select2bs4" name="marital_status" style="width: 100%;" required="required">
-                                <option>{{$cont->gender}}</option>
+                              <select class="form-control select2bs4" name="gender" style="width: 100%;" required="required">
+                                <option value="{{$cont->gender}}">{{$cont->gender}}</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                               </select>  
@@ -67,7 +67,7 @@
                             <div class="col-2">
                               <label>Marital Status</label>
                               <select class="form-control select2bs4" name="marital_status" style="width: 100%;" required="required">
-                                <option>{{$cont->marital_status}}</option>
+                                <option value="{{$cont->marital_status}}">{{$cont->marital_status}}</option>
                                 <option value="Single">Single</option>
                                 <option value="Married">Married</option>
                                 <option value="Widowed">Widowed</option>
@@ -112,9 +112,34 @@
                             </div>
                             <div class="col-3">
                               <label>Household Head</label>
-                              <input type="text" name="next_of_kin" autocomplete="off" class="form-control" placeholder="Next of Kin" value="{{ $cont->house_head }}" required="required">
+                              <input type="text" name="house_head" autocomplete="off" class="form-control" placeholder="Household Head" value="{{ $cont->house_head }}" required="required">
                             </div>
                           </div>
+                          <div class="card-header">
+                            <h3 class="card-title title col-11 text-primary text-uppercase">Description of family property</h3>
+                            <button class="btn btn-outline-primary btn-sm ml-12" id="add_new_row_family" title="Add new row"><i class="fa fa-plus"></i></button>
+                          </div>
+                          <div class="row form-group mt-1">
+                            <div class="input-group col-5">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">1</span>
+                              </div>
+                                <input type="text" class="form-control" name="security_name[]" placeholder="Property name" autocomplete="off">
+                              </div>
+                              <div class="col-2">
+                                <input type="text" class="form-control" name="security_number[]" placeholder="Quantity" autocomplete="off">
+                              </div>
+                              <div class="col-2">
+                                <input type="text" class="form-control" name="security_value[]" placeholder="Estimated value" autocomplete="off">
+                              </div>
+                              <div class="input-group col-3">
+                                <div class="custom-file">
+                                  <input type="file" name="security_attachment[]" class="form-control custom-file-input" id="exampleInputFile">
+                                  <label class="custom-file-label" for="exampleInputFile">Upload attachment</label>
+                                </div>
+                              </div>
+                          </div>
+                          <div class="add_security_family"></div>
                           <div class="card-header">
                             <h3 class="card-title text-uppercase text-primary">loan applied for</h3>
                           </div>
@@ -138,23 +163,28 @@
                           </div>
                           <div class="row form-group">
                             <div class="col-3">
+                              <label>Type of of the business</label>
+                              <input type="text" name="business_type" autocomplete="off" class="form-control" placeholder="Type of business" required="required">
+                            </div>
+                            <div class="col-3">
                               <label>Principle owner of business</label>
-                              <input type="text" name="business_location" autocomplete="off" class="form-control" placeholder="Location of the business" required="required">
+                              <input type="text" name="business_owner" autocomplete="off" class="form-control" placeholder="Location of the business" required="required">
                             </div>
                             <div class="col-3">
                               <label>Location of the business</label>
-                              <input type="text" name="business_owner" autocomplete="off" class="form-control" placeholder="Name of business owner" required="required">
+                              <input type="text" name="business_location" autocomplete="off" class="form-control" placeholder="Name of business owner" required="required">
                             </div>
                             <div class="col-3">
                               <label>Who will use the loan?</label>
                               <input type="text" name="loan_user" autocomplete="off" class="form-control" placeholder="Loan user" required="required">
                             </div>
+                            
+                          </div>
+                          <div class="row form-group">
                             <div class="col-3">
                               <label>Present Investment</label>
                               <input type="number" name="present_investment" autocomplete="off" class="form-control" placeholder="Present Investment" required="required">
                             </div>
-                          </div>
-                          <div class="row form-group">
                             <div class="col-3">
                               <label>Present Profits</label>
                               <input type="number" name="present_profit" autocomplete="off" class="form-control" placeholder="Present Profit" required="required">
@@ -178,8 +208,8 @@
                               <input type="number" name="cash_at_hand" autocomplete="off" class="form-control" placeholder="Cash at hand" required="required">
                             </div>
                             <div class="col-3">
-                              <label>Cash at hand that day</label>
-                              <input type="number" name="cash_at_hand" autocomplete="off" class="form-control" placeholder="Cash at hand" required="required">
+                              <label>Fixed Assets</label>
+                              <input type="number" name="fixed_assets" autocomplete="off" class="form-control" placeholder="Fixed Assets" required="required">
                             </div>
                           </div>
                           <div class="row form-group">
@@ -214,7 +244,7 @@
                             </div>
                             <div class="col-4">
                               <label>Date</label>
-                              <input type="date" name="witness_date[]" autocomplete="off" class="form-control" placeholder="Telephone" required="required">
+                              <input type="date" name="witness_on[]" autocomplete="off" class="form-control" placeholder="Date" required="required">
                             </div>
                           </div>
                           <div class="row form-group">
@@ -228,7 +258,7 @@
                             </div>
                             <div class="col-4">
                               <label>Date</label>
-                              <input type="date" name="witness_date[]" autocomplete="off" class="form-control" placeholder="Telephone" required="required">
+                              <input type="date" name="witness_on[]" autocomplete="off" class="form-control" placeholder="Date" required="required">
                             </div>
                           </div>
                           <div class="card-header">

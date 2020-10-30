@@ -15,7 +15,6 @@ class CreateGroupLoanAssessmentsTable extends Migration
     {
         Schema::create('group_loan_assessments', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->unsignedBigInteger('id_client');
             $table->unsignedBigInteger('id_loan');
             $table->string('business_type');
@@ -28,12 +27,14 @@ class CreateGroupLoanAssessmentsTable extends Migration
             $table->string('capital_source');
             $table->double('present_inventory');
             $table->double('cash_at_hand');
+            $table->double('fixed_assets');
             $table->double('sales_seven_days');
             $table->string('member_location');
             $table->string('known_person_name');
             $table->string('known_person_telephone')->nullable();
             $table->unsignedBigInteger('credit_officer');
-            $table->unsignedBigInteger('branch_manager');
+            $table->timestamps();
+            
 
         });
     }

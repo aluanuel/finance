@@ -149,6 +149,7 @@ class RegisterClientController extends Controller {
 		->select('client_groups.group_name','client_groups.group_code','register_clients.name','register_clients.telephone', 'register_clients.gender', 'register_clients.marital_status', 'register_clients.work_place', 'register_clients.occupation','loan_applications.*')
 		->where('loan_applications.id_group','!=',NULL)
 		->where('loan_applications.application_status','=',1)
+		->where('loan_applications.assessment_status','=',NULL)
 		->orderBy('loan_applications.created_at','desc')
 		->get();
 		return view('apply.grp.index',compact('groups','interest','appraisal','loan'));

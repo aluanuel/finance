@@ -180,7 +180,7 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="/apply/view" class="nav-link">
+                  <a href="#" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Loan Application</p>
                   </a>
@@ -194,6 +194,36 @@
                 </li>
                 <li class="nav-item">
                   <a href="/apply/admin/processed" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Processed Loan</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-circle"></i>
+                <p>
+                  Group Loan
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Loan Application</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/admin/grp/assess" class="nav-link">
+                    <i class="fas fa-circle nav-icon"></i>
+                    <p>Loan Assessment
+                    </p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/admin/grp/processed" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Processed Loan</p>
                   </a>
