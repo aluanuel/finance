@@ -56,15 +56,22 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/trans/record', [App\Http\Controllers\OtherPaymentController::class, 'recordTransaction']);
 	Route::post('/apply/trans/search/income',[App\Http\Controllers\OtherPaymentController::class,'SearchIncome']);
 	Route::post('/apply/trans/search/expense',[App\Http\Controllers\OtherPaymentController::class,'SearchExpense']);
-	Route::get('generate/loan/application/{id}', [App\Http\Controllers\PDFController::class, 'CreateLoanApplicationReceipt']);
+	Route::get('/generate/loan/application/{id}', [App\Http\Controllers\PDFController::class, 'CreateLoanApplicationReceipt']);
 	Route::get('generate/loan/payment/receipt/{id}', [App\Http\Controllers\PDFController::class, 'CreateLoanPaymentReceipt']);
 	Route::get('/apply/view/profile/{id}', [App\Http\Controllers\LoanApplicationController::class, 'viewClientProfile'])->name('clientProfile');
+
+	/**********************************Reports******************************************/
 	Route::get('/apply/report/collections',[App\Http\Controllers\ReportController::class,'Collections']);
 	Route::get('/apply/report/sales',[App\Http\Controllers\ReportController::class,'Sales']);
 	Route::get('/apply/report/incomes',[App\Http\Controllers\ReportController::class,'Incomes']);
 	Route::get('/apply/report/expenses',[App\Http\Controllers\ReportController::class,'Expenses']);
+	Route::get('/apply/report/cbook',[App\Http\Controllers\ReportController::class,'CashBook']);
+	Route::get('/apply/report/bsht',[App\Http\Controllers\ReportController::class,'BalanceSheet']);
 	Route::post('/apply/report/incomes/search',[App\Http\Controllers\ReportController::class,'SearchIncome']);
 	Route::post('/apply/report/expenses/search',[App\Http\Controllers\ReportController::class,'SearchExpense']);
+
+
+	/*******************************settings************************************/
 	Route::get('/apply/settings/groups',[App\Http\Controllers\ClientGroupController::class,'index']);
 	Route::post('/apply/settings/groups',[App\Http\Controllers\ClientGroupController::class,'newLoanGroup']);
 

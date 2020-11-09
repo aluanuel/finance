@@ -207,7 +207,6 @@ class GroupLoanAssessmentController extends Controller
     public function adminFillAssessmentForm(Request $request){
 
         $loan = LoanApplication::find($request->id);
-        dd($loan);
 
         if ($loan) {
 

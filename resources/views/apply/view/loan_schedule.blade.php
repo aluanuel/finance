@@ -68,7 +68,7 @@
 					                <table class="table ">
 					                  <thead>
 					                    <tr>
-					                      <th>Month</th>
+					                      <th>Date</th>
 					                      <th style="width: 40px">Instalment</th>
 					                    </tr>
 					                  </thead>

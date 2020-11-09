@@ -25,7 +25,7 @@
 		</div>
 		<div class="doc-body">
 			<p>Received with thanks from {{$loan->name}}</p>
-			<p>The sum of shillings two millions only</p>
+			<p>The sum of {{ $amountInWords }}</p>
 			<p>Being payment of Loan Application - {{$loan->loan_number}}</p>
 		</div>
 		@endforeach

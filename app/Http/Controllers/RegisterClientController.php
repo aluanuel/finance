@@ -31,8 +31,13 @@ class RegisterClientController extends Controller {
 			->where('loan_type', '=', 'Individual')
 			->latest()
 			->first();
+		$fee = DB::table('appraisal_fees')
+			->where('appraisal_type','=','Individual')
+			->select('appraisal_amount')
+			->latest()
+			->first();
 
-		return view('apply.ind.index', compact('clients', 'loan', 'register', 'interest'));
+		return view('apply.ind.index', compact('clients', 'loan', 'register', 'interest','fee'));
 	}
 
 	public function NewIndividualApplication() {

@@ -25,6 +25,7 @@
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
+        @include('layouts.flash')
         <!-- Small boxes (Stat box) -->
         <div class="row">
           <div class="col-lg-3 col-6">

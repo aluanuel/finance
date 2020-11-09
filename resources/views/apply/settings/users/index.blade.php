@@ -43,7 +43,7 @@
                         <div class="form-group row">
                             <div class="col-12">
                               <label>Name</label>
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Full Name" autocomplete="off">
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required="required" autofocus placeholder="Full Name" autocomplete="off">
                                 @error('name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -53,9 +53,21 @@
                         </div>
 
                         <div class="form-group row">
+                          <div class="col-12">
+                            <label>Telephone</label>
+                              <input id="telephone" type="text" class="form-control @error('telephone') is-invalid @enderror" name="telephone" value="{{ old('telephone') }}" required="required" placeholder="Telephone" autocomplete="off">
+                              @error('telephone')
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $message }}</strong>
+                              </span>
+                              @enderror
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
                             <div class="col-12">
                               <label>Email</label>
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email Address" autocomplete="offy">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required  placeholder="Email Address" autocomplete="off">
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -63,6 +75,7 @@
                                 @enderror
                             </div>
                         </div>
+
                         <div class="form-group row">
                             <div class="col-12">
                                 <label>Usertype</label>
@@ -90,7 +103,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-outline-primary">
                                     {{ __('Register') }}
                                 </button>
                             </div>
@@ -110,17 +123,18 @@
                 <h3 class="card-title">Showing System Users</h3>
               </div>
                         <!-- /.card-header -->
-              <div class="card-body">
-                <table id="example2" class="table table-bordered table-hover">
+              <div class="card-body" style="overflow-x: scroll;">
+                <table class="table table-bordered table-hover">
                   <thead>
                     <tr>
-                      <th>#</th>
+                      <th width="4">#</th>
                       <th>Name</th>
+                      <th>Telephone</th>
                       <th>Email</th>
                       <th>Type</th>
                       <th>Role</th>
                       <th>Status</th>
-                      <th>#</th>
+                      <th width="10">#</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -129,11 +143,17 @@
                     <tr>
                       <td>{{ $i }}</td>
                       <td>{{ $user->name }}</td>
+                      <td>{{ $user->telephone }}</td>
                       <td>{{ $user->email }}</td>
                       <td>{{ $user->usertype }}</td>
                       <td>{{ $user->role }}</td>
-                      <td></td>
-                      <td></td>
+                      @if($user->user_status == 1)
+                      <td class="text-success">Active</td>
+                      <td><a href="/apply/settings/deact/{{$user->id}}" class="btn btn-outline-danger btn-sm">Deactivate</a></td>
+                      @else
+                      <td class="text-danger">Inactive</td>
+                      <td><a href="/apply/settings/act/{{$user->id}}" class="btn btn-outline-primary btn-sm">Activate</a></td>
+                      @endif
                     </tr>
                     <?php $i++;?>
                     @endforeach

@@ -93,7 +93,7 @@
                             </div>
                             <div class="col-2">
                               <label>Application Fee</label>
-                              <input type="text" name="application_fee" autocomplete="off" class="form-control" placeholder="Application fee" readonly="readonly" value="10000">
+                              <input type="text" name="application_fee" autocomplete="off" class="form-control" placeholder="Application fee" readonly="readonly" value="{{$fee->appraisal_amount}}">
                             </div>
                             <div class="col-2">
                                 <label>Interest Rate (%)</label>
@@ -133,7 +133,7 @@
                               </div>
                             <div class="col-2">
                                 <label>Application Fee</label>
-                                <input type="text" name="application_fee" autocomplete="off" class="form-control" placeholder="Application fee" readonly="readonly" value="10000">
+                                <input type="text" name="application_fee" autocomplete="off" class="form-control" placeholder="Application fee" readonly="readonly" value="{{$fee->appraisal_amount}}">
                             </div>
                             <div class="col-2">
                                 <label>Interest Rate (%)</label>

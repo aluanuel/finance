@@ -31,7 +31,7 @@
           <div class="col-12">
           	<div class="card">
                       <div class="card-header">
-                        <h3 class="card-title">Showing Daily Collections</h3>
+                        <h3 class="card-title">{{$heading}}</h3>
                       </div>
                       <!-- /.card-header -->
                       <div class="card-body" style="overflow-x: scroll;">
@@ -40,17 +40,53 @@
                             <tr>
                               <th>Date</th>
                               <th>Particulars</th>
-                              <th>Repayment</th>
-                              <th>Appraisal</th>
-                              <th>Application</th>
-                              <th>Passbook</th>
-                              <th>Loan Processing</th>
-                              <th>Fine</th>
-                              <th>Security</th>
+                              <th>Amount</th>
                             </tr>
                           </thead>
                           <tbody>
+                            <tr>
+                              <td></td>
+                              <td><a href="/apply/report/collections/repayment">Loan repayment</a></td>
+                              <td>{{number_format($loan)}}</td>
+                            </tr>
+                            <tr>
+                              <td></td>
+                              <td><a href="/apply/report/collections/apraisal"> Appraisal</a></td>
+                              <td>{{number_format($loan)}}</td>
+                            </tr>
+                            <tr>
+                              <td></td>
+                              <td><a href="/apply/settings/collections/application"> Application</td>
+                              <td>{{number_format($loan)}}</td>
+                            </tr>
+                            <tr>
+                              <td></td>
+                              <td><a href="/apply/report/collections/passbook">Passbook</a></td>
+                              <td>{{number_format($loan)}}</td>
+                            </tr>
+                            <tr>
+                              <td></td>
+                              <td><a href="/apply/report/collections/procesing"> Loan Processing</td>
+                              <td>{{number_format($loan)}}</td>
+                            </tr>
+                            <tr>
+                              <td></td>
+                              <td><a href="/apply/report/collections/fine"> Fine</a></td>
+                              <td>{{number_format($loan)}}</td>
+                            </tr>
+                            <tr>
+                              <td></td>
+                              <td><a href="/apply/report/collections/security"> Security</a></td>
+                              <td>{{number_format($loan)}}</td>
+                            </tr>
                           </tbody>
+                          <tfoot>
+                            <tr>
+                              <th>#</th>
+                              <th>Total</th>
+                              <th></th>
+                            </tr>
+                          </tfoot>
                       </table>
                   </div>
               </div>

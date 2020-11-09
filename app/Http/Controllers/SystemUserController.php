@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Validator;
 class SystemUserController extends Controller
 {
     public function index(){
-        $user = User::where('usertype','!=','administrator')
+        $user = User::where('usertype','!=','admin')
+        ->orderBy('created_at','desc')
         ->get();
         return view('.apply.settings.users.index',compact('user'));
     }
@@ -18,12 +19,14 @@ class SystemUserController extends Controller
     public function create()
     {
     	$password = $this->randomPassword();
-    	// dd(Hash::make($password),$password);
+        
         User::create([
             'name' => request('name'),
+            'telephone' => request('telephone'),
             'email' => request('email'),
             'usertype' => request('usertype'),
             'role' => request('role'),
+            'user_status' => 1,
             'password' => Hash::make($password),
         ]);
         return redirect()->back()->with('success','Your temporary password is '.$password);

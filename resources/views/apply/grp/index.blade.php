@@ -26,6 +26,7 @@
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
+        @include('layouts.flash')
       	<div class="row">
           <!-- right column -->
           <div class="col-md-12">

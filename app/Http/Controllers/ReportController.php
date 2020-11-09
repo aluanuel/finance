@@ -9,7 +9,9 @@ use Carbon\Carbon;
 class ReportController extends Controller
 {
     public function Collections(){
-    	return view('apply.report.collections');
+        $loan = DB::table('loan_repayments')->sum('deposit');
+        $heading = "Showing Collections for ".Carbon::now()->toDateString();
+    	return view('apply.report.collections',compact('loan','heading'));
     }
 
     public function Sales(){
@@ -39,6 +41,15 @@ class ReportController extends Controller
         ->get();
         $headExpense = 'Showing Recent Expenses';
         return view('apply.report.expenses',compact('expenses','headExpense'));
+    }
+
+    public function CashBook(){
+        $heading = "Showing cashbook for ".Carbon::now()->toDateString();
+        return view('apply.report.cashbook',compact('heading'));
+    }
+
+    public function BalanceSheet(){
+        return view('apply.report.balancesheet');
     }
 
     public function SearchIncome(){
