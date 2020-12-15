@@ -185,7 +185,7 @@
                                 <td>{{ number_format($complete->loan_recovered) }}</td>
                                 <td>{{ number_format($complete->loan_balance) }}</td>
                                 <td>{{ $complete->telephone }}</td>
-                                <td><a href="/apply/view/profile/{{$run->id}}"><button class="btn btn-outline-primary">View</button></a></td>
+                                <td><a href="/apply/view/profile/{{$complete->id}}"><button class="btn btn-outline-primary">View</button></a></td>
                               </tr>
                             <?php $i++;?>
                             @endforeach

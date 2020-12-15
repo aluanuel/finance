@@ -45,17 +45,30 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <?php $i = 1;?>
+                            <?php $i = 1;
+                              $total = null;
+                            ?>
                             @foreach($sales as $sale)
                             <tr>
                               <td>{{$i}}</td>
                               <td>{{date('Y-m-d', strtotime($sale->start_date))}}</td>
-                              <td>{{$sale->loan_number }}</td>
+                              <td><a href="/apply/view/profile/{{$sale->id}}"> {{$sale->loan_number }}</a></td>
                               <td>{{number_format($sale->recommended_amount)}}</td>
+                              <?php
+                              $total += $sale->recommended_amount;
+                              ?>
                             </tr>
                             <?php $i++;?>
                             @endforeach
                           </tbody>
+                          <tfoot>
+                            <tr>
+                              <th>#</th>
+                              <th>TOTAL</th>
+                              <th></th>
+                              <th>{{ number_format($total) }}</th>
+                            </tr>
+                          </tfoot>
                       </table>
                   </div>
               </div>

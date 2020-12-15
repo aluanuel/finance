@@ -222,14 +222,6 @@ class LoanApplicationController extends Controller {
 		return view('apply.admin.grp.processed',compact('apps', 'running', 'completed'));
 	}
 
-
-
-
-
-
-
-
-
 	protected function getEndDate($period) {
 
 		$date = date('Y-m-d', strtotime('+' . $period . ' month'));

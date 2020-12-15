@@ -20,13 +20,17 @@ class IndividualLoanAssessmentController extends Controller {
 			->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
 			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone')
 			->where('loan_applications.proposed_amount', '!=', NULL)
-			->where('loan_applications.assessment_status', '=', NULL)->orderBy('loan_applications.created_at', 'desc')->get();
+			->where('loan_applications.application_by',Auth::user()->id)
+			->where('loan_applications.assessment_status', '=', NULL)
+			->orderBy('loan_applications.created_at', 'desc')->get();
 
 		$approve = DB::table('loan_applications')
 			->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
 			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone')
 			->where('loan_applications.approval_status', '=', NULL)
-			->where('loan_applications.assessment_status', '=', '0')->orderBy('loan_applications.created_at', 'desc')->get();
+			->where('loan_applications.assessment_status', '=', '0')
+			->where('loan_applications.application_by',Auth::user()->id)
+			->orderBy('loan_applications.created_at', 'desc')->get();
 
 		$approved = DB::table('loan_applications')
 			->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
@@ -34,12 +38,15 @@ class IndividualLoanAssessmentController extends Controller {
 			->where('loan_applications.approval_status', '=', '1')
 			->where('loan_applications.assessment_status', '=', '1')
 			->where('loan_applications.loan_status', '=', NULL)
+			->where('loan_applications.application_by',Auth::user()->id)
 			->orderBy('loan_applications.created_at', 'desc')->get();
 		$cancelled = DB::table('loan_applications')
 			->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
 			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone')
 			->where('loan_applications.approval_status', '=', '0')
-			->where('loan_applications.assessment_status', '=', '0')->orderBy('loan_applications.created_at', 'desc')->get();
+			->where('loan_applications.application_by',Auth::user()->id)
+			->where('loan_applications.assessment_status', '=', '0')
+			->orderBy('loan_applications.created_at', 'desc')->get();
 
 		return view('apply.ind.assess.index', compact('loan','approve', 'approved', 'cancelled'));
 	}

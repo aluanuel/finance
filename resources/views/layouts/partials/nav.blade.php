@@ -34,7 +34,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          @if(Auth::user()->usertype == 'Loan Officer')
+          @if(Auth::user()->usertype == 'Loan Officer' && Auth::user()->role == 'None')
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-circle"></i>
@@ -45,7 +45,7 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="/apply/ind" class="nav-link">
+                  <a href="/apply/ind/" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Application</p>
                   </a>
@@ -57,7 +57,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/apply/admin/processed" class="nav-link">
+                  <a href="/apply/ind/processed" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Processed Loan</p>
                   </a>
@@ -110,7 +110,82 @@
                 </li>
               </ul>
             </li>
-            @if(Auth::user()->role = 'Supervisor')
+          @elseif(Auth::user()->usertype == 'Loan Officer' && Auth::user()->role == 'Supervisor')
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-circle"></i>
+                <p>
+                  Individual Loan
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/apply/ind/" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Application</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/ind/assess" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Assessment</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/ind/processed" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Processed Loan</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/grp" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Clients
+                    </p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-circle"></i>
+                <p>
+                  Group Loan
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/apply/grp" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Application
+                    </p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/grp/assess" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Assessment
+                    </p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/grp/processed" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Processed Loan
+                    </p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/grp/list" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Loan Groups
+                    </p>
+                  </a>
+                </li>
+              </ul>
+            </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="nav-icon fa fa-eye "></i>
@@ -188,7 +263,6 @@
                 </li>
               </ul>
             </li>
-            @endif
           @elseif(Auth::user()->usertype == 'Teller')
             <li class="nav-item">
               <a href="#" class="nav-link">
@@ -200,13 +274,13 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="/apply/view/ind" class="nav-link">
+                  <a href="/apply/teller/ind/application/" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Applications</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/apply/view" class="nav-link">
+                  <a href="/apply/teller/ind/processed/" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Processed Loan</p>
                   </a>
@@ -223,13 +297,13 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="/apply/view/grp" class="nav-link">
+                  <a href="/apply/teller/grp/application/" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Applications</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/apply/view" class="nav-link">
+                  <a href="/apply/teller/ind/processed/" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Processed Loan</p>
                   </a>
@@ -367,9 +441,16 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="/apply/settings/appraisal" class="nav-link">
+                  <a href="/apply/settings/appraisal/" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Appraisal Fee
+                    </p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/settings/processing/" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Loan Processing Fee
                     </p>
                   </a>
                 </li>

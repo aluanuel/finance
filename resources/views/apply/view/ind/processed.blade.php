@@ -48,7 +48,7 @@
                       </div>
                       <!-- /.card-header -->
                       <div class="card-body" style="overflow-x: scroll;">
-                         <table id="example2" class="table table-bordered table-hover">
+                         <table class="table table-bordered table-hover">
                           <thead>
                             <tr>
                               <th>#</th>
@@ -60,7 +60,7 @@
                               <th>Loan Payable</th>
                               <th>Period(Months)</th>
                               <th>Telephone</th>
-                              <th style="width: 80px;">#</th>
+                              <th width="150px">#</th>
                             </tr>
                           </thead>
                           <tbody>

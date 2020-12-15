@@ -7,7 +7,7 @@
         <a href="/" class="h1"><b>{{ config('app.name', 'Laravel') }}</b></a>
       </div>
       <div class="card-body">
-        <p class="login-box-msg">Sign in to start your session</p>
+        <p class="login-msg">Sign in to start your session</p>
 
         <form action="{{ route('login') }}" method="post">
           @csrf

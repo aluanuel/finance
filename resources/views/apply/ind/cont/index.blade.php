@@ -42,16 +42,16 @@
               <div class="row form-group">
                 <div class="col-5">
                   <label>Name</label>
-                  <input type="text" name="name" autocomplete="off" class="form-control" value="{{ $cont->name }}" placeholder="Full Name">
+                  <input type="text" name="name" autocomplete="off" class="form-control" value="{{ $cont->name }}" placeholder="Full Name" required="required">
                 </div>
                 <div class="col-3">
                   <label>Telephone</label>
-                  <input type="text" name="telephone" autocomplete="off" class="form-control" value="{{ $cont->telephone }}" placeholder="Telephone Contact">
+                  <input type="text" name="telephone" autocomplete="off" class="form-control" value="{{ $cont->telephone }}" placeholder="Telephone Contact" required="required">
                 </div>
                 <div class="col-2">
                   <label>Gender</label>
                   <div class="form-group">
-                    <select class="form-control select2bs4" name="gender" data-placeholder="Select Gender" style="width: 100%;">
+                    <select class="form-control select2bs4" name="gender" data-placeholder="Select Gender" style="width: 100%;" required="required">
                       <option>{{ $cont->gender }}</option>
                       <option>Male</option>
                       <option>Female</option>
@@ -61,7 +61,7 @@
                 <div class="col-2">
                   <div class="form-group">
                     <label>Marital Status</label>
-                    <select class="form-control select2bs4" name="marital_status" style="width: 100%;">
+                    <select class="form-control select2bs4" name="marital_status" style="width: 100%;" data-placeholder="Select Marital Status" required="required">
                       <option>{{$cont->marital_status }}</option>
                       <option value="Single">Single</option>
                       <option value="Married">Married</option>
@@ -74,37 +74,37 @@
               <div class="row form-group">
                 <div class="col-3">
                   <label>Workplace</label>
-                  <input type="text" name="work_place" autocomplete="off" class="form-control" placeholder="Workplace" value="{{ $cont->work_place }}">
+                  <input type="text" name="work_place" autocomplete="off" class="form-control" placeholder="Workplace" value="{{ $cont->work_place }}" required="required">
                 </div>
                 <div class="col-3">
                   <label>Occupation</label>
-                  <input type="text" name="occupation" autocomplete="off" class="form-control" placeholder="Occupation" value="{{ $cont->occupation }}">
+                  <input type="text" name="occupation" autocomplete="off" class="form-control" placeholder="Occupation" value="{{ $cont->occupation }}" required="required">
                 </div>
                 <div class="col-3">
                   <label>District</label>
-                  <input type="text" name="district" autocomplete="off" class="form-control" placeholder="District of work" value="{{ $cont->district }}">
+                  <input type="text" name="district" autocomplete="off" class="form-control" placeholder="District of work" value="{{ $cont->district }}" required="required">
                 </div>
                 <div class="col-3">
                   <label>Permanent Resident Village/Cell</label>
-                  <input type="text" name="resident_village" autocomplete="off" class="form-control" placeholder="Village of residence" value="{{ $cont->resident_village}}">
+                  <input type="text" name="resident_village" autocomplete="off" class="form-control" placeholder="Village of residence" value="{{ $cont->resident_village}}" required="required">
                 </div>
               </div>
               <div class="row form-group">
                 <div class="col-3">
                   <label>Parish/Ward</label>
-                  <input type="text" name="resident_parish" autocomplete="off" class="form-control" placeholder="Parish" value="{{ $cont->resident_parish }}">
+                  <input type="text" name="resident_parish" autocomplete="off" class="form-control" placeholder="Parish" value="{{ $cont->resident_parish }}" required="required">
                 </div>
                 <div class="col-3">
                   <label>Subcounty/Division</label>
-                  <input type="text" name="resident_division" autocomplete="off" class="form-control" placeholder="Subcounty" value="{{ $cont->resident_division }}">
+                  <input type="text" name="resident_division" autocomplete="off" class="form-control" placeholder="Subcounty" value="{{ $cont->resident_division }}" required="required">
                 </div>
                 <div class="col-3">
                   <label>District of residence</label>
-                  <input type="text" name="resident_district" autocomplete="off" class="form-control" placeholder="District of residence" value="{{ $cont->resident_district }}">
+                  <input type="text" name="resident_district" autocomplete="off" class="form-control" placeholder="District of residence" value="{{ $cont->resident_district }}" required="required">
                 </div>
                 <div class="col-3">
                   <label>Next of Kin</label>
-                  <input type="text" name="next_of_kin" autocomplete="off" class="form-control" placeholder="Next of Kin" value="{{ $cont->next_of_kin }}">
+                  <input type="text" name="next_of_kin" autocomplete="off" class="form-control" placeholder="Next of Kin" value="{{ $cont->next_of_kin }}" required="required">
                 </div>
               </div>
               <div class="card-header">
@@ -117,21 +117,21 @@
                 </div>
                 <div class="col-3">
                   <label>Loan Amount</label>
-                  <input type="number" name="proposed_amount" autocomplete="off" class="form-control" placeholder="Loan amount to borrow">
+                  <input type="number" name="proposed_amount" autocomplete="off" class="form-control" placeholder="Loan amount to borrow" required="required">
                 </div>
                 <div class="col-3">
                   <label>Loan Period (Months)</label>
-                  <input type="number" name="loan_period" autocomplete="off" class="form-control" placeholder="Loan Duration in Months">
+                  <input type="number" name="loan_period" autocomplete="off" class="form-control" placeholder="Loan Duration in Months" required="required">
                 </div>
                 <div class="col-4">
                   <label>Purpose of the loan</label>
-                  <input type="text" name="borrowing_purpose" autocomplete="off" class="form-control" placeholder="Purpose of borrowing">
+                  <input type="text" name="borrowing_purpose" autocomplete="off" class="form-control" placeholder="Purpose of borrowing" required="required">
                 </div>
               </div>
               <div class="row form-group">
                 <div class="col-12">
                   <label>Sources of income</label>
-                  <textarea class="form-control" name="income_sources" placeholder="Type the responses, separate with comma (,)"></textarea>
+                  <textarea class="form-control" name="income_sources" placeholder="Type the responses, separate with comma (,)" required="required"></textarea>
                 </div>
               </div>
               <div class="row form-group">

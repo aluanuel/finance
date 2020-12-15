@@ -23,5 +23,9 @@
     #business_type,#formChangePassword,#formChangePhoto{
       display: none;
     }
+    table th{
+      text-transform: uppercase;
+      font-size: 12px;
+    }
   </style>
 </head>

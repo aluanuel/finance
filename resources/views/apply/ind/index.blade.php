@@ -48,23 +48,24 @@
                         <h3 class="card-title">Personal Data</h3>
                       </div>
                       <div class="card-body">
-                        <form action="/apply/ind" method="post">
+                        <form action="/apply/ind/" method="post">
                           @csrf
                           <div class="row form-group">
                             <div class="col-6">
                               <label>Name</label>
-                              <input type="text" name="name" autocomplete="off" class="form-control" placeholder="Full Name">
+                              <input type="text" name="name" autocomplete="off" class="form-control" placeholder="Full Name" required="required">
                             </div>
                             <div class="col-6">
                               <label>Telephone</label>
-                              <input type="text" name="telephone" autocomplete="off" class="form-control" placeholder="Telephone Contact">
+                              <input type="text" name="telephone" autocomplete="off" class="form-control" placeholder="Telephone Contact" required="required">
                             </div>
                           </div>
                           <div class="row form-group">
                             <div class="col-6">
                               <label>Gender</label>
                               <div class="form-group">
-                                <select class="form-control select2bs4" name="gender" data-placeholder="Select Gender" style="width: 100%;">
+                                <select class="form-control select2bs4" name="gender" data-placeholder="Select Gender" style="width: 100%;" required="required">
+                                  <option></option>
                                   <option>Male</option>
                                   <option>Female</option>
                                 </select>
@@ -73,7 +74,8 @@
                             <div class="col-6">
                               <div class="form-group">
                                 <label>Marital Status</label>
-                                <select class="form-control select2bs4" name="marital_status" style="width: 100%;">
+                                <select class="form-control select2bs4" name="marital_status" data-placeholder="Select Marital Status" style="width: 100%;" required="required">
+                                  <option></option>
                                   <option value="Single">Single</option>
                                   <option value="Married">Married</option>
                                   <option value="Widowed">Widowed</option>
@@ -85,11 +87,11 @@
                           <div class="row form-group">
                             <div class="col-4">
                               <label>Workplace</label>
-                              <input type="text" name="work_place" autocomplete="off" class="form-control" placeholder="Workplace">
+                              <input type="text" name="work_place" autocomplete="off" class="form-control" placeholder="Workplace" required="required">
                             </div>
                             <div class="col-4">
                               <label>Occupation</label>
-                              <input type="text" name="occupation" autocomplete="off" class="form-control" placeholder="Occupation">
+                              <input type="text" name="occupation" autocomplete="off" class="form-control" placeholder="Occupation" required="required">
                             </div>
                             <div class="col-2">
                               <label>Application Fee</label>
@@ -118,15 +120,16 @@
                         <h3 class="card-title">Personal Data</h3>
                       </div>
                       <div class="card-body">
-                        <form action="/apply/ind" method="post">
+                        <form action="/apply/ind/" method="post">
                           @csrf
                           <div class="row form-group">
                             <div class="col-8">
                                 <div class="form-group">
-                                  <label>Select client</label>
-                                  <select class="form-control select2bs4" name="id_client" style="width: 100%;">
+                                  <label>Select Client</label>
+                                  <select class="form-control select2bs4" name="id_client" data-placeholder="Search By Name/Telephone Number" style="width: 100%;">
+                                    <option></option>
                                     @foreach($register as $client)
-                                    <option value="{{ $client->id}}">{{$client->name}}</option>
+                                    <option value="{{ $client->id}}">{{$client->name}} - {{$client->telephone}}</option>
                                     @endforeach
                                   </select>
                                 </div>

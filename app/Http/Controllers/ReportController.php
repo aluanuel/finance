@@ -10,16 +10,30 @@ class ReportController extends Controller
 {
     public function Collections(){
         $loan = DB::table('loan_repayments')->sum('deposit');
-        $heading = "Showing Collections for ".Carbon::now()->toDateString();
-    	return view('apply.report.collections',compact('loan','heading'));
+        $appraisal = DB::table('loan_applications')
+                ->where('id_group', '!=',null)
+                ->sum('application_fee');
+        $application = DB::table('loan_applications')
+                ->where('id_group', '=',null)
+                ->sum('application_fee');
+        $passbook = 0;
+        $processing = 0;
+        $fine = 0;
+        $security = DB::table('loan_applications')
+                ->where('id_group', '!=',null)
+                ->sum('security');
+        $total = $loan + $appraisal + $application + $passbook + $processing + $fine + $security;
+        $heading = "Showing Collections As At ".Carbon::now()->toDateString();
+    	return view('apply.report.collections',compact('loan','heading','appraisal','application','passbook','processing','fine','security','total'));
     }
 
     public function Sales(){
     	$sales = DB::table('loan_applications')
-    	->where('loan_status','=','started')
+    	->where('loan_status','!=',null)
     	->orderBy('start_date','desc')
         ->limit(100)
     	->get();
+        
     	return view('apply.report.sales',compact('sales'));
     }
 
@@ -44,8 +58,31 @@ class ReportController extends Controller
     }
 
     public function CashBook(){
-        $heading = "Showing cashbook for ".Carbon::now()->toDateString();
-        return view('apply.report.cashbook',compact('heading'));
+        $heading = "Showing CashBook As At ".Carbon::now()->toDateString();
+        $repayments = DB::table('loan_repayments')->orderBy('created_at','desc')->get();
+        $appraisal = DB::table('loan_applications')
+                ->where('id_group', '!=',null)
+                ->orderBy('created_at','desc')
+                ->get();
+        $application = DB::table('loan_applications')
+                ->where('id_group', '=',null)
+                ->orderBy('created_at','desc')
+                ->get();
+        $loan = DB::table('loan_applications')
+                ->join('register_clients','loan_applications.id_client','register_clients.id')
+                ->where('loan_applications.loan_status', '!=',null)
+                ->select('register_clients.name','loan_applications.*')
+                ->orderBy('loan_applications.start_date','desc')
+                ->get();
+        $incomes = DB::table('other_payments')
+                ->where('payment_category','income')
+                ->orderBy('created_at')
+                ->get();
+        $expenses = DB::table('other_payments')
+                ->where('payment_category','expense')
+                ->orderBy('created_at')
+                ->get();
+        return view('apply.report.cashbook',compact('heading','repayments','appraisal','application','loan','incomes','expenses'));
     }
 
     public function BalanceSheet(){

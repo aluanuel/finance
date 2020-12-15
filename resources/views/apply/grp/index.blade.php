@@ -164,8 +164,35 @@
                         <h3 class="card-title">Personal Data</h3>
                       </div>
                       <div class="card-body">
-                        <form action="/apply/ind" method="post">
+                        <form action="/apply/grp" method="post">
                           @csrf
+                          <div class="row form-group">
+                            <div class="col-8">
+                                <div class="form-group">
+                                  <label>Select Client</label>
+                                  <select class="form-control select2bs4" name="id_client" id="id_client_with_group" data-placeholder="Search By Name/Telephone Number" style="width: 100%;">
+                                    <option></option>
+                                    @foreach($register as $client)
+                                    <option value="{{ $client->id}}" label="{{ $client->id_group}}">{{$client->name}} - {{$client->telephone}}</option>
+                                    @endforeach
+                                  </select>
+                                </div>
+                              </div>
+                            <div class="col-2">
+                                <label>Application Fee</label>
+                                <input type="text" name="application_fee" autocomplete="off" class="form-control" placeholder="Application fee" readonly="readonly" value="{{$fee->appraisal_amount}}">
+                            </div>
+                            <div class="col-2">
+                                <label>Interest Rate (%)</label>
+                                <input type="text" name="interest_rate" autocomplete="off" class="form-control" placeholder="Application fee" required="required" value="{{ ($interest->interest_rate)}}">
+                            </div>
+                              <input type="hidden" name="application_date" autocomplete="off" class="form-control" placeholder="Application date" value="<?php echo date('Y-m-d h:i:s'); ?>">
+                              <input type="hidden" name="loan_number" autocomplete="off" class="form-control" value="{{ $loanNumber }}">
+                              <input type="hidden" name="id_group" id="id_group" autocomplete="off">
+                          </div>
+                          <div class="row form-group">
+                              <button class="btn btn-primary ml-2">Submit</button>
+                            </div>
                         </form>
                       </div>
                     </div>
