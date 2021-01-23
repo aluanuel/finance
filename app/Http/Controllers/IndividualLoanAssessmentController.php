@@ -261,6 +261,8 @@ class IndividualLoanAssessmentController extends Controller {
 
 			$today = Carbon::now();
 
+			$today = $today->addDays(30);
+
 			for ($x = 1; $x <= $loan_period; $x++) {
 
 				$data[] = array('id_loan' => $request->id,

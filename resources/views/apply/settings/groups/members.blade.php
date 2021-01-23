@@ -43,7 +43,6 @@
                         <th style="width: 20px">Gender</th>
                         <th style="width: 40px">Telephone</th>
                         <th style="width: 20px">Joined</th>
-                        <th>Membership</th>
                         <th>Role</th>
                       </tr>
                     </thead>
@@ -57,7 +56,32 @@
                         <td>{{$member->gender}}</td>
                         <td>{{$member->telephone}}</td>
                         <td>{{date('Y-m-d',strtotime($member->registration_date))}}</td>
+                        @if($member->role == NULL)
+                        <td>
+                          <button class="btn btn-outline-primary btn-sm" id="btnShowFormAddGroupMemberRole">Add Role</button>
+                          <form id="addGroupMemberRole" action="/apply/settings/members/{{$member->id}}" method="post">
+                            @csrf
+                            <div class="form-group row">
+                             <div class="col-8">
+                                <div class="form-group">
+                                  <select class="form-control select2bs4" name="role" data-placeholder="Select role" style="width: 100%;" required="required">
+                                    <option></option>
+                                    <option>Member</option>
+                                    <option>Group Leader</option>
+                                    <option>Secretary</option>
+                                  </select>
+                                </div>
+                            </div>
+                            <input type="hidden" name="id_group" value="{{ $member->id_group }}">
+                            <div class="col-4">
+                              <button class="btn btn-outline-primary">Save</button>
+                            </div>
+                        </div>
+                          </form>
+                        </td>
+                        @else
                         <td>{{$member->role}}</td>
+                        @endif
                       </tr>
                       <?php $i++; ?>
                       @endforeach

@@ -59,10 +59,12 @@
                     </div>
                 </div>
                 <div class="form-group row">
-
-                            <div class="col-6">
-                                <input type="hidden" name="role" value="system">
-                            </div>
+                    <div class="col-6">
+                        <input type="hidden" name="usertype" value="admin">
+                    </div>
+                    <div class="col-6">
+                        <input type="hidden" name="role" value="system">
+                    </div>
                 </div>
 
                 <div class="form-group row mb-0">

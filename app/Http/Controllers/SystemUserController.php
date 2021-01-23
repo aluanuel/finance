@@ -42,7 +42,7 @@ class SystemUserController extends Controller
 
     }
 
-    public function updateProfile(Request $request){
+    public function updatePassword(Request $request){
 
         $user = User::find($request->id);
 
@@ -66,6 +66,19 @@ class SystemUserController extends Controller
             return redirect()->back()->with('danger','Password change failed'); 
     }
 
+    public function updateUserPhoto(Request $request){
+
+        $user = User::find($request->id);
+        $this->validate($request, [
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        if($request->file()){
+            return redirect()->back()->with('success','Password change failed'); 
+        }
+
+        return redirect()->back()->with('error','Password change failed'); 
+    }
+
     protected function randomPassword() { 
 
 	    $alphabet = 'abcdefghijklmnopqrstuvwxyz1234567890';
@@ -77,5 +90,16 @@ class SystemUserController extends Controller
 	    }
 	    return implode($pass); //turn the array into a string
 	}
+
+    protected function validateUser(array $data){
+
+        return Validator::make($data,['name' => ['required', 'string', 'max:255'],
+            'telephone' => ['required','string','max:12'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'usertype' => ['required','string'],
+            'role' => ['required','string'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+    }
 
 }

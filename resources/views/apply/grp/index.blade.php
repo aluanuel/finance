@@ -56,21 +56,23 @@
                             <div class="col-3">
                               <div class="form-group">
                                 <label>Loan Group</label>
-                                <select class="form-control select2bs4" name="id_group" style="width: 100%;" required="required">
+                                <select class="form-control select2bs4" name="id_group" style="width: 100%;" data-placeholder="Select" required="required">
                                   @foreach($groups as $group)
+                                    <option></option>
                                     <option value="{{$group->id}}">{{$group->group_code.' - '. $group->group_name}}</option>
                                   @endforeach
                                 </select>
                               </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-5">
                               <label>Name</label>
                               <input type="text" name="name" autocomplete="off" class="form-control" placeholder="Full Name" required="required">
                             </div>
-                            <div class="col-1">
+                            <div class="col-2">
                               <label>Gender</label>
                               <div class="form-group">
-                                <select class="form-control select2bs4" name="gender" data-placeholder="Select Gender" style="width: 100%;" required="required">
+                                <select class="form-control select2bs4" name="gender" data-placeholder="Select" style="width: 100%;" required="required">
+                                  <option></option>
                                   <option>Male</option>
                                   <option>Female</option>
                                 </select>
@@ -87,6 +89,7 @@
                               <div class="form-group">
                                 <label>Marital Status</label>
                                 <select class="form-control select2bs4" name="marital_status" style="width: 100%;" required="required">
+                                  <option></option>
                                   <option value="Single">Single</option>
                                   <option value="Married">Married</option>
                                   <option value="Widowed">Widowed</option>

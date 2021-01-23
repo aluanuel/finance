@@ -29,7 +29,7 @@ class LoanRepaymentController extends Controller {
 
 		$headers = 'Showing Recent Loan Payments';
 
-		return view('apply.trans.index', compact('loans', 'pays', 'headers'));
+		return view('apply.teller.trans.index', compact('loans', 'pays', 'headers'));
 	}
 
 	public function showPayFormWithLoanSelected(Request $request) {
@@ -54,7 +54,7 @@ class LoanRepaymentController extends Controller {
 		if (sizeof($loans) < 1) {
 			return redirect()->back()->with('error', 'Loan period expired, contact your loan officer for assistance');
 		}
-		return view('apply.trans.index', compact('loans', 'pays', 'headers'));
+		return view('apply.teller.trans.index', compact('loans', 'pays', 'headers'));
 	}
 
 	public function RecordPayment() {
@@ -98,7 +98,7 @@ class LoanRepaymentController extends Controller {
 				}
 				$app->save();
 
-				return redirect()->back()->with('success', 'Transaction successful');
+				return redirect()->route('loanPaymentForm')->with('success', 'Transaction successful');
 			}
 		}
 	}
@@ -127,7 +127,7 @@ class LoanRepaymentController extends Controller {
 
 		$headers = 'Showing Loan Payments Between ' . Carbon::create($start_date)->toFormattedDateString() . ' To ' . Carbon::create($end_date)->toFormattedDateString();
 
-		return view('apply.trans.index', compact('loans', 'pays', 'headers'));
+		return view('apply.teller.trans.index', compact('loans', 'pays', 'headers'));
 	}
 
 	protected function Receipt() {

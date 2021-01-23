@@ -161,7 +161,7 @@
                           </div>
                           <!-- /.card-header -->
                           <div class="card-body">
-                            <table id="example2" class="table table-bordered table-hover">
+                            <table id="example3" class="table table-bordered table-hover">
                               <thead>
                               <tr>
                                 <th>#</th>
@@ -197,19 +197,6 @@
                                 </tr>
                                 @endforeach
                               </tbody>
-                              <tfoot>
-                              <tr>
-                                <th>#</th>
-                                <th>NUmber</th>
-                                <th>Name</th>
-                                <th>Telephone</th>
-                                <th>Gender</th>
-                                <th>Marital Status</th>
-                                <th>Workplace</th>
-                                <th>Occupation</th>
-                                <th>#</th>
-                              </tr>
-                              </tfoot>
                             </table>
                           </div>
                           <!-- /.card-body -->

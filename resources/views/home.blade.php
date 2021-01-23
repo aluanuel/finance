@@ -90,6 +90,26 @@
           <!-- ./col -->
         </div>
         <!-- /.row -->
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header border-0">
+                <div class="d-flex justify-content-between">
+                  <h3 class="card-title">Sales</h3>
+                </div>
+              </div>
+              <div class="card-body">
+                <!-- /.d-flex -->
+
+                <div class="position-relative mb-4">
+                  <canvas id="myChart" height="100"></canvas>
+                </div>
+              </div>
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+        <!-- row -->
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->

@@ -4,7 +4,7 @@
 	    </div>
 	        <!-- /.card-header -->
 	    <div class="card-body">
-			<form action="/apply/trans" method="post">
+			<form action="/apply/teller/trans" method="post">
 			     @csrf
 				<div class="row form-group">
 					<div class="col-12">

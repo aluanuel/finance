@@ -10,7 +10,47 @@ use \App\Models\ClientGroup;
 use Carbon\Carbon;
 
 class RegisterClientController extends Controller {
-	//
+
+	public function viewAccounts(){
+
+		$accounts = RegisterClient::all();
+
+		return view('apply.view.clients',compact('accounts'));
+
+	}
+
+	public function adminViewAccounts(){
+
+		$accounts = RegisterClient::all();
+
+		return view('apply.admin.clients',compact('accounts'));
+
+	}
+
+	public function viewAccountDetails(Request $request){
+		$id = LoanApplication::where('id_client',$request->id)
+			->latest()
+			->first();
+		// dd($id);
+		$loan = DB::table('loan_applications')
+			->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
+			->select('loan_applications.*', 'register_clients.*')
+			->where('loan_applications.id', '=', $id->id)
+			->first();
+		$ledger = DB::table('loan_repayments')
+			->where('id_loan', '=', $id->id)
+			->get();
+
+		$history = DB::table('loan_applications')
+			->where('id_client', $request->id)
+			->orderBy('created_at', 'desc')
+			->get();
+		$schedule = DB::table('loan_schedules')
+			->where('id_loan',$id->id)
+			->get();
+		return view('apply.view.client_profile', compact('loan', 'ledger', 'history','schedule'));
+
+	}
 
 	public function singleApplication() {
 
@@ -50,8 +90,7 @@ class RegisterClientController extends Controller {
 
 			$check = DB::table('loan_applications')
 					->where('id_client',request('id_client'))
-					->where('loan_status',NULL)
-					->orWhere('loan_status','=','started')
+					->where('loan_status','!=','completed')
 					->get();
 			if(sizeof($check) > 0){
 				return redirect()->route('viewLoanList',[request('id_client')])->with('error','You have '.sizeof($check). ' incomplete loan(s). Please complete the current running loan or resume the exisiting loan application');
@@ -75,11 +114,19 @@ class RegisterClientController extends Controller {
 			}
 
 		} else {
-			RegisterClient::create($this->validateApplication());
+			$client = new RegisterClient();
+			$client->account = $this->accountNumber();
+			$client->name = request('name');
+			$client->gender = request('gender');
+			$client->marital_status = request('marital_status');
+			$client->telephone = request('telephone');
+			$client->work_place = request('work_place');
+			$client->occupation = request('occupation');
+			$client->registration_date = Carbon::now()->toDateTimeString();
+			$client->registered_by = Auth::id();
+			$client->save();
 
-			$id_client = RegisterClient::latest('id')->where('id_group', '=', NULL)->first();
-
-			$loanApp->id_client = $id_client->id;
+			$loanApp->id_client = $client->id;
 
 			$loanApp->application_fee = request('application_fee');
 
@@ -131,19 +178,7 @@ class RegisterClientController extends Controller {
 		return view('apply.view.loan_list',compact('client','loans'));
 	}
 
-	protected function validateApplication() {
 
-		return $data = request()->validate([
-			'name' => 'required',
-			'telephone' => 'required',
-			'gender' => 'required',
-			'marital_status' => 'required',
-			'work_place' => 'required',
-			'occupation' => 'required',
-			'registered_by' => 'required',
-			'registration_date' => 'required',
-		]);
-	}
 
 	public function ViewGroupMembers(Request $request) {
 
@@ -160,11 +195,29 @@ class RegisterClientController extends Controller {
 		return view('apply.settings.groups.members',compact('group','members'));
 	}
 
+	public function updateGroupMemberRole(Request $request){
+		$member = RegisterClient::find($request->id);
+		if($member){
+			$member->role = request('role');
+			$member->id_group = request('id_group');
+			$member->save();
+			if(request('role') == 'Group Leader'){
+				$group = ClientGroup::find($member->id_group);
+				$group->group_status = 1;
+				$group->save();
+			}
+			return redirect()->back()->with('success','User role updated successfully');
+		}else{
+			return redirect()->back()->with('error','Record does not exist');
+		}
+	}
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public function showGroupApplicationForm(){
-		$groups = ClientGroup::all();
+		$groups = ClientGroup::where('group_status',1)
+				->get();
 		$interest = DB::table('interest_on_loans')
 			->select('interest_rate')
 			->where('loan_type', '=', 'Group')
@@ -208,8 +261,7 @@ class RegisterClientController extends Controller {
 
 			$check = DB::table('loan_applications')
 					->where('id_client',request('id_client'))
-					->where('loan_status',NULL)
-					->orWhere('loan_status','=','started')
+					->where('loan_status','!=','completed')
 					->get();
 			if(sizeof($check) > 0){
 				return redirect()->route('viewLoanList',[request('id_client')])->with('error','You have '.sizeof($check). ' incomplete loan(s). Please complete the current running loan or resume the exisiting loan application');
@@ -238,6 +290,7 @@ class RegisterClientController extends Controller {
 
 		}else{
 			$client = new RegisterClient();
+			$client->account = $this->accountNumber();
 			$client->name = request('name');
 			$client->gender = request('gender');
 			$client->dob = request('dob');
@@ -294,6 +347,19 @@ class RegisterClientController extends Controller {
 
 			return $id->loan_number + 1;
 
+		}
+	}
+
+	private function accountNumber(){
+
+		$ac = RegisterClient::latest('account')->first();
+
+		if(is_null($ac)){
+
+			return (1000100001);
+
+		}else{
+			return $ac->account + 1;
 		}
 	}
 }

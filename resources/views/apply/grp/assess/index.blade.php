@@ -76,7 +76,7 @@
                             </div>
                             <div class="col-2">
                               <label>Telephone</label>
-                              <input type="text" name="telephone"  autocomplete="off" class="form-control" placeholder="Telephone" value="{{$cont->telephone}}">  
+                              <input type="text" name="telephone"  autocomplete="off" class="form-control" placeholder="Telephone" required="required" value="{{$cont->telephone}}">  
                             </div>
                           </div>
                           <div class="row form-group">
@@ -124,17 +124,17 @@
                               <div class="input-group-prepend">
                                 <span class="input-group-text">1</span>
                               </div>
-                                <input type="text" class="form-control" name="security_name[]" placeholder="Property name" autocomplete="off">
+                                <input type="text" class="form-control" name="security_name[]" placeholder="Property name" autocomplete="off" required="required">
                               </div>
                               <div class="col-2">
-                                <input type="text" class="form-control" name="security_number[]" placeholder="Quantity" autocomplete="off">
+                                <input type="text" class="form-control" name="security_number[]" placeholder="Quantity" autocomplete="off" required="required">
                               </div>
                               <div class="col-2">
-                                <input type="text" class="form-control" name="security_value[]" placeholder="Estimated value" autocomplete="off">
+                                <input type="text" class="form-control" name="security_value[]" placeholder="Estimated value" autocomplete="off" required="required">
                               </div>
                               <div class="input-group col-3">
                                 <div class="custom-file">
-                                  <input type="file" name="security_attachment[]" class="form-control custom-file-input" id="exampleInputFile">
+                                  <input type="file" name="security_attachment[]" required="required" class="form-control custom-file-input" id="exampleInputFile">
                                   <label class="custom-file-label" for="exampleInputFile">Upload attachment</label>
                                 </div>
                               </div>

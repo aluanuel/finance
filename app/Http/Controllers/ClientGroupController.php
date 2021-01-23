@@ -12,6 +12,13 @@ class ClientGroupController extends Controller
     	return view('apply.settings.groups.groups',compact('groups'));
     }
 
+    public function view(){
+
+      $groups = ClientGroup::all();
+      
+      return view('apply.view.grp.loan_groups',compact('groups'));
+    }
+
     public function newLoanGroup(){
 
   		$group = new ClientGroup();

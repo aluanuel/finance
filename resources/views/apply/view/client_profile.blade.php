@@ -40,7 +40,8 @@
 
                   <h3 class="profile-username text-center">{{$loan->name}}</h3>
 
-                  <p class="text-muted text-center">{{$loan->occupation}}</p>
+                  <p class="text-muted text-center">{{$loan->occupation}}<br>
+                    A/C: {{$loan->account}}</p>
                   <ul class="list-group list-group-unbordered mb-3">
                   <li class="list-group-item">
                     <b><i class="fas fa-phone mr-1"></i> Phone</b> <a class="float-right">{{$loan->telephone }}</a>
@@ -87,13 +88,14 @@
               <div class="card">
                 <div class="card-header p-2">
                   <ul class="nav nav-pills">
-                    <li class="nav-item"><a class="nav-link active" href="#ln_activity" data-toggle="tab">Loan Activity</a></li>
+                    <li class="nav-item"><a class="nav-link {{ Route::is('clientProfile') ? 'active' : '' }}" href="#ln_activity" data-toggle="tab">Loan Activity</a></li>
                     <li class="nav-item"><a class="nav-link" href="#ln_history" data-toggle="tab">Loan History</a></li>
+                    <li class="nav-item"><a class="nav-link {{ Route::is('accountDetails') ? 'active' : '' }}" href="#sv_history" data-toggle="tab">Savings History</a></li>
                   </ul>
                 </div><!-- /.card-header -->
                 <div class="card-body">
                   <div class="tab-content">
-                    <div class="active tab-pane" id="ln_activity">
+                    <div class="{{ Route::is('clientProfile') ? 'active' : '' }} tab-pane" id="ln_activity">
                       <!-- card -->
                         <div class="card">
                           <div class="card-header">
@@ -104,21 +106,35 @@
                               <thead>
                                 <tr>
                                   <th style="width: 40px">Number</th>
-                                  <th>Loan Request</th>
-                                  <th>Loan Outstanding</th>
+                                  <th>Request</th>
+                                  <th>approved</th>
+                                  <th>Outstanding</th>
                                   <th>Security</th>
-                                  <th>Loan Recovered</th>
-                                  <th>Loan Balance</th>
+                                  <th>Recovered</th>
+                                  <th>Balance</th>
+                                  <th>#</th>
                                 </tr>
                               </thead>
                               <tbody>
                                 <tr>
                                   <td>{{$loan->loan_number}}</td>
                                   <td>{{number_format($loan->proposed_amount)}}</td>
+                                  <td>{{number_format($loan->recommended_amount)}}</td>
                                   <td>{{number_format($loan->total_loan)}}</td>
                                   <td>{{number_format($loan->security)}}</td>
                                   <td>{{number_format($loan->loan_recovered)}}</td>
                                   <td>{{number_format($loan->loan_balance)}}</td>
+                                  @if(Auth::user()->usertype == 'Manager' && Auth::user()->role == 'Manager')
+                                    @if($loan->loan_balance > 0 && $loan->loan_status == 'started')
+                                    <td><a class="btn btn-outline-danger btn-sm" href="/apply/admin/cancel/{{$loan->id}}">Cancel</a></td>
+                                    @elseif($loan->loan_status == 'completed')
+                                    <td><a class="btn btn-outline-primary btn-sm" href="/apply/admin/collateral/{{$loan->id}}">Return Collateral</a></td>
+                                    @else
+                                    <td></td>
+                                    @endif
+                                  @else
+                                  <td></td>
+                                  @endif
                                 </tr>
                               </tbody>
                             </table>
@@ -156,6 +172,24 @@
                         <div class="card">
                           <div class="card-header">
                             <h4 class="card-title text-primary">Payment Schedule</h4>
+                          </div>
+                          <div class="card-body">
+                            <table id="example3" class="table table-stripped table-hover">
+                              <thead>
+                                <tr>
+                                  <th>Date</th>
+                                  <th>Instalment</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                @foreach($schedule as $sch)
+                                <tr>
+                                  <td>{{ date('Y-m-d',strtotime($sch->deadline))}}</td>
+                                  <td>{{ number_format($sch->instalment) }}</td>
+                                </tr>
+                                @endforeach
+                              </tbody>
+                            </table>
                           </div>
                         </div>
                         <!-- card -->
@@ -195,6 +229,8 @@
                                       <th>Security</th>
                                       <th>Loan Recovered</th>
                                       <th>Loan Balance</th>
+                                      <th>Start Date</th>
+                                      <th>End Date</th>
                                     </tr>
                                   </thead>
                                   <tbody>
@@ -205,6 +241,13 @@
                                       <td>{{number_format($hist->security)}}</td>
                                       <td>{{number_format($hist->loan_recovered)}}</td>
                                       <td>{{number_format($hist->loan_balance)}}</td>
+                                      @if($hist->start_date == NULL)
+                                      <td></td>
+                                      <td></td>
+                                      @else
+                                      <td>{{ date('Y-m-d',strtotime($hist->start_date)) }}</td>
+                                      <td>{{ date('Y-m-d',strtotime($hist->end_date)) }}</td>
+                                      @endif
                                     </tr>
                                   </tbody>
                                 </table>
@@ -220,6 +263,27 @@
 
                     </div>
                     <!-- /.tab-pane -->
+                    <div class="{{ Route::is('accountDetails') ? 'active' : '' }}tab-pane" id="sv_history">
+                      <div class="card card-info">
+                        <div class="card-header">
+                          <h3 class="card-title">{{ $loan->account}}</h3>
+                        </div>
+                        <div class="card-body">
+                          <table id="example1" class="table table-bordered table-hover">
+                            <thead>
+                              <tr>
+                                <th>date</th>
+                                <th>details</th>
+                                <th>amount</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <!-- /.tab-content -->
                 </div><!-- /.card-body -->

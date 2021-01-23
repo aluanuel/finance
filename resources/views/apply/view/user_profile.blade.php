@@ -95,7 +95,7 @@
                                 </div>
                               </div>  
                             </form>
-                            <form action="/apply/user/{{$user->id}}" method="post" id="formChangePhoto">
+                            <form action="/apply/user/update/photo/{{$user->id}}" method="post" id="formChangePhoto" enctype="multipart/form-data">
                               @csrf
                               <div class="row form-group">
                                 <div class="col-10 input-group">

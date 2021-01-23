@@ -23,25 +23,57 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group(['middleware' => 'auth'], function () {
 
-/**************************** Loan Officer ***************************************/
+/**************************** Loan Officer ***********************************/
 	Route::get('/apply/ind/', [App\Http\Controllers\RegisterClientController::class, 'singleApplication'])->name('viewSingle');
+
 	Route::post('/apply/ind/', [App\Http\Controllers\RegisterClientController::class, 'NewIndividualApplication']);
+
 	Route::get('/apply/ind/assess', [App\Http\Controllers\IndividualLoanAssessmentController::class, 'index'])->name('assessSingle');
+
 	Route::get('/apply/assess/{id}', [App\Http\Controllers\IndividualLoanAssessmentController::class, 'assessIndividual']);
+
 	Route::post('/apply/ind/cont/{id}', [App\Http\Controllers\LoanApplicationController::class, 'continueIndividualApplication']);
+
 	Route::get('/apply/wiew/loan_list/{id}',[App\Http\Controllers\RegisterClientController::class, 'ViewClientLoanList'])->name('viewLoanList');
+
+	Route::get('/apply/grp/processed',[App\Http\Controllers\LoanApplicationController::class, 'adminViewGroupProcessedLoans']);
+	Route::get('/apply/ind/processed', [App\Http\Controllers\LoanApplicationController::class, 'adminViewIndividualProcessedLoans']);
+
+/******************************** Teller ************************************/
+	Route::get('/apply/teller/ind/application/', [App\Http\Controllers\LoanApplicationController::class, 'viewIndividualApplication'])->name('tellerSingleViewApplications');
+
+	Route::get('/apply/teller/ind/processed/', [App\Http\Controllers\LoanApplicationController::class, 'viewIndividualProcessedLoans']);
+
+	Route::get('/apply/teller/grp/application/', [App\Http\Controllers\LoanApplicationController::class, 'viewGroupApplication'])->name('tellerGroupViewApplications');
+
+	Route::get('/apply/teller/grp/processed/', [App\Http\Controllers\LoanApplicationController::class, 'viewGroupProcessedLoans']);
+
+	Route::post('/apply/teller/ind/{id}', [App\Http\Controllers\RegisterClientController::class, 'updateIndividualApplication']);
+
+	Route::post('/apply/teller/process/{id}', [App\Http\Controllers\LoanApplicationController::class, 'startIndividualProcessedLoans']);
+
+	Route::get('/apply/teller/trans', [App\Http\Controllers\LoanRepaymentController::class, 'index'])->name('loanPaymentForm');
+
+	Route::get('/apply/teller/trans/{id}', [App\Http\Controllers\LoanRepaymentController::class, 'showPayFormWithLoanSelected']);
+
+	Route::post('/apply/teller/trans', [App\Http\Controllers\LoanRepaymentController::class, 'RecordPayment']);
+
+	Route::post('/apply/teller/trans/search/payment', [App\Http\Controllers\LoanRepaymentController::class, 'SearchPayment']);
+
+	Route::get('/apply/teller/savings/', [App\Http\Controllers\ClientSavingController::class, 'savingsForm']);
+
+	Route::get('/apply/teller/withdrawal/', [App\Http\Controllers\ClientSavingController::class, 'withdrawalForm']);
 
 
 
 
 
 	Route::get('/apply/settings/members/{id}', [App\Http\Controllers\RegisterClientController::class, 'ViewGroupMembers']);
+	Route::post('/apply/settings/members/{id}', [App\Http\Controllers\RegisterClientController::class, 'updateGroupMemberRole']);
 
-	Route::get('/apply/teller/ind/application/', [App\Http\Controllers\LoanApplicationController::class, 'viewIndividualApplication'])->name('tellerSingleViewApplications');
+
 	Route::get('/apply/view/ind/processed', [App\Http\Controllers\LoanApplicationController::class, 'viewIndividualProcessedLoan'])->name('tellerSingleProcessedLoans');
 	
-
-	Route::post('/apply/ind/{id}', [App\Http\Controllers\RegisterClientController::class, 'updateIndividualApplication']);
 	
 	Route::post('/apply/ind/update/{id}', [App\Http\Controllers\LoanApplicationController::class, 'updateIndividualApplication']);
 	
@@ -51,19 +83,15 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/apply/admin/assess/{id}', [App\Http\Controllers\IndividualLoanAssessmentController::class, 'adminAssessIndividual']);
 	Route::post('/apply/assess/{id}', [App\Http\Controllers\IndividualLoanAssessmentController::class, 'FillAssessmentForm']);
 	Route::post('/apply/admin/assess/{id}', [App\Http\Controllers\IndividualLoanAssessmentController::class, 'AdminFillAssessmentForm']);
+	Route::get('/apply/admin/collateral/{id}',[App\Http\Controllers\LoanSecurityController::class, 'index']);
 
 	Route::get('/app/ind/schedule/{id}', [App\Http\Controllers\LoanApplicationController::class, 'individualLoanPaymentSchedule']);
 	Route::get('apply/ind/accept/{id}', [App\Http\Controllers\LoanApplicationController::class, 'acceptLoan']);
-	Route::get('/apply/teller/ind/processed/', [App\Http\Controllers\LoanApplicationController::class, 'viewIndividualProcessedLoans']);
 	Route::get('/apply/admin/processed', [App\Http\Controllers\LoanApplicationController::class, 'adminViewIndividualProcessedLoans']);
-	Route::post('/apply/process/{id}', [App\Http\Controllers\LoanApplicationController::class, 'startIndividualProcessedLoans']);
+
 	Route::get('/apply/settings/interest', [App\Http\Controllers\InterestOnLoanController::class, 'index']);
 	Route::post('/apply/settings/interest', [App\Http\Controllers\InterestOnLoanController::class, 'create']);
 
-	Route::get('/apply/trans', [App\Http\Controllers\LoanRepaymentController::class, 'index']);
-	Route::get('/apply/trans/{id}', [App\Http\Controllers\LoanRepaymentController::class, 'showPayFormWithLoanSelected']);
-	Route::post('/apply/trans', [App\Http\Controllers\LoanRepaymentController::class, 'RecordPayment']);
-	Route::post('/apply/trans/search/payment', [App\Http\Controllers\LoanRepaymentController::class, 'SearchPayment']);
 	Route::get('/trans/record', [App\Http\Controllers\OtherPaymentController::class, 'index']);
 	Route::post('/trans/record', [App\Http\Controllers\OtherPaymentController::class, 'recordTransaction']);
 	Route::post('/apply/trans/search/income',[App\Http\Controllers\OtherPaymentController::class,'SearchIncome']);
@@ -71,6 +99,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/generate/loan/application/{id}', [App\Http\Controllers\PDFController::class, 'CreateLoanApplicationReceipt']);
 	Route::get('generate/loan/payment/receipt/{id}', [App\Http\Controllers\PDFController::class, 'CreateLoanPaymentReceipt']);
 	Route::get('/apply/view/profile/{id}', [App\Http\Controllers\LoanApplicationController::class, 'viewClientProfile'])->name('clientProfile');
+
+	Route::get('/apply/account/profile/{id}', [App\Http\Controllers\RegisterClientController::class, 'viewAccountDetails'])->name('accountDetails');
 
 	/**********************************Reports******************************************/
 	Route::get('/apply/report/collections',[App\Http\Controllers\ReportController::class,'Collections']);
@@ -86,6 +116,8 @@ Route::group(['middleware' => 'auth'], function () {
 	/*******************************settings************************************/
 	Route::get('/apply/settings/groups',[App\Http\Controllers\ClientGroupController::class,'index']);
 	Route::post('/apply/settings/groups',[App\Http\Controllers\ClientGroupController::class,'newLoanGroup']);
+	Route::get('/apply/grp/list',[App\Http\Controllers\ClientGroupController::class,'view']);
+	Route::post('/apply/grp/list',[App\Http\Controllers\ClientGroupController::class,'newMemberRole']);
 
 
 	Route::get('/apply/grp', [App\Http\Controllers\RegisterClientController::class, 'showGroupApplicationForm'])->name('OfficerViewGroupApplications');
@@ -94,7 +126,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/apply/settings/users', [App\Http\Controllers\SystemUserController::class, 'index']);
 	Route::post('/apply/settings/user', [App\Http\Controllers\SystemUserController::class, 'create']);
 	Route::get('apply/user/{id}',[App\Http\Controllers\SystemUserController::class, 'profile']);
-	Route::post('apply/user/update/{id}',[App\Http\Controllers\SystemUserController::class, 'updateProfile']);
+	Route::post('/apply/user/update/{id}',[App\Http\Controllers\SystemUserController::class, 'updatePassword']);
+	Route::post('/apply/user/update/photo/{id}',[App\Http\Controllers\SystemUserController::class, 'updateUserPhoto']);
 
 	Route::get('/apply/settings/appraisal/',[App\Http\Controllers\AppraisalFeeController::class, 'index']);
 	Route::post('/apply/settings/appraisal/',[App\Http\Controllers\AppraisalFeeController::class, 'create']);
@@ -102,7 +135,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/apply/settings/processing/',[App\Http\Controllers\LoanProcessingFeeController::class, 'create']);
 
 
-	Route::get('/apply/teller/grp/application/', [App\Http\Controllers\LoanApplicationController::class, 'viewGroupApplication'])->name('tellerGroupViewApplications');
+	
 	Route::get('/apply/grp/assess/{id}',[App\Http\Controllers\GroupLoanAssessmentController::class, 'index']);
 	Route::post('/apply/grp/assess/{id}',[App\Http\Controllers\GroupLoanAssessmentController::class, 'fillAssessment']);
 	Route::get('/apply/grp/assess',[App\Http\Controllers\GroupLoanAssessmentController::class, 'viewAssessment']);
@@ -110,7 +143,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/apply/admin/grp/assess/{id}',[App\Http\Controllers\GroupLoanAssessmentController::class, 'adminViewAssessmentSingle']);
 	Route::post('/apply/admin/grp/assess/{id}',[App\Http\Controllers\GroupLoanAssessmentController::class, 'adminFillAssessmentForm']);
 	Route::get('/apply/admin/grp/processed',[App\Http\Controllers\LoanApplicationController::class, 'adminViewGroupProcessedLoans']);
-	Route::get('/apply/grp/processed',[App\Http\Controllers\LoanApplicationController::class, 'adminViewGroupProcessedLoans']);
+	
+	Route::get('/apply/accounts',[App\Http\Controllers\RegisterClientController::class,'viewAccounts']);
+	Route::get('/apply/admin/accounts',[App\Http\Controllers\RegisterClientController::class,'adminViewAccounts']);
 
 });
 

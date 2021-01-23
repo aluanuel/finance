@@ -39,7 +39,8 @@
 	                            <div class="col-12">
 	                              <label>Loan Type</label>
 	                              <div class="form-group">
-	                                <select class="form-control select2bs4" name="loan_type" data-placeholder="Select Gender" style="width: 100%;">
+	                                <select class="form-control select2bs4" name="loan_type" data-placeholder="Select Loan Type" style="width: 100%;">
+                                    <option></option>
 	                                  <option>Individual</option>
 	                                  <option>Group</option>
 	                                </select>
