@@ -79,7 +79,7 @@
 					                      <div class="card-header">
 					                        <h3 class="card-title">{{$headIncome}}</h3>
 					                        <div class="card-tools">
-								              <a href="#" class="btn btn-primary btn-sm" title="Download" onclick="printContent('printArea')">
+								              <a href="/generate/report/incomes" class="btn btn-primary btn-sm" title="Download" onclick="printContent('printArea')">
 								                <i class="fa fa-download"></i>
 								               </a>
 								            </div>
@@ -88,7 +88,7 @@
 					                      <div class="card-body">
 					                      <form action="/apply/trans/search/income" method="post">
 						                    @csrf
-						                    <div class="row">
+						                    <div class="row pb-3">
 						                      <div class="input-group col-4">
 						                        <div class="input-group-prepend">
 						                          <span class="input-group-text">Start date</span>
@@ -106,7 +106,7 @@
 						                      </div>
 						                    </div>
 						                  </form>
-					                      	<table id="example2" class="table table-bordered table-hover">
+					                      	<table class="table table-bordered table-hover">
 								                <thead>
 								                  <tr>
 								                    <th style="width: 12px;">#</th>
@@ -189,7 +189,7 @@
 					                      <div class="card-header">
 					                        <h3 class="card-title">{{$headExpense}}</h3>
 					                        <div class="card-tools">
-								              <a href="#" class="btn btn-primary btn-sm" title="Download" onclick="printContent('printArea')">
+								              <a href="/generate/report/expenses" class="btn btn-primary btn-sm" title="Download" onclick="printContent('printArea')">
 								                <i class="fa fa-download"></i>
 								               </a>
 								            </div>
@@ -198,7 +198,7 @@
 					                      <div class="card-body">
 					                      	<form action="/apply/trans/search/expense" method="post">
 						                    @csrf
-						                    <div class="row">
+						                    <div class="row pb-3">
 						                      <div class="input-group col-5">
 						                        <div class="input-group-prepend">
 						                          <span class="input-group-text">Start date</span>
@@ -216,7 +216,7 @@
 						                      </div>
 						                    </div>
 						                  </form>
-					                      	<table id="example4" class="table table-bordered table-hover">
+					                      	<table class="table table-bordered table-hover">
 								                <thead>
 								                  <tr>
 								                    <th style="width: 12px;">#</th>

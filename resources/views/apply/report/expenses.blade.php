@@ -32,8 +32,8 @@
           	<div class="card">
                       <div class="card-header">
                         <h3 class="card-title">{{$headExpense}}</h3>
-                        <div class="card-tools">
-                          <a href="#" class="btn btn-primary btn-sm" title="Download Report" onclick="printContent('printArea')">
+                        <div class="card-tools" id="admin-only">
+                          <a href="/generate/report/expenses" title="Download Report">
                                 <i class="fa fa-download"></i>
                           </a>
                         </div>
@@ -60,7 +60,7 @@
                                   </div>
                                 </div>
                               </form>
-                         <table id="example3" class="table table-bordered table-hover">
+                         <table id="example1" class="table table-bordered table-hover">
                           <thead>
                             <tr>
                               <th style="width: 8px">#</th>

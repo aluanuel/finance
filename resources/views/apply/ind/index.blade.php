@@ -48,7 +48,7 @@
                         <h3 class="card-title">Personal Data</h3>
                       </div>
                       <div class="card-body">
-                        <form action="/apply/ind/" method="post">
+                        <form action="/apply/ind/" method="post" enctype="multipart/form-data">
                           @csrf
                           <div class="row form-group">
                             <div class="col-6">
@@ -61,7 +61,7 @@
                             </div>
                           </div>
                           <div class="row form-group">
-                            <div class="col-6">
+                            <div class="col-4">
                               <label>Gender</label>
                               <div class="form-group">
                                 <select class="form-control select2bs4" name="gender" data-placeholder="Select Gender" style="width: 100%;" required="required">
@@ -71,7 +71,7 @@
                                 </select>
                               </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-4">
                               <div class="form-group">
                                 <label>Marital Status</label>
                                 <select class="form-control select2bs4" name="marital_status" data-placeholder="Select Marital Status" style="width: 100%;" required="required">
@@ -81,6 +81,13 @@
                                   <option value="Widowed">Widowed</option>
                                   <option value="Divorced">Divorced</option>
                                 </select>
+                              </div>
+                            </div>
+                            <div class="col-4">
+                              <label>Profile Photo</label>
+                              <div class="custom-file">
+                                <input type="file" name="photo" class="form-control custom-file-input" id="exampleInputFile" required="required">
+                                <label class="custom-file-label" for="exampleInputFile">Upload Photo</label>
                               </div>
                             </div>
                           </div>

@@ -33,8 +33,8 @@
                       <div class="card-header">
                         <h3 class="card-title">{{$headIncome}}</h3>
                         <div class="card-tools">
-                          <a href="#" class="btn btn-primary btn-sm" title="Download Report" onclick="printContent('printArea')">
-                                <i class="fa fa-download"></i>
+                          <a href="/generate/report/incomes" class="btn btn-primary btn-sm" title="Download Report">
+                            <i class="fa fa-download"></i>
                           </a>
                         </div>
                       </div>

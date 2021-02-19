@@ -62,8 +62,11 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/apply/teller/savings/', [App\Http\Controllers\ClientSavingController::class, 'savingsForm']);
 
+	Route::post('/apply/teller/savings/', [App\Http\Controllers\ClientSavingController::class, 'Deposit']);
+
 	Route::get('/apply/teller/withdrawal/', [App\Http\Controllers\ClientSavingController::class, 'withdrawalForm']);
 
+	Route::post('/apply/teller/withdrawal/', [App\Http\Controllers\ClientSavingController::class, 'Withdrawal']);
 
 
 
@@ -96,8 +99,18 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/trans/record', [App\Http\Controllers\OtherPaymentController::class, 'recordTransaction']);
 	Route::post('/apply/trans/search/income',[App\Http\Controllers\OtherPaymentController::class,'SearchIncome']);
 	Route::post('/apply/trans/search/expense',[App\Http\Controllers\OtherPaymentController::class,'SearchExpense']);
+
+/***************************pdf documents********************************/
 	Route::get('/generate/loan/application/{id}', [App\Http\Controllers\PDFController::class, 'CreateLoanApplicationReceipt']);
-	Route::get('generate/loan/payment/receipt/{id}', [App\Http\Controllers\PDFController::class, 'CreateLoanPaymentReceipt']);
+	Route::get('/generate/loan/payment/receipt/{id}', [App\Http\Controllers\PDFController::class, 'CreateLoanPaymentReceipt']);
+	Route::get('/generate/account/statement/{id}', [App\Http\Controllers\PDFController::class, 'CreateAccountStatement']);
+	Route::get('/generate/report/accounts', [App\Http\Controllers\PDFController::class, 'CreateAccountsReport']);
+	Route::get('/generate/report/collections', [App\Http\Controllers\PDFController::class, 'CreateCollectionsReport']);
+	Route::get('/generate/report/expenses', [App\Http\Controllers\PDFController::class, 'CreateExpensesReport']);
+	Route::get('/generate/report/incomes', [App\Http\Controllers\PDFController::class, 'CreateIncomesReport']);
+	Route::get('/generate/report/cashbook', [App\Http\Controllers\PDFController::class, 'CreateCashBookReport']);
+
+
 	Route::get('/apply/view/profile/{id}', [App\Http\Controllers\LoanApplicationController::class, 'viewClientProfile'])->name('clientProfile');
 
 	Route::get('/apply/account/profile/{id}', [App\Http\Controllers\RegisterClientController::class, 'viewAccountDetails'])->name('accountDetails');

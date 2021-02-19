@@ -107,7 +107,7 @@
 </script>
 <script>
   $(function () {
-    $('#example2').DataTable({
+    $('#example1').DataTable({
       "paging": true,
       "lengthChange": false,
       "searching": false,
@@ -116,10 +116,37 @@
       "autoWidth": true,
       "responsive": true,
     });
-    $('#example3').DataTable({
+    $('#example6').DataTable({
       "paging": true,
       "lengthChange": false,
       "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": true,
+      "responsive": true,
+    });
+    $('#example7').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": true,
+      "responsive": true,
+    });
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": true,
+      "responsive": true,
+    });
+    $('#example3').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": true,
       "ordering": true,
       "info": true,
       "autoWidth": false,
@@ -128,7 +155,7 @@
     $('#example4').DataTable({
       "paging": true,
       "lengthChange": false,
-      "searching": false,
+      "searching": true,
       "ordering": true,
       "info": true,
       "autoWidth": false,
@@ -137,7 +164,7 @@
     $('#example5').DataTable({
       "paging": true,
       "lengthChange": false,
-      "searching": false,
+      "searching": true,
       "ordering": true,
       "info": true,
       "autoWidth": false,

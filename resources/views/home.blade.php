@@ -28,7 +28,7 @@
         @include('layouts.flash')
         <!-- Small boxes (Stat box) -->
         <div class="row">
-          <div class="col-lg-3 col-6">
+          <div class="col-4">
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
@@ -42,7 +42,7 @@
               <a href="/apply/view" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
-                    <div class="col-lg-3 col-6">
+          <div class="col-4">
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
@@ -57,23 +57,7 @@
             </div>
           </div>
           <!-- ./col -->
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>{{number_format($newIndividualClients)}} <span style="font-size: 18px">Individuals</span></h3>
-
-                <p>This Month</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-person-add"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
+          <div class="col-4">
             <!-- small box -->
             <div class="small-box bg-danger">
               <div class="inner">
@@ -84,7 +68,11 @@
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
               </div>
+              @if(Auth::user()->usertype == 'Manager')
+              <a href="/apply/settings/groups" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              @else
               <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              @endif
             </div>
           </div>
           <!-- ./col -->

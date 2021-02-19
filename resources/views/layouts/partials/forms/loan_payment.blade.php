@@ -11,9 +11,16 @@
 					    <label>Loan Number</label>
 					    <div class="form-group">
 					      <select class="form-control select2bs4" name="id_loan" style="width: 100%;" required="required">
-					      	@foreach($loans as $loan)
-					      	<option value="{{ $loan->id }}">{{ $loan->loan_number }}</option>
-					      	@endforeach
+					      	@if(is_null($id_loan))
+						      	@foreach($loans as $loan)
+						      	<option></option>
+						      	<option value="{{ $loan->id }}">{{ $loan->loan_number }}</option>
+						      	@endforeach
+						    @else
+						    	@foreach($loans as $loan)
+						      	<option value="{{ $loan->id }}">{{ $loan->loan_number }}</option>
+						      	@endforeach
+						    @endif
 					      </select>
 					    </div>
 					</div>
@@ -26,8 +33,8 @@
 				 </div>
 				 <div class="row form-group">
 				  	<div class="col-12">
-				    	<label>Depositer</label>
-				    	<input type="text" name="depositer" autocomplete="off" class="form-control" placeholder="Name of depositer" required="required">
+				    	<label>Depositor</label>
+				    	<input type="text" name="depositer" autocomplete="off" class="form-control" placeholder="Name of depositor" required="required">
 					</div>
 				 </div>
 			  <input type="hidden" name="receipt_number" value="">

@@ -48,7 +48,11 @@ class RegisterClientController extends Controller {
 		$schedule = DB::table('loan_schedules')
 			->where('id_loan',$id->id)
 			->get();
-		return view('apply.view.client_profile', compact('loan', 'ledger', 'history','schedule'));
+		$savings = DB::table('client_savings')
+			->where('id_client',$request->id)
+			->orderBy('created_at','asc')
+			->get();
+		return view('apply.view.client_profile', compact('loan', 'ledger', 'history','schedule','savings'));
 
 	}
 
@@ -82,7 +86,7 @@ class RegisterClientController extends Controller {
 		return view('apply.ind.index', compact('clients', 'loan', 'register', 'interest','fee'));
 	}
 
-	public function NewIndividualApplication() {
+	public function NewIndividualApplication(Request $request) {
 
 		$loanApp = new LoanApplication();
 
@@ -114,6 +118,13 @@ class RegisterClientController extends Controller {
 			}
 
 		} else {
+			$request->validate([
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        	]);
+        	$imageName = time().'.'.$request->photo->extension();
+
+         	$request->photo->move(public_path('img'), $imageName);
+
 			$client = new RegisterClient();
 			$client->account = $this->accountNumber();
 			$client->name = request('name');
@@ -122,6 +133,7 @@ class RegisterClientController extends Controller {
 			$client->telephone = request('telephone');
 			$client->work_place = request('work_place');
 			$client->occupation = request('occupation');
+			$client->photo = $imageName;
 			$client->registration_date = Carbon::now()->toDateTimeString();
 			$client->registered_by = Auth::id();
 			$client->save();

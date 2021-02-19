@@ -28,6 +28,7 @@ class SystemUserController extends Controller
             'role' => request('role'),
             'user_status' => 1,
             'password' => Hash::make($password),
+            'photo' => '1611593817.png',
         ]);
         return redirect()->back()->with('success','Your temporary password is '.$password);
     }
@@ -69,14 +70,19 @@ class SystemUserController extends Controller
     public function updateUserPhoto(Request $request){
 
         $user = User::find($request->id);
-        $this->validate($request, [
+
+        $request->validate([
             'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        if($request->file()){
-            return redirect()->back()->with('success','Password change failed'); 
-        }
+        $imageName = time().'.'.$request->photo->extension();
 
-        return redirect()->back()->with('error','Password change failed'); 
+         $request->photo->move(public_path('img'), $imageName);
+
+         $user->photo = $imageName;
+
+         $user->save();
+
+        return redirect()->back()->with('success','Success'); 
     }
 
     protected function randomPassword() { 

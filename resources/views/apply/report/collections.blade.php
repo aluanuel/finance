@@ -32,6 +32,11 @@
           	<div class="card">
                       <div class="card-header">
                         <h3 class="card-title">{{$heading}}</h3>
+                        <div class="card-tools" id="admin_only">
+                          <a href="/generate/report/collections" title="Download Report">
+                            <i class="fa fa-download" title="Download Report"></i>
+                          </a>
+                        </div>
                       </div>
                       <!-- /.card-header -->
                       <div class="card-body" style="overflow-x: scroll;">

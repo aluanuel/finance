@@ -233,7 +233,7 @@
                    	<div class="row form-group">
                    		<div class="col-3">
                    			<label>Recommended loan amount</label>
-                   			<input type="number" name="recommended_amount" class="form-control" required="required" autocomplete="off" placeholder="Recommended loan amount">
+                   			<input type="number" name="recommended_amount" class="form-control" required="required" autocomplete="off" placeholder="Recommended loan amount" value="{{$cont->proposed_amount}}">
                    		</div>
                       <div class="col-1">
                         <label>Rate(%)</label>
@@ -241,7 +241,7 @@
                       </div>
                       <div class="col-2">
                         <label>Interest</label>
-                        <input type="text" class="form-control" readonly="readonly" autocomplete="off" placeholder="Interest rate" value="{{ $cont->interest_rate}}">
+                        <input type="text" class="form-control" readonly="readonly" autocomplete="off" placeholder="Interest" value="{{ $cont->loan_interest}}">
                       </div>
                       <div class="col-2">
                         <label>Loan Period (Months)</label>

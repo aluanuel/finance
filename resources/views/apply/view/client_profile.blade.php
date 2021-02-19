@@ -34,7 +34,7 @@
                 <div class="card-body box-profile">
                   <div class="text-center">
                     <img class="profile-user-img img-fluid img-circle"
-                         src="{{ asset('theme/dist/img/user4-128x128.jpg')}}"
+                         src="{{ asset('img/'.$loan->photo)}}"
                          alt="User profile picture">
                   </div>
 
@@ -263,22 +263,37 @@
 
                     </div>
                     <!-- /.tab-pane -->
-                    <div class="{{ Route::is('accountDetails') ? 'active' : '' }}tab-pane" id="sv_history">
+                    <div class="{{ Route::is('accountDetails') ? 'active' : '' }} tab-pane" id="sv_history">
                       <div class="card card-info">
                         <div class="card-header">
                           <h3 class="card-title">{{ $loan->account}}</h3>
+                          @if(Auth::user()->usertype == 'Manager')
+                          <div class="card-tools" id="admin_only">
+                            <a href="/generate/account/statement/{{$loan->id}}" title="Download Report">
+                              <i class="fa fa-download" title="Download Account Statement"></i>
+                            </a>
+                          </div>
+                          @endif
                         </div>
                         <div class="card-body">
-                          <table id="example1" class="table table-bordered table-hover">
+                          <table id="example2" class="table table-bordered table-hover">
                             <thead>
                               <tr>
                                 <th>date</th>
-                                <th>details</th>
+                                <th>transaction type</th>
                                 <th>amount</th>
+                                <th>balance</th>
                               </tr>
                             </thead>
                             <tbody>
-                              
+                              @foreach($savings as $saving)
+                                <tr>
+                                  <td>{{ date('Y-m-d',strtotime($saving->created_at)) }}</td>
+                                  <td>{{ $saving->transaction_type }}</td>
+                                  <td>{{ number_format($saving->amount_figures) }}</td>
+                                  <td>{{ number_format($saving->savings_balance) }}</td>
+                                </tr>
+                              @endforeach
                             </tbody>
                           </table>
                         </div>

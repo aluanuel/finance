@@ -19,6 +19,7 @@ class LoanRepaymentController extends Controller {
 			->orderBy('created_at', 'desc')
 			->limit(500)
 			->get();
+		$id_loan = null;
 
 		$pays = DB::table('loan_repayments')
 			->join('loan_applications', 'loan_repayments.id_loan', 'loan_applications.id')
@@ -29,7 +30,7 @@ class LoanRepaymentController extends Controller {
 
 		$headers = 'Showing Recent Loan Payments';
 
-		return view('apply.teller.trans.index', compact('loans', 'pays', 'headers'));
+		return view('apply.teller.trans.index', compact('loans', 'pays', 'headers','id_loan'));
 	}
 
 	public function showPayFormWithLoanSelected(Request $request) {
@@ -41,6 +42,8 @@ class LoanRepaymentController extends Controller {
 			->select('id', 'loan_number')
 			->orderBy('created_at', 'desc')
 			->get();
+
+		$id_loan = $request->id;
 
 		$pays = DB::table('loan_repayments')
 			->join('loan_applications', 'loan_repayments.id_loan', 'loan_applications.id')
@@ -54,7 +57,7 @@ class LoanRepaymentController extends Controller {
 		if (sizeof($loans) < 1) {
 			return redirect()->back()->with('error', 'Loan period expired, contact your loan officer for assistance');
 		}
-		return view('apply.teller.trans.index', compact('loans', 'pays', 'headers'));
+		return view('apply.teller.trans.index', compact('loans', 'pays', 'headers','id_loan'));
 	}
 
 	public function RecordPayment() {

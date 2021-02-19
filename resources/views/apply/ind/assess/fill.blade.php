@@ -36,11 +36,12 @@
                    	<div class="row form-group">
                    		<div class="col-3">
                    			<label>Type of Applicant</label>
-                   			<select class="form-control select2bs4" name="applicant_type" data-placeholder="Select Gender" style="width: 100%;" id="applicant_type">
-                                  <option>Civil servant</option>
-                                  <option>Business person</option>
-                                  <option>Salaried person</option>
-                                </select>
+                   			<select class="form-control select2bs4" name="applicant_type" style="width: 100%;" id="applicant_type" required="required">
+                          <option></option>
+                          <option>Civil servant</option>
+                          <option>Business person</option>
+                          <option>Salaried person</option>
+                        </select>
                    		</div>
                    		<div class="col-3">
                             <label>Monthly Income</label>
@@ -109,7 +110,8 @@
                    	<div class="row form-group">
                    		<div class="col-2">
                    			<label>Every Borrowed Loan?</label>
-                   			<select class="form-control select2bs4" name="borrowed_money" data-placeholder="Select" style="width: 100%;">
+                   			<select class="form-control select2bs4" name="borrowed_money" data-placeholder="Select" style="width: 100%;" required="required">
+                                  <option></option>
                                   <option value="0">No</option>
                                   <option value="1">Yes</option>
                             </select>
@@ -142,7 +144,8 @@
                         </div>
                    		<div class="col-2">
                    			<label>Other personal loan?</label>
-                   			<select class="form-control select2bs4" name="other_personal_loan" data-placeholder="Select" style="width: 100%;">
+                   			<select class="form-control select2bs4" name="other_personal_loan" data-placeholder="Select" style="width: 100%;" required="required">
+                                  <option></option>
                                   <option value="0">No</option>
                                   <option value="1">Yes</option>
                             </select>
@@ -160,7 +163,8 @@
                    	<div class="row form-group">
                    		<div class="col-2">
                    			<label>Have running projects?</label>
-                   			<select class="form-control select2bs4" name="running_project" data-placeholder="Select" style="width: 100%;">
+                   			<select class="form-control select2bs4" name="running_project" data-placeholder="Select" style="width: 100%;" required="required">
+                                  <option></option>
                                   <option value="0">No</option>
                                   <option value="1">Yes</option>
                             </select>

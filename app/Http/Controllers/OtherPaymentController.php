@@ -9,14 +9,14 @@ class OtherPaymentController extends Controller {
 
 		$income = OtherPayment::where('payment_category', '=', 'income')
 			->orderBy('created_at', 'desc')
-			->limit(100)
+			->limit(25)
 			->get();
 
 		$headIncome = 'Showing Recent Incomes';
 
 		$expense = OtherPayment::where('payment_category', '=', 'expense')
 			->orderBy('created_at', 'desc')
-			->limit(100)
+			->limit(25)
 			->get();
 
 		$headExpense = 'Showing Recent Expenses';
