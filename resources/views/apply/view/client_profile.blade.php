@@ -219,7 +219,7 @@
                               <div class="card-header">
                                 <h4 class="card-title text-primary">Loan Details</h4>
                               </div>
-                              <div class="card-body">
+                              <div class="card-body" style="overflow-x: scroll;">
                                 <table class="table table-bordered">
                                   <thead>
                                     <tr>
