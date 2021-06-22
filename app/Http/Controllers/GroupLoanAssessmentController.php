@@ -107,13 +107,16 @@ class GroupLoanAssessmentController extends Controller
 
         foreach ($security_name as $key => $value) {
 
+                $request->validate(['security_attachment' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', ]);
+                $imageName = time().'.'.$request->security_attachment[$key]->extension();
+                $request->security_attachment->move(public_path('docs/collateral'), $imageName);
                 $securityAttached = array(
                     "id_client" => $loan->id_client,
                     "id_loan" => $request->id,
                     "security_name" => $security_name[$key],
                     "security_number" => $security_number[$key],
                     "security_value" => $security_value[$key],
-                    "security_attachment" => $security_attachment[$key],
+                    "security_attachment" => $imageName,
                 );
                 LoanSecurity::insert($securityAttached);
         }

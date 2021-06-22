@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="{{ asset('theme/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
   <link rel="stylesheet" href="{{ asset('theme/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
   <style type="text/css">
-    #business_type,#formChangePassword,#formChangePhoto,#addGroupMemberRole{
+    #business_type,#formChangePassword,#formChangePhoto,#addGroupMemberRole,#new_income,#new_expense,#auth_user,#submit_input,#ever_borrowed_money_1,#ever_borrowed_money_2{
       display: none;
     }
     table th{

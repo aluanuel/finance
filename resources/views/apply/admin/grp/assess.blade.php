@@ -32,8 +32,8 @@
             <div class="card card-default">
               <div class="card-header">
                 <ul class="nav nav-pills">
-                  <li class="nav-item"><a class="nav-link active" href="#admin_grp_assess" data-toggle="tab">Loans Awating Assessment</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#admin_grp_approve" data-toggle="tab">Loans Awating Approval</a></li>
+                  <!-- <li class="nav-item"><a class="nav-link active" href="#admin_grp_assess" data-toggle="tab">Loans Awating Assessment</a></li> -->
+                  <li class="nav-item"><a class="nav-link active" href="#admin_grp_approve" data-toggle="tab">Loans Awating Approval</a></li>
                   <li class="nav-item"><a class="nav-link" href="#admn_grp_approved" data-toggle="tab">Approved Loans</a></li>
                   <li class="nav-item"><a class="nav-link" href="#admn_grp_cancelled" data-toggle="tab">Cancelled Loans</a></li>
                 </ul>
@@ -41,47 +41,8 @@
               </div>
               <div class="card-body">
                 <div class="tab-content">
-                  <div class="active tab-pane" id="admin_grp_assess">
-                    <div class="card">
-                      <div class="card-header">
-                        <h3 class="card-title">Loans Awaiting Assessment</h3>
-                      </div>
-                              <!-- /.card-header -->
-                      <div class="card-body">
-                        <table id="example2" class="table table-bordered table-hover">
-                           <thead>
-                              <tr>
-                                <th style="width: 12px;">#</th>
-                                <th style="width: 30px;">Number</th>
-                                <th style="width: 30px;">Code</th>
-                                <th>Group Name</th>
-                                <th>Applicant</th>
-                                <th>Amount</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <?php $x = 1;?>
-                              @foreach($loan as $ln)
-                                <tr>
-                                  <td>{{$x}}</td>
-                                  <td>{{ $ln->loan_number}}</td>
-                                  <td>{{ $ln->group_code}}</td>
-                                  <td>{{ $ln->group_name}}</td>
-                                  <td>{{ $ln->name}}</td>
-                                  <td>{{ number_format($ln->proposed_amount)}}</td>
-                                </tr>
-                                <?php $x++;?>
-                              @endforeach
-                            </tbody>
-                        </table>
-                        <!-- table -->
-                      </div>
-                      <!-- card-body -->
-                    </div>
-                    <!-- card -->
-                  </div>
-                  <!-- tab-pane -->
-                  <div class="tab-pane" id="admin_grp_approve">
+                  
+                  <div class="active tab-pane" id="admin_grp_approve">
                     <div class="card">
                       <div class="card-header">
                         <h3 class="card-title">Loans Awaiting Approval</h3>
@@ -97,7 +58,7 @@
                                 <th>Group Name</th>
                                 <th>Applicant</th>
                                 <th>Amount</th>
-                                <th style="width: 180px;">#</th>
+                                <th>#</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -111,14 +72,7 @@
                                   <td>{{ $app->name }}</td>
                                   <td>{{ number_format($app->proposed_amount) }}</td>
                                   <td>
-                                    <div class="row">
-                                      <div class="col-6">
-                                        <a href="/apply/admin/grp/assess/{{$app->id}}" class="btn btn-outline-primary btn-sm">Assess</a>
-                                      </div>
-                                      <div class="col-6">
-                                        <a href="" class="btn btn-outline-primary btn-sm">View</a>
-                                      </div>
-                                    </div>
+                                    <a href="/apply/admin/grp/assess/{{$app->id}}" class="btn btn-outline-primary btn-sm">Assess</a>
                                   </td>
                                 </tr>
                                 <?$i++;?>

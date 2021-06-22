@@ -25,8 +25,15 @@ class OtherPaymentController extends Controller {
 	}
 
 	public function recordTransaction() {
+
+		$payment_name = request('payment_name');
+
 		$pay = new OtherPayment();
 		$pay->payment_name = request('payment_name');
+		if($payment_name == 'Other'){
+
+			$pay->payment_name = request('new_payment_name');
+		}
 		$pay->payment_amount = request('payment_amount');
 		$pay->payment_category = request('payment_category');
 		$pay->recorded_by = request('recorded_by');

@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadFile;
 use \App\Models\Guarantors;
 use \App\Models\IndividualLoanAssessment;
 use \App\Models\LoanApplication;
 use \App\Models\LoanSchedule;
 use \App\Models\LoanSecurity;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
+use App\Rules\ValidatePassword;
 
 class IndividualLoanAssessmentController extends Controller {
 
@@ -22,11 +25,13 @@ class IndividualLoanAssessmentController extends Controller {
 			->where('loan_applications.proposed_amount', '!=', NULL)
 			->where('loan_applications.application_by',Auth::user()->id)
 			->where('loan_applications.assessment_status', '=', NULL)
+			->where('register_clients.id_group',NULL)
 			->orderBy('loan_applications.created_at', 'desc')->get();
 
 		$approve = DB::table('loan_applications')
 			->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
 			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone')
+			->where('register_clients.id_group',NULL)
 			->where('loan_applications.approval_status', '=', NULL)
 			->where('loan_applications.assessment_status', '=', '0')
 			->where('loan_applications.application_by',Auth::user()->id)
@@ -37,6 +42,7 @@ class IndividualLoanAssessmentController extends Controller {
 			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone')
 			->where('loan_applications.approval_status', '=', '1')
 			->where('loan_applications.assessment_status', '=', '1')
+			->where('register_clients.id_group',NULL)
 			->where('loan_applications.loan_status', '=', NULL)
 			->where('loan_applications.application_by',Auth::user()->id)
 			->orderBy('loan_applications.created_at', 'desc')->get();
@@ -44,6 +50,7 @@ class IndividualLoanAssessmentController extends Controller {
 			->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
 			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone')
 			->where('loan_applications.approval_status', '=', '0')
+			->where('register_clients.id_group',NULL)
 			->where('loan_applications.application_by',Auth::user()->id)
 			->where('loan_applications.assessment_status', '=', '0')
 			->orderBy('loan_applications.created_at', 'desc')->get();
@@ -55,25 +62,29 @@ class IndividualLoanAssessmentController extends Controller {
 
 		$loan = DB::table('loan_applications')
 			->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
-			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone')
+			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone','register_clients.id_group')
 			->where('loan_applications.proposed_amount', '!=', NULL)
+			->where('register_clients.id_group',NULL)
 			->where('loan_applications.assessment_status', '=', NULL)->orderBy('loan_applications.created_at', 'desc')->get();
 
 		$approve = DB::table('loan_applications')
 			->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
-			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone')
+			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone','register_clients.id_group')
 			->where('loan_applications.approval_status', '=', NULL)
+			->where('register_clients.id_group',NULL)
 			->where('loan_applications.assessment_status', '=', '0')->orderBy('loan_applications.created_at', 'desc')->get();
 
 		$approved = DB::table('loan_applications')
 			->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
-			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone')
+			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone','register_clients.id_group')
 			->where('loan_applications.approval_status', '=', '1')
 			->where('loan_applications.assessment_status', '=', '1')
+			->where('register_clients.id_group',NULL)
 			->where('loan_applications.loan_status', '=', NULL)->orderBy('loan_applications.created_at', 'desc')->get();
 		$cancelled = DB::table('loan_applications')
 			->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
-			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone')
+			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone','register_clients.id_group')
+			->where('register_clients.id_group',NULL)
 			->where('loan_applications.approval_status', '=', '0')
 			->where('loan_applications.assessment_status', '=', '0')->orderBy('loan_applications.created_at', 'desc')->get();
 
@@ -130,11 +141,15 @@ class IndividualLoanAssessmentController extends Controller {
 	}
 
 	public function FillAssessmentForm(Request $request) {
+		$validator = $request->validate([
+			    'password' => ['required', new ValidatePassword(auth()->user())]
+			]);
+
+		dd($request->validate(['security_attachment.*' => 'required|string|image|mimes:jpeg,png,jpg,gif,svg|max:2048']));
 
 		try {
 
 			$assess = new IndividualLoanAssessment();
-
 			$assess->id_client = request('id_client');
 			$assess->id_loan = $request->id;
 			$assess->applicant_type = request('applicant_type');
@@ -169,18 +184,22 @@ class IndividualLoanAssessmentController extends Controller {
 			$assess->recorded_by = Auth::id();
 			$assess->save();
 
-			$security_name = request('security_name');
+			//$security_name = request('security_name');
 			$security_value = request('security_value');
 			$security_attachment = request('security_attachment');
 
-			foreach ($security_name as $key => $value) {
+			foreach ($request->file('security_name') as $security_name) {
 
+				$file = $security_name;
+    			$file->move('docs/collateral', $file->getClientOriginalName());
+
+    			dd($file);
 				$securityAttached = array(
 					"id_client" => request('id_client'),
 					"id_loan" => $request->id,
-					"security_name" => $security_name[$key],
+					"security_name" => $file->getClientOriginalName(),
 					"security_value" => $security_value[$key],
-					"security_attachment" => $security_attachment[$key],
+					"security_attachment" => $imageName,
 				);
 				LoanSecurity::insert($securityAttached);
 			}
@@ -205,7 +224,7 @@ class IndividualLoanAssessmentController extends Controller {
 			$loan->assessment_status = 0;
 			$loan->save();
 
-			return redirect()->route('assessSingle')->with('success', 'Assessment recorded successfully');
+			return redirect()->route('assessSingle')->with('success', 'Assessment successful');
 
 		} catch (Exception $e) {
 

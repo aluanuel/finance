@@ -190,7 +190,7 @@
                                 <td>{{ number_format($complete->loan_balance) }}</td>
                                 <td>{{ $complete->telephone }}</td>
                                 @if($complete->security > 0)
-                                <td><a href="/apply/teller/trans/{{$complete->id}}"><button class="btn btn-outline-primary">Return</button></a></td>
+                                <td><a href="/apply/teller/trans/security/{{$complete->id}}"><button class="btn btn-outline-primary">Return</button></a></td>
                                 @else
                                 <td></td>
                                 @endif

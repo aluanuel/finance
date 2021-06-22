@@ -17,7 +17,7 @@
 	</style>
 	<body>
 		<div class="doc-header">
-			<h4 style="text-align: center; text-transform: uppercase;" >Horizon Glory Investments Limited <br> <small> P.O BOX 112 <br> ARUA(U)</small></h4>
+			<h4 style="text-align: center; text-transform: uppercase;" >{{ config('app.name', 'Laravel') }} <br> <small> P.O BOX 112 <br> ARUA(U)</small></h4>
 			<h4 style="text-align: center; text-transform: uppercase;">LOAN APPLICATION RECEIPT</h4>
 
 			@foreach($data as $loan)
@@ -25,8 +25,9 @@
 		</div>
 		<div class="doc-body">
 			<p>Received with thanks from {{$loan->name}}</p>
-			<p>The sum of shillings {{ $amountInWords }}</p>
+			<p>The sum of shillings {{ $amountInWords }} only</p>
 			<p>Being payment of Loan Application - {{$loan->loan_number}}</p>
+			<p>Amount Paid <br><input type="text" value="{{ number_format($loan->application_fee) }}" style=" width:80px; height: auto; "></p>
 		</div>
 		@endforeach
 		<div class="doc-footer">

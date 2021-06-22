@@ -413,7 +413,7 @@
                   </a>
                   <ul class="nav nav-treeview">
                     <li class="nav-item">
-                      <a href="#" class="nav-link">
+                      <a href="/apply/admin/ind/" class="nav-link">
                         <i class="fas fa-angle-right nav-icon"></i>
                         <p>Loan Application</p>
                       </a>
@@ -443,7 +443,7 @@
                   </a>
                   <ul class="nav nav-treeview">
                     <li class="nav-item">
-                      <a href="#" class="nav-link">
+                      <a href="/apply/admin/grp/" class="nav-link">
                         <i class="fas fa-angle-right nav-icon"></i>
                         <p>Loan Application</p>
                       </a>
@@ -556,38 +556,54 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="/apply/settings/appraisal/" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Appraisal Fee
+                  <a href="#" class="nav-link">
+                    <i class="fas fa-circle nav-icon"></i>
+                    <p>
+                      Policies
+                      <i class="fas fa-angle-left right"></i>
                     </p>
                   </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/apply/settings/processing/" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Loan Processing Fee
-                    </p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/apply/settings/interest" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Interest on Loans
-                    </p>
-                  </a>
+                    <ul class="nav nav-treeview">
+                      <li class="nav-item">
+                        <a href="/apply/settings/appraisal/" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Appraisal Fee
+                          </p>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="/apply/settings/processing/" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Loan Processing Fee
+                          </p>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="/apply/settings/interest" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Interest on Loans
+                          </p>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="/apply/settings/interest/defaulting" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Interest On Defaulting
+                          </p>
+                        </a>
+                      </li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                   <a href="/apply/settings/groups" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Loan Groups
-                    </p>
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Loan Groups</p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="/apply/settings/users" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>System Users
-                    </p>
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>System Users</p>
                   </a>
                 </li>
               </ul>

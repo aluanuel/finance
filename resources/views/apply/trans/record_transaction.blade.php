@@ -30,7 +30,7 @@
 	        	<div class="col-12">
 	            <div class="card card-default">
 	              <div class="card-header">
-	                <ul class="nav nav-pills">
+	                <ul class="nav nav-pills" id="myTab">
 	                  <li class="nav-item"><a class="nav-link active" href="#nw_income" data-toggle="tab">Record Income
 	                  </a></li>
 	                  <li class="nav-item"><a class="nav-link" href="#nw_expense" data-toggle="tab">Record Expense</a></li>
@@ -52,8 +52,15 @@
 					                          @csrf
 					                          <div class="row form-group">
 					                            <div class="col-12">
-					                              <label>Income source</label>
-					                              <input type="text" name="payment_name" autocomplete="off" class="form-control" placeholder="Income source" required="required">
+					                              <label>Income Source</label>
+					                              <select class="form-control select2bs4" name="payment_name" id="income_source" data-placeholder="Select Income Source" style="width: 100%;" required="required">
+			                                  	<option></option>
+			                                  	<option value="Bank To Cash">Bank To Cash</option>
+			                                  	<option value="Fine">Fine</option>
+			                                  	<option value="Other">Other</option>
+                                				</select>
+					                              
+					                              <input type="text" id="new_income" name="new_payment_name" autocomplete="off" class="form-control mt-2" placeholder="New Income source">
 					                            </div>
 					                          </div>
 					                          <div class="row form-group">
@@ -162,8 +169,17 @@
 					                          @csrf
 					                          <div class="row form-group">
 					                            <div class="col-12">
-					                              <label>Expense source</label>
-					                              <input type="text" name="payment_name" autocomplete="off" class="form-control" placeholder="Expense source" required="required">
+					                              <label>Expense Source</label>
+
+					                              <select class="form-control select2bs4" name="payment_name" id="expense_source" data-placeholder="Select Expense Source" style="width: 100%;" required="required">
+			                                  	<option></option>
+			                                  	<option value="Bank To Cash">Cash To Bash</option>
+			                                  	<option value="Other">Other</option>
+                                				</select>
+					                              
+					                              <input type="text" id="new_expense" name="new_payment_name" autocomplete="off" class="form-control mt-2" placeholder="New Expense source">
+
+					                             
 					                            </div>
 					                          </div>
 					                          <div class="row form-group">

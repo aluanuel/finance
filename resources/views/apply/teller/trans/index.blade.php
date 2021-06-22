@@ -37,7 +37,7 @@
               </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <form action="/apply/teller/trans/search/payment" method="post">
+                  <form action="/apply/teller/trans/search/payment" method="post" class="pb-2">
                     @csrf
                     <div class="row">
                       <div class="input-group col-5">

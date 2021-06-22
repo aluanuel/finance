@@ -52,6 +52,26 @@
                     <?php $debit = null;
                           $credit = null;
                      ?>
+                    @foreach($incomes as $income)
+                      <tr>
+                        <td>{{ date('Y-m-d',strtotime($income->created_at)) }}</td>
+                        <td>{{ $income->payment_name }}</td>
+                        <td>{{ number_format($income->payment_amount) }}</td>
+                        <td></td>
+                        <?php $debit += $income->payment_amount; ?>
+                      </tr>
+                    @endforeach
+
+                    @foreach($expenses as $expense)
+                      <tr>
+                        <td>{{ date('Y-m-d',strtotime($expense->created_at)) }}</td>
+                        <td>{{ $expense->payment_name }}</td>
+                        <td></td>
+                        <td>{{ number_format($expense->payment_amount) }}</td>
+                        <?php $credit += $expense->payment_amount; ?>
+                      </tr>
+                    @endforeach
+                    
                     @foreach($repayments as $repay)
                       <tr>
                         <td>{{ date('Y-m-d',strtotime($repay->created_at)) }}</td>
@@ -96,26 +116,6 @@
                         <td>{{ number_format($security->security) }}</td>
                         <td></td>
                         <?php $debit += $security->security; ?>
-                      </tr>
-                    @endforeach
-
-                    @foreach($incomes as $income)
-                      <tr>
-                        <td>{{ date('Y-m-d',strtotime($income->created_at)) }}</td>
-                        <td>{{ $income->payment_name }}</td>
-                        <td>{{ number_format($income->payment_amount) }}</td>
-                        <td></td>
-                        <?php $debit += $income->payment_amount; ?>
-                      </tr>
-                    @endforeach
-
-                    @foreach($expenses as $expense)
-                      <tr>
-                        <td>{{ date('Y-m-d',strtotime($expense->created_at)) }}</td>
-                        <td>{{ $expense->payment_name }}</td>
-                        <td></td>
-                        <td>{{ number_format($expense->payment_amount) }}</td>
-                        <?php $credit += $expense->payment_amount; ?>
                       </tr>
                     @endforeach
                   </tbody>

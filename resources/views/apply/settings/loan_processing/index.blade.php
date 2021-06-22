@@ -50,7 +50,7 @@
                     <div class="row form-group">
                       <div class="col-12">
                         <label>Loan Processing Rate</label>
-                        <input type="number" name="interest_rate" autocomplete="off" class="form-control" placeholder="Loan Processing Rate" required="required">
+                        <input type="number" name="processing_rate" autocomplete="off" class="form-control" placeholder="Loan Processing Rate" required="required">
                       </div>
                     </div>
                     <div class="row form-group">
@@ -79,7 +79,16 @@
                       </tr>
                     </thead>
                     <tbody>
-                      
+                      <?php $x = 1; ?>
+                      @foreach($rates as $rate)
+                        <tr>
+                          <td>{{ $x }}</td>
+                          <td>{{ $rate->loan_type }}</td>
+                          <td>{{ $rate->processing_rate }}</td>
+                          <td>{{ $rate->created_at }}</td>
+                        </tr>
+                        <?php $x++; ?>
+                      @endforeach
                     </tbody>
                   </table>
                   <!-- table -->

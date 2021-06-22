@@ -1,7 +1,7 @@
 <footer class="main-footer">
-    <strong>&copy; {{date('Y') }} <a href="https://adminlte.io">Lux Technologies Limited</a>.</strong>
+    <strong>&copy; {{date('Y') }} <a href="#">Circle Software Company Ltd</a>.</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 1.0.0
+      <b>Circle Finance Software</b> 1.0.0
     </div>
   </footer>

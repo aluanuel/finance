@@ -28,6 +28,17 @@
 <script src="{{asset('theme/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
 <script src="{{asset('theme/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
 <script>
+$(document).ready(function(){
+    $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+        localStorage.setItem('activeTab', $(e.target).attr('href'));
+    });
+    var activeTab = localStorage.getItem('activeTab');
+    if(activeTab){
+        $('#myTab a[href="' + activeTab + '"]').tab('show');
+    }
+});
+</script>
+<script>
   $(function () {
     //Initialize Select2 Elements
     $('.select2').select2({
@@ -40,6 +51,7 @@
       placeholder: 'Select'
     })
   })
+
 
 
   // BS-Stepper Init
@@ -104,6 +116,21 @@
 
      document.body.innerHTML = originalContents;
 }
+</script>
+<script type="text/javascript">
+  $.fn.extend({
+    print: function() {
+      var frameName = 'printIframe';
+      var doc = window.frames[frameName];
+      if (!doc) {
+        $('<iframe>').hide().attr('name', frameName).appendTo(document.body);
+        doc = window.frames[frameName];
+      }
+      doc.document.body.innerHTML = this.html();
+      doc.window.print();
+      return this;
+    }
+  });
 </script>
 <script>
   $(function () {
@@ -221,6 +248,7 @@
       $('#id_group').val(content);
       console.log(content);
     })
+
     $('#applicant_type').change(function(){
       var value = $('#applicant_type option:selected').val();
       if(value == "Business person"){
@@ -229,14 +257,22 @@
         $('#business_type').hide();
       }
     });  
+
     $('#btnChangePassword').click(function(){
       $('#formChangePassword').show();
       $('#formChangePhoto').hide();
        $('#infoPassword').hide();
     });
+
     $('#btnChangePhoto').click(function(){
       $('#formChangePhoto').show();
       $('#formChangePassword').hide();
+    });
+
+    $('#btn_invoke_auth').click(function(){
+      $('#invoke_auth').hide();
+      $('#auth_user').show();
+      $('#submit_input').show();
     });
 
     $('#password2').blur(function(){
@@ -251,6 +287,27 @@
       $('#addGroupMemberRole').show();
        $('#btnShowFormAddGroupMemberRole').hide();
     });
+    $('#income_source').change(function(){
+      var value = $('#income_source option:selected').val();
+      if(value == "Other"){
+        $('#new_income').show();
+        $('#new_income').attr('required', 'required');
+      }else{
+        $('#new_income').hide();
+        $('#new_income').removeAttr('required');
+      }
+    }); 
+
+    $('#expense_source').change(function(){
+      var value = $('#expense_source option:selected').val();
+      if(value == "Other"){
+        $('#new_expense').show();
+        $('#new_expense').attr('required', 'required');
+      }else{
+        $('#new_expense').hide();
+        $('#new_expense').removeAttr('required');
+      }
+    }); 
 
 });
 var ctx = document.getElementById('myChart').getContext('2d');

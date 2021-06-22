@@ -31,6 +31,8 @@ class CreateLoanApplicationsTable extends Migration {
 			$table->double('loan_amount_issued')->nullable();
 			$table->double('loan_interest')->nullable();
 			$table->double('security')->nullable();
+			$table->string('security_status')->nullable();
+			$table->integer('security_issued_by')->nullable();
 			$table->integer('loan_period')->nullable();
 			$table->double('loan_recovered')->nullable();
 			$table->double('loan_balance')->nullable();
@@ -39,6 +41,13 @@ class CreateLoanApplicationsTable extends Migration {
 			$table->boolean('assessment_status')->nullable();
 			$table->boolean('approval_status')->nullable();
 			$table->string('loan_status')->nullable();
+			$table->double('loan_outstanding')->nullable();
+			$table->double('interest_loan_outstanding')->nullable();
+			$table->integer('days_defaulted')->nullable();
+			$table->double('days_loan_extended')->nullable();
+			$table->datetime('loan_extension_start')->nullable();
+			$table->text('loan_extension_comment')->nullable();
+			$table->integer('loan_reinstated_by')->nullable();
 			$table->unsignedBigInteger('issued_by')->default(0);
 			$table->timestamps();
 		});

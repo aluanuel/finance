@@ -37,7 +37,7 @@
                    		<div class="col-3">
                    			<label>Type of Applicant</label>
                    			<select class="form-control select2bs4" name="applicant_type" style="width: 100%;" id="applicant_type" required="required">
-                          <option></option>
+                          <option>{{ old('applicant_type') }}</option>
                           <option>Civil servant</option>
                           <option>Business person</option>
                           <option>Salaried person</option>
@@ -45,16 +45,16 @@
                    		</div>
                    		<div class="col-3">
                             <label>Monthly Income</label>
-                            <input type="number" name="monthly_income" autocomplete="off" class="form-control" placeholder="Monthly Income" required="required">
+                            <input type="number" name="monthly_income" autocomplete="off" class="form-control" placeholder="Monthly Income" required="required" value="{{ old('monthly_income')}}">
                         </div>
                         <div class="col-6">
                             <label>Other Income Sources</label>
-                            <textarea name="income_sources" class="form-control" placeholder="List sources, separate each source with a comma(,)" autocomplete="off" ></textarea>
+                            <textarea name="income_sources" class="form-control" placeholder="List sources, separate each source with a comma(,)" autocomplete="off"></textarea>
                         </div>
                    	</div>
                     <div class="row form-group" id="business_type">
                           <div class="col-12">
-                            <input type="text" class="form-control" name="business_type" placeholder="Type of business" autocomplete="off">
+                            <input type="text" class="form-control" name="business_type" placeholder="Type of business" autocomplete="off" value="{{ old('business_type')}}">
                           </div>
                         </div>
                    	<div class="row form-group">
@@ -89,19 +89,19 @@
                    	<div class="row form-group">
                         <div class="col-3">
                             <label>School fees</label>
-                            <input type="number" autocomplete="off" class="form-control" name="school_fees" placeholder="School fees" required="required">
+                            <input type="number" autocomplete="off" class="form-control" name="school_fees" placeholder="School fees" required="required" value="{{ old('school_fees')}}">
                         </div>
                         <div class="col-3">
                             <label>Leisure</label>
-                            <input type="number" autocomplete="off" name="leisure" class="form-control" placeholder="Leisure" required="required" >
+                            <input type="number" autocomplete="off" name="leisure" class="form-control" placeholder="Leisure" required="required" value="{{ old('leisure') }}" >
                         </div>
                         <div class="col-3">
                             <label>Others</label>
-                            <input type="number" autocomplete="off" class="form-control" name="others" placeholder="Others" required="required">
+                            <input type="number" autocomplete="off" class="form-control" name="others" placeholder="Others" required="required" value="{{ old('others')}}">
                         </div>
                         <div class="col-3">
                             <label>Total Monthly Expenditure</label>
-                            <input type="number" autocomplete="off" class="form-control" placeholder="Total Monthly Expenditure" name="total_monthly_expense" required="required" >
+                            <input type="number" autocomplete="off" class="form-control" placeholder="Total Monthly Expenditure" name="total_monthly_expense" required="required" value="{{ old('total_monthly_expense') }}" >
                         </div>
                    	</div>
                    	<div class="row form-group">
@@ -111,7 +111,7 @@
                    		<div class="col-2">
                    			<label>Every Borrowed Loan?</label>
                    			<select class="form-control select2bs4" name="borrowed_money" data-placeholder="Select" style="width: 100%;" required="required">
-                                  <option></option>
+                                  <option>{{ old('borrowed_money')}}</option>
                                   <option value="0">No</option>
                                   <option value="1">Yes</option>
                             </select>
@@ -125,7 +125,7 @@
                             <input type="date" autocomplete="off" class="form-control" placeholder="End of the loan" name="end_date">
                         </div>
                         <div class="col-2">
-                            <label>Loan Amount borrowed</label>
+                            <label>Amount borrowed</label>
                             <input type="number" autocomplete="off" class="form-control" placeholder="Loan Amount" name="amount_borrowed">
                         </div>
                         <div class="col-4">
@@ -135,7 +135,7 @@
                    	</div>
                    	<div class="row form-group">
                    		<div class="col-2">
-                            <label>Loan duration (months)</label>
+                            <label>Loan period (months)</label>
                             <input type="number" autocomplete="off" class="form-control" placeholder="Duration of the loan" name="loan_period_borrowed">
                         </div>
                         <div class="col-2">
@@ -247,8 +247,17 @@
   		                	<input type="text" class="form-control" name="guarantor_telephone[]" autocomplete="off" placeholder="Telephone number" required="required">
   		                </div>
                    	</div>
-                   	<div class="row form-group">
-                        <button class="btn btn-outline-primary ml-2">Save</button>
+                   	<div class="row form-group" id="invoke_auth">
+                        <button class="btn btn-outline-primary ml-2" id="btn_invoke_auth">Save</button>
+                    </div>
+                    <div class="row form-group" id="auth_user">
+                        <div class="col-4">
+                            <label>Password</label>
+                            <input type="password" name="password" class="form-control" required="required" placeholder="Type your password">
+                        </div>
+                    </div>
+                    <div class="row form-group" id="submit_input">
+                        <button class="btn btn-primary ml-2">Continue to save</button>
                     </div>
         		</form>
         	</div>

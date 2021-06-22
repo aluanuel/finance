@@ -151,10 +151,10 @@
                       <td>{{ $user->role }}</td>
                       @if($user->user_status == 1)
                       <td class="text-success">Active</td>
-                      <td><a href="/apply/settings/deact/{{$user->id}}" class="btn btn-outline-danger btn-sm">Deactivate</a></td>
+                      <td><a href="/apply/settings/manage?id={{ $user->id }}&state={{ $user->user_status}}" class="btn btn-outline-danger btn-sm">Deactivate</a></td>
                       @else
                       <td class="text-danger">Inactive</td>
-                      <td><a href="/apply/settings/act/{{$user->id}}" class="btn btn-outline-primary btn-sm">Activate</a></td>
+                      <td><a href="/apply/settings/manage?id={{ $user->id }}&state={{ $user->user_status}}" class="btn btn-outline-primary btn-sm">Activate</a></td>
                       @endif
                     </tr>
                     <?php $i++;?>

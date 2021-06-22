@@ -85,6 +85,31 @@ class SystemUserController extends Controller
         return redirect()->back()->with('success','Success'); 
     }
 
+    public function manageUser(Request $request){
+
+        $user = User::findOrFail($request->id);
+
+        $status = $request->state;
+
+        switch ($status) {
+
+            case '0':
+               $user->user_status = 1;
+
+                break;
+            
+            case '1':
+               $user->user_status = 0;
+
+                break;
+        }
+
+        $user->save(); 
+        
+        return redirect()->back()->with('success','Account updated successfully');
+
+    }
+
     protected function randomPassword() { 
 
 	    $alphabet = 'abcdefghijklmnopqrstuvwxyz1234567890';

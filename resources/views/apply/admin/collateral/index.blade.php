@@ -42,6 +42,7 @@
                           <th>Est. Value</th>
                           <th>Attachment</th>
                           <th>Status</th>
+                          <th>Agreement</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -50,8 +51,14 @@
                             <td>{{ $sec->security_name}}</td>
                             <td>{{ $sec->security_number}}</td>
                             <td>{{ number_format($sec->security_value)}}</td>
-                            <td><a href="{{$sec->security_attachment}}" class="btn btn-success btn-sm">View</a></td>
+                            <td><a href="{{ asset('docs/'.$sec->security_attachment)}}" class="btn btn-outline-success btn-sm">View</a></td>
+                            @if($sec->security_status == 0)
                             <td>Not taken</td>
+                            <td></td>
+                            @else
+                            <td>Taken</td>
+                            <td><a href="{{ asset('docs/'.$sec->security_agreement)}}" class="btn btn-outline-primary btn-sm">View</a></td>
+                            @endif
                           </tr>
                         @endforeach
                       </tbody>
@@ -68,7 +75,7 @@
                 <div class="tab-content">
                   <div class="tab-pane active" id="view_agreement">
                     <p>
-                      I <strong>{{ $loan->name }}</strong> do hereby agree to withdraw my security from <strong>{{ config('app.name', 'Laravel') }}</strong> that I offered to acquire a loan of <strong>{{ 'UGX'}} {{ number_format($loan->recommended_amount) }}</strong> for a period of <strong>{{$loan->loan_period }} {{'Months'}}</strong> at an interest rate of <strong>{{$loan->interest_rate }}{{ '%'}}</strong> from this institution.
+                      I <strong>{{ $loan->name }}</strong> do hereby agree to withdraw my security from <strong>{{ config('app.name', 'Laravel') }}</strong> that I offered to acquire a loan of <strong>{{ 'UGX'}} {{ number_format($loan->recommended_amount) }}</strong> at an interest rate of <strong>{{$loan->interest_rate }}{{ '%'}}</strong> from this institution.
                     </p>
                     <p>My securities to withdraw are listed herein as;<br>
                       <?php $i = 1; ?>
@@ -99,12 +106,13 @@
                   </div>
                   <!-- /.tab-pane -->
                   <div class="tab-pane" id="upload_agreement">
-                    <form>
+                    <form action="/apply/admin/collateral/{{$loan->id}}" enctype="multipart/form-data" method="post">
+                      @csrf
                       <div class="form-group">
                         <label>Upload Signed Agreement</label>
                         <div class="input-group">
                           <div class="custom-file">
-                            <input type="file" name="signed_agreement" class="form-control custom-file-input" id="exampleInputFile" required="required">
+                            <input type="file" name="security_agreement" class="form-control custom-file-input" id="exampleInputFile" required="required">
                             <label class="custom-file-label" for="exampleInputFile">Upload Signed Agreement</label>
                           </div>
                         </div>

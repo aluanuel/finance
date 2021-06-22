@@ -37,11 +37,16 @@ class LoanRepaymentController extends Controller {
 
 		$loans = DB::table('loan_applications')
 			->where('loan_status', '=', 'started')
-			->where('end_date', '>=', Carbon::now()->toDateString())
+			->where('end_date', '>=', Carbon::now()->format('Y-m-d'))
 			->where('id', '=', $request->id)
 			->select('id', 'loan_number')
 			->orderBy('created_at', 'desc')
 			->get();
+
+		if(sizeof($loans) <= 0){
+
+			return redirect()->back()->with('error','Loan period expired, please contact your Accounts Manager for assistance');
+		}
 
 		$id_loan = $request->id;
 
@@ -54,9 +59,6 @@ class LoanRepaymentController extends Controller {
 
 		$headers = 'Showing Recent Loan Payments';
 
-		if (sizeof($loans) < 1) {
-			return redirect()->back()->with('error', 'Loan period expired, contact your loan officer for assistance');
-		}
 		return view('apply.teller.trans.index', compact('loans', 'pays', 'headers','id_loan'));
 	}
 

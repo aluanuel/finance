@@ -33,7 +33,7 @@
             <!-- Form Element sizes -->
             <div class="card card-default">
               <div class="card-header">
-              	<ul class="nav nav-pills">
+              	<ul class="nav nav-pills" id="myTab">
                   <li class="nav-item"><a class="nav-link active" href="#nw_ind_ln" data-toggle="tab">New</a></li>
                   <li class="nav-item"><a class="nav-link" href="#cont_ind_ln" data-toggle="tab">Existing</a></li>
                   <li class="nav-item"><a class="nav-link" href="#list_ind_ln" data-toggle="tab">View Applications</a></li>

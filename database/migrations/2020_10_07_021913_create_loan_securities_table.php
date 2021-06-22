@@ -20,6 +20,7 @@ class CreateLoanSecuritiesTable extends Migration {
 			$table->string('security_number')->nullable();
 			$table->double('security_value');
 			$table->text('security_attachment')->nullable();
+			$table->text('security_agreement')->nullable();
 			$table->boolean('security_status')->default(0);
 			$table->timestamps();
 		});

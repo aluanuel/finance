@@ -8,6 +8,7 @@ use \App\Models\LoanApplication;
 use \App\Models\RegisterClient;
 use \App\Models\ClientGroup;
 use Carbon\Carbon;
+use App\Rules\ValidatePassword;
 
 class RegisterClientController extends Controller {
 
@@ -95,6 +96,7 @@ class RegisterClientController extends Controller {
 			$check = DB::table('loan_applications')
 					->where('id_client',request('id_client'))
 					->where('loan_status','!=','completed')
+					->orWhere('loan_status',NULL)
 					->get();
 			if(sizeof($check) > 0){
 				return redirect()->route('viewLoanList',[request('id_client')])->with('error','You have '.sizeof($check). ' incomplete loan(s). Please complete the current running loan or resume the exisiting loan application');
@@ -159,6 +161,10 @@ class RegisterClientController extends Controller {
 	}
 
 	public function updateIndividualApplication(Request $request) {
+
+		$validator = $request->validate([
+			    'password' => ['required', new ValidatePassword(auth()->user())]
+			]);
 
 		$loan = LoanApplication::find($request->id);
 
@@ -228,8 +234,7 @@ class RegisterClientController extends Controller {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public function showGroupApplicationForm(){
-		$groups = ClientGroup::where('group_status',1)
-				->get();
+		$groups = ClientGroup::get();
 		$interest = DB::table('interest_on_loans')
 			->select('interest_rate')
 			->where('loan_type', '=', 'Group')

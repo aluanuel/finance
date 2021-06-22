@@ -27,6 +27,29 @@ class ReportController extends Controller
     	return view('apply.report.collections',compact('loan','heading','appraisal','application','passbook','processing','fine','security','total'));
     }
 
+    public function LoanRepayments(){
+        $loan = DB::table('loan_repayments')
+                ->join('loan_applications','loan_repayments.id_loan','loan_applications.id')
+                ->join('register_clients','loan_applications.id_client','register_clients.id')
+                ->join('users','loan_repayments.recorded_by','users.id')
+                ->select('loan_repayments.*','loan_applications.loan_number','loan_applications.id AS loan_id','register_clients.name As client','users.name')
+                ->orderBy('loan_repayments.created_at','desc')->get();
+        $heading = "Showing Loan Repayments As At ".Carbon::now()->toDateString();
+        return view('apply.report.collections.repayment',compact('heading','loan'));
+    }
+
+    public function LoanSecurity(){
+        $security = DB::table('loan_applications')
+                    ->join('register_clients','loan_applications.id_client','register_clients.id')
+                    ->select('loan_applications.*','register_clients.name as client')
+                    ->where('loan_applications.security','!=',NULL)
+                    ->orderBy('loan_applications.start_date','desc')
+                    ->get();
+        
+        $heading = "Showing Loan Securities As At ".Carbon::now()->toDateString();
+        return view('apply.report.collections.security',compact('heading','security'));
+    }
+
     public function Sales(){
     	$sales = DB::table('loan_applications')
     	->where('loan_status','!=',null)

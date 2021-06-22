@@ -74,7 +74,7 @@
                     <b><i class="fas fa-user-friends mr-1"></i>Loan Group</b> <a class="float-right">{{$loan->id_group }}</a>
                   </li>
                   <li class="list-group-item">
-                    <b><i class="fas fa-user mr-1"></i> Group Leader</b> <a class="float-right">{{$loan->role }}</a>
+                    <b><i class="fas fa-user mr-1"></i> Role</b> <a class="float-right">{{$loan->role }}</a>
                   </li>
                 </ul>
 
@@ -203,7 +203,12 @@
                           <h3 class="card-title">{{ $hist->loan_number }}</h3>
 
                           <div class="card-tools">
-                            <span title="3 New Messages" class="badge badge-warning">{{$hist->loan_status}}</span>
+                            <span title="Loan Status" class="badge badge-warning">{{$hist->loan_status}}</span>
+                            @if(Auth::user()->usertype == 'Manager' && Auth::user()->role == 'Manager')
+                              @if($hist->loan_status == 'suspended')
+                            <span><a href="/apply/admin/reinstate/{{$hist->id}}" class="btn btn-xs btn-danger"> {{'Reinstate Loan'}}</a></span>
+                            @endif
+                            @endif
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                               <i class="fas fa-minus"></i>
                             </button>
