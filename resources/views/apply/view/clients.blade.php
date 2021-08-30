@@ -50,11 +50,11 @@
                       @foreach($accounts as $ac)
                       <tr>
                         <td>{{$x}}</td>
-                        <td><a href="/apply/account/profile/{{$ac->id}}">{{ $ac->account }}</a></td>
-                        <td><a href="/apply/account/profile/{{$ac->id}}">{{ $ac->name }}</a></td>
-                        <td><a href="/apply/account/profile/{{$ac->id}}">{{ $ac->gender }}</a></td>
-                        <td><a href="/apply/account/profile/{{$ac->id}}">{{ $ac->telephone }}</a></td>
-                        <td><a href="/apply/account/profile/{{$ac->id}}">{{ $ac->occupation }}</a></td>
+                        <td><a href="/apply/view/profile/{{$ac->id}}">{{ $ac->account }}</a></td>
+                        <td><a href="/apply/view/profile/{{$ac->id}}">{{ $ac->name }}</a></td>
+                        <td><a href="/apply/view/profile/{{$ac->id}}">{{ $ac->gender }}</a></td>
+                        <td><a href="/apply/view/profile/{{$ac->id}}">{{ $ac->telephone }}</a></td>
+                        <td><a href="/apply/view/profile/{{$ac->id}}">{{ $ac->occupation }}</a></td>
                         <td>{{ date('Y-m-d',strtotime($ac->created_at)) }}</td>
                       </tr>
                       <?php $x++;?>

@@ -21,7 +21,9 @@ class CreateRegisterClientsTable extends Migration {
 			$table->string('work_place');
 			$table->string('occupation')->nullable();
 			$table->string('district')->nullable();
-			$table->text('photo')->default('1611593817.png');
+			$table->text('photo')->nullable();
+			$table->string('nin')->nullable();
+			$table->text('photo_national_id')->nullable();
 			$table->string('resident_village')->nullable();
 			$table->string('resident_parish')->nullable();
 			$table->string('resident_division')->nullable();

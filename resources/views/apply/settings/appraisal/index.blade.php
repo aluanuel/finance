@@ -39,7 +39,8 @@
 	                            <div class="col-12">
 	                              <label>Loan Appraisal Type</label>
 	                              <div class="form-group">
-	                                <select class="form-control select2bs4" name="appraisal_type" data-placeholder="Select Gender" style="width: 100%;">
+	                                <select class="form-control select2bs4" name="appraisal_type" data-placeholder="Select" style="width: 100%;" required="required">
+	                                	<option></option>
 	                                  <option>Individual</option>
 	                                  <option>Group</option>
 	                                </select>
@@ -48,8 +49,20 @@
 	                          </div>
 	                          <div class="row form-group">
 	                            <div class="col-12">
+	                              <label>Category</label>
+	                              <div class="form-group">
+	                                <select class="form-control select2bs4" name="appraisal_category" data-placeholder="Select" style="width: 100%;" required="required">
+	                                	<option></option>
+	                                  <option>New</option>
+	                                  <option>Existing</option>
+	                                </select>
+	                              </div>
+	                            </div>
+	                          </div>
+	                          <div class="row form-group">
+	                            <div class="col-12">
 	                              <label>Appraisal Amount</label>
-	                              <input type="number" name="appraisal_amount" autocomplete="off" class="form-control" placeholder="Appraisal Amount" required="required">
+	                              <input type="text" name="appraisal_amount" autocomplete="off" class="form-control" placeholder="Appraisal Amount" required="required">
 	                            </div>
 	                          </div>
 	                          <input type="hidden" name="created_by" value="{{Auth::id()}}">
@@ -72,6 +85,7 @@
                               <tr>
                                 <th>#</th>
                                 <th>Appraisal Type</th>
+                                <th>Category</th>
                                 <th>Charge</th>
                                 <th>Created at</th>
                               </tr>
@@ -82,6 +96,7 @@
                                 <tr>
                                   <td>{{$i}}</td>
                                   <td>{{ $fee->appraisal_type }}</td>
+                                  <td>{{ $fee->appraisal_category }}</td>
                                   <td>{{ number_format($fee->appraisal_amount) }}</td>
                                   <td>{{ date('Y-m-d',strtotime($fee->created_at)) }}</td>
                                 </tr>

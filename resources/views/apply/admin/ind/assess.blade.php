@@ -31,7 +31,7 @@
           <div class="col-12">
             <div class="card card-default">
               <div class="card-header">
-                <ul class="nav nav-pills">
+                <ul class="nav nav-pills" id="myTab">
                   <li class="nav-item"><a class="nav-link active" href="#admin_nw_assess" data-toggle="tab">Loans Awating Assessment</a></li>
                   <li class="nav-item"><a class="nav-link" href="#admin_nw_approve" data-toggle="tab">Loans Awating Approval</a></li>
                   <li class="nav-item"><a class="nav-link" href="#admn_approved" data-toggle="tab">Approved Loans</a></li>

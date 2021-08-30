@@ -33,7 +33,7 @@
             <!-- Form Element sizes -->
             <div class="card card-default">
               <div class="card-header">
-              	<ul class="nav nav-pills">
+              	<ul class="nav nav-pills" id="myTab">
                   <li class="nav-item"><a class="nav-link active" href="#grp_nw" data-toggle="tab">New</a></li>
                   <li class="nav-item"><a class="nav-link" href="#grp_existing" data-toggle="tab">Existing</a></li>
                   <li class="nav-item"><a class="nav-link" href="#grp_apply" data-toggle="tab">View Applications</a></li>
@@ -80,7 +80,7 @@
                             </div>
                             <div class="col-2">
                               <label>Date of Birth</label>
-                              <input type="date" name="dob" autocomplete="off" class="form-control" placeholder="Date of Birth" required="required">
+                              <input type="date" name="dob" autocomplete="off" class="form-control" placeholder="Date of Birth" required="required" min="01/01/1900">
                             </div>
                             
                           </div>
@@ -99,7 +99,7 @@
                             </div>
                             <div class="col-3">
                               <label>Telephone</label>
-                              <input type="text" name="telephone" autocomplete="off" class="form-control" placeholder="Telephone" required="required">
+                              <input type="text" name="telephone" autocomplete="off" class="form-control" placeholder="Telephone" required="required" pattern="[0-9]{10}">
                             </div>
                             <div class="col-4">
                               <label>Next of Kin</label>
@@ -150,7 +150,7 @@
                             </div>
                             <div class="col-3">
                               <label>Appraisal Fee</label>
-                              <input type="text" name="application_fee" autocomplete="off" class="form-control" placeholder="Appraisal Fee" value="{{ $appraisal->appraisal_amount}}" readonly="readonly">
+                              <input type="text" name="application_fee" autocomplete="off" class="form-control" placeholder="Appraisal Fee" value="{{ number_format($appraisal->appraisal_amount)}}" readonly="readonly">
                             </div>
                           </div>
                           <div class="row form-group">
@@ -220,7 +220,7 @@
                           </div>
                           <!-- /.card-header -->
                           <div class="card-body" style="overflow-x: scroll;">
-                            <table id="example2" class="table table-bordered table-hover">
+                            <table id="example1" class="table table-bordered table-hover">
                               <thead>
                               <tr>
                                 <th>#</th>

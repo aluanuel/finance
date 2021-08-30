@@ -117,11 +117,11 @@
                 </div>
                 <div class="col-3">
                   <label>Loan Amount</label>
-                  <input type="number" name="proposed_amount" autocomplete="off" class="form-control" placeholder="Loan amount to borrow" required="required">
+                  <input type="text" name="proposed_amount" autocomplete="off" class="form-control" placeholder="Loan amount to borrow" required="required">
                 </div>
                 <div class="col-3">
                   <label>Loan Period (Months)</label>
-                  <input type="number" name="loan_period" autocomplete="off" class="form-control" placeholder="Loan Duration in Months" required="required">
+                  <input type="number" name="loan_period" autocomplete="off" class="form-control" placeholder="Loan Duration in Months" required="required" min="1">
                 </div>
                 <div class="col-4">
                   <label>Purpose of the loan</label>

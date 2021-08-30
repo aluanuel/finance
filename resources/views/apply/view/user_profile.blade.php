@@ -34,7 +34,7 @@
                     <div class="card-body box-profile">
                       <div class="text-center">
                         <img class="profile-user-img img-fluid img-circle"
-                             src="{{ asset('img/'.$user->photo)}}"
+                             src="{{ asset('storage/photos/'.$user->photo)}}"
                              alt="User profile picture">
                       </div>
 

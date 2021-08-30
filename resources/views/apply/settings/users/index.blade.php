@@ -55,7 +55,7 @@
                         <div class="form-group row">
                           <div class="col-12">
                             <label>Telephone</label>
-                              <input id="telephone" type="text" class="form-control @error('telephone') is-invalid @enderror" name="telephone" value="{{ old('telephone') }}" required="required" placeholder="Telephone" autocomplete="off">
+                              <input id="telephone" type="text" class="form-control @error('telephone') is-invalid @enderror" name="telephone" value="{{ old('telephone') }}" required="required" placeholder="Telephone" autocomplete="off" pattern="[0-9]{10}">
                               @error('telephone')
                               <span class="invalid-feedback" role="alert">
                                   <strong>{{ $message }}</strong>

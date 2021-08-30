@@ -78,13 +78,20 @@ class RegisterClientController extends Controller {
 			->where('loan_type', '=', 'Individual')
 			->latest()
 			->first();
-		$fee = DB::table('appraisal_fees')
+		$new = DB::table('appraisal_fees')
 			->where('appraisal_type','=','Individual')
+			->where('appraisal_category','=','New')
 			->select('appraisal_amount')
 			->latest()
 			->first();
+		$existing = DB::table('appraisal_fees')
+			->where('appraisal_type','=','Individual')
+			->where('appraisal_category','=','Existing')
+			->select('appraisal_amount')
+			->latest()
+			->first();	
 
-		return view('apply.ind.index', compact('clients', 'loan', 'register', 'interest','fee'));
+		return view('apply.ind.index', compact('clients', 'loan', 'register', 'interest','new','existing'));
 	}
 
 	public function NewIndividualApplication(Request $request) {
@@ -96,7 +103,6 @@ class RegisterClientController extends Controller {
 			$check = DB::table('loan_applications')
 					->where('id_client',request('id_client'))
 					->where('loan_status','!=','completed')
-					->orWhere('loan_status',NULL)
 					->get();
 			if(sizeof($check) > 0){
 				return redirect()->route('viewLoanList',[request('id_client')])->with('error','You have '.sizeof($check). ' incomplete loan(s). Please complete the current running loan or resume the exisiting loan application');
@@ -120,12 +126,12 @@ class RegisterClientController extends Controller {
 			}
 
 		} else {
-			$request->validate([
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        	]);
-        	$imageName = time().'.'.$request->photo->extension();
+			//$request->validate([
+         //    'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        	// ]);
+        	// $imageName = time().'.'.$request->photo->extension();
 
-         	$request->photo->move(public_path('img'), $imageName);
+         // 	$request->photo->move(public_path('img'), $imageName);
 
 			$client = new RegisterClient();
 			$client->account = $this->accountNumber();
@@ -135,7 +141,7 @@ class RegisterClientController extends Controller {
 			$client->telephone = request('telephone');
 			$client->work_place = request('work_place');
 			$client->occupation = request('occupation');
-			$client->photo = $imageName;
+			//$client->photo = $imageName;
 			$client->registration_date = Carbon::now()->toDateTimeString();
 			$client->registered_by = Auth::id();
 			$client->save();
@@ -172,7 +178,7 @@ class RegisterClientController extends Controller {
 
 			$loan->application_status = 1;
 
-			$loan->payment_received_by = Auth::id();
+			//$loan->payment_received_by = Auth::user()->id;
 
 			$loan->save();
 
@@ -187,8 +193,7 @@ class RegisterClientController extends Controller {
 		$loans = DB::table('loan_applications')
 					->join('users','loan_applications.application_by','users.id')
 					->where('loan_applications.id_client',$request->id)
-					->where('loan_applications.loan_status',NULL)
-					->orWhere('loan_applications.loan_status','=','started')
+					->where('loan_applications.loan_status','!=','completed')
 					->select('loan_applications.*','users.name')
 					->orderBy('loan_applications.application_date','desc')
 					->get();
@@ -288,7 +293,7 @@ class RegisterClientController extends Controller {
 
 				$loanApp->id_client = request('id_client');
 
-				$loanApp->application_fee = request('application_fee');
+				$loanApp->application_fee = str_replace(',','',request('application_fee'));
 
 				$loanApp->application_date = Carbon::now()->toDateTimeString();
 
@@ -335,7 +340,7 @@ class RegisterClientController extends Controller {
 
 			$loanApp->id_group = request('id_group');
 
-			$loanApp->application_fee = request('application_fee');
+			$loanApp->application_fee = str_replace(',','',request('application_fee'));
 
 			$loanApp->application_date = Carbon::now()->toDateTimeString();
 

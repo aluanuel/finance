@@ -16,6 +16,7 @@ class CreateAppraisalFeesTable extends Migration
         Schema::create('appraisal_fees', function (Blueprint $table) {
             $table->id();
             $table->string('appraisal_type');
+            $table->string('appraisal_category');
             $table->double('appraisal_amount');
             $table->unsignedBigInteger('created_by');
             $table->timestamps();

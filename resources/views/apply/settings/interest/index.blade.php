@@ -50,7 +50,7 @@
 	                          <div class="row form-group">
 	                            <div class="col-12">
 	                              <label>Interest rate</label>
-	                              <input type="number" name="interest_rate" autocomplete="off" class="form-control" placeholder="Interest Rate (%)" required="required">
+	                              <input type="number" name="interest_rate" autocomplete="off" class="form-control" placeholder="Interest Rate (%)" required="required" min="0">
 	                            </div>
 	                          </div>
 	                          <input type="hidden" name="created_by" value="{{Auth::id()}}">

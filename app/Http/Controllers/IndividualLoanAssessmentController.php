@@ -11,9 +11,11 @@ use \App\Models\IndividualLoanAssessment;
 use \App\Models\LoanApplication;
 use \App\Models\LoanSchedule;
 use \App\Models\LoanSecurity;
+use \App\Models\RegisterClient;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use App\Rules\ValidatePassword;
+use Illuminate\Support\Facades\Storage;
 
 class IndividualLoanAssessmentController extends Controller {
 
@@ -141,65 +143,33 @@ class IndividualLoanAssessmentController extends Controller {
 	}
 
 	public function FillAssessmentForm(Request $request) {
+
 		$validator = $request->validate([
 			    'password' => ['required', new ValidatePassword(auth()->user())]
 			]);
 
-		dd($request->validate(['security_attachment.*' => 'required|string|image|mimes:jpeg,png,jpg,gif,svg|max:2048']));
-
 		try {
 
-			$assess = new IndividualLoanAssessment();
-			$assess->id_client = request('id_client');
-			$assess->id_loan = $request->id;
-			$assess->applicant_type = request('applicant_type');
-			$assess->business_type = request('business_type');
-			$assess->monthly_income = request('monthly_income');
-			$assess->income_sources = request('income_sources');
-			$assess->monthly_income_others = request('monthly_income_others');
-			$assess->total_monthly_income = request('total_monthly_income');
-			$assess->food = request('food');
-			$assess->rent = request('rent');
-			$assess->medical = request('medical');
-			$assess->electricity = request('electricity');
-			$assess->school_fees = request('school_fees');
-			$assess->leisure = request('leisure');
-			$assess->others = request('others');
-			$assess->total_monthly_expense = request('total_monthly_expense');
-			$assess->monthly_surplus = request('monthly_surplus');
-			$assess->borrowed_money = request('borrowed_money');
-			$assess->start_date = request('start_date');
-			$assess->end_date = request('end_date');
-			$assess->money_lender = request('money_lender');
-			$assess->amount_borrowed = request('amount_borrowed');
-			$assess->loan_period_borrowed = request('loan_period_borrowed');
-			$assess->monthly_instalment = request('monthly_instalment');
-			$assess->other_personal_loan = request('other_personal_loan');
-			$assess->money_lender_personal = request('money_lender_personal');
-			$assess->amount_outstanding = request('amount_outstanding');
-			$assess->running_project = request('running_project');
-			$assess->project_name = request('project_name');
-			$assess->project_budget = request('project_budget');
-			$assess->monthly_project_expense = request('monthly_project_expense');
-			$assess->recorded_by = Auth::id();
-			$assess->save();
-
-			//$security_name = request('security_name');
+			$security_name = request('security_name');
 			$security_value = request('security_value');
 			$security_attachment = request('security_attachment');
 
-			foreach ($request->file('security_name') as $security_name) {
+			LoanSecurity::where('id_loan',$request->id)->delete();
 
-				$file = $security_name;
-    			$file->move('docs/collateral', $file->getClientOriginalName());
+			foreach ($security_attachment as $i => $attachments ) {
 
-    			dd($file);
-				$securityAttached = array(
+				$temp_name = explode('.', $attachments);
+
+				$filename = time().'.'.$temp_name[1];
+
+		        Storage::disk('securities')->put($filename, 'Contents');
+
+				$securityAttached= array(
 					"id_client" => request('id_client'),
 					"id_loan" => $request->id,
-					"security_name" => $file->getClientOriginalName(),
-					"security_value" => $security_value[$key],
-					"security_attachment" => $imageName,
+					"security_name" => $security_name[$i],
+					"security_value" => str_replace(',','',$security_value[$i]),
+					"security_attachment" => $filename,
 				);
 				LoanSecurity::insert($securityAttached);
 			}
@@ -207,8 +177,17 @@ class IndividualLoanAssessmentController extends Controller {
 			$guarantor_name = request('guarantor_name');
 			$guarantor_address = request('guarantor_address');
 			$guarantor_telephone = request('guarantor_telephone');
+			$guarantor_photo = request('guarantor_photo');
 
-			foreach ($guarantor_name as $key => $value) {
+			Guarantors::where('id_loan',$request->id)->delete();
+
+			foreach ($guarantor_photo as $key => $value) {
+
+				$temp_name = explode('.', $value);
+
+				$filename = time().'.'.$temp_name[1];
+
+		        Storage::disk('photos')->put($filename, 'Contents');
 
 				$guarantors = array(
 					"id_loan" => $request->id,
@@ -216,9 +195,84 @@ class IndividualLoanAssessmentController extends Controller {
 					"guarantor_name" => $guarantor_name[$key],
 					"guarantor_address" => $guarantor_address[$key],
 					"guarantor_telephone" => $guarantor_telephone[$key],
+					"guarantor_photo" => $filename,
 				);
 				Guarantors::insert($guarantors);
 			}
+			if($request->hasFile('photo')){
+
+	            $request->validate([
+	                    'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+	                ]);
+	            $destination = 'photos';
+	            $imageName = time().'.'.$request->photo->extension();
+	            $path = $request->file('photo')->storeAs($destination,$imageName);
+
+	            $dest = 'documents';
+	            $image = time().'.'.$request->photo_national_id->extension();
+	            $path = $request->file('photo_national_id')->storeAs($dest,$image);
+
+	            $client = RegisterClient::where('id',request('id_client'))->first();
+				$client->photo = $imageName;
+				$client->nin = request('nin');
+				$client->photo_national_id = $image;
+	            $client->save();
+
+	        }
+
+			$assess = new IndividualLoanAssessment();
+			$assess->id_client = request('id_client');
+			$assess->id_loan = $request->id;
+			$assess->applicant_type = request('applicant_type');
+			$assess->business_type = request('business_type');
+			$assess->business_license = request('business_license');
+			$assess->business_account_statement = request('business_account_statement');
+			$assess->appointment_letter = request('appointment_letter');
+			$assess->supervisor_recommendation = request('supervisor_recommendation');
+			$assess->bank_statement = request('bank_statement');
+			$assess->leader_recommendation = request('leader_recommendation');
+			$assess->monthly_income = str_replace(',','',request('monthly_income'));
+			$assess->income_sources = str_replace(',','',request('income_sources'));
+			$assess->monthly_income_others = str_replace(',','',request('monthly_income_others'));
+			$assess->total_monthly_income = str_replace(',','',request('total_monthly_income'));
+			$assess->food = str_replace(',','',request('food'));
+			$assess->rent = str_replace(',','',request('rent'));
+			$assess->medical = str_replace(',','',request('medical'));
+			$assess->electricity = str_replace(',','',request('electricity'));
+			$assess->school_fees = str_replace(',','',request('school_fees'));
+			$assess->leisure = str_replace(',','',request('leisure'));
+			$assess->others = str_replace(',','',request('others'));
+			$assess->total_monthly_expense = str_replace(',','',request('total_monthly_expense'));
+			$assess->borrowed_money = request('borrowed_money');
+
+			if(request('borrowed_money') == 1){
+				$assess->start_date = request('start_date');
+				$assess->end_date = request('end_date');
+				$assess->money_lender = request('money_lender');
+				$assess->amount_borrowed = str_replace(',','',request('amount_borrowed'));
+				$assess->loan_period_borrowed = request('loan_period_borrowed');
+				$assess->monthly_instalment = str_replace(',','',request('monthly_instalment'));
+			}
+
+			$assess->other_personal_loan = request('other_personal_loan');
+
+			if(request('other_personal_loan') == 1){
+				$assess->money_lender_personal = request('money_lender_personal');
+				$assess->amount_outstanding = str_replace(',','',request('amount_outstanding'));
+			}
+
+			$assess->running_project = request('running_project');
+
+			if(request('running_project') == 1){
+				$assess->project_name = request('project_name');
+			$assess->project_budget = str_replace(',','',request('project_budget'));
+			$assess->monthly_project_expense = str_replace(',','',request('monthly_project_expense'));
+			}
+
+			$assess->recorded_by = Auth::id();
+			$assess->save();
+
+			
 
 			$loan = LoanApplication::find($request->id);
 			$loan->assessment_status = 0;
@@ -236,11 +290,13 @@ class IndividualLoanAssessmentController extends Controller {
 
 		$loan = LoanApplication::find($request->id);
 
+		$fees = DB::table('loan_processing_fees')->where('loan_type','Individual')->select('processing_rate')->latest()->first();
+
 		if ($loan) {
 
 			$loan->approval_status = $this->approveLoan(request('assessment_status'));
 
-			$recommended_amount = request('recommended_amount');
+			$recommended_amount = str_replace(',','',request('recommended_amount'));
 
 			$security = $this->checkRecommendedAmount($recommended_amount);
 
@@ -258,6 +314,8 @@ class IndividualLoanAssessmentController extends Controller {
 
 			$loan->loan_interest = $interest;
 
+			$loan->loan_processing_fee = $this->calculateLoanProcessingFee($fees->processing_rate,$recommended_amount);
+
 			$loan->security = $security;
 
 			$loan->loan_amount_issued = $this->calculateLoanToIssue($recommended_amount, $security);
@@ -271,8 +329,6 @@ class IndividualLoanAssessmentController extends Controller {
 			$loan->recommended_by = Auth::id();
 
 			$loan->save();
-
-			//$schedule = new LoanSchedule();
 
 			$instalment = round(($total_loan / $loan_period), 2);
 
@@ -300,9 +356,11 @@ class IndividualLoanAssessmentController extends Controller {
 
 		$security = NULL;
 
-		if ($recommended_amount > 6000000) {
+		$limit = DB::table('loan_security_rates')->where('loan_type','Individual')->latest()->first();
 
-			$security = 0.1 * $recommended_amount;
+		if ($recommended_amount >= $limit->threshold_amount) {
+
+			$security = ($limit->security_rate/100) * $recommended_amount;
 		}
 
 		return $security;
@@ -328,6 +386,13 @@ class IndividualLoanAssessmentController extends Controller {
 			$approve = 0;
 		}
 		return $approve;
+	}
+
+	protected function calculateLoanProcessingFee($rate,$loan_amount){
+
+			$processing_fee = ($rate/100)*$loan_amount;
+
+			return $processing_fee;
 	}
 
 }

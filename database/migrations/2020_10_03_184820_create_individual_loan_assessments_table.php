@@ -17,6 +17,12 @@ class CreateIndividualLoanAssessmentsTable extends Migration {
 			$table->unsignedBigInteger('id_loan');
 			$table->string('applicant_type');
 			$table->string('business_type')->nullable();
+			$table->text('business_license')->nullable();
+			$table->text('business_account_statement')->nullable();
+			$table->text('appointment_letter')->nullable();
+			$table->text('supervisor_recommendation')->nullable();
+			$table->text('bank_statement')->nullable();
+			$table->text('leader_recommendation');
 			$table->double('monthly_income');
 			$table->text('income_sources')->nullable();
 			$table->double('monthly_income_others');
@@ -29,7 +35,6 @@ class CreateIndividualLoanAssessmentsTable extends Migration {
 			$table->double('leisure')->nullable();
 			$table->double('others')->nullable();
 			$table->double('total_monthly_expense');
-			$table->double('monthly_surplus')->nullable();
 			$table->boolean('borrowed_money');
 			$table->date('start_date')->nullable();
 			$table->date('end_date')->nullable();

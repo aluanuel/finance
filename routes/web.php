@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
 /**************************** Loan Officer ***********************************/
 	Route::get('/apply/ind/', [App\Http\Controllers\RegisterClientController::class, 'singleApplication'])->name('viewSingle');
 
-	Route::post('/apply/ind/', [App\Http\Controllers\RegisterClientController::class, 'NewIndividualApplication']);
+	Route::post('/apply/ind', [App\Http\Controllers\RegisterClientController::class, 'NewIndividualApplication']);
 
 	Route::get('/apply/ind/assess', [App\Http\Controllers\IndividualLoanAssessmentController::class, 'index'])->name('assessSingle');
 
@@ -51,6 +51,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/apply/teller/ind/{id}', [App\Http\Controllers\RegisterClientController::class, 'updateIndividualApplication']);
 
 	Route::post('/apply/teller/process/{id}', [App\Http\Controllers\LoanApplicationController::class, 'startIndividualProcessedLoans']);
+	Route::get('/apply/teller/trans/process/{id}', [App\Http\Controllers\LoanApplicationController::class, 'ViewLoanProcessingForm']);
 
 	Route::get('/apply/teller/trans', [App\Http\Controllers\LoanRepaymentController::class, 'index'])->name('loanPaymentForm');
 
@@ -58,17 +59,19 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/apply/teller/trans/security/{id}', [App\Http\Controllers\LoanApplicationController::class, 'ReturnLoanSecurity']);
 
+	Route::post('/apply/teller/trans/security/{id}', [App\Http\Controllers\LoanApplicationController::class, 'TellerIssueLoanSecurity']);
+
 	Route::post('/apply/teller/trans', [App\Http\Controllers\LoanRepaymentController::class, 'RecordPayment']);
 
 	Route::post('/apply/teller/trans/search/payment', [App\Http\Controllers\LoanRepaymentController::class, 'SearchPayment']);
 
 	Route::get('/apply/teller/savings/', [App\Http\Controllers\ClientSavingController::class, 'savingsForm']);
 
-	Route::post('/apply/teller/savings/', [App\Http\Controllers\ClientSavingController::class, 'Deposit']);
+	Route::post('/apply/teller/savings', [App\Http\Controllers\ClientSavingController::class, 'Deposit']);
 
 	Route::get('/apply/teller/withdrawal/', [App\Http\Controllers\ClientSavingController::class, 'withdrawalForm']);
 
-	Route::post('/apply/teller/withdrawal/', [App\Http\Controllers\ClientSavingController::class, 'Withdrawal']);
+	Route::post('/apply/teller/withdrawal', [App\Http\Controllers\ClientSavingController::class, 'Withdrawal']);
 
 
 
@@ -115,6 +118,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/generate/report/expenses', [App\Http\Controllers\PDFController::class, 'CreateExpensesReport']);
 	Route::get('/generate/report/incomes', [App\Http\Controllers\PDFController::class, 'CreateIncomesReport']);
 	Route::get('/generate/report/cashbook', [App\Http\Controllers\PDFController::class, 'CreateCashBookReport']);
+	Route::get('/storage/app/public/{id}', [App\Http\Controllers\PDFController::class, 'ViewLoanSecurity']);
 
 
 	Route::get('/apply/view/profile/{id}', [App\Http\Controllers\LoanApplicationController::class, 'viewClientProfile'])->name('clientProfile');
@@ -124,6 +128,9 @@ Route::group(['middleware' => 'auth'], function () {
 	/**********************************Reports******************************************/
 	Route::get('/apply/report/collections',[App\Http\Controllers\ReportController::class,'Collections']);
 	Route::get('/apply/report/collections/repayment',[App\Http\Controllers\ReportController::class,'LoanRepayments']);
+	Route::get('/apply/report/collections/appraisal',[App\Http\Controllers\ReportController::class,'LoanAppraisal']);
+	Route::get('/apply/report/collections/application',[App\Http\Controllers\ReportController::class,'LoanApplication']);
+	Route::get('/apply/report/collections/procesing',[App\Http\Controllers\ReportController::class,'LoanProcessing']);
 	Route::get('/apply/report/collections/security',[App\Http\Controllers\ReportController::class,'LoanSecurity']);
 
 	Route::get('/apply/report/sales',[App\Http\Controllers\ReportController::class,'Sales']);
@@ -133,7 +140,14 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/apply/report/bsht',[App\Http\Controllers\ReportController::class,'BalanceSheet']);
 	Route::post('/apply/report/incomes/search',[App\Http\Controllers\ReportController::class,'SearchIncome']);
 	Route::post('/apply/report/expenses/search',[App\Http\Controllers\ReportController::class,'SearchExpense']);
-
+	Route::get('/apply/report/loan/sup/payout/',[App\Http\Controllers\ReportController::class,'LoanPayouts']);
+	Route::get('/apply/report/loan/sup/outstanding/',[App\Http\Controllers\ReportController::class,'LoanOutstanding']);
+	Route::get('/apply/report/loan/sup/overdue/',[App\Http\Controllers\ReportController::class,'LoanOverdue']);
+	Route::get('/apply/report/loan/sup/recovery/',[App\Http\Controllers\ReportController::class,'LoanRealization']);
+	Route::get('/apply/report/loan/office/payout/{id}/',[App\Http\Controllers\ReportController::class,'LoanPayouts']);
+	Route::get('/apply/report/loan/office/outstanding/{id}/',[App\Http\Controllers\ReportController::class,'LoanOutstanding']);
+	Route::get('/apply/report/loan/office/overdue/{id}/',[App\Http\Controllers\ReportController::class,'LoanOverdue']);
+	Route::get('/apply/report/loan/office/recovery/{id}/',[App\Http\Controllers\ReportController::class,'LoanRealization']);
 
 	/*******************************settings************************************/
 	Route::get('/apply/settings/groups',[App\Http\Controllers\ClientGroupController::class,'index']);
@@ -153,11 +167,11 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/apply/user/update/photo/{id}',[App\Http\Controllers\SystemUserController::class, 'updateUserPhoto']);
 
 	Route::get('/apply/settings/appraisal/',[App\Http\Controllers\AppraisalFeeController::class, 'index']);
-	Route::post('/apply/settings/appraisal/',[App\Http\Controllers\AppraisalFeeController::class, 'create']);
+	Route::post('/apply/settings/appraisal',[App\Http\Controllers\AppraisalFeeController::class, 'create']);
 	Route::get('/apply/settings/processing/',[App\Http\Controllers\LoanProcessingFeeController::class, 'index']);
-	Route::post('/apply/settings/processing/',[App\Http\Controllers\LoanProcessingFeeController::class, 'create']);
-
-
+	Route::post('/apply/settings/processing',[App\Http\Controllers\LoanProcessingFeeController::class, 'create']);
+	Route::get('/apply/settings/security/rate/',[App\Http\Controllers\LoanSecurityRateController::class, 'index']);
+	Route::post('/apply/settings/security/rate',[App\Http\Controllers\LoanSecurityRateController::class, 'create']);
 	
 	Route::get('/apply/grp/assess/{id}',[App\Http\Controllers\GroupLoanAssessmentController::class, 'index']);
 	Route::post('/apply/grp/assess/{id}',[App\Http\Controllers\GroupLoanAssessmentController::class, 'fillAssessment']);
@@ -167,11 +181,15 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/apply/admin/grp/assess/{id}',[App\Http\Controllers\GroupLoanAssessmentController::class, 'adminViewAssessmentSingle']);
 	Route::post('/apply/admin/grp/assess/{id}',[App\Http\Controllers\GroupLoanAssessmentController::class, 'adminFillAssessmentForm']);
 	Route::get('/apply/admin/grp/processed',[App\Http\Controllers\LoanApplicationController::class, 'adminViewGroupProcessedLoans']);
-	Route::get('/apply/admin/reinstate/{id}',[App\Http\Controllers\LoanApplicationController::class,'ReinstateLoan']);
+	Route::get('/apply/admin/reinstate/{id}',[App\Http\Controllers\LoanApplicationController::class,'ViewReinstateLoanForm']);
+	Route::post('/apply/admin/reinstate/{id}',[App\Http\Controllers\LoanApplicationController::class,'ReinstateLoan']);
 	
 	Route::get('/apply/accounts',[App\Http\Controllers\RegisterClientController::class,'viewAccounts']);
 	Route::get('/apply/admin/accounts',[App\Http\Controllers\RegisterClientController::class,'adminViewAccounts']);
 
+	Route::get('/admin/download/collateral/{file}', function ($file='') {
+    	return response()->file(storage_path('app/public/'.$file));
+	});
 
 });
 

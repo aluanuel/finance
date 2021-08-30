@@ -53,11 +53,11 @@
                               <td>{{number_format($loan)}}</td>
                             </tr>
                             <tr>
-                              <td><a href="/apply/report/collections/apraisal">Loan Appraisal</a></td>
+                              <td><a href="/apply/report/collections/appraisal">Loan Appraisal</a></td>
                               <td>{{number_format($appraisal)}}</td>
                             </tr>
                             <tr>
-                              <td><a href="/apply/settings/collections/application">Loan Application</td>
+                              <td><a href="/apply/report/collections/application">Loan Application</td>
                               <td>{{number_format($application)}}</td>
                             </tr>
                             <tr>

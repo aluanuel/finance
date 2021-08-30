@@ -51,13 +51,13 @@
                             <td>{{ $sec->security_name}}</td>
                             <td>{{ $sec->security_number}}</td>
                             <td>{{ number_format($sec->security_value)}}</td>
-                            <td><a href="{{ asset('docs/'.$sec->security_attachment)}}" class="btn btn-outline-success btn-sm">View</a></td>
+                            <td><a href="/admin/download/collateral/{{ $sec->security_attachment }}" class="btn btn-outline-success btn-sm">View</a></td>
                             @if($sec->security_status == 0)
                             <td>Not taken</td>
                             <td></td>
                             @else
                             <td>Taken</td>
-                            <td><a href="{{ asset('docs/'.$sec->security_agreement)}}" class="btn btn-outline-primary btn-sm">View</a></td>
+                            <td><a href="{{ asset('storage/app/public/'.$sec->security_agreement)}}" class="btn btn-outline-primary btn-sm">View</a></td>
                             @endif
                           </tr>
                         @endforeach
@@ -66,7 +66,7 @@
                     <div class="card">
               <div class="card-header d-flex p-0">
                 <h3 class="card-title p-3">Collateral Return Agreement</h3>
-                <ul class="nav nav-pills ml-auto p-2">
+                <ul class="nav nav-pills ml-auto p-2" id="myTab">
                   <li class="nav-item"><a class="nav-link active" href="#view_agreement" data-toggle="tab">View Agreement</a></li>
                   <li class="nav-item"><a class="nav-link" href="#upload_agreement" data-toggle="tab">Upload Agreement</a></li>
                 </ul>
@@ -74,35 +74,38 @@
               <div class="card-body">
                 <div class="tab-content">
                   <div class="tab-pane active" id="view_agreement">
-                    <p>
-                      I <strong>{{ $loan->name }}</strong> do hereby agree to withdraw my security from <strong>{{ config('app.name', 'Laravel') }}</strong> that I offered to acquire a loan of <strong>{{ 'UGX'}} {{ number_format($loan->recommended_amount) }}</strong> at an interest rate of <strong>{{$loan->interest_rate }}{{ '%'}}</strong> from this institution.
-                    </p>
-                    <p>My securities to withdraw are listed herein as;<br>
-                      <?php $i = 1; ?>
-                      @foreach($security as $sec)
-                      {{$i }}. {{$sec->security_name}}<br>
-                      <?php $i++; ?>
-                      @endforeach
-                    </p>
-                    <p><strong>Declaration</strong></p>
-                    <div class="row">
-                      <div class="col-12">
-                        <p>I have received my security in good condition.</p>
+                    <div id="print_area">
+                      <h3 class="title">Collateral Return Agreement</h3>
+                      <p>
+                        I <strong>{{ $loan->name }}</strong> do hereby agree to withdraw my security from <strong>{{ config('app.name', 'Laravel') }}</strong> that I offered to acquire a loan of <strong>{{ 'UGX'}} {{ number_format($loan->recommended_amount) }}</strong> at an interest rate of <strong>{{$loan->interest_rate }}{{ '%'}}</strong> from this institution.
+                      </p>
+                      <p>My securities to withdraw are listed herein as;<br>
+                        <?php $i = 1; ?>
+                        @foreach($security as $sec)
+                        {{$i }}. {{$sec->security_name}}<br>
+                        <?php $i++; ?>
+                        @endforeach
+                      </p>
+                      <p><strong>Declaration</strong></p>
+                      <div class="row">
+                        <div class="col-12">
+                          <p>I have received my security in good condition.</p>
+                        </div>
+                        <div class="col-6">
+                      
+                        <p>Received by ................................................<br>
+                        Signature ....................................................<br>
+                        Date.............................................................</p>
                       </div>
                       <div class="col-6">
-                    
-                      <p>Received by ................................................<br>
-                      Signature ....................................................<br>
-                      Date.............................................................</p>
+                      
+                        <p>Issued by ....................................................<br>
+                        Signature ....................................................<br>
+                        Date.............................................................</p>
+                      </div>
+                      </div>
                     </div>
-                    <div class="col-6">
-                    
-                      <p>Issued by ....................................................<br>
-                      Signature ....................................................<br>
-                      Date.............................................................</p>
-                    </div>
-                    <button class="btn btn-outline-success btn-sm">Print Agreement</button>
-                    </div>
+                    <button class="btn btn-outline-success btn-sm" onclick="printDiv()">Print Agreement</button>
                   </div>
                   <!-- /.tab-pane -->
                   <div class="tab-pane" id="upload_agreement">

@@ -36,7 +36,7 @@
             <!-- /.col -->
             <div class="col-8">
               <p class="mb-1 pl-5">
-                <a href="{{ route('password.request') }}">I forgot my password</a>
+                <a href="{{ route('register') }}">I forgot my password</a>
               </p>
             </div>
             <!-- col -->

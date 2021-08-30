@@ -2,7 +2,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ config('app.name', 'Laravel') }}</title>
-
+  <link rel="shortcut icon" href="{{ asset('theme/dist/img/logo.png') }}" type="image/x-icon">
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="{{ asset('theme/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
   <link rel="stylesheet" href="{{ asset('theme/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
   <style type="text/css">
-    #business_type,#formChangePassword,#formChangePhoto,#addGroupMemberRole,#new_income,#new_expense,#auth_user,#submit_input,#ever_borrowed_money_1,#ever_borrowed_money_2{
+    #business_type,#formChangePassword,#formChangePhoto,#addGroupMemberRole,#new_income,#new_expense,#auth_user,#submit_input,#ever_borrowed_money_1,#ever_borrowed_money_2,#nav-savings,#sv_history,#business_license,#business_account_statement,#leader_recommendation,#appointment_letter,#bank_statement,#supervisor_recommendation{
       display: none;
     }
     table th{

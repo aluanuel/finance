@@ -97,10 +97,6 @@
                             <label>Total Monthly Expenditure</label>
                             <input type="text" autocomplete="off" class="form-control" value="{{number_format($cont->total_monthly_expense)}}" readonly="readonly">
                         </div>
-                        <div class="col-3">
-                            <label>Monthly Surplus (If Any)</label>
-                            <input type="text" autocomplete="off" class="form-control" value="{{number_format($cont->monthly_surplus)}}" readonly="readonly">
-                        </div>
                    	</div>
                    	<div class="row form-group">
                    		<h4 class="title col-12 text-primary">Loan status</h4>
@@ -202,7 +198,7 @@
                           <input type="text" autocomplete="off" class="form-control" value="{{ number_format($sec->security_value)}}" readonly="readonly">
                         </div>
                         <div class="input-group col-1">
-                            <a href=""><button type="button" class="btn btn-outline-primary">View</button></a>
+                            <a href="{{ asset('storage/securities/'.$sec->security_attachment)}}"><button type="button" class="btn btn-outline-primary">View</button></a>
                        </div>
                       </div>
                     <?php $x++;?>
@@ -213,7 +209,7 @@
                     <?php $i = 1;?>
                     @foreach($guarantors as $gtr )
                       <div class="row form-group">
-                        <div class="input-group col-5">
+                        <div class="input-group col-4">
                           <div class="input-group-prepend">
                             <span class="input-group-text">{{ $i}}</span>
                           </div>
@@ -225,6 +221,9 @@
                         <div class="col-3">
                           <input type="text" autocomplete="off" class="form-control" value="{{$gtr->guarantor_telephone}}" readonly="readonly">
                         </div>
+                        <div class="input-group col-1">
+                            <a href="{{ asset('storage/photos/'.$gtr->guarantor_photo)}}" class="btn btn-outline-primary">View</a>
+                       </div>
                       </div>
                     <?php $i++;?>
                     @endforeach
@@ -233,16 +232,16 @@
                    	<div class="row form-group">
                    		<div class="col-3">
                    			<label>Recommended loan amount</label>
-                   			<input type="number" name="recommended_amount" class="form-control" required="required" autocomplete="off" placeholder="Recommended loan amount" value="{{$cont->proposed_amount}}">
+                   			<input type="text" name="recommended_amount" class="form-control" required="required" autocomplete="off" placeholder="Recommended loan amount" value="{{$cont->proposed_amount}}">
                    		</div>
                       <div class="col-1">
                         <label>Rate(%)</label>
-                        <input type="number" name="interest_rate" class="form-control" required="required" autocomplete="off" placeholder="Interest rate" value="{{ $cont->interest_rate}}">
+                        <input type="number" name="interest_rate" class="form-control" required="required" autocomplete="off" placeholder="Interest rate" value="{{ $cont->interest_rate}}" min="0">
                       </div>
-                      <div class="col-2">
+                      <!-- <div class="col-2">
                         <label>Interest</label>
                         <input type="text" class="form-control" readonly="readonly" autocomplete="off" placeholder="Interest" value="{{ $cont->loan_interest}}">
-                      </div>
+                      </div> -->
                       <div class="col-2">
                         <label>Loan Period (Months)</label>
                         <input type="number" name="loan_period" class="form-control" required="required" autocomplete="off" value="{{ $cont->loan_period }}" placeholder="Loan Period">

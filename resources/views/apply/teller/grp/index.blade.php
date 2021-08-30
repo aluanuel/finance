@@ -64,12 +64,21 @@
                        <td>
                                     <form action="/apply/teller/ind/{{$app->id}}" method="post">
                                       @csrf
-                                      <button type="submit" class="btn btn-block btn-outline-primary">Activate</button>
+                                      <div class="form-group" id="invoke_auth">
+                                        <button class="btn btn-outline-danger" id="btn_invoke_auth">Activate</button>
+                                      </div>
+                                      <div class="form-group" id="auth_user">
+                                        <label>Password</label>
+                                        <input type="password" name="password" class="form-control" required="required" placeholder="Type your password">
+                                      </div>
+                                      <div class="form-group" id="submit_input">
+                                        <button class="btn btn-primary">Continue</button>
+                                      </div>
                                     </form>
                                   </td>
                                   @elseif($app->application_status == 1)
                                   <td><p class="text-success">{{ 'Active' }}</p></td>
-                                  <td><a href="/generate/loan/application/{{$app->id}}" class="btn btn-outline-success btn-sm"> Receipt</a></td>
+                                  <td></td>
                                   @endif
                                   <!-- <td></td> -->
                                 </tr>

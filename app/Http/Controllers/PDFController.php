@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use \PDF;
 use NumberToWords\NumberToWords;
 use NumberToWords\Locale\English;
+use Response;
+use Illuminate\Support\Facades\Storage;
+use \App\Models\LoanSecurity;
 
 class PDFController extends Controller {
 
@@ -116,5 +119,13 @@ class PDFController extends Controller {
                 ->get();
 		$pdf = PDF::loadView('apply.docs.reports.cashbook',compact('repayments','appraisal','application','loan','incomes','expenses'));
 		return $pdf->download('cashbook.pdf');
+	}
+
+	public function ViewLoanSecurity(Request $request){
+
+		$id = LoanSecurity::find($request->file);
+
+		return Storage::download($id->security_attachment,$id->security_name);
+		
 	}
 }

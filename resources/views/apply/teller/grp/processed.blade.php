@@ -31,7 +31,7 @@
           <div class="col-12">
             <div class="card card-default">
               <div class="card-header">
-                <ul class="nav nav-pills">
+                <ul class="nav nav-pills" id="myTab">
                   <li class="nav-item"><a class="nav-link active" href="#ln_issue" data-toggle="tab">Loans to Issue
                   </a></li>
                   <li class="nav-item"><a class="nav-link" href="#ln_running" data-toggle="tab">Running Loans</a></li>
@@ -57,6 +57,7 @@
                               <th>Loan Amount</th>
                               <th>Loan Outstanding</th>
                               <th>Security</th>
+                              <th>Processing Fee</th>
                               <th>Loan Payable</th>
                               <th>Period(Months)</th>
                               <th>Telephone</th>
@@ -73,15 +74,12 @@
                                 <td>{{ number_format($app->recommended_amount)}}</td>
                                 <td>{{ number_format($app->total_loan)}}</td>
                                 <td>{{ number_format($app->security)}}</td>
+                                <td>{{ number_format($app->loan_processing_fee)}}</td>
                                 <td>{{ number_format($app->loan_amount_issued)}}</td>
                                 <td>{{ $app->loan_period}}</td>
                                 <td>{{ $app->telephone }}</td>
                                 <td>
-                                  <form action="/apply/teller/process/{{$app->id}}" method="post">
-                                    @csrf
-                                    <input type="hidden" name="loan_period" value="{{ $app->loan_period }}">
-                                    <button class="btn btn-outline-primary">Issue & start</button>
-                                  </form>
+                                  <a href="/apply/teller/trans/process/{{$app->id}}" class="btn btn-outline-primary">Issue Loan</a>
                                 </td>
                               </tr>
                             <?php $i++;?>

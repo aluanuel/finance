@@ -27,7 +27,7 @@ class CreateGroupLoanAssessmentsTable extends Migration
             $table->string('capital_source');
             $table->double('present_inventory');
             $table->double('cash_at_hand');
-            $table->double('fixed_assets');
+            $table->text('fixed_assets');
             $table->double('sales_seven_days');
             $table->string('member_location');
             $table->string('known_person_name');

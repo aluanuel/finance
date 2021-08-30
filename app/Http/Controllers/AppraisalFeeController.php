@@ -19,10 +19,11 @@ class AppraisalFeeController extends Controller
     	$fees = new AppraisalFee();
 
     	$fees->appraisal_type = request('appraisal_type');
-    	$fees->appraisal_amount = request('appraisal_amount');
+    	$fees->appraisal_amount = str_replace(',','',request('appraisal_amount'));
+        $fees->appraisal_category = request('appraisal_category');
     	$fees->created_by = request('created_by');
     	$fees->save();
     	
-    	return redirect()->back()->with('success','Transaction successful');
+    	return redirect()->back()->with('success','Success');
     }
 }

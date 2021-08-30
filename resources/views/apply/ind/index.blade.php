@@ -48,20 +48,18 @@
                         <h3 class="card-title">Personal Data</h3>
                       </div>
                       <div class="card-body">
-                        <form action="/apply/ind/" method="post" enctype="multipart/form-data">
+                        <form action="/apply/ind" method="post" enctype="multipart/form-data">
                           @csrf
                           <div class="row form-group">
                             <div class="col-6">
                               <label>Name</label>
                               <input type="text" name="name" autocomplete="off" class="form-control" placeholder="Full Name" required="required">
                             </div>
-                            <div class="col-6">
+                            <div class="col-3">
                               <label>Telephone</label>
-                              <input type="text" name="telephone" autocomplete="off" class="form-control" placeholder="Telephone Contact" required="required">
+                              <input type="text" name="telephone" autocomplete="off" class="form-control" placeholder="Telephone Contact" required="required" pattern="[0-9]{10}">
                             </div>
-                          </div>
-                          <div class="row form-group">
-                            <div class="col-4">
+                            <div class="col-3">
                               <label>Gender</label>
                               <div class="form-group">
                                 <select class="form-control select2bs4" name="gender" data-placeholder="Select Gender" style="width: 100%;" required="required">
@@ -71,7 +69,9 @@
                                 </select>
                               </div>
                             </div>
-                            <div class="col-4">
+                          </div>
+                          <div class="row form-group">
+                            <div class="col-2">
                               <div class="form-group">
                                 <label>Marital Status</label>
                                 <select class="form-control select2bs4" name="marital_status" data-placeholder="Select Marital Status" style="width: 100%;" required="required">
@@ -83,26 +83,26 @@
                                 </select>
                               </div>
                             </div>
-                            <div class="col-4">
+                            <!-- <div class="col-4">
                               <label>Profile Photo</label>
                               <div class="custom-file">
                                 <input type="file" name="photo" class="form-control custom-file-input" id="exampleInputFile" required="required">
                                 <label class="custom-file-label" for="exampleInputFile">Upload Photo</label>
                               </div>
-                            </div>
-                          </div>
-                          <div class="row form-group">
-                            <div class="col-4">
+                            </div> -->
+                          <!-- </div> -->
+                          <!-- <div class="row form-group"> -->
+                            <div class="col-3">
                               <label>Workplace</label>
                               <input type="text" name="work_place" autocomplete="off" class="form-control" placeholder="Workplace" required="required">
                             </div>
-                            <div class="col-4">
+                            <div class="col-3">
                               <label>Occupation</label>
                               <input type="text" name="occupation" autocomplete="off" class="form-control" placeholder="Occupation" required="required">
                             </div>
                             <div class="col-2">
                               <label>Application Fee</label>
-                              <input type="text" name="application_fee" autocomplete="off" class="form-control" placeholder="Application fee" readonly="readonly" value="{{$fee->appraisal_amount}}">
+                              <input type="text" name="application_fee" autocomplete="off" class="form-control" placeholder="Application fee" readonly="readonly" value="{{$new->appraisal_amount}}">
                             </div>
                             <div class="col-2">
                                 <label>Interest Rate (%)</label>
@@ -127,7 +127,7 @@
                         <h3 class="card-title">Personal Data</h3>
                       </div>
                       <div class="card-body">
-                        <form action="/apply/ind/" method="post">
+                        <form action="/apply/ind" method="post">
                           @csrf
                           <div class="row form-group">
                             <div class="col-8">
@@ -143,7 +143,7 @@
                               </div>
                             <div class="col-2">
                                 <label>Application Fee</label>
-                                <input type="text" name="application_fee" autocomplete="off" class="form-control" placeholder="Application fee" readonly="readonly" value="{{$fee->appraisal_amount}}">
+                                <input type="text" name="application_fee" autocomplete="off" class="form-control" placeholder="Application fee" readonly="readonly" value="{{$existing->appraisal_amount}}">
                             </div>
                             <div class="col-2">
                                 <label>Interest Rate (%)</label>

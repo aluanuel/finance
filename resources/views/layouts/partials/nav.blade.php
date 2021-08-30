@@ -1,7 +1,7 @@
  <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/home" class="brand-link">
-      <img src="{{ asset('theme/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <img src="{{ asset('theme/dist/img/logo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">{{ config('app.name', 'Laravel') }}</span>
     </a>
 
@@ -10,7 +10,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{{ asset('img/'.Auth::user()->photo)}}" class="img-circle elevation-2" alt="User Image">
+          <img src="{{ asset('storage/photos/'.Auth::user()->photo)}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="/apply/user/{{Auth::user()->id}}" class="d-block">{{ Auth::user()->name }}</a>
@@ -120,6 +120,51 @@
                 </li>
               </ul>
             </li>
+            <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="fas fa-list nav-icon"></i>
+                    <p>Reports
+                      <i class="fas fa-angle-left right"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                      <a href="/apply/report/sales" class="nav-link">
+                        <i class="fas fa-angle-right nav-icon"></i>
+                        <p>Sales
+                        </p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="/apply/report/loan/office/payout/{{Auth::user()->id}}/" class="nav-link">
+                        <i class="fas fa-angle-right nav-icon"></i>
+                        <p>Loan Payouts
+                        </p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="/apply/report/loan/office/outstanding/{{Auth::user()->id}}/" class="nav-link">
+                        <i class="fas fa-angle-right nav-icon"></i>
+                        <p>Loan Outstandings
+                        </p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="/apply/report/loan/office/overdue/{{Auth::user()->id}}/" class="nav-link">
+                        <i class="fas fa-angle-right nav-icon"></i>
+                        <p>Loan Overdue
+                        </p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="/apply/report/loan/office/recovery/{{Auth::user()->id}}/" class="nav-link">
+                        <i class="fas fa-angle-right nav-icon"></i>
+                        <p>Loan Recovery
+                        </p>
+                      </a>
+                    </li>
+                  </ul>
+            </li>
           @elseif(Auth::user()->usertype == 'Loan Officer' && Auth::user()->role == 'Supervisor')
             <li class="nav-item">
               <a href="/apply/accounts" class="nav-link">
@@ -206,7 +251,6 @@
                 </li>
               </ul>
             </li>
-            
             <li class="nav-link">MANAGE</li>
             <li class="nav-item">
               <a href="#" class="nav-link">
@@ -285,6 +329,61 @@
                 </li>
               </ul>
             </li>
+            <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="fas fa-list nav-icon"></i>
+                    <p>Reports
+                      <i class="fas fa-angle-left right"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                      <a href="/apply/report/loan/sup/payout/" class="nav-link">
+                        <i class="fas fa-angle-right nav-icon"></i>
+                        <p>Loan Payouts
+                        </p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="/apply/report/loan/sup/outstanding/" class="nav-link">
+                        <i class="fas fa-angle-right nav-icon"></i>
+                        <p>Loan Outstandings
+                        </p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="/apply/report/loan/sup/overdue/" class="nav-link">
+                        <i class="fas fa-angle-right nav-icon"></i>
+                        <p>Loan Overdue
+                        </p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="/apply/report/loan/sup/recovery/" class="nav-link">
+                        <i class="fas fa-angle-right nav-icon"></i>
+                        <p>Loan Recovery
+                        </p>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+            <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="fas fa-cog nav-icon"></i>
+                    <p>
+                     Settings
+                      <i class="fas fa-angle-left right"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="/apply/settings/groups" class="nav-link">
+                          <i class="fas fa-angle-right nav-icon"></i>
+                          <p>Loan Groups</p>
+                        </a>
+                    </li>
+                  </ul>
+                </li>
           @elseif(Auth::user()->usertype == 'Teller')
             <li class="nav-item">
               <a href="/apply/accounts" class="nav-link">
@@ -357,7 +456,7 @@
                 </li>
               </ul>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" id="nav-savings">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-circle"></i>
                 <p>
@@ -385,6 +484,47 @@
                 <i class="nav-icon fas fa-circle"></i>
                 <p>Record</p>
               </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-circle"></i>
+                <p>
+                  Reports
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/apply/report/collections" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Collections</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/report/expenses" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Expenses</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/report/incomes" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Incomes</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/report/cbook" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Cashbook</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/report/bsht" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Balance Sheet</p>
+                  </a>
+                </li>  
+              </ul>
             </li>
           @elseif(Auth::user()->usertype == 'Manager')
             <li class="nav-item">
@@ -482,7 +622,7 @@
                 </li>
               </ul>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" id="nav-savings">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-circle"></i>
                 <p>
@@ -575,6 +715,13 @@
                         <a href="/apply/settings/processing/" class="nav-link">
                           <i class="far fa-circle nav-icon"></i>
                           <p>Loan Processing Fee
+                          </p>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="/apply/settings/security/rate/" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Loan Security Rate
                           </p>
                         </a>
                       </li>

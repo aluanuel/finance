@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -44,8 +45,52 @@ class HomeController extends Controller
 
         $groupClients = DB::table('register_clients')
         ->where('id_group','!=',null)
-        ->count('id');  
+        ->count('id'); 
 
-        return view('home',compact('individualLoans','groupLoans','newIndividualClients','groupClients','groups'));
+        $application = $this->countTasks(Auth::user()->usertype,'loan_application');
+        $assessment = $this->countTasks(Auth::user()->usertype,'loan_assessments');
+
+
+        return view('home',compact('individualLoans','groupLoans','newIndividualClients','groupClients','groups','application','assessment'));
+    }
+
+    public function countTasks($usertype,$activity,$result = null){
+
+        if($usertype == 'Loan Officer'){
+
+            if($activity == 'loan_application'){
+
+                $result = DB::table('loan_applications')->where('proposed_amount',null)->count('id');
+
+            }elseif($activity == 'loan_assessments'){
+
+                $result = DB::table('loan_applications')->where('application_status',1)
+                            ->where('assessment_status',0)->count('id');
+
+            }
+
+            return $result;
+
+        }elseif ($usertype == 'Teller') {
+            
+            $result = DB::table('loan_applications')->where('application_status',0)->count('id');
+
+            return $result;
+
+        }elseif ($usertype == 'Manager') {
+            
+            if($activity == 'loan_application'){
+
+                $result = DB::table('loan_applications')->where('proposed_amount',null)->count('id');
+
+            }elseif($activity == 'loan_assessments'){
+
+                $result = DB::table('loan_applications')->where('application_status',1)
+                            ->where('approval_status',0)->count('id');
+
+            }
+
+            return $result;
+        }
     }
 }

@@ -34,7 +34,7 @@
                 <div class="card-body box-profile">
                   <div class="text-center">
                     <img class="profile-user-img img-fluid img-circle"
-                         src="{{ asset('img/'.$loan->photo)}}"
+                         src="{{ asset('storage/photos/'.$loan->photo)}}"
                          alt="User profile picture">
                   </div>
 
@@ -127,7 +127,7 @@
                                   @if(Auth::user()->usertype == 'Manager' && Auth::user()->role == 'Manager')
                                     @if($loan->loan_balance > 0 && $loan->loan_status == 'started')
                                     <td><a class="btn btn-outline-danger btn-sm" href="/apply/admin/cancel/{{$loan->id}}">Cancel</a></td>
-                                    @elseif($loan->loan_status == 'completed')
+                                    @elseif($loan->loan_status == 'completed' && $collateral > 0)
                                     <td><a class="btn btn-outline-primary btn-sm" href="/apply/admin/collateral/{{$loan->id}}">Return Collateral</a></td>
                                     @else
                                     <td></td>

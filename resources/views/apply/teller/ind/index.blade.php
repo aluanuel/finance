@@ -79,7 +79,7 @@
                                   </td>
                                   @elseif($app->application_status == 1)
                                   <td><p class="text-success">{{ 'Active' }}</p></td>
-                                  <td><a href="/generate/loan/application/{{$app->id}}" class="btn btn-outline-success btn-sm"> Receipt</a></td>
+                                  <td></td>
                                   @endif
                                   <!-- <td></td> -->
                                 </tr>

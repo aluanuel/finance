@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class SystemUserController extends Controller
 {
@@ -71,18 +72,19 @@ class SystemUserController extends Controller
 
         $user = User::find($request->id);
 
-        $request->validate([
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-        $imageName = time().'.'.$request->photo->extension();
+        if($request->hasFile('photo')){
 
-         $request->photo->move(public_path('img'), $imageName);
+            $request->validate([
+                    'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                ]);
+            $destination = 'photos';
+             $imageName = time().'.'.$request->photo->extension();
+             $path = $request->file('photo')->storeAs($destination,$imageName);
+             $user->photo = $imageName;
+             $user->save();
+              return redirect()->back()->with('success','Success'); 
 
-         $user->photo = $imageName;
-
-         $user->save();
-
-        return redirect()->back()->with('success','Success'); 
+        }
     }
 
     public function manageUser(Request $request){

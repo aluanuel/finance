@@ -31,19 +31,24 @@ class LoanSecurityController extends Controller
 
     public function issueSecurity(Request $request){
     	$agreement = LoanSecurity::where('id_loan',$request->id)
-    		->first();
-    	$agreement ->security_agreement = request('security_agreement');
+    		->get();
 
-    	$request->validate([
-            'security_agreement' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-        $imageName = $request->id.'-'.time().'.'.$request->security_agreement->extension();
+    	foreach($agreement as $agreement){
+    		// dd($agreement->security_name);
+    		$agreement ->security_agreement = request('security_agreement');
 
-        $request->security_agreement->move(public_path('docs'), $imageName);
+	    	$request->validate([
+	            'security_agreement' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+	        ]);
+	        $imageName = $request->id.'-'.time().'.'.$request->security_agreement->extension();
 
-        $agreement->security_agreement = $imageName;
-    	$agreement->security_status = 1;
-    	$agreement->save();
+	        //$path = $request->file('avatar')->store('avatars');
+
+	        $agreement->security_agreement = $imageName;
+	    	$agreement->security_status = 1;
+	    	$agreement->save();
+
+    	}
     	return redirect()->back()->with('success','Success');
     }
 }

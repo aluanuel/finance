@@ -31,11 +31,12 @@
           <div class="col-12">
             <div class="card card-default">
               <div class="card-header">
-                <ul class="nav nav-pills">
+                <ul class="nav nav-pills" id="myTab">
                   <li class="nav-item"><a class="nav-link active" href="#admin_grp_ln_issue" data-toggle="tab">Loans to Issue
                   </a></li>
                   <li class="nav-item"><a class="nav-link" href="#admin_grp_ln_running" data-toggle="tab">Running Loans</a></li>
                   <li class="nav-item"><a class="nav-link" href="#admin_grp_ln_complete" data-toggle="tab">Completed Loans</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#admin_grp_ln_suspended" data-toggle="tab">Suspended Loans</a></li>
                 </ul>
                 <!-- <h3 class="card-title">Different Height</h3> -->
               </div>
@@ -58,6 +59,7 @@
                               <th>Loan Amount</th>
                               <th>Loan Outstanding</th>
                               <th>Security</th>
+                              <th>Processing Fee</th>
                               <th>Loan Payable</th>
                               <th>Period(Weeks)</th>
                               <th>Telephone</th>
@@ -75,6 +77,7 @@
                                 <td>{{ number_format($app->recommended_amount)}}</td>
                                 <td>{{ number_format($app->total_loan)}}</td>
                                 <td>{{ number_format($app->security)}}</td>
+                                <td>{{ number_format($app->loan_processing_fee)}}</td>
                                 <td>{{ number_format($app->loan_amount_issued)}}</td>
                                 <td>{{ $app->loan_period}}</td>
                                 <td>{{ $app->telephone }}</td>
@@ -186,6 +189,60 @@
                                 <td>{{ number_format($complete->loan_balance) }}</td>
                                 <td>{{ $complete->telephone }}</td>
                                 <td><a href="/apply/view/profile/{{$complete->id}}"><button class="btn btn-outline-primary">View</button></a></td>
+                              </tr>
+                            <?php $i++;?>
+                            @endforeach
+                        </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <!-- card -->
+                  </div>
+                  <!-- tab-pane -->
+                  <div class="tab-pane" id="admin_grp_ln_suspended">
+                    <div class="card">
+                      <div class="card-header">
+                        <h3 class="card-title">Completed Loans</h3>
+                      </div>
+                      <!-- /.card-header -->
+                      <div class="card-body" style="overflow-x: scroll;">
+                         <table id="example4" class="table table-bordered table-hover">
+                          <thead>
+                            <tr>
+                              <th style="width: 12px;">#</th>
+                              <th style="width: 30px;">Number</th>
+                              <th style="width: 30px;">Code</th>
+                              <th>Applicant</th>
+                              <th>Loan Amount</th>
+                              <th>Interest</th>
+                              <th>Loan Outstanding</th>
+                              <th>Security</th>
+                              <th>Start</th>
+                              <th>End</th>
+                              <th>Recovered</th>
+                              <th>Balance</th>
+                              <th>Telephone</th>
+                              <th>#</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <?php $i = 1;?>
+                            @foreach($suspended as $suspend)
+                              <tr>
+                                <td>{{ $i }}</td>
+                                <td>{{ $suspend->loan_number }}</td>
+                                <td>{{ $suspend->group_code }}</td>
+                                <td>{{ $suspend->name }}</td>
+                                <td>{{ number_format($suspend->recommended_amount) }}</td>
+                                <td>{{ number_format($suspend->loan_interest) }}</td>
+                                <td>{{ number_format($suspend->total_loan) }}</td>
+                                <td>{{ number_format($suspend->security) }}</td>
+                                <td>{{ date('Y-m-d', strtotime($suspend->start_date)) }}</td>
+                                <td>{{ date('Y-m-d',strtotime($suspend->end_date)) }}</td>
+                                <td>{{ number_format($suspend->loan_recovered) }}</td>
+                                <td>{{ number_format($suspend->loan_balance) }}</td>
+                                <td>{{ $suspend->telephone }}</td>
+                                <td><a href="/apply/view/profile/{{$suspend->id}}"><button class="btn btn-outline-primary">View</button></a></td>
                               </tr>
                             <?php $i++;?>
                             @endforeach

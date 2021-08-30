@@ -56,6 +56,20 @@
                           </div>
                           <div class="row form-group">
                             <div class="col-3">
+                              <label>Profile Photo</label><br>
+                              <a class="btn btn-outline-primary btn-sm" href="#">View Attachment</a>  
+                            </div>
+                            <div class="col-3">
+                              <label>National ID Number(NIN)</label>
+                              <input type="text"  autocomplete="off" class="form-control" placeholder="Name" value="{{$cont->nin}}" readonly="readonly"> 
+                            </div>
+                            <div class="col-3">
+                              <label>Photo National ID</label><br>
+                              <a class="btn btn-outline-primary btn-sm" href="#">View Attachment</a>  
+                            </div>
+                          </div>
+                          <div class="row form-group">
+                            <div class="col-3">
                               <label>Workplace</label>
                               <input type="text"  autocomplete="off" class="form-control" value="{{$cont->work_place}}" readonly="readonly"> 
                             </div>
@@ -96,21 +110,21 @@
                           <?php $i = 1;?>
                           @foreach($security as $sec)
                           <div class="row form-group">
-                            <div class="input-group col-5">
+                            <div class="input-group col-6">
                               <div class="input-group-prepend">
                                 <span class="input-group-text">{{ $i }}</span>
                               </div>
                                 <input type="text" class="form-control" value="{{$sec->security_name}}" readonly="readonly">
                               </div>
-                              <div class="col-2">
+                              <div class="col-3">
                                 <input type="text" class="form-control" value="{{$sec->security_number}}" readonly="readonly">
                               </div>
                               <div class="col-3">
                                 <input type="text" class="form-control" value="{{ number_format($sec->security_value)}}" readonly="readonly">
                               </div>
-                              <div class="input-group col-2">
+                              <!-- <div class="input-group col-2">
                                 <a href="#" class="btn btn-outline-primary">View attachment</a>
-                              </div>
+                              </div> -->
                           </div>
                           <?php $i++;?>
                           @endforeach
@@ -183,7 +197,7 @@
                             </div>
                             <div class="col-3">
                               <label>Fixed Assets</label>
-                              <input type="text" autocomplete="off" class="form-control" readonly="readonly" value="{{ number_format($cont->fixed_assets) }}">
+                              <textarea class="form-control" name="fixed_assets" readonly="readonly">{{ $cont->fixed_assets}}</textarea>
                             </div>
                           </div>
                           <div class="row form-group">
@@ -238,17 +252,20 @@
                           <?php $i = 1;?>
                           @foreach($guarantors as $guarantor)
                           <div class="row form-group">
-                            <div class="input-group col-5">
+                            <div class="input-group col-4">
                               <div class="input-group-prepend">
                                 <span class="input-group-text">{{ $i}}</span>
                               </div>
                               <input type="text" autocomplete="off" class="form-control" readonly="readonly" value="{{ $guarantor->guarantor_name }}">
                             </div>
-                            <div class="col-4">
+                            <div class="col-3">
                               <input type="text" autocomplete="off" class="form-control" readonly="readonly" value="{{ $guarantor->guarantor_address }}">
                             </div>
                             <div class="col-3">
                               <input type="text" autocomplete="off" class="form-control" readonly="readonly" value="{{ $guarantor->guarantor_telephone }}">
+                            </div>
+                            <div class="col-2">
+                              <a href="#" class="btn btn-outline-primary">View Photo</a>
                             </div>
                           </div>
                           <?php $i++; ?>
@@ -259,7 +276,7 @@
                           <div class="row form-group">
                             <div class="col-3">
                               <label>Recommended loan amount</label>
-                              <input type="number" name="recommended_amount" class="form-control" id="recommended_amount" required="required" autocomplete="off" placeholder="Recommended loan amount">
+                              <input type="text" name="recommended_amount" class="form-control" id="recommended_amount" required="required" autocomplete="off" placeholder="Recommended loan amount" value="{{ number_format($cont->proposed_amount) }}">
                             </div>
                             <div class="col-1">
                               <label>Rate(%)</label>
@@ -285,8 +302,15 @@
                               <input type="date" name="assessment_date" class="form-control" required="required" autocomplete="off" placeholder="Assessment date">
                             </div>
                           </div>
-                          <div class="row form-group">
-                              <button class="btn btn-outline-primary ml-2">Save</button>
+                          <div class="row form-group" id="invoke_auth">
+                            <button class="btn btn-outline-primary ml-2" id="btn_invoke_auth">Save</button>
+                          </div>
+                          <div class="row form-group col-3" id="auth_user">
+                            <label>Password</label>
+                            <input type="password" name="password" class="form-control" required="required" placeholder="Type your password">
+                          </div>
+                          <div class="row form-group" id="submit_input">
+                            <button class="btn btn-primary ml-2">Continue</button>
                           </div>
                         </form>
                       </div>

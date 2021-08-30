@@ -33,7 +33,7 @@
             <!-- Form Element sizes -->
             <div class="card card-default">
               <div class="card-header">
-                <ul class="nav nav-pills">
+                <ul class="nav nav-pills" id="myTab">
                   <li class="nav-item"><a class="nav-link active" href="#fill_assess" data-toggle="tab">Fill Assessment</a></li>
                   <li class="nav-item"><a class="nav-link" href="#view_assess" data-toggle="tab">View Assessment Form</a></li>
                 </ul>
@@ -78,6 +78,26 @@
                               <label>Telephone</label>
                               <input type="text" name="telephone"  autocomplete="off" class="form-control" placeholder="Telephone" required="required" value="{{$cont->telephone}}">  
                             </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-3">
+                                  <label>Profile Photo</label>
+                                  <div class="custom-file">
+                                      <input type="file" name="photo" class="form-control custom-file-input" id="exampleInputFile" required="required">
+                                      <label class="custom-file-label" for="exampleInputFile">Upload Photo</label>
+                                  </div>
+                              </div>
+                              <div class="col-3">
+                                  <label>National ID Number (NIN)</label>
+                                  <input type="text" autocomplete="off" class="form-control" name="nin" placeholder="National ID Number (NIN)" value="{{ old('nin')}}" required="required">
+                              </div>
+                              <div class="col-3">
+                                  <label>Copy of National ID</label>
+                                  <div class="custom-file">
+                                      <input type="file" name="photo_national_id" class="form-control custom-file-input" id="exampleInputFile" required="required">
+                                      <label class="custom-file-label" for="exampleInputFile">Upload</label>
+                                  </div>
+                              </div>
                           </div>
                           <div class="row form-group">
                             <div class="col-3">
@@ -126,18 +146,18 @@
                               </div>
                                 <input type="text" class="form-control" name="security_name[]" placeholder="Property name" autocomplete="off" required="required">
                               </div>
-                              <div class="col-2">
+                              <div class="col-3">
                                 <input type="text" class="form-control" name="security_number[]" placeholder="Quantity" autocomplete="off" required="required">
                               </div>
-                              <div class="col-2">
+                              <div class="col-3">
                                 <input type="text" class="form-control" name="security_value[]" placeholder="Estimated value" autocomplete="off" required="required">
                               </div>
-                              <div class="input-group col-3">
+                              <!-- <div class="input-group col-3">
                                 <div class="custom-file">
                                   <input type="file" name="security_attachment[]" required="required" class="form-control custom-file-input" id="exampleInputFile">
                                   <label class="custom-file-label" for="exampleInputFile">Upload attachment</label>
                                 </div>
-                              </div>
+                              </div> -->
                           </div>
                           <div class="add_security_family"></div>
                           <div class="card-header">
@@ -150,84 +170,84 @@
                             </div>
                             <div class="col-3">
                               <label>Loan Amount</label>
-                              <input type="number" name="proposed_amount" autocomplete="off" class="form-control" placeholder="Loan amount to borrow" required="required">
+                              <input type="text" name="proposed_amount" autocomplete="off" class="form-control" placeholder="Loan amount to borrow" required="required" value="{{ old('proposed_amount') }}">
                             </div>
                             <div class="col-2">
                               <label>Loan Period (Weeks)</label>
-                              <input type="number" name="loan_period" autocomplete="off" class="form-control" placeholder="Loan period" required="required">
+                              <input type="number" name="loan_period" autocomplete="off" class="form-control" placeholder="Loan period" required="required" value="{{ old('loan_period')}}" min="1">
                             </div>
                             <div class="col-5">
                               <label>Purpose of the loan</label>
-                              <textarea class="form-control" name="borrowing_purpose" placeholder="Purpose of borrowing" required="required"></textarea>
+                              <textarea class="form-control" name="borrowing_purpose" placeholder="Purpose of borrowing" required="required">{{ old('borrowing_purpose') }}</textarea>
                             </div>
                           </div>
                           <div class="row form-group">
                             <div class="col-3">
                               <label>Type of of the business</label>
-                              <input type="text" name="business_type" autocomplete="off" class="form-control" placeholder="Type of business" required="required">
+                              <input type="text" name="business_type" autocomplete="off" class="form-control" placeholder="Type of business" required="required" value="{{ old('business_type') }}">
                             </div>
                             <div class="col-3">
                               <label>Principle owner of business</label>
-                              <input type="text" name="business_owner" autocomplete="off" class="form-control" placeholder="Location of the business" required="required">
+                              <input type="text" name="business_owner" autocomplete="off" class="form-control" placeholder="Name of business owner" required="required" value="{{ old('business_owner') }}">
                             </div>
                             <div class="col-3">
                               <label>Location of the business</label>
-                              <input type="text" name="business_location" autocomplete="off" class="form-control" placeholder="Name of business owner" required="required">
+                              <input type="text" name="business_location" autocomplete="off" class="form-control" placeholder="Location of the business" required="required" value="{{ old('business_location')}}">
                             </div>
                             <div class="col-3">
                               <label>Who will use the loan?</label>
-                              <input type="text" name="loan_user" autocomplete="off" class="form-control" placeholder="Loan user" required="required">
+                              <input type="text" name="loan_user" autocomplete="off" class="form-control" placeholder="Loan user" required="required" value="{{ old('loan_user') }}">
                             </div>
                             
                           </div>
                           <div class="row form-group">
                             <div class="col-3">
                               <label>Present Investment</label>
-                              <input type="number" name="present_investment" autocomplete="off" class="form-control" placeholder="Present Investment" required="required">
+                              <input type="text" name="present_investment" autocomplete="off" class="form-control" placeholder="Present Investment" required="required" value="{{ old('present_investment') }}">
                             </div>
                             <div class="col-3">
                               <label>Present Profits</label>
-                              <input type="number" name="present_profit" autocomplete="off" class="form-control" placeholder="Present Profit" required="required">
+                              <input type="text" name="present_profit" autocomplete="off" class="form-control" placeholder="Present Profit" required="required" value="{{ old('present_profit') }}">
                             </div>
                             <div class="col-3">
                               <label>Monthly Family Expenditure</label>
-                              <input type="number" name="monthly_expenditure" autocomplete="off" class="form-control" placeholder="Family Expenditure" required="required">
+                              <input type="text" name="monthly_expenditure" autocomplete="off" class="form-control" placeholder="Family Expenditure" required="required" value="{{ old('monthly_expenditure') }}">
                             </div>
                           </div>
                           <div class="row form-group">
                             <div class="col-3">
                               <label>Source of Capital</label>
-                              <textarea class="form-control" name="capital_source" placeholder="Enter sources of capital and separate them with comma (,)" required="required"></textarea>
+                              <textarea class="form-control" name="capital_source" placeholder="Enter sources of capital and separate them with comma (,)" required="required">{{ old('capital_source') }}</textarea>
                             </div>
                             <div class="col-3">
                               <label>Inventory that day</label>
-                              <input type="number" name="present_inventory" autocomplete="off" class="form-control" placeholder="Inventory" required="required">
+                              <input type="text" name="present_inventory" autocomplete="off" class="form-control" placeholder="Inventory" required="required" value="{{ old('present_inventory') }}" >
                             </div>
                             <div class="col-3">
                               <label>Cash at hand that day</label>
-                              <input type="number" name="cash_at_hand" autocomplete="off" class="form-control" placeholder="Cash at hand" required="required">
+                              <input type="text" name="cash_at_hand" autocomplete="off" class="form-control" placeholder="Cash at hand" required="required" value="{{ old('cash_at_hand')}}">
                             </div>
                             <div class="col-3">
                               <label>Fixed Assets</label>
-                              <input type="number" name="fixed_assets" autocomplete="off" class="form-control" placeholder="Fixed Assets" required="required">
+                              <textarea class="form-control" name="fixed_assets" placeholder="Enter Fixed Assets and separate them with comma (,)" required="required">{{ old('fixed_assets') }}</textarea>
                             </div>
                           </div>
                           <div class="row form-group">
                             <div class="col-3">
                               <label>Total sales in last 7 days</label>
-                              <input type="number" name="sales_seven_days" autocomplete="off" class="form-control" placeholder="Sales in last 7 days" required="required">
+                              <input type="text" name="sales_seven_days" autocomplete="off" class="form-control" placeholder="Sales in last 7 days" required="required" value="{{ old('sales_seven_days')}}">
                             </div>
                             <div class="col-3">
                               <label>Member's Residence</label>
-                              <input type="text" name="member_location" autocomplete="off" class="form-control" placeholder="Member's residence" required="required">
+                              <input type="text" name="member_location" autocomplete="off" class="form-control" placeholder="Member's residence" required="required" value="{{ old('member_location')}}">
                             </div>
                             <div class="col-3">
                               <label>Name of known person</label>
-                              <input type="text" name="known_person_name" autocomplete="off" class="form-control" placeholder="Name of any person known in the community" required="required">
+                              <input type="text" name="known_person_name" autocomplete="off" class="form-control" placeholder="Name of any person known in the community" required="required" value="{{ old('known_person_name')}}">
                             </div>
                             <div class="col-3">
                               <label>Telephone of known person</label>
-                              <input type="text" name="known_person_telephone" autocomplete="off" class="form-control" placeholder="Telephone" required="required">
+                              <input type="text" name="known_person_telephone" autocomplete="off" class="form-control" placeholder="Telephone" required="required" value="{{ old('known_person_telephone')}}">
                             </div>
                           </div>
                           <div class="card-header">
@@ -244,7 +264,7 @@
                             </div>
                             <div class="col-4">
                               <label>Date</label>
-                              <input type="date" name="witness_on[]" autocomplete="off" class="form-control" placeholder="Date" required="required">
+                              <input type="date" name="witness_on[]" autocomplete="off" class="form-control" placeholder="Date" required="required" min="01/01/2020">
                             </div>
                           </div>
                           <div class="row form-group">
@@ -258,7 +278,7 @@
                             </div>
                             <div class="col-4">
                               <label>Date</label>
-                              <input type="date" name="witness_on[]" autocomplete="off" class="form-control" placeholder="Date" required="required">
+                              <input type="date" name="witness_on[]" autocomplete="off" class="form-control" placeholder="Date" required="required" min="01/01/2020">
                             </div>
                           </div>
                           <div class="card-header">
@@ -271,11 +291,17 @@
                               </div>
                               <input type="text" class="form-control" placeholder="Guarantor name" name="guarantor_name[]" autocomplete="off" required="required">
                             </div>
-                            <div class="col-4">
+                            <div class="col-3">
                               <input type="text" name="guarantor_address[]" autocomplete="off" class="form-control" placeholder="Address" required="required">
                             </div>
-                            <div class="col-3">
-                              <input type="text" class="form-control" name="guarantor_telephone[]" autocomplete="off" placeholder="Telephone number" required="required">
+                            <div class="col-2">
+                              <input type="text" class="form-control" name="guarantor_telephone[]" autocomplete="off" placeholder="Telephone number" required="required" pattern="[0-9]{10}">
+                            </div>
+                            <div class="input-group col-2">
+                                <div class="custom-file">
+                                  <input type="file" name="guarantor_photo[]" required="required" class="form-control custom-file-input" id="exampleInputFile">
+                                  <label class="custom-file-label" for="exampleInputFile">Guarantor Photo</label>
+                                </div>
                             </div>
                           </div>
                           <div class="row form-group">
@@ -285,15 +311,28 @@
                               </div>
                               <input type="text" class="form-control" placeholder="Guarantor name" name="guarantor_name[]" autocomplete="off" required="required">
                             </div>
-                            <div class="col-4">
+                            <div class="col-3">
                               <input type="text" name="guarantor_address[]" autocomplete="off" class="form-control" placeholder="Address" required="required">
                             </div>
-                            <div class="col-3">
-                              <input type="text" class="form-control" name="guarantor_telephone[]" autocomplete="off" placeholder="Telephone number" required="required">
+                            <div class="col-2">
+                              <input type="text" class="form-control" name="guarantor_telephone[]" autocomplete="off" placeholder="Telephone number" required="required" pattern="[0-9]{10}">
+                            </div>
+                            <div class="input-group col-2">
+                                <div class="custom-file">
+                                  <input type="file" name="guarantor_photo[]" required="required" class="form-control custom-file-input" id="exampleInputFile">
+                                  <label class="custom-file-label" for="exampleInputFile">Guarantor Photo</label>
+                                </div>
                             </div>
                           </div>
-                          <div class="row form-group">
-                              <button class="btn btn-outline-primary ml-2">Save</button>
+                          <div class="row form-group" id="invoke_auth">
+                            <button class="btn btn-outline-primary ml-2" id="btn_invoke_auth">Save</button>
+                          </div>
+                          <div class="row form-group col-3" id="auth_user">
+                            <label>Password</label>
+                            <input type="password" name="password" class="form-control" required="required" placeholder="Type your password">
+                          </div>
+                          <div class="row form-group" id="submit_input">
+                            <button class="btn btn-primary ml-2">Continue</button>
                           </div>
                         </form>
                       </div>
@@ -495,7 +534,7 @@
                                 ....................................................................................................................................................................................................................................................
                             </p>
                             <p>
-                                Name of Applicant ....................................................................................................... Signature ............................................... Date ...................................
+                                Name of Applicant <strong class="pl-2">{{$cont->name}}</strong> <span class="pl-4">Signature ............................................... Date ...................................</span> 
                             </p>
                             <p>
                                 Purpose of loan <br>

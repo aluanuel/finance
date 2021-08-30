@@ -78,7 +78,9 @@ class LoanRepaymentController extends Controller {
 
 			$balance = $total_loan - $loan_recovered;
 
-			if ($balance < request('deposit')) {
+			$deposit = str_replace(',','',request('deposit'));
+
+			if ($balance < $deposit) {
 
 				return redirect()->back()->with('warning', 'Deposit amount exceeds the loan balance of ' . number_format($balance));
 
@@ -86,13 +88,13 @@ class LoanRepaymentController extends Controller {
 
 				$pay = new LoanRepayment();
 				$pay->id_loan = request('id_loan');
-				$pay->deposit = request('deposit');
+				$pay->deposit = $deposit;
 				$pay->depositer = request('depositer');
 				$pay->receipt_number = $this->Receipt();
 				$pay->recorded_by = Auth::id();
 				$pay->save();
 
-				$new_recovery = $loan_recovered + request('deposit');
+				$new_recovery = $loan_recovered + $deposit;
 
 				$app->loan_recovered = $new_recovery;
 				$app->loan_balance = ($total_loan - $new_recovery);

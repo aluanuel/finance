@@ -28,13 +28,13 @@
 				<div class="row form-group">
 				  	<div class="col-12">
 				    	<label>Deposit Amount</label>
-				    	<input type="number" name="deposit" autocomplete="off" class="form-control" placeholder="Deposit Amount" required="required">
+				    	<input type="text" name="deposit" autocomplete="off" class="form-control" placeholder="Deposit Amount" required="required" value="{{ old('deposit') }}">
 					</div>
 				 </div>
 				 <div class="row form-group">
 				  	<div class="col-12">
 				    	<label>Depositor</label>
-				    	<input type="text" name="depositer" autocomplete="off" class="form-control" placeholder="Name of depositor" required="required">
+				    	<input type="text" name="depositer" autocomplete="off" class="form-control" placeholder="Name of depositor" required="required" value="{{ old('depositer') }}">
 					</div>
 				 </div>
 			  <input type="hidden" name="receipt_number" value="">
