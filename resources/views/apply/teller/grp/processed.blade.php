@@ -52,15 +52,14 @@
                           <thead>
                             <tr>
                               <th>#</th>
-                              <th>Number</th>
-                              <th>Applicant</th>
-                              <th>Loan Amount</th>
-                              <th>Loan Outstanding</th>
-                              <th>Security</th>
-                              <th>Processing Fee</th>
-                              <th>Loan Payable</th>
-                              <th>Period(Months)</th>
-                              <th>Telephone</th>
+                              <th>loan Number</th>
+                              <th>Applicant name</th>
+                              <th>Loan approved</th>
+                              <th>interest rate(%)</th>
+                              <th>Total Loan</th>
+                              <th>Loan Security</th>
+                              <th>Loan Period(Weeks)</th>
+                              <th>applicant Telephone</th>
                               <th width="150px">#</th>
                             </tr>
                           </thead>
@@ -72,10 +71,9 @@
                                 <td>{{ $app->loan_number }}</td>
                                 <td>{{ $app->name }}</td>
                                 <td>{{ number_format($app->recommended_amount)}}</td>
+                                <td>{{ $app->interest_rate }}</td>
                                 <td>{{ number_format($app->total_loan)}}</td>
                                 <td>{{ number_format($app->security)}}</td>
-                                <td>{{ number_format($app->loan_processing_fee)}}</td>
-                                <td>{{ number_format($app->loan_amount_issued)}}</td>
                                 <td>{{ $app->loan_period}}</td>
                                 <td>{{ $app->telephone }}</td>
                                 <td>
@@ -85,7 +83,6 @@
                             <?php $i++;?>
                             @endforeach
                           </tbody>
-
                         </table>
                       </div>
                     <!-- /.card-body -->
@@ -104,17 +101,16 @@
                           <thead>
                             <tr>
                               <th style="width: 12px;">#</th>
-                              <th style="width: 30px;">Number</th>
-                              <th>Applicant</th>
-                              <th>Loan Amount</th>
-                              <th>Interest</th>
+                              <th>loan Number</th>
+                              <th>client name</th>
+                              <th>Loan disbursed</th>
+                              <th>Total loan</th>
+                              <th>loan Security</th>
+                              <th>loan instalment</th>
+                              <th>loan Start</th>
+                              <th>loan End</th>
+                              <th>loan Recovered</th>
                               <th>Loan Outstanding</th>
-                              <th>Security</th>
-                              <th>Start</th>
-                              <th>End</th>
-                              <th>Recovered</th>
-                              <th>Balance</th>
-                              <th>Telephone</th>
                               <th style="width: 80px;">#</th>
                             </tr>
                           </thead>
@@ -124,16 +120,15 @@
                               <tr>
                                 <td>{{ $i }}</td>
                                 <td>{{ $run->loan_number }}</td>
-                                <td>{{ $run->name }}</td>
+                                <td><a href="/apply/view/profile/{{$run->id_client}}">{{ $run->name }}</a></td>
                                 <td>{{ number_format($run->recommended_amount) }}</td>
-                                <td>{{ number_format($run->loan_interest) }}</td>
                                 <td>{{ number_format($run->total_loan) }}</td>
                                 <td>{{ number_format($run->security) }}</td>
+                                <td>{{ number_format($run->instalment) }}</td>
                                 <td>{{ date('Y-m-d', strtotime($run->start_date)) }}</td>
                                 <td>{{ date('Y-m-d',strtotime($run->end_date)) }}</td>
                                 <td>{{ number_format($run->loan_recovered) }}</td>
                                 <td>{{ number_format($run->loan_balance) }}</td>
-                                <td>{{ $run->telephone }}</td>
                                 <td><a href="/apply/teller/trans/{{$run->id}}"><button class="btn btn-outline-primary">Pay</button></a></td>
                               </tr>
                             <?php $i++;?>
@@ -157,17 +152,16 @@
                           <thead>
                             <tr>
                               <th style="width: 12px;">#</th>
-                              <th style="width: 30px;">Number</th>
-                              <th>Applicant</th>
-                              <th>Loan Amount</th>
-                              <th>Interest</th>
+                              <th>loan Number</th>
+                              <th>client name</th>
+                              <th>Loan disbursed</th>
+                              <th>Total Loan</th>
+                              <th>loan Security</th>
+                              <th>loan instalment</th>
+                              <th>loan Start</th>
+                              <th>loan End</th>
+                              <th>loan Recovered</th>
                               <th>Loan Outstanding</th>
-                              <th>Security</th>
-                              <th>Start</th>
-                              <th>End</th>
-                              <th>Recovered</th>
-                              <th>Balance</th>
-                              <th>Telephone</th>
                               <th>#</th>
                             </tr>
                           </thead>
@@ -177,16 +171,15 @@
                               <tr>
                                 <td>{{ $i }}</td>
                                 <td>{{ $complete->loan_number }}</td>
-                                <td>{{ $complete->name }}</td>
+                                <td><a href="/apply/view/profile/{{$complete->id_client}}">{{ $complete->name }}</a></td>
                                 <td>{{ number_format($complete->recommended_amount) }}</td>
-                                <td>{{ number_format($complete->loan_interest) }}</td>
                                 <td>{{ number_format($complete->total_loan) }}</td>
                                 <td>{{ number_format($complete->security) }}</td>
+                                <td>{{ number_format($complete->instalment) }}</td>
                                 <td>{{ date('Y-m-d', strtotime($complete->start_date)) }}</td>
                                 <td>{{ date('Y-m-d',strtotime($complete->end_date)) }}</td>
                                 <td>{{ number_format($complete->loan_recovered) }}</td>
                                 <td>{{ number_format($complete->loan_balance) }}</td>
-                                <td>{{ $complete->telephone }}</td>
                                 @if($complete->security > 0)
                                 <td><a href="/apply/teller/trans/security/{{$complete->id}}"><button class="btn btn-outline-primary">Return</button></a></td>
                                 @else

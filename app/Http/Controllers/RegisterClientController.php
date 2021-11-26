@@ -12,11 +12,52 @@ use App\Rules\ValidatePassword;
 
 class RegisterClientController extends Controller {
 
+	public function index(Request $request){
+		$client = RegisterClient::where('id',$request->id)
+				->first();	
+		return view('apply.teller.trans.appraisal_fee.index',compact('client'));
+	}
+
+	public function RecordAppraisalFeePayment(Request $request){
+
+		$validator = $request->validate([
+			    'password' => ['required', new ValidatePassword(auth()->user())]
+			]);
+
+		$account = RegisterClient::find($request->id);
+
+		$account->account_status = 1;
+
+		$account->save();
+
+		return redirect()->route('ActiveAccounts')->with('success','Account Activated Successfully');
+
+	}
+
 	public function viewAccounts(){
 
-		$accounts = RegisterClient::all();
+		switch(Auth::user()->category){
 
-		return view('apply.view.clients',compact('accounts'));
+			case 'Individual':
+
+				$accounts = RegisterClient::where('id_group',NULL)->where('account_status',1)->get();
+
+			break;
+
+			case 'Group':
+
+				$accounts = RegisterClient::where('id_group','!=',NULL)->where('account_status',1)->get();
+
+			break;
+
+			default:
+
+				$accounts = RegisterClient::where('account_status',1)->get();
+
+			break;
+		}
+
+		return view('apply.accounts.clients',compact('accounts'));
 
 	}
 
@@ -29,15 +70,17 @@ class RegisterClientController extends Controller {
 	}
 
 	public function viewAccountDetails(Request $request){
+
 		$id = LoanApplication::where('id_client',$request->id)
 			->latest()
 			->first();
-		// dd($id);
+
 		$loan = DB::table('loan_applications')
 			->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
 			->select('loan_applications.*', 'register_clients.*')
 			->where('loan_applications.id', '=', $id->id)
 			->first();
+
 		$ledger = DB::table('loan_repayments')
 			->where('id_loan', '=', $id->id)
 			->get();
@@ -46,94 +89,80 @@ class RegisterClientController extends Controller {
 			->where('id_client', $request->id)
 			->orderBy('created_at', 'desc')
 			->get();
+
 		$schedule = DB::table('loan_schedules')
 			->where('id_loan',$id->id)
 			->get();
+
 		$savings = DB::table('client_savings')
 			->where('id_client',$request->id)
 			->orderBy('created_at','asc')
 			->get();
+
 		return view('apply.view.client_profile', compact('loan', 'ledger', 'history','schedule','savings'));
 
 	}
 
-	public function singleApplication() {
+	public function NewAccount() {
 
-		$clients = DB::table('register_clients')
-			->join('loan_applications', 'loan_applications.id_client', 'register_clients.id')
-			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone', 'register_clients.gender', 'register_clients.marital_status', 'register_clients.work_place', 'register_clients.occupation')
-			->where('register_clients.id_group', '=', NULL)
-			->where('loan_applications.application_status', '=', '1')
-			->where('loan_applications.proposed_amount', '=', NULL)
-			->where('loan_applications.application_by',Auth::user()->id)
-			->orderBy('loan_applications.created_at', 'desc')
-			->get();
-		$register = RegisterClient::where('id_group',NULL)
-			->get();
+		if(Auth::user()->category == 'Individual'){
 
-		$loan = $this->loanNumber();
+			$appraisal = DB::table('appraisal_fees')
+				->select('appraisal_amount')
+				->where('appraisal_type', 'Individual')
+				->latest()
+				->first();
 
-		$interest = DB::table('interest_on_loans')
-			->select('interest_rate')
-			->where('loan_type', '=', 'Individual')
-			->latest()
-			->first();
-		$new = DB::table('appraisal_fees')
-			->where('appraisal_type','=','Individual')
-			->where('appraisal_category','=','New')
-			->select('appraisal_amount')
-			->latest()
-			->first();
-		$existing = DB::table('appraisal_fees')
-			->where('appraisal_type','=','Individual')
-			->where('appraisal_category','=','Existing')
-			->select('appraisal_amount')
-			->latest()
-			->first();	
+			return view('apply.accounts.individual',compact('appraisal'));
 
-		return view('apply.ind.index', compact('clients', 'loan', 'register', 'interest','new','existing'));
-	}
+		}elseif(Auth::user()->category == 'Group'){
 
-	public function NewIndividualApplication(Request $request) {
+			$groups = ClientGroup::get();
 
-		$loanApp = new LoanApplication();
+			$appraisal = DB::table('appraisal_fees')
+				->select('appraisal_amount')
+				->where('appraisal_type', 'Group')
+				->latest()
+				->first();
 
-		if (is_numeric(request('id_client'))) {
 
-			$check = DB::table('loan_applications')
-					->where('id_client',request('id_client'))
-					->where('loan_status','!=','completed')
-					->get();
-			if(sizeof($check) > 0){
-				return redirect()->route('viewLoanList',[request('id_client')])->with('error','You have '.sizeof($check). ' incomplete loan(s). Please complete the current running loan or resume the exisiting loan application');
-			}else{
+			return view('apply.accounts.group',compact('groups','appraisal'));
 
-				$loanApp->id_client = request('id_client');
+		}
 
-				$loanApp->application_fee = request('application_fee');
+	}	
 
-				$loanApp->application_date = Carbon::now()->toDateTimeString();
+	public function CreateAccount() {
 
-				$loanApp->loan_number = request('loan_number');
+		$client = new RegisterClient();
 
-				$loanApp->interest_rate = request('interest_rate');
+		if(is_numeric(request('id_group'))){
+			
+			$client->account = $this->accountNumber();
+			$client->name = request('name');
+			$client->gender = request('gender');
+			$client->dob = request('dob');
+			$client->marital_status = request('marital_status');
+			$client->telephone = request('telephone');
+			$client->next_of_kin = request('next_of_kin');
+			$client->appraisal_fee = str_replace(',','',request('appraisal_fee'));
+			$client->id_group = request('id_group');
+			$client->house_head = request('house_head');
+			$client->work_place = request('work_place');
+			$client->occupation = request('occupation');
+			$client->district = request('district');
+			$client->resident_district = request('resident_district');
+			$client->resident_division = request('resident_division');
+			$client->resident_parish = request('resident_parish');
+			$client->resident_village = request('resident_village');
+			$client->registration_date = Carbon::now()->toDateTimeString();
+			$client->registered_by = Auth::id();
+			$client->save();
 
-				$loanApp->application_by = Auth::id();
+			return redirect()->back()->with('success', 'Account Created Successfully');
 
-				$loanApp->save();
+		}else{
 
-				return redirect()->back()->with('success', 'Loan Application Registerd Successfully');
-			}
-
-		} else {
-			//$request->validate([
-         //    'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        	// ]);
-        	// $imageName = time().'.'.$request->photo->extension();
-
-         // 	$request->photo->move(public_path('img'), $imageName);
-
-			$client = new RegisterClient();
 			$client->account = $this->accountNumber();
 			$client->name = request('name');
 			$client->gender = request('gender');
@@ -141,29 +170,25 @@ class RegisterClientController extends Controller {
 			$client->telephone = request('telephone');
 			$client->work_place = request('work_place');
 			$client->occupation = request('occupation');
+			$client->appraisal_fee = str_replace(',','',request('appraisal_fee'));
 			//$client->photo = $imageName;
 			$client->registration_date = Carbon::now()->toDateTimeString();
 			$client->registered_by = Auth::id();
 			$client->save();
 
-			$loanApp->id_client = $client->id;
-
-			$loanApp->application_fee = request('application_fee');
-
-			$loanApp->application_date = Carbon::now()->toDateTimeString();
-
-			$loanApp->loan_number = request('loan_number');
-
-			$loanApp->interest_rate = request('interest_rate');
-
-			$loanApp->application_by = Auth::id();
-
-			$loanApp->save();
-
-			return redirect()->back()->with('success', 'Registered Successfully');
-
+			return redirect()->back()->with('success', 'Account Created Successfully');
 		}
 
+	}
+
+
+	public function viewAccountApplications(){
+
+		$application = RegisterClient::where('account_status',0)
+						->orderBy('created_at','desc')
+						->get();
+
+		return view('apply.accounts.applications',compact('application'));
 	}
 
 	public function updateIndividualApplication(Request $request) {
@@ -178,7 +203,6 @@ class RegisterClientController extends Controller {
 
 			$loan->application_status = 1;
 
-			//$loan->payment_received_by = Auth::user()->id;
 
 			$loan->save();
 
@@ -237,140 +261,6 @@ class RegisterClientController extends Controller {
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	public function showGroupApplicationForm(){
-		$groups = ClientGroup::get();
-		$interest = DB::table('interest_on_loans')
-			->select('interest_rate')
-			->where('loan_type', '=', 'Group')
-			->latest()
-			->first();
-		$appraisal = DB::table('appraisal_fees')
-			->select('appraisal_amount')
-			->where('appraisal_type', '=', 'Group')
-			->latest()
-			->first();
-		$loan = DB::table('loan_applications')
-		->join('register_clients','loan_applications.id_client','register_clients.id')
-		->join('client_groups','loan_applications.id_group','client_groups.id')
-		->select('client_groups.group_name','client_groups.group_code','register_clients.name','register_clients.telephone', 'register_clients.gender', 'register_clients.marital_status', 'register_clients.work_place', 'register_clients.occupation','loan_applications.*')
-		->where('loan_applications.id_group','!=',NULL)
-		->where('loan_applications.application_status','=',1)
-		->where('loan_applications.assessment_status','=',NULL)
-		->where('loan_applications.application_by',Auth::user()->id)
-		->orderBy('loan_applications.created_at','desc')
-		->get();
-
-		$register = RegisterClient::where('id_group','!=',NULL)
-			->get();
-		$interest = DB::table('interest_on_loans')
-			->select('interest_rate')
-			->where('loan_type', '=', 'Group')
-			->latest()
-			->first();
-		$fee = DB::table('appraisal_fees')
-			->where('appraisal_type','=','Group')
-			->select('appraisal_amount')
-			->latest()
-			->first();
-		$loanNumber = $this->loanNumber();
-		return view('apply.grp.index',compact('groups','interest','appraisal','loan','register','interest','fee','loanNumber'));
-	}
-
-	public function NewGroupApplication(){
-		
-		if (is_numeric(request('id_client'))) {
-
-			$check = DB::table('loan_applications')
-					->where('id_client',request('id_client'))
-					->where('loan_status','!=','completed')
-					->get();
-			if(sizeof($check) > 0){
-				return redirect()->route('viewLoanList',[request('id_client')])->with('error','You have '.sizeof($check). ' incomplete loan(s). Please complete the current running loan or resume the exisiting loan application');
-			}else{
-
-				$loanApp = new LoanApplication();
-
-				$loanApp->id_client = request('id_client');
-
-				$loanApp->application_fee = str_replace(',','',request('application_fee'));
-
-				$loanApp->application_date = Carbon::now()->toDateTimeString();
-
-				$loanApp->loan_number = request('loan_number');
-
-				$loanApp->interest_rate = request('interest_rate');
-
-				$loanApp->id_group = request('id_group');
-
-				$loanApp->application_by = Auth::id();
-
-				$loanApp->save();
-
-				return redirect()->back()->with('success', 'Loan Application Registerd Successfully');
-			}
-
-		}else{
-			$client = new RegisterClient();
-			$client->account = $this->accountNumber();
-			$client->name = request('name');
-			$client->gender = request('gender');
-			$client->dob = request('dob');
-			$client->marital_status = request('marital_status');
-			$client->telephone = request('telephone');
-			$client->next_of_kin = request('next_of_kin');
-			$client->id_group = request('id_group');
-			$client->house_head = request('house_head');
-			$client->work_place = request('work_place');
-			$client->occupation = request('occupation');
-			$client->district = request('district');
-			$client->resident_district = request('resident_district');
-			$client->resident_division = request('resident_division');
-			$client->resident_parish = request('resident_parish');
-			$client->resident_village = request('resident_village');
-			$client->registration_date = Carbon::now()->toDateTimeString();
-			$client->registered_by = Auth::id();
-			$client->save();
-
-			$loanApp = new LoanApplication();
-
-			$id_client = RegisterClient::latest('id')->where('id_group', '=',request('id_group') )->first();
-
-			$loanApp->id_client = $id_client->id;
-
-			$loanApp->id_group = request('id_group');
-
-			$loanApp->application_fee = str_replace(',','',request('application_fee'));
-
-			$loanApp->application_date = Carbon::now()->toDateTimeString();
-
-			$loanApp->loan_number =$this->loanNumber();
-
-			$loanApp->interest_rate = request('interest_rate');
-
-			$loanApp->application_by = Auth::id();
-
-			$loanApp->save();
-
-			return redirect()->back()->with('success', 'Registered Successfully');
-		}
-
-	}
-
-	private function loanNumber() {
-
-		$id = LoanApplication::latest('loan_number')->first();
-
-		if (is_null($id)) {
-
-			return (101);
-
-		} else {
-
-			return $id->loan_number + 1;
-
-		}
-	}
 
 	private function accountNumber(){
 

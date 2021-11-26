@@ -49,18 +49,6 @@
 	                          </div>
 	                          <div class="row form-group">
 	                            <div class="col-12">
-	                              <label>Category</label>
-	                              <div class="form-group">
-	                                <select class="form-control select2bs4" name="appraisal_category" data-placeholder="Select" style="width: 100%;" required="required">
-	                                	<option></option>
-	                                  <option>New</option>
-	                                  <option>Existing</option>
-	                                </select>
-	                              </div>
-	                            </div>
-	                          </div>
-	                          <div class="row form-group">
-	                            <div class="col-12">
 	                              <label>Appraisal Amount</label>
 	                              <input type="text" name="appraisal_amount" autocomplete="off" class="form-control" placeholder="Appraisal Amount" required="required">
 	                            </div>
@@ -85,7 +73,6 @@
                               <tr>
                                 <th>#</th>
                                 <th>Appraisal Type</th>
-                                <th>Category</th>
                                 <th>Charge</th>
                                 <th>Created at</th>
                               </tr>
@@ -96,7 +83,6 @@
                                 <tr>
                                   <td>{{$i}}</td>
                                   <td>{{ $fee->appraisal_type }}</td>
-                                  <td>{{ $fee->appraisal_category }}</td>
                                   <td>{{ number_format($fee->appraisal_amount) }}</td>
                                   <td>{{ date('Y-m-d',strtotime($fee->created_at)) }}</td>
                                 </tr>

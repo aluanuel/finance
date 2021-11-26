@@ -79,7 +79,7 @@
                                 <td>{{ number_format($app->loan_amount_issued)}}</td>
                                 <td>{{ $app->loan_period}}</td>
                                 <td>{{ $app->telephone }}</td>
-                                <td><a href="/apply/view/profile/{{$app->id}}"><button class="btn btn-outline-primary">View</button></a></td>
+                                <td><a href="/apply/view/profile/{{$app->id_client}}"><button class="btn btn-outline-primary">View</button></a></td>
                               </tr>
                             <?php $i++;?>
                             @endforeach
@@ -133,7 +133,7 @@
                                 <td>{{ number_format($run->loan_recovered) }}</td>
                                 <td>{{ number_format($run->loan_balance) }}</td>
                                 <td>{{ $run->telephone }}</td>
-                                <td><a href="/apply/view/profile/{{$run->id}}"><button class="btn btn-outline-primary">View</button></a></td>
+                                <td><a href="/apply/view/profile/{{$run->id_client}}"><button class="btn btn-outline-primary">View</button></a></td>
                               </tr>
                             <?php $i++;?>
                             @endforeach
@@ -186,7 +186,7 @@
                                 <td>{{ number_format($complete->loan_recovered) }}</td>
                                 <td>{{ number_format($complete->loan_balance) }}</td>
                                 <td>{{ $complete->telephone }}</td>
-                                <td><a href="/apply/view/profile/{{$complete->id}}"><button class="btn btn-outline-primary">View</button></a></td>
+                                <td><a href="/apply/view/profile/{{$complete->id_client}}"><button class="btn btn-outline-primary">View</button></a></td>
                               </tr>
                             <?php $i++;?>
                             @endforeach
@@ -199,7 +199,7 @@
                   <div class="tab-pane" id="ln_suspended">
                     <div class="card">
                       <div class="card-header">
-                        <h3 class="card-title">Completed Loans</h3>
+                        <h3 class="card-title">Suspended Loans</h3>
                       </div>
                       <!-- /.card-header -->
                       <div class="card-body" style="overflow-x: scroll;">

@@ -29,16 +29,40 @@
         @include('layouts.flash')
         <div class="row">
           <div class="col-12">
-          	<div class="card">
+          	<div class="card" id="printArea">
               <div class="card-header">
                 <h3 class="card-title">{{$heading}}</h3>
                 <div class="card-tools">
-                  <a href="/generate/report/cashbook" title="Download Report">
+                  <!-- <a href="/generate/report/cashbook" title="Download Report">
                     <i class="fa fa-download"></i>
-                  </a>
+                  </a> -->
+
+                  <button type="button" class="btn btn-primary btn-sm" title="Print form" onclick="printContent('printArea')">
+                <i class="fa fa-print"></i>
+               </button>
                 </div>
               </div>
               <div class="card-body">
+                <form action="/apply/report/cbook/search" method="post" class="pb-2">
+                  @csrf
+                  <div class="row">
+                    <div class="input-group col-5">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Start date</span>
+                      </div>
+                      <input type="date" name="start_date" class="form-control" data-mask required="required">
+                    </div>
+                    <div class="input-group col-5">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">End date</span>
+                      </div>
+                      <input type="date" name="end_date" class="form-control"  data-mask required="required">
+                    </div>
+                    <div class="col-2">
+                      <button class="btn btn-outline-primary">Search</button>
+                    </div>
+                   </div>
+                 </form>
                 <table id="example2" class="table table-bordered table-hover">
                   <thead>
                     <tr>
@@ -55,20 +79,20 @@
                     @foreach($incomes as $income)
                       <tr>
                         <td>{{ date('Y-m-d',strtotime($income->created_at)) }}</td>
-                        <td>{{ $income->payment_name }}</td>
-                        <td>{{ number_format($income->payment_amount) }}</td>
+                        <td>{{ $income->transaction_category }}</td>
+                        <td>{{ number_format($income->transaction_amount) }}</td>
                         <td></td>
-                        <?php $debit += $income->payment_amount; ?>
+                        <?php $debit += $income->transaction_amount; ?>
                       </tr>
                     @endforeach
 
                     @foreach($expenses as $expense)
                       <tr>
                         <td>{{ date('Y-m-d',strtotime($expense->created_at)) }}</td>
-                        <td>{{ $expense->payment_name }}</td>
+                        <td>{{ $expense->transaction_category }}</td>
                         <td></td>
-                        <td>{{ number_format($expense->payment_amount) }}</td>
-                        <?php $credit += $expense->payment_amount; ?>
+                        <td>{{ number_format($expense->transaction_amount) }}</td>
+                        <?php $credit += $expense->transaction_amount; ?>
                       </tr>
                     @endforeach
                     
@@ -85,9 +109,9 @@
                       <tr>
                         <td>{{ date('Y-m-d',strtotime($appraise->created_at)) }}</td>
                         <td>Loan appraisal</td>
-                        <td>{{ number_format($appraise->application_fee) }}</td>
+                        <td>{{ number_format($appraise->appraisal_fee) }}</td>
                         <td></td>
-                        <?php $debit += $appraise->application_fee; ?>
+                        <?php $debit += $appraise->appraisal_fee; ?>
                       </tr>
                     @endforeach
                     @foreach($application as $app)

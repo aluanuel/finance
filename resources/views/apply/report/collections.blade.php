@@ -65,12 +65,8 @@
                               <td>{{number_format($processing)}}</td>
                             </tr>
                             <tr>
-                              <td><a href="/apply/report/collections/passbook">Passbook</a></td>
-                              <td>{{number_format($passbook)}}</td>
-                            </tr>
-                            <tr>
-                              <td><a href="/apply/report/collections/fine"> Fine</a></td>
-                              <td>{{number_format($fine)}}</td>
+                              <td><a href="/apply/report/incomes">Other Incomes</a></td>
+                              <td>{{number_format($incomes)}}</td>
                             </tr>
                             <tr>
                               <td><a href="/apply/report/collections/security"> Security</a></td>

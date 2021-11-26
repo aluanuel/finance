@@ -2,40 +2,56 @@
 
 namespace App\Http\Controllers;
 use \App\Models\OtherPayment;
+use App\Models\TransactionCategory;
+use App\Models\TransactionSubCategory;
 use Carbon\Carbon;
+
+use DB;
+
 
 class OtherPaymentController extends Controller {
 	public function index() {
 
-		$income = OtherPayment::where('payment_category', '=', 'income')
-			->orderBy('created_at', 'desc')
-			->limit(25)
-			->get();
+		$income =  DB::table('other_payments')
+					->join('transaction_categories','other_payments.id_category','transaction_categories.id')
+					->where('other_payments.transaction_type', '=', 'income')
+					->orderBy('other_payments.created_at', 'desc')
+					->limit(25)
+					->get();
 
 		$headIncome = 'Showing Recent Incomes';
 
-		$expense = OtherPayment::where('payment_category', '=', 'expense')
-			->orderBy('created_at', 'desc')
-			->limit(25)
-			->get();
+		$inflow = TransactionCategory::where('transaction_type','income')->get();
+
+		$inflow_sub = TransactionSubCategory::where('transaction_type','income')->get();
+
+		$outflow = TransactionCategory::where('transaction_type','expense')->get();
+
+		$outflow_sub = TransactionSubCategory::where('transaction_type','expense')->get();
+
+		$expense = DB::table('other_payments')
+					->join('transaction_categories','other_payments.id_category','transaction_categories.id')
+					->where('other_payments.transaction_type', 'expense')
+					->orderBy('other_payments.created_at', 'desc')
+					->limit(25)
+					->get();
 
 		$headExpense = 'Showing Recent Expenses';
 
-		return view('apply.trans.record_transaction', compact('income', 'expense','headIncome','headExpense'));
+		return view('apply.trans.record_transaction', compact('income', 'expense','headIncome','headExpense','inflow','inflow_sub','outflow','outflow_sub'));
 	}
 
 	public function recordTransaction() {
-
-		$payment_name = request('payment_name');
-
 		$pay = new OtherPayment();
-		$pay->payment_name = request('payment_name');
-		if($payment_name == 'Other'){
-
-			$pay->payment_name = request('new_payment_name');
+		$pay->id_category = request('id_category');
+		if(is_numeric(request('id_sub_category'))){
+			$pay->id_sub_category = request('id_sub_category');
+		}else{
+			$pay->id_sub_category = null;
 		}
-		$pay->payment_amount = request('payment_amount');
-		$pay->payment_category = request('payment_category');
+		
+		$pay->transaction_type = request('transaction_type');
+		$pay->transaction_amount = str_replace(',','',request('transaction_amount'));
 		$pay->recorded_by = request('recorded_by');
 		$pay->save();
 		return redirect()->back()->with('success', 'Transaction successful');

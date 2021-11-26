@@ -52,24 +52,35 @@
 					                          @csrf
 					                          <div class="row form-group">
 					                            <div class="col-12">
-					                              <label>Income Source</label>
-					                              <select class="form-control select2bs4" name="payment_name" id="income_source" data-placeholder="Select Income Source" style="width: 100%;" required="required">
-			                                  	<option></option>
-			                                  	<option value="Bank To Cash">Bank To Cash</option>
-			                                  	<option value="Fine">Fine</option>
-			                                  	<option value="Other">Other</option>
+					                              <label>Income Category</label>
+					                              <select class="form-control select2bs4" name="id_category" data-placeholder="Select" style="width: 100%;" required="required">
+					                              		<option></option>
+			                                  	@foreach($inflow as $in)
+			                                  		<option value="{{ $in->id }}">{{ $in->transaction_category }}</option>
+			                                  	@endforeach
                                 				</select>
-					                              
-					                              <input type="text" id="new_income" name="new_payment_name" autocomplete="off" class="form-control mt-2" placeholder="New Income source">
+					                            </div>
+					                          </div>
+					                          <div class="row form-group">
+					                            <div class="col-12">
+					                              <label>Income Sub Category</label>
+					                              <select class="form-control select2bs4" name="id_sub_category" data-placeholder="Select" style="width: 100%;" required="required">
+					                              		<option></option>
+					                              		<option>{{'None'}}</option>
+			                                  	@foreach($inflow_sub as $in)
+			                                  		<option value="{{ $in->id }}">{{ $in->transaction_sub_category }}</option>
+			                                  	@endforeach
+			                                  		
+                                				</select>
 					                            </div>
 					                          </div>
 					                          <div class="row form-group">
 					                            <div class="col-12">
 					                              <label>Amount</label>
-					                              <input type="number" name="payment_amount" autocomplete="off" class="form-control" placeholder="Amount" required="required">
+					                              <input type="text" name="transaction_amount" autocomplete="off" class="form-control" placeholder="Amount" required="required">
 					                            </div>
 					                          </div>
-					                          <input type="hidden" name="payment_category" value="income">
+					                          <input type="hidden" name="transaction_type" value="income">
 
 					                          <input type="hidden" name="recorded_by" value="{{Auth::id()}}">
 					                          <div class="row form-group">
@@ -118,7 +129,7 @@
 								                  <tr>
 								                    <th style="width: 12px;">#</th>
 								                    <th>Date</th>
-								                    <th>Details</th>
+								                    <th>Category</th>
 								                    <th>Amount</th>
 								                  </tr>
 								                </thead>
@@ -131,10 +142,10 @@
 								                	<tr>
 								                		<td>{{ $i }}</td>
 								                		<td>{{ date('Y-m-d',strtotime($inc->created_at)) }}</td>
-								                		<td>{{ $inc->payment_name }}</td>
-								                		<td>{{ number_format($inc->payment_amount) }}</td>
+								                		<td>{{ $inc->transaction_category }}</td>
+								                		<td>{{ number_format($inc->transaction_amount) }}</td>
 								                		<?php 
-								                			$totalIncome += $inc->payment_amount;
+								                			$totalIncome += $inc->transaction_amount;
 								                		?>
 								                	</tr>
 								                	<?php $i++;?>
@@ -143,8 +154,8 @@
 								                <tfoot>
 								                	<tr>
 								                		<th>#</th>
-								                		<th>#</th>
 								                		<th>Total</th>
+								                		<th></th>
 								                		<th>{{ number_format($totalIncome) }}</th>
 								                	</tr>
 								                </tfoot>
@@ -169,26 +180,34 @@
 					                          @csrf
 					                          <div class="row form-group">
 					                            <div class="col-12">
-					                              <label>Expense Source</label>
-
-					                              <select class="form-control select2bs4" name="payment_name" id="expense_source" data-placeholder="Select Expense Source" style="width: 100%;" required="required">
-			                                  	<option></option>
-			                                  	<option value="Bank To Cash">Cash To Bash</option>
-			                                  	<option value="Other">Other</option>
+					                              <label>Expense Category</label>
+					                              <select class="form-control select2bs4" name="id_category" data-placeholder="Select" style="width: 100%;" required="required">
+					                              		<option></option>
+			                                  	@foreach($outflow as $out)
+			                                  		<option value="{{ $out->id }}">{{ $out->transaction_category }}</option>
+			                                  	@endforeach
                                 				</select>
-					                              
-					                              <input type="text" id="new_expense" name="new_payment_name" autocomplete="off" class="form-control mt-2" placeholder="New Expense source">
-
-					                             
+					                            </div>
+					                          </div>
+					                          <div class="row form-group">
+					                            <div class="col-12">
+					                              <label>Outflow Sub Category</label>
+					                              <select class="form-control select2bs4" name="id_sub_category" data-placeholder="Select " style="width: 100%;" required="required">
+					                              		<option></option>
+					                              		<option>{{'None'}}</option>
+			                                  	@foreach($outflow_sub as $out)
+			                                  		<option value="{{ $out->id }}">{{ $out->transaction_sub_category }}</option>
+			                                  	@endforeach
+                                				</select>
 					                            </div>
 					                          </div>
 					                          <div class="row form-group">
 					                            <div class="col-12">
 					                              <label>Amount</label>
-					                              <input type="number" name="payment_amount" autocomplete="off" class="form-control" placeholder="Amount" required="required">
+					                              <input type="text" name="transaction_amount" autocomplete="off" class="form-control" placeholder="Amount" required="required">
 					                            </div>
 					                          </div>
-					                          <input type="hidden" name="payment_category" value="expense">
+					                          <input type="hidden" name="transaction_type" value="expense">
 
 					                          <input type="hidden" name="recorded_by" value="{{Auth::id()}}">
 					                          <div class="row form-group">
@@ -237,22 +256,36 @@
 								                  <tr>
 								                    <th style="width: 12px;">#</th>
 								                    <th>Date</th>
-								                    <th>Details</th>
+								                    <th>Category</th>
 								                    <th>Amount</th>
 								                  </tr>
 								                </thead>
 								                <tbody>
-								                	<?php $i = 1;?>
+								                	<?php 
+								                			$i = 1;
+								                			$totalExpense = null;
+								                		?>
 								                	@foreach($expense as $exp)
 								                	<tr>
 								                		<td>{{ $i }}</td>
 								                		<td>{{ date('Y-m-d',strtotime($exp->created_at)) }}</td>
-								                		<td>{{ $exp->payment_name }}</td>
-								                		<td>{{ number_format($exp->payment_amount) }}</td>
+								                		<td>{{ $exp->transaction_category }}</td>
+								                		<td>{{ number_format($exp->transaction_amount) }}</td>
 								                	</tr>
-								                	<?php $i++;?>
+								                	<?php 
+								                			$i++;
+								                			$totalExpense +=$exp->transaction_amount;
+								                	?>
 								                	@endforeach
 								                </tbody>
+								                <tfoot>
+								                	<tr>
+								                		<th>#</th>
+								                		<th>Total</th>
+								                		<th></th>
+								                		<th>{{ number_format($totalExpense) }}</th>
+								                	</tr>
+								                </tfoot>
 								            </table>
 					                      </div>
 					                      <!-- card-body -->

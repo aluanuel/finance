@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="{{ asset('theme/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
   <link rel="stylesheet" href="{{ asset('theme/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
   <style type="text/css">
-    #business_type,#formChangePassword,#formChangePhoto,#addGroupMemberRole,#new_income,#new_expense,#auth_user,#submit_input,#ever_borrowed_money_1,#ever_borrowed_money_2,#nav-savings,#sv_history,#business_license,#business_account_statement,#leader_recommendation,#appointment_letter,#bank_statement,#supervisor_recommendation{
+    #business_type,#formChangePassword,#formChangePhoto,#addGroupMemberRole,#auth_user,#submit_input,#ever_borrowed_money_1,#ever_borrowed_money_2,#nav-savings,#sv_history,#business_license,#business_account_statement,#leader_recommendation,#appointment_letter,#bank_statement,#supervisor_recommendation,#transaction_inflow_sub_category,#transaction_outflow_sub_category,#new_inflow_category,#new_outflow_category{
       display: none;
     }
     table th{

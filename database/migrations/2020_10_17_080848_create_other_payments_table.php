@@ -13,9 +13,10 @@ class CreateOtherPaymentsTable extends Migration {
 	public function up() {
 		Schema::create('other_payments', function (Blueprint $table) {
 			$table->id();
-			$table->string('payment_name');
-			$table->double('payment_amount');
-			$table->string('payment_category');
+			$table->unsignedBigInteger('id_category');
+			$table->unsignedBigInteger('id_sub_category')->nullable();
+			$table->double('transaction_amount');
+			$table->string('transaction_type');
 			$table->unsignedBigInteger('recorded_by');
 			$table->timestamps();
 		});

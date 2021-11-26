@@ -102,7 +102,19 @@
                                 </div>
                               </div>
                         </div>
-
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <label>Category</label>
+                                <div class="form-group">
+                                  <select class="form-control select2bs4" name="category" data-placeholder="Select" style="width: 100%;" required="required">
+                                    <option></option>
+                                    <option value="None">None</option>
+                                    <option value="Individual">Individual</option>
+                                    <option value="Group">Group</option>
+                                  </select>
+                                </div>
+                              </div>
+                        </div>
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-outline-primary">
@@ -136,7 +148,7 @@
                       <th>Type</th>
                       <th>Role</th>
                       <th>Status</th>
-                      <th width="10">#</th>
+                      <th>#</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -151,10 +163,19 @@
                       <td>{{ $user->role }}</td>
                       @if($user->user_status == 1)
                       <td class="text-success">Active</td>
-                      <td><a href="/apply/settings/manage?id={{ $user->id }}&state={{ $user->user_status}}" class="btn btn-outline-danger btn-sm">Deactivate</a></td>
+                      <td>
+                        <div class="row">
+                          <div class="col-5 mr-1">
+                            <a href="/apply/settings/manage?id={{ $user->id }}&state={{ $user->user_status}}" class="btn btn-outline-danger btn-sm"><i class="fa fa-lock" aria-hidden="true"></i></a>
+                          </div>
+                          <div class="col-5 mr-1">
+                            <a href="/apply/settings/manage/{{ $user->id }}" class="btn btn-outline-primary btn-sm" ><i class="fa fa-key" aria-hidden="true"></i></a>
+                          </div>
+                        </div>
+                      </td>
                       @else
                       <td class="text-danger">Inactive</td>
-                      <td><a href="/apply/settings/manage?id={{ $user->id }}&state={{ $user->user_status}}" class="btn btn-outline-primary btn-sm">Activate</a></td>
+                      <td><a href="/apply/settings/manage?id={{ $user->id }}&state={{ $user->user_status}}" class="btn btn-outline-primary btn-sm"><i class="fa fa-unlock" aria-hidden="true"></i></a></td>
                       @endif
                     </tr>
                     <?php $i++;?>

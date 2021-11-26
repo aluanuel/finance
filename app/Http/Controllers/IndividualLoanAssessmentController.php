@@ -20,42 +20,95 @@ use Illuminate\Support\Facades\Storage;
 class IndividualLoanAssessmentController extends Controller {
 
 	public function index() {
+		switch(Auth::user()->role){
 
-		$loan = DB::table('loan_applications')
-			->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
-			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone')
-			->where('loan_applications.proposed_amount', '!=', NULL)
-			->where('loan_applications.application_by',Auth::user()->id)
-			->where('loan_applications.assessment_status', '=', NULL)
-			->where('register_clients.id_group',NULL)
-			->orderBy('loan_applications.created_at', 'desc')->get();
+			case 'Supervisor':
 
-		$approve = DB::table('loan_applications')
-			->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
-			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone')
-			->where('register_clients.id_group',NULL)
-			->where('loan_applications.approval_status', '=', NULL)
-			->where('loan_applications.assessment_status', '=', '0')
-			->where('loan_applications.application_by',Auth::user()->id)
-			->orderBy('loan_applications.created_at', 'desc')->get();
+				$loan = DB::table('loan_applications')
+					->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
+					->join('users', 'users.id', 'loan_applications.application_by')
+					->select('loan_applications.*','users.name as officer', 'register_clients.name', 'register_clients.telephone')
+					->where('loan_applications.proposed_amount', '!=', NULL)
+					->where('loan_applications.assessment_status', '=', NULL)
+					->where('register_clients.id_group',NULL)
+					->orderBy('loan_applications.created_at', 'desc')->get();
 
-		$approved = DB::table('loan_applications')
-			->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
-			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone')
-			->where('loan_applications.approval_status', '=', '1')
-			->where('loan_applications.assessment_status', '=', '1')
-			->where('register_clients.id_group',NULL)
-			->where('loan_applications.loan_status', '=', NULL)
-			->where('loan_applications.application_by',Auth::user()->id)
-			->orderBy('loan_applications.created_at', 'desc')->get();
-		$cancelled = DB::table('loan_applications')
-			->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
-			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone')
-			->where('loan_applications.approval_status', '=', '0')
-			->where('register_clients.id_group',NULL)
-			->where('loan_applications.application_by',Auth::user()->id)
-			->where('loan_applications.assessment_status', '=', '0')
-			->orderBy('loan_applications.created_at', 'desc')->get();
+				$approve = DB::table('loan_applications')
+					->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
+					->join('users', 'users.id', 'loan_applications.application_by')
+					->select('loan_applications.*','users.name as officer', 'register_clients.name', 'register_clients.telephone')
+					->where('register_clients.id_group',NULL)
+					->where('loan_applications.approval_status', '=', NULL)
+					->where('loan_applications.assessment_status', '=', '0')
+					->orderBy('loan_applications.created_at', 'desc')->get();
+
+				$approved = DB::table('loan_applications')
+					->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
+					->join('users', 'users.id', 'loan_applications.application_by')
+					->select('loan_applications.*','users.name as officer' ,'register_clients.name', 'register_clients.telephone')
+					->where('loan_applications.approval_status', '=', '1')
+					->where('loan_applications.assessment_status', '=', '1')
+					->where('register_clients.id_group',NULL)
+					->where('loan_applications.loan_status', '=', NULL)
+					->orderBy('loan_applications.created_at', 'desc')->get();
+				$cancelled = DB::table('loan_applications')
+					->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
+					->join('users', 'users.id', 'loan_applications.application_by')
+					->select('loan_applications.*','users.name as officer','register_clients.name', 'register_clients.telephone')
+					->where('loan_applications.approval_status', '=', '0')
+					->where('register_clients.id_group',NULL)
+					->where('loan_applications.assessment_status', '=', '0')
+					->orderBy('loan_applications.created_at', 'desc')->get();
+
+				break;
+
+
+			case 'None':
+				
+
+				$loan = DB::table('loan_applications')
+					->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
+					->join('users', 'users.id', 'loan_applications.application_by')
+					->select('loan_applications.*','users.name as officer','register_clients.name', 'register_clients.telephone')
+					->where('loan_applications.proposed_amount', '!=', NULL)
+					->where('loan_applications.application_by',Auth::user()->id)
+					->where('loan_applications.assessment_status', '=', NULL)
+					->where('register_clients.id_group',NULL)
+					->orderBy('loan_applications.created_at', 'desc')->get();
+
+				$approve = DB::table('loan_applications')
+					->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
+					->join('users', 'users.id', 'loan_applications.application_by')
+					->select('loan_applications.*','users.name as officer','register_clients.name', 'register_clients.telephone')
+					->where('register_clients.id_group',NULL)
+					->where('loan_applications.approval_status', '=', NULL)
+					->where('loan_applications.assessment_status', '=', '0')
+					->where('loan_applications.application_by',Auth::user()->id)
+					->orderBy('loan_applications.created_at', 'desc')->get();
+
+				$approved = DB::table('loan_applications')
+					->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
+					->join('users', 'users.id', 'loan_applications.application_by')
+					->select('loan_applications.*', 'users.name as officer','register_clients.name', 'register_clients.telephone')
+					->where('loan_applications.approval_status', '=', '1')
+					->where('loan_applications.assessment_status', '=', '1')
+					->where('register_clients.id_group',NULL)
+					->where('loan_applications.loan_status', '=', NULL)
+					->where('loan_applications.application_by',Auth::user()->id)
+					->orderBy('loan_applications.created_at', 'desc')->get();
+				$cancelled = DB::table('loan_applications')
+					->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
+					->join('users', 'users.id', 'loan_applications.application_by')
+					->select('loan_applications.*','users.name as officer' ,'register_clients.name', 'register_clients.telephone')
+					->where('loan_applications.approval_status', '=', '0')
+					->where('register_clients.id_group',NULL)
+					->where('loan_applications.application_by',Auth::user()->id)
+					->where('loan_applications.assessment_status', '=', '0')
+					->orderBy('loan_applications.created_at', 'desc')->get();
+
+				break;	
+		}
+		
 
 		return view('apply.ind.assess.index', compact('loan','approve', 'approved', 'cancelled'));
 	}
@@ -124,7 +177,7 @@ class IndividualLoanAssessmentController extends Controller {
 		$cont = DB::table('loan_applications')
 			->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
 			->join('individual_loan_assessments', 'loan_applications.id', 'individual_loan_assessments.id_loan')
-			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone', 'individual_loan_assessments.applicant_type', 'individual_loan_assessments.business_type', 'individual_loan_assessments.monthly_income', 'individual_loan_assessments.income_sources', 'individual_loan_assessments.monthly_income_others', 'individual_loan_assessments.total_monthly_income', 'individual_loan_assessments.food', 'individual_loan_assessments.rent', 'individual_loan_assessments.medical', 'individual_loan_assessments.electricity', 'individual_loan_assessments.school_fees', 'individual_loan_assessments.leisure', 'individual_loan_assessments.others', 'individual_loan_assessments.total_monthly_expense', 'individual_loan_assessments.monthly_surplus', 'individual_loan_assessments.borrowed_money', 'individual_loan_assessments.start_date', 'individual_loan_assessments.end_date', 'individual_loan_assessments.money_lender', 'individual_loan_assessments.amount_borrowed', 'individual_loan_assessments.loan_period_borrowed', 'individual_loan_assessments.monthly_instalment', 'individual_loan_assessments.other_personal_loan', 'individual_loan_assessments.money_lender_personal', 'individual_loan_assessments.amount_outstanding', 'individual_loan_assessments.running_project', 'individual_loan_assessments.project_name', 'individual_loan_assessments.project_budget', 'individual_loan_assessments.monthly_project_expense')
+			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone', 'individual_loan_assessments.applicant_type', 'individual_loan_assessments.business_type', 'individual_loan_assessments.monthly_income', 'individual_loan_assessments.income_sources', 'individual_loan_assessments.monthly_income_others', 'individual_loan_assessments.total_monthly_income', 'individual_loan_assessments.food', 'individual_loan_assessments.rent', 'individual_loan_assessments.medical', 'individual_loan_assessments.electricity', 'individual_loan_assessments.school_fees', 'individual_loan_assessments.leisure', 'individual_loan_assessments.others', 'individual_loan_assessments.total_monthly_expense', 'individual_loan_assessments.borrowed_money', 'individual_loan_assessments.start_date', 'individual_loan_assessments.end_date', 'individual_loan_assessments.money_lender', 'individual_loan_assessments.amount_borrowed', 'individual_loan_assessments.loan_period_borrowed', 'individual_loan_assessments.monthly_instalment', 'individual_loan_assessments.other_personal_loan', 'individual_loan_assessments.money_lender_personal', 'individual_loan_assessments.amount_outstanding', 'individual_loan_assessments.running_project', 'individual_loan_assessments.project_name', 'individual_loan_assessments.project_budget', 'individual_loan_assessments.monthly_project_expense')
 			->where('loan_applications.id', '=', $loan_id->id)
 			->first();
 		$assess = DB::table('individual_loan_assessments')
@@ -324,13 +377,15 @@ class IndividualLoanAssessmentController extends Controller {
 
 			$loan->loan_period = $loan_period;
 
+			$instalment = round(($total_loan / $loan_period), 2);
+
 			$loan->assessment_status = request('assessment_status');
+
+			$loan->instalment = $instalment;
 
 			$loan->recommended_by = Auth::id();
 
 			$loan->save();
-
-			$instalment = round(($total_loan / $loan_period), 2);
 
 			$data = array();
 

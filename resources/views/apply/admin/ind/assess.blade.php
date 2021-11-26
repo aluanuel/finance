@@ -136,7 +136,7 @@
                                     <th style="width: 30px;">Number</th>
                                     <th>Applicant</th>
                                     <th>Amount</th>
-                                    <th>Period</th>
+                                    <th>Period(months)</th>
                                     <th>Telephone</th>
                                     <th style="width: 80px;">#</th>
                                 </tr>

@@ -9,8 +9,160 @@ use \App\Models\RegisterClient;
 use Carbon\Carbon;
 use App\Rules\ValidatePassword;
 use \App\Models\LoanSchedule;
+use \App\Models\ClientGroup;
 
 class LoanApplicationController extends Controller {
+
+	public function singleApplication() {
+
+		if(Auth::user()->role == 'Supervisor'){
+
+			$clients = DB::table('register_clients')
+			->join('loan_applications', 'loan_applications.id_client', 'register_clients.id')
+			->join('users', 'loan_applications.application_by', 'users.id')
+			->select('loan_applications.*','users.name as officer', 'register_clients.name', 'register_clients.telephone', 'register_clients.gender', 'register_clients.marital_status', 'register_clients.work_place', 'register_clients.occupation')
+			->where('register_clients.id_group',  NULL)
+			->where('loan_applications.application_status',  '1')
+			->where('loan_applications.proposed_amount',  NULL)
+			->orderBy('loan_applications.created_at', 'desc')
+			->get();
+
+		}else{
+
+			$clients = DB::table('register_clients')
+			->join('loan_applications', 'loan_applications.id_client', 'register_clients.id')
+			->join('users', 'loan_applications.application_by', 'users.id')
+			->select('loan_applications.*','users.name as officer', 'register_clients.name', 'register_clients.telephone', 'register_clients.gender', 'register_clients.marital_status', 'register_clients.work_place', 'register_clients.occupation')
+			->where('register_clients.id_group',  NULL)
+			->where('loan_applications.application_status', '1')
+			->where('loan_applications.proposed_amount',  NULL)
+			->where('loan_applications.application_by',Auth::user()->id)
+			->orderBy('loan_applications.created_at', 'desc')
+			->get();
+
+		}
+
+		$register = RegisterClient::where('id_group',NULL)
+			->where('account_status',1)
+			->get();
+
+		$loan = $this->loanNumber();
+
+		$interest = DB::table('interest_on_loans')
+			->select('interest_rate')
+			->where('loan_type', '=', 'Individual')
+			->latest()
+			->first();
+		$application = DB::table('application_fees')
+			->where('application_type','Individual')
+			->select('application_amount')
+			->latest()
+			->first();	
+
+		return view('apply.ind.index', compact('clients', 'loan', 'register', 'interest','application'));
+	}
+
+	public function NewIndividualApplication(Request $request) {
+
+		$loanApp = new LoanApplication();
+
+		$check = DB::table('loan_applications')
+					->where('id_client',request('id_client'))
+					->where('loan_status','!=','completed')
+					->get();
+			if(sizeof($check) > 0){
+				return redirect()->route('viewLoanList',[request('id_client')])->with('error','You have '.sizeof($check). ' incomplete loan(s). Please complete the current running loan or resume the exisiting loan application');
+			}else{
+
+				$loanApp->id_client = request('id_client');
+
+				$loanApp->application_fee = request('application_fee');
+
+				$loanApp->application_date = Carbon::now()->toDateTimeString();
+
+				$loanApp->loan_number = request('loan_number');
+
+				$loanApp->interest_rate = request('interest_rate');
+
+				$loanApp->application_by = Auth::id();
+
+				$loanApp->save();
+
+				return redirect()->back()->with('success', 'Loan Application Successful');
+			}
+
+	}
+
+	public function showGroupApplicationForm(){
+
+		$groups = ClientGroup::get();
+
+		$loan = DB::table('loan_applications')
+		->join('register_clients','loan_applications.id_client','register_clients.id')
+		->join('client_groups','loan_applications.id_group','client_groups.id')
+		->select('client_groups.group_name','client_groups.group_code','register_clients.name','register_clients.telephone', 'register_clients.gender', 'register_clients.marital_status', 'register_clients.work_place', 'register_clients.occupation','loan_applications.*')
+		->where('loan_applications.id_group','!=',NULL)
+		->where('loan_applications.application_status',1)
+		->where('loan_applications.assessment_status','=',NULL)
+		->where('loan_applications.application_by',Auth::user()->id)
+		->orderBy('loan_applications.created_at','desc')
+		->get();
+
+		$register = DB::table('register_clients')
+			->join('client_groups','register_clients.id_group','client_groups.id')
+			->select('register_clients.*','client_groups.group_name','client_groups.group_code')
+			->where('register_clients.account_status',1)
+			->get();
+
+		$interest = DB::table('interest_on_loans')
+			->select('interest_rate')
+			->where('loan_type', 'Group')
+			->latest()
+			->first();
+
+		$fee = DB::table('application_fees')
+			->where('application_type','Group')
+			->select('application_amount')
+			->latest()
+			->first();
+
+		$loanNumber = $this->loanNumber();
+
+		return view('apply.grp.index',compact('groups','loan','register','interest','fee','loanNumber'));
+	}
+
+	public function NewGroupApplication(){
+
+			$check = DB::table('loan_applications')
+					->where('id_client',request('id_client'))
+					->where('loan_status','!=','completed')
+					->get();
+			if(sizeof($check) > 0){
+				return redirect()->route('viewLoanList',[request('id_client')])->with('error','You have '.sizeof($check). ' incomplete loan(s). Please complete the current running loan or resume the exisiting loan application');
+			}else{
+
+				$loanApp = new LoanApplication();
+
+				$loanApp->id_client = request('id_client');
+
+				$loanApp->application_fee = str_replace(',','',request('application_fee'));
+
+				$loanApp->application_date = Carbon::now()->toDateTimeString();
+
+				$loanApp->loan_number = request('loan_number');
+
+				$loanApp->interest_rate = request('interest_rate');
+
+				$loanApp->id_group = request('id_group');
+
+				$loanApp->application_by = Auth::id();
+
+				$loanApp->save();
+
+				return redirect()->back()->with('success', 'Loan Application Successful');
+			}
+
+	}
 
 	public function viewIndividualApplication() {
 
@@ -123,37 +275,121 @@ class LoanApplicationController extends Controller {
 
 	public function adminViewIndividualProcessedLoans() {
 
-		$apps = DB::table('loan_applications')
-			->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
-			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone', 'register_clients.gender')
-			->where('register_clients.id_group',NULL)
-			->where('loan_applications.approval_status', '=', '1')
-			->where('loan_applications.assessment_status', '=', '1')
-			->where('loan_applications.loan_status', '=', NULL)->orderBy('loan_applications.created_at', 'desc')->get();
+		switch(Auth::user()->role){
 
-		$running = DB::table('loan_applications')
-			->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
-			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone', 'register_clients.gender')
-			->where('loan_applications.loan_status', '=', 'started')
-			->where('register_clients.id_group',NULL)
-			->where('loan_applications.approval_status', '=', '1')
-			->where('loan_applications.assessment_status', '=', '1')
-			->orderBy('loan_applications.created_at', 'desc')->get();
-		$completed = DB::table('loan_applications')
-			->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
-			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone', 'register_clients.gender')
-			->where('register_clients.id_group',NULL)
-			->where('loan_applications.approval_status', '=', '1')
-			->where('loan_applications.assessment_status', '=', '1')
-			->where('loan_applications.loan_status', '=', 'completed')->orderBy('loan_applications.created_at', 'desc')->get();
-		$suspended = DB::table('loan_applications')
-			->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
-			->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone', 'register_clients.gender')
-			->where('loan_applications.loan_status', '=', 'suspended')
-			->where('register_clients.id_group',NULL)
-			->where('loan_applications.approval_status', '=', '1')
-			->where('loan_applications.assessment_status', '=', '1')
-			->orderBy('loan_applications.created_at', 'desc')->get();
+			case 'Manager':
+
+				$apps = DB::table('loan_applications')
+					->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
+					->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone', 'register_clients.gender')
+					->where('register_clients.id_group',NULL)
+					->where('loan_applications.approval_status', '=', '1')
+					->where('loan_applications.assessment_status', '=', '1')
+					->where('loan_applications.loan_status', '=', NULL)->orderBy('loan_applications.created_at', 'desc')->get();
+
+				$running = DB::table('loan_applications')
+					->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
+					->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone', 'register_clients.gender')
+					->where('loan_applications.loan_status', '=', 'started')
+					->where('register_clients.id_group',NULL)
+					->where('loan_applications.approval_status', '=', '1')
+					->where('loan_applications.assessment_status', '=', '1')
+					->orderBy('loan_applications.created_at', 'desc')->get();
+				$completed = DB::table('loan_applications')
+					->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
+					->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone', 'register_clients.gender')
+					->where('register_clients.id_group',NULL)
+					->where('loan_applications.approval_status', '=', '1')
+					->where('loan_applications.assessment_status', '=', '1')
+					->where('loan_applications.loan_status', '=', 'completed')->orderBy('loan_applications.created_at', 'desc')->get();
+				$suspended = DB::table('loan_applications')
+					->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
+					->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone', 'register_clients.gender')
+					->where('loan_applications.loan_status', '=', 'suspended')
+					->where('register_clients.id_group',NULL)
+					->where('loan_applications.approval_status', '=', '1')
+					->where('loan_applications.assessment_status', '=', '1')
+					->orderBy('loan_applications.created_at', 'desc')->get();
+
+				break;
+
+				case 'Supervisor':
+
+				$apps = DB::table('loan_applications')
+					->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
+					->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone', 'register_clients.gender')
+					->where('register_clients.id_group',NULL)
+					->where('loan_applications.approval_status', '=', '1')
+					->where('loan_applications.assessment_status', '=', '1')
+					->where('loan_applications.loan_status', '=', NULL)->orderBy('loan_applications.created_at', 'desc')->get();
+
+				$running = DB::table('loan_applications')
+					->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
+					->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone', 'register_clients.gender')
+					->where('loan_applications.loan_status', '=', 'started')
+					->where('register_clients.id_group',NULL)
+					->where('loan_applications.approval_status', '=', '1')
+					->where('loan_applications.assessment_status', '=', '1')
+					->orderBy('loan_applications.created_at', 'desc')->get();
+				$completed = DB::table('loan_applications')
+					->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
+					->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone', 'register_clients.gender')
+					->where('register_clients.id_group',NULL)
+					->where('loan_applications.approval_status', '=', '1')
+					->where('loan_applications.assessment_status', '=', '1')
+					->where('loan_applications.loan_status', '=', 'completed')->orderBy('loan_applications.created_at', 'desc')->get();
+				$suspended = DB::table('loan_applications')
+					->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
+					->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone', 'register_clients.gender')
+					->where('loan_applications.loan_status', '=', 'suspended')
+					->where('register_clients.id_group',NULL)
+					->where('loan_applications.approval_status', '=', '1')
+					->where('loan_applications.assessment_status', '=', '1')
+					->orderBy('loan_applications.created_at', 'desc')->get();
+
+				break;
+
+				case 'None':
+
+				$apps = DB::table('loan_applications')
+					->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
+					->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone', 'register_clients.gender')
+					->where('register_clients.id_group',NULL)
+					->where('loan_applications.approval_status', '=', '1')
+					->where('loan_applications.assessment_status', '=', '1')
+					->where('loan_applications.application_by',Auth::user()->id)
+					->where('loan_applications.loan_status', '=', NULL)->orderBy('loan_applications.created_at', 'desc')->get();
+
+				$running = DB::table('loan_applications')
+					->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
+					->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone', 'register_clients.gender')
+					->where('loan_applications.loan_status', '=', 'started')
+					->where('register_clients.id_group',NULL)
+					->where('loan_applications.approval_status', '=', '1')
+					->where('loan_applications.assessment_status', '=', '1')
+					->where('loan_applications.application_by',Auth::user()->id)
+					->orderBy('loan_applications.created_at', 'desc')->get();
+				$completed = DB::table('loan_applications')
+					->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
+					->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone', 'register_clients.gender')
+					->where('register_clients.id_group',NULL)
+					->where('loan_applications.approval_status', '=', '1')
+					->where('loan_applications.assessment_status', '=', '1')
+					->where('loan_applications.application_by',Auth::user()->id)
+					->where('loan_applications.loan_status', '=', 'completed')->orderBy('loan_applications.created_at', 'desc')->get();
+				$suspended = DB::table('loan_applications')
+					->join('register_clients', 'register_clients.id', 'loan_applications.id_client')
+					->select('loan_applications.*', 'register_clients.name', 'register_clients.telephone', 'register_clients.gender')
+					->where('loan_applications.loan_status', '=', 'suspended')
+					->where('register_clients.id_group',NULL)
+					->where('loan_applications.approval_status', '=', '1')
+					->where('loan_applications.assessment_status', '=', '1')
+					->where('loan_applications.application_by',Auth::user()->id)
+					->orderBy('loan_applications.created_at', 'desc')->get();
+
+				break;
+		}
+		
 
 		return view('apply.admin.ind.processed', compact('apps', 'running', 'completed','suspended'));
 	}
@@ -190,6 +426,8 @@ class LoanApplicationController extends Controller {
 
 				$loan_processing_fee = $loan->loan_processing_fee;
 
+				$loan_processing_fee_status = 1;
+
 				$application_fee = $loan->application_fee;
 
 				$loan_amount_issued -= ($loan_processing_fee + $application_fee);
@@ -198,18 +436,17 @@ class LoanApplicationController extends Controller {
 
 				$loan->payment_received_by = Auth::user()->id;
 			}
-			$loan->loan_processing_fee_status = request('loan_processing_fee_status');
+			$loan->loan_processing_fee_status = 1;
 
 			
 			$today = Carbon::now();
 			$loan->loan_status = 'started';
 			$loan->start_date = $today->toDateString();
 			$loan->end_date = $this->getEndDate($request->id);
+			$loan->loan_balance = $loan->total_loan;
 			$loan->payment_received_by = Auth::user()->id;
 			$loan->issued_by = Auth::user()->id;
 			$loan->save();
-
-			// $today = $today->addDays(30);
 
 			return redirect()->back()->with('success', 'Loan issued successfully');
 		}
@@ -226,7 +463,6 @@ class LoanApplicationController extends Controller {
 						->where(['security_status' => 0])->get()->count();
 
 			$this->checkLoanExpiry($loan->id);
-
 
 		$ledger = DB::table('loan_repayments')
 			->where('id_loan', '=', $loan->id)
@@ -505,5 +741,20 @@ class LoanApplicationController extends Controller {
 			}
 		}
 
+	}
+
+	protected function loanNumber() {
+
+		$id = LoanApplication::latest('loan_number')->first();
+
+		if (is_null($id)) {
+
+			return (101);
+
+		} else {
+
+			return $id->loan_number + 1;
+
+		}
 	}
 }

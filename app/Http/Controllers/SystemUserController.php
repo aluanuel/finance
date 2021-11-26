@@ -27,6 +27,7 @@ class SystemUserController extends Controller
             'email' => request('email'),
             'usertype' => request('usertype'),
             'role' => request('role'),
+            'category' => request('category'),
             'user_status' => 1,
             'password' => Hash::make($password),
             'photo' => '1611593817.png',
@@ -109,6 +110,20 @@ class SystemUserController extends Controller
         $user->save(); 
         
         return redirect()->back()->with('success','Account updated successfully');
+
+    }
+
+    public function TemporaryPassword(Request $request){
+        
+        $user = User::find($request->id);
+        
+        $temporary_password = $this->randomPassword();
+
+        $user->password = Hash::make($temporary_password);
+
+        $user->save();
+
+        return redirect()->back()->with('success','Your new password is '.$temporary_password);
 
     }
 

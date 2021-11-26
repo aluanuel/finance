@@ -10,15 +10,15 @@
 					<div class="col-12">
 					    <label>Loan Number</label>
 					    <div class="form-group">
-					      <select class="form-control select2bs4" name="id_loan" style="width: 100%;" required="required">
+					      <select class="form-control select2bs4" name="id_loan" style="width: 100%;" required="required" id="id_loan">
 					      	@if(is_null($id_loan))
 						      	@foreach($loans as $loan)
 						      	<option></option>
-						      	<option value="{{ $loan->id }}">{{ $loan->loan_number }}</option>
+						      	<option value="{{ $loan->id }}" label="{{ $loan->instalment }}">{{ $loan->loan_number }}</option>
 						      	@endforeach
 						    @else
 						    	@foreach($loans as $loan)
-						      	<option value="{{ $loan->id }}">{{ $loan->loan_number }}</option>
+						      	<option value="{{ $loan->id }}" label="{{ $loan->instalment }}">{{ $loan->loan_number }}</option>
 						      	@endforeach
 						    @endif
 					      </select>
@@ -26,6 +26,14 @@
 					</div>
 				</div>
 				<div class="row form-group">
+					
+				  	<div class="col-12">
+				    	<label>Loan Instalment</label>
+				    	<input type="text" autocomplete="off" class="form-control" id="loan_instalment" readonly="readonly">
+					</div>
+				 </div>
+				<div class="row form-group">
+
 				  	<div class="col-12">
 				    	<label>Deposit Amount</label>
 				    	<input type="text" name="deposit" autocomplete="off" class="form-control" placeholder="Deposit Amount" required="required" value="{{ old('deposit') }}">

@@ -32,13 +32,14 @@ class CreateLoanApplicationsTable extends Migration {
 			$table->double('loan_interest')->nullable();
 			$table->double('security')->nullable();
 			$table->double('loan_processing_fee')->nullable();
-			$table->double('loan_processing_fee_status')->nullable();
+			$table->boolean('loan_processing_fee_status')->nullable();
 			$table->string('security_status')->nullable();
 			$table->text('signed_security_agreement')->nullable();
 			$table->integer('security_issued_by')->nullable();
 			$table->integer('loan_period')->nullable();
 			$table->double('loan_recovered')->nullable();
 			$table->double('loan_balance')->nullable();
+			$table->double('instalment')->nullable();
 			$table->datetime('start_date')->nullable();
 			$table->datetime('end_date')->nullable();
 			$table->boolean('assessment_status')->nullable();

@@ -31,7 +31,7 @@
         	<div class="col-12">
             <div class="card card-default">
               <div class="card-header">
-                <ul class="nav nav-pills">
+                <ul class="nav nav-pills" id="myTab">
                   <li class="nav-item"><a class="nav-link active" href="#nw_assess" data-toggle="tab">Loans Awaiting Assessment
                   </a></li>
                   <li class="nav-item"><a class="nav-link" href="#ln_to_approve" data-toggle="tab">Loans Awaiting Approval</a></li>
@@ -57,6 +57,7 @@
                                     <th>Applicant</th>
                                     <th>Amount</th>
                                     <th style="width: 120px;">#</th>
+                                    <th>Loan Officer</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -82,6 +83,7 @@
                                       </div>
                                     </div>
                                   </td>
+                                  <td>{{ $loans->officer }}</td>
                                 </tr>
                               <?php $x++;?>
                               @endforeach
@@ -106,6 +108,7 @@
                                     <th>Applicant</th>
                                     <th>Amount</th>
                                     <th>#</th>
+                                    <th>Loan Officer</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -117,6 +120,7 @@
                                   <td>{{ $app->name }}</td>
                                   <td>{{ number_format($app->proposed_amount) }}</td>
                                   <td></td>
+                                  <td>{{ $app->officer }}</td>
                                 </tr>
                               <?php $x++;?>
                               @endforeach
@@ -140,10 +144,11 @@
                                     <th style="width: 8px;">#</th>
                                     <th style="width: 30px;">Number</th>
                                     <th>Amount</th>
-                                    <th>Period</th>
+                                    <th>Period(months)</th>
                                     <th>Applicant</th>
                                     <th>Telephone</th>
                                     <th style="width: 80px;">#</th>
+                                    <th>Loan Officer</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -159,6 +164,7 @@
                                   <td>
                                     <a href="/app/ind/schedule/{{$app->id}}"><button class="btn btn-outline-primary btn-sm">Schedule</button></a>
                                   </td>
+                                  <td>{{ $app->officer }}</td>
                                 </tr>
                               <?php $x++;?>
                               @endforeach
@@ -182,6 +188,7 @@
                                     <th>Telephone</th>
                                     <th>Loan Request</th>
                                     <th>Period (Months)</th>
+                                    <th>Loan Officer</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -194,6 +201,7 @@
                                   <td>{{ $app->telephone}}</td>
                                   <td>{{ number_format($app->proposed_amount) }}</td>
                                   <td>{{ $app->loan_period }}</td>
+                                  <td>{{ $app->officer }}</td>
                                 </tr>
                               <?php $x++;?>
                               @endforeach

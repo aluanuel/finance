@@ -31,7 +31,7 @@
           <div class="col-12">
           	<div class="card">
               <div class="card-header">
-                <h3 class="card-title"></h3>
+                <h3 class="card-title">Showing Balance Sheet as at October 30, 2021</h3>
                 <div class="card-tools">
                   <a href="#" class="btn btn-primary btn-sm" title="Download Report">
                     <i class="fa fa-download"></i>
@@ -39,6 +39,51 @@
                 </div>
               </div>
               <div class="card-body">
+                <table class="table table-stripped">
+                  <thead>
+                    <tr>
+                      <th>Particulars</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="2"><h4>ASSETS</h4></td>
+                    </tr>
+                    <tr>
+                      <td>Fixed Assets</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>Current Assets</td>
+                      <td>{{ number_format($currentAssets) }}</td>
+                    </tr>
+                    <tr>
+                      <td colspan="2"><h4>LIABILITIES</h4></td>
+                    </tr>
+                    <tr>
+                      <td>Non Current Liabilities</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>Current Liabilities</td>
+                      <td>{{ number_format($currentLiabilities) }}</td>
+                    </tr>
+                    <tr>
+                      <td colspan="2"><h4>EQUITY</h4></td>
+                    </tr>
+                    <tr>
+                      <td>Share Capital</td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </tfoot>
+                </table>
                 
               </div>
             </div>

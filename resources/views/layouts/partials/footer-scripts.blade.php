@@ -231,6 +231,27 @@ $(document).ready(function(){
 
   });
 
+  $('#inflow_yes').click(function(){
+
+      $('#transaction_inflow_sub_category').show();
+      $('#transaction_inflow_sub_category').attr('required','required');
+  });
+  $('#inflow_no').click(function(){
+      $('#transaction_inflow_sub_category').hide();
+      $('#transaction_inflow_sub_category').removeAttr('required');
+  });
+
+  $('#outflow_yes').click(function(){
+
+      $('#transaction_outflow_sub_category').show();
+      $('#transaction_outflow_sub_category').attr('required','required');
+  });
+  $('#outflow_no').click(function(){
+      $('#transaction_outflow_sub_category').hide();
+      $('#transaction_outflow_sub_category').removeAttr('required');
+  });
+  
+
   $(document).ready(function() {
     var max_fields = 8;
     var wrapper = $(".add_security");
@@ -274,12 +295,37 @@ $(document).ready(function(){
 
 
 
+    $('#id_loan').change(function(){
 
+      var instalment = $('#id_loan option:selected').attr('label');
+      $('#loan_instalment').val(instalment);
+    })
 
     $('#id_client_with_group').change(function(){
       var content = $('#id_client_with_group option:selected').attr('label');
       $('#id_group').val(content);
       console.log(content);
+    })
+
+    $('#inflow_category').change(function(){
+      var value = $('#inflow_category option:selected').val();
+      if(value == 'Add Category'){
+        $('#new_inflow_category').show();
+        $('#new_inflow_category').attr('required', 'required');
+      }else{
+        $('#new_inflow_category').hide();
+        $('#new_inflow_category').removeAttr('required');
+      }
+    })
+    $('#outflow_category').change(function(){
+      var value = $('#outflow_category option:selected').val();
+      if(value == 'Add Category'){
+        $('#new_outflow_category').show();
+        $('#new_outflow_category').attr('required', 'required');
+      }else{
+        $('#new_outflow_category').hide();
+        $('#new_outflow_category').removeAttr('required');
+      }
     })
 
     $('#applicant_type').change(function(){
@@ -346,27 +392,27 @@ $(document).ready(function(){
       $('#addGroupMemberRole').show();
        $('#btnShowFormAddGroupMemberRole').hide();
     });
-    $('#income_source').change(function(){
-      var value = $('#income_source option:selected').val();
-      if(value == "Other"){
-        $('#new_income').show();
-        $('#new_income').attr('required', 'required');
-      }else{
-        $('#new_income').hide();
-        $('#new_income').removeAttr('required');
-      }
-    }); 
+    // $('#income_source').change(function(){
+    //   var value = $('#income_source option:selected').val();
+    //   if(value == "Other"){
+    //     $('#new_income').show();
+    //     $('#new_income').attr('required', 'required');
+    //   }else{
+    //     $('#new_income').hide();
+    //     $('#new_income').removeAttr('required');
+    //   }
+    // }); 
 
-    $('#expense_source').change(function(){
-      var value = $('#expense_source option:selected').val();
-      if(value == "Other"){
-        $('#new_expense').show();
-        $('#new_expense').attr('required', 'required');
-      }else{
-        $('#new_expense').hide();
-        $('#new_expense').removeAttr('required');
-      }
-    }); 
+    // $('#expense_source').change(function(){
+    //   var value = $('#expense_source option:selected').val();
+    //   if(value == "Other"){
+    //     $('#new_expense').show();
+    //     $('#new_expense').attr('required', 'required');
+    //   }else{
+    //     $('#new_expense').hide();
+    //     $('#new_expense').removeAttr('required');
+    //   }
+    // }); 
 
 });
 var ctx = document.getElementById('myChart').getContext('2d');

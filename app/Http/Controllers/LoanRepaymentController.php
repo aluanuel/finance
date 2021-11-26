@@ -15,7 +15,7 @@ class LoanRepaymentController extends Controller {
 		$loans = DB::table('loan_applications')
 			->where('loan_status', '=', 'started')
 			->where('end_date', '>=', Carbon::now())
-			->select('id', 'loan_number')
+			->select('id', 'loan_number','instalment')
 			->orderBy('created_at', 'desc')
 			->limit(500)
 			->get();
@@ -39,7 +39,7 @@ class LoanRepaymentController extends Controller {
 			->where('loan_status', '=', 'started')
 			->where('end_date', '>=', Carbon::now()->format('Y-m-d'))
 			->where('id', '=', $request->id)
-			->select('id', 'loan_number')
+			->select('id', 'loan_number','instalment')
 			->orderBy('created_at', 'desc')
 			->get();
 

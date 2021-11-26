@@ -123,7 +123,7 @@
                         <h3 class="card-title">Cancelled Loans</h3>
                       </div>
                       <div class="card-body">
-                        <table id="example3" class="table table-bordered table-hover">
+                        <table id="example4" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
                                     <th style="width: 12px;">#</th>

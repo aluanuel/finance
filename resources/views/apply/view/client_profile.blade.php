@@ -108,10 +108,11 @@
                                   <th style="width: 40px">Number</th>
                                   <th>Request</th>
                                   <th>approved</th>
-                                  <th>Outstanding</th>
+                                  <th>Interest rate</th>
+                                  <th>Total loan</th>
                                   <th>Security</th>
                                   <th>Recovered</th>
-                                  <th>Balance</th>
+                                  <th>outstanding</th>
                                   <th>#</th>
                                 </tr>
                               </thead>
@@ -120,6 +121,7 @@
                                   <td>{{$loan->loan_number}}</td>
                                   <td>{{number_format($loan->proposed_amount)}}</td>
                                   <td>{{number_format($loan->recommended_amount)}}</td>
+                                  <td>{{number_format($loan->interest_rate)}}</td>
                                   <td>{{number_format($loan->total_loan)}}</td>
                                   <td>{{number_format($loan->security)}}</td>
                                   <td>{{number_format($loan->loan_recovered)}}</td>
@@ -230,10 +232,10 @@
                                     <tr>
                                       <th style="width: 40px">Number</th>
                                       <th>Loan Request</th>
-                                      <th>Loan Outstanding</th>
+                                      <th>Total Loan</th>
                                       <th>Security</th>
                                       <th>Loan Recovered</th>
-                                      <th>Loan Balance</th>
+                                      <th>Loan Outstanding</th>
                                       <th>Start Date</th>
                                       <th>End Date</th>
                                     </tr>

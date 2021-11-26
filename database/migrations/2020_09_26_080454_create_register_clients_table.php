@@ -29,6 +29,8 @@ class CreateRegisterClientsTable extends Migration {
 			$table->string('resident_division')->nullable();
 			$table->string('resident_district')->nullable();
 			$table->string('next_of_kin')->nullable();
+			$table->boolean('account_status')->default(0);
+			$table->double('appraisal_fee');
 			$table->unsignedBigInteger('id_group')->nullable();
 			$table->string('role')->nullable();
 			$table->boolean('member_status')->nullable();
