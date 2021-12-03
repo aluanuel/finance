@@ -34,7 +34,7 @@
                 <div class="card-body box-profile">
                   <div class="text-center">
                     <img class="profile-user-img img-fluid img-circle"
-                         src="{{ asset('storage/photos/'.$loan->photo)}}"
+                         src=""
                          alt="User profile picture">
                   </div>
 
@@ -158,14 +158,19 @@
                                 </tr>
                               </thead>
                               <tbody>
-                                @foreach($ledger as $pay)
-                                <tr>
-                                  <td>{{$pay->receipt_number}}</td>
-                                  <td>{{date('Y-m-d',strtotime($pay->created_at))}}</td>
-                                  <td>{{number_format($pay->deposit)}}</td>
-                                  <td>{{$pay->depositer}}</td>
-                                </tr>
-                                @endforeach
+                                <?php if(is_null($ledger)){
+
+                                 }else{?>
+                                  @foreach($ledger as $pay)
+                                  <tr>
+                                    <td>{{$pay->receipt_number}}</td>
+                                    <td>{{date('Y-m-d',strtotime($pay->created_at))}}</td>
+                                    <td>{{number_format($pay->deposit)}}</td>
+                                    <td>{{$pay->depositer}}</td>
+                                  </tr>
+                                  @endforeach
+                                <?php } ?>
+                                
                               </tbody>
                             </table>
                           </div>
@@ -184,12 +189,17 @@
                                 </tr>
                               </thead>
                               <tbody>
-                                @foreach($schedule as $sch)
-                                <tr>
-                                  <td>{{ date('Y-m-d',strtotime($sch->deadline))}}</td>
-                                  <td>{{ number_format($sch->instalment) }}</td>
-                                </tr>
-                                @endforeach
+
+                                <?php if(is_null($schedule)){ 
+
+                                }else{ ?>
+                                  @foreach($schedule as $sch)
+                                  <tr>
+                                    <td>{{ date('Y-m-d',strtotime($sch->deadline))}}</td>
+                                    <td>{{ number_format($sch->instalment) }}</td>
+                                  </tr>
+                                  @endforeach
+                                <?php } ?>
                               </tbody>
                             </table>
                           </div>
@@ -199,75 +209,79 @@
                     </div>
                     <!-- /.tab-pane -->
                     <div class="tab-pane" id="ln_history">
-                      @foreach($history as $hist)
-                      <div class="card card-success">
-                        <div class="card-header">
-                          <h3 class="card-title">{{ $hist->loan_number }}</h3>
+                      <?php if(is_null($history)){
 
-                          <div class="card-tools">
-                            <span title="Loan Status" class="badge badge-warning">{{$hist->loan_status}}</span>
-                            @if(Auth::user()->usertype == 'Manager' && Auth::user()->role == 'Manager')
-                              @if($hist->loan_status == 'suspended')
-                            <span><a href="/apply/admin/reinstate/{{$hist->id}}" class="btn btn-xs btn-danger"> {{'Reinstate Loan'}}</a></span>
-                            @endif
-                            @endif
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                              <i class="fas fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-tool" data-card-widget="remove">
-                              <i class="fas fa-times"></i>
-                            </button>
-                          </div>
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <!-- card -->
-                            <div class="card">
-                              <div class="card-header">
-                                <h4 class="card-title text-primary">Loan Details</h4>
-                              </div>
-                              <div class="card-body" style="overflow-x: scroll;">
-                                <table class="table table-bordered">
-                                  <thead>
-                                    <tr>
-                                      <th style="width: 40px">Number</th>
-                                      <th>Loan Request</th>
-                                      <th>Total Loan</th>
-                                      <th>Security</th>
-                                      <th>Loan Recovered</th>
-                                      <th>Loan Outstanding</th>
-                                      <th>Start Date</th>
-                                      <th>End Date</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr>
-                                      <td>{{$hist->loan_number}}</td>
-                                      <td>{{number_format($hist->proposed_amount)}}</td>
-                                      <td>{{number_format($hist->total_loan)}}</td>
-                                      <td>{{number_format($hist->security)}}</td>
-                                      <td>{{number_format($hist->loan_recovered)}}</td>
-                                      <td>{{number_format($hist->loan_balance)}}</td>
-                                      @if($hist->start_date == NULL)
-                                      <td></td>
-                                      <td></td>
-                                      @else
-                                      <td>{{ date('Y-m-d',strtotime($hist->start_date)) }}</td>
-                                      <td>{{ date('Y-m-d',strtotime($hist->end_date)) }}</td>
-                                      @endif
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </div>
+                      }else{ ?>
+
+                        @foreach($history as $hist)
+                        <div class="card card-success">
+                          <div class="card-header">
+                            <h3 class="card-title">{{ $hist->loan_number }}</h3>
+
+                            <div class="card-tools">
+                              <span title="Loan Status" class="badge badge-warning">{{$hist->loan_status}}</span>
+                              @if(Auth::user()->usertype == 'Manager' && Auth::user()->role == 'Manager')
+                                @if($hist->loan_status == 'suspended')
+                              <span><a href="/apply/admin/reinstate/{{$hist->id}}" class="btn btn-xs btn-danger"> {{'Reinstate Loan'}}</a></span>
+                              @endif
+                              @endif
+                              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                              </button>
+                              <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                              </button>
                             </div>
-                         <!-- card -->
+                          </div>
+                          <!-- /.card-header -->
+                          <div class="card-body">
+                              <!-- card -->
+                              <div class="card">
+                                <div class="card-header">
+                                  <h4 class="card-title text-primary">Loan Details</h4>
+                                </div>
+                                <div class="card-body" style="overflow-x: scroll;">
+                                  <table class="table table-bordered">
+                                    <thead>
+                                      <tr>
+                                        <th style="width: 40px">Number</th>
+                                        <th>Loan Request</th>
+                                        <th>Total Loan</th>
+                                        <th>Security</th>
+                                        <th>Loan Recovered</th>
+                                        <th>Loan Outstanding</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <td>{{$hist->loan_number}}</td>
+                                        <td>{{number_format($hist->proposed_amount)}}</td>
+                                        <td>{{number_format($hist->total_loan)}}</td>
+                                        <td>{{number_format($hist->security)}}</td>
+                                        <td>{{number_format($hist->loan_recovered)}}</td>
+                                        <td>{{number_format($hist->loan_balance)}}</td>
+                                        @if($hist->start_date == NULL)
+                                        <td></td>
+                                        <td></td>
+                                        @else
+                                        <td>{{ date('Y-m-d',strtotime($hist->start_date)) }}</td>
+                                        <td>{{ date('Y-m-d',strtotime($hist->end_date)) }}</td>
+                                        @endif
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                           <!-- card -->
 
 
+                          </div>
+                          <!-- /.card-body -->
                         </div>
-                        <!-- /.card-body -->
-                      </div>
-                      @endforeach
-
+                        @endforeach
+                      <?php } ?>
                     </div>
                     <!-- /.tab-pane -->
                     <div class="{{ Route::is('accountDetails') ? 'active' : '' }} tab-pane" id="sv_history">
@@ -293,14 +307,19 @@
                               </tr>
                             </thead>
                             <tbody>
-                              @foreach($savings as $saving)
-                                <tr>
-                                  <td>{{ date('Y-m-d',strtotime($saving->created_at)) }}</td>
-                                  <td>{{ $saving->transaction_type }}</td>
-                                  <td>{{ number_format($saving->amount_figures) }}</td>
-                                  <td>{{ number_format($saving->savings_balance) }}</td>
-                                </tr>
-                              @endforeach
+                              <?php if(is_null($savings)){
+
+                              }else{ ?>
+
+                                @foreach($savings as $saving)
+                                  <tr>
+                                    <td>{{ date('Y-m-d',strtotime($saving->created_at)) }}</td>
+                                    <td>{{ $saving->transaction_type }}</td>
+                                    <td>{{ number_format($saving->amount_figures) }}</td>
+                                    <td>{{ number_format($saving->savings_balance) }}</td>
+                                  </tr>
+                                @endforeach
+                              <?php } ?>
                             </tbody>
                           </table>
                         </div>

@@ -79,7 +79,7 @@ class HomeController extends Controller
                                     ->sum('proposed_amount');
         $individual_loan_outstanding = DB::table('loan_applications')
                                     ->where('id_group',null)
-                                    ->where('loan_status','started')
+                                    ->where('loan_status','!=','completed')
                                     ->where('application_by',Auth::user()->id)
                                     ->sum('loan_balance');
         $individual_loan_defaulted = DB::table('loan_applications')
@@ -108,7 +108,6 @@ class HomeController extends Controller
         $sup_individual_loan_running = DB::table('loan_applications')
                                     ->where('id_group',null)
                                     ->where('loan_status','started')
-                                    ->whereBetween('start_date',[$start_date,$end_date])
                                     ->count('id');
         $sup_individual_loan_payout = DB::table('loan_applications')
                                     ->where('id_group',null)
@@ -117,7 +116,7 @@ class HomeController extends Controller
                                     ->sum('proposed_amount');
         $sup_individual_loan_outstanding = DB::table('loan_applications')
                                     ->where('id_group',null)
-                                    ->where('loan_status','started')
+                                    ->where('loan_status','!=','completed')
                                     ->sum('loan_balance');
         $sup_individual_loan_defaulted = DB::table('loan_applications')
                                     ->where('id_group',null)
@@ -148,7 +147,6 @@ class HomeController extends Controller
                                     ->where('id_group','!=',null)
                                     ->where('loan_status','started')
                                     ->where('application_by',Auth::user()->id)
-                                    ->whereBetween('start_date',[$start_date,$end_date])
                                     ->count('id');
         $group_loan_payout = DB::table('loan_applications')
                                     ->where('id_group','!=',null)
@@ -158,7 +156,7 @@ class HomeController extends Controller
                                     ->sum('proposed_amount');
         $group_loan_outstanding = DB::table('loan_applications')
                                     ->where('id_group','!=',null)
-                                    ->where('loan_status','started')
+                                    ->where('loan_status','!=','completed')
                                     ->where('application_by',Auth::user()->id)
                                     ->sum('loan_balance');
         $group_loan_defaulted = DB::table('loan_applications')
@@ -196,7 +194,7 @@ class HomeController extends Controller
                                     ->sum('proposed_amount');
         $sup_group_loan_outstanding = DB::table('loan_applications')
                                     ->where('id_group','!=',null)
-                                    ->where('loan_status','started')
+                                    ->where('loan_status','!=','completed')
                                     ->sum('loan_balance');
         $sup_group_loan_defaulted = DB::table('loan_applications')
                                     ->where('id_group','!=',null)

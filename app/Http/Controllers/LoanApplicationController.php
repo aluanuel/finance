@@ -459,28 +459,51 @@ class LoanApplicationController extends Controller {
 			->select('loan_applications.*','register_clients.name','register_clients.photo','register_clients.occupation','register_clients.account','register_clients.telephone','register_clients.gender','register_clients.marital_status','register_clients.work_place','register_clients.district','register_clients.resident_village','register_clients.resident_parish','register_clients.resident_division','register_clients.resident_district','register_clients.role')
 			->where('loan_applications.id_client', '=', $request->id)
 			->latest()->first();
-		$collateral = DB::table('loan_securities')->where(['id_loan' => $loan->id ])
+
+		if(is_null($loan)){
+
+			$loan = RegisterClient::where('id',$request->id)
+					->first();
+
+			$collateral = null;
+
+			$ledger = null;
+
+			$history = null;
+
+			$schedule = null;
+
+			$savings = null;
+
+			return view('apply.view.client_profile', compact('loan', 'ledger', 'history','schedule','savings','collateral'));
+
+		}else{
+
+			$collateral = DB::table('loan_securities')->where(['id_loan' => $loan->id ])
 						->where(['security_status' => 0])->get()->count();
 
 			$this->checkLoanExpiry($loan->id);
 
-		$ledger = DB::table('loan_repayments')
-			->where('id_loan', '=', $loan->id)
-			->get();
+			$ledger = DB::table('loan_repayments')
+				->where('id_loan', '=', $loan->id)
+				->get();
 
-		$history = DB::table('loan_applications')
-			->where('id_client', '=',$request->id)
-			->orderBy('created_at', 'desc')
-			->get();
+			$history = DB::table('loan_applications')
+				->where('id_client', '=',$request->id)
+				->orderBy('created_at', 'desc')
+				->get();
 
-		$schedule = DB::table('loan_schedules')
-			->where('id_loan',$loan->id)
-			->get();
-		$savings = DB::table('client_savings')
-			->where('id_client',$request->id)
-			->orderBy('created_at','asc')
-			->get();
-		return view('apply.view.client_profile', compact('loan', 'ledger', 'history','schedule','savings','collateral'));
+			$schedule = DB::table('loan_schedules')
+				->where('id_loan',$loan->id)
+				->get();
+			$savings = DB::table('client_savings')
+				->where('id_client',$request->id)
+				->orderBy('created_at','asc')
+				->get();
+			return view('apply.view.client_profile', compact('loan', 'ledger', 'history','schedule','savings','collateral'));
+
+		}
+		
 	}
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 	
