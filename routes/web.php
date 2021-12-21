@@ -215,6 +215,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/apply/accounts/applications/',[App\Http\Controllers\RegisterClientController::class,'viewAccountApplications']);
 
 	Route::get('/apply/admin/accounts',[App\Http\Controllers\RegisterClientController::class,'adminViewAccounts']);
+	Route::get('/apply/admin/ind/accounts',[App\Http\Controllers\RegisterClientController::class,'adminViewIndividualAccounts']);
+	Route::get('/apply/admin/grp/accounts',[App\Http\Controllers\RegisterClientController::class,'adminViewGroupAccounts']);
 
 	Route::get('/admin/download/collateral/{file}', function ($file='') {
     	return response()->file(storage_path('app/public/'.$file));

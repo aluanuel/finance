@@ -13,10 +13,11 @@ class LoanRepaymentController extends Controller {
 	public function index() {
 
 		$loans = DB::table('loan_applications')
-			->where('loan_status', '=', 'started')
-			->where('end_date', '>=', Carbon::now())
-			->select('id', 'loan_number','instalment')
-			->orderBy('created_at', 'desc')
+			->join('register_clients','loan_applications.id_client','register_clients.id')
+			->where('loan_applications.loan_status','started')
+			->where('loan_applications.end_date', '>=', Carbon::now())
+			->select('loan_applications.id', 'loan_applications.loan_number','loan_applications.instalment','register_clients.name')
+			->orderBy('loan_applications.created_at', 'desc')
 			->limit(500)
 			->get();
 		$id_loan = null;
@@ -36,11 +37,12 @@ class LoanRepaymentController extends Controller {
 	public function showPayFormWithLoanSelected(Request $request) {
 
 		$loans = DB::table('loan_applications')
-			->where('loan_status', '=', 'started')
-			->where('end_date', '>=', Carbon::now()->format('Y-m-d'))
-			->where('id', '=', $request->id)
-			->select('id', 'loan_number','instalment')
-			->orderBy('created_at', 'desc')
+			->join('register_clients','loan_applications.id_client','register_clients.id')
+			->where('loan_applications.loan_status', 'started')
+			->where('loan_applications.end_date', '>=', Carbon::now()->format('Y-m-d'))
+			->where('loan_applications.id', '=', $request->id)
+			->select('loan_applications.id', 'loan_applications.loan_number','loan_applications.instalment','register_clients.name')
+			->orderBy('loan_applications.created_at', 'desc')
 			->get();
 
 		if(sizeof($loans) <= 0){
@@ -91,6 +93,7 @@ class LoanRepaymentController extends Controller {
 				$pay->deposit = $deposit;
 				$pay->depositer = request('depositer');
 				$pay->receipt_number = $this->Receipt();
+				$pay->created_at = request('created_at');
 				$pay->recorded_by = Auth::id();
 				$pay->save();
 

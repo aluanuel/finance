@@ -220,7 +220,7 @@
 
                             <div class="card-tools">
                               <span title="Loan Status" class="badge badge-warning">{{$hist->loan_status}}</span>
-                              @if(Auth::user()->usertype == 'Manager' && Auth::user()->role == 'Manager')
+                              @if((Auth::user()->usertype == 'Manager' && Auth::user()->role == 'Manager') || Auth::user()->usertype == 'Teller')
                                 @if($hist->loan_status == 'suspended')
                               <span><a href="/apply/admin/reinstate/{{$hist->id}}" class="btn btn-xs btn-danger"> {{'Reinstate Loan'}}</a></span>
                               @endif

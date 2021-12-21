@@ -185,7 +185,6 @@ class HomeController extends Controller
         $sup_group_loan_running = DB::table('loan_applications')
                                     ->where('id_group','!=',null)
                                     ->where('loan_status','started')
-                                    ->whereBetween('start_date',[$start_date,$end_date])
                                     ->count('id');
         $sup_group_loan_payout = DB::table('loan_applications')
                                     ->where('id_group','!=',null)
@@ -216,7 +215,6 @@ class HomeController extends Controller
                     ->sum('loan_processing_fee');
         $disburse = DB::table('loan_applications')
                     ->where('loan_status','started')
-                    ->whereBetween('start_date',[$start_date,$end_date])
                     ->sum('recommended_amount');
         $expenses = DB::table('other_payments')
                     ->where('transaction_type','expense')

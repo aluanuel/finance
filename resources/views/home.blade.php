@@ -512,7 +512,33 @@
           @case('Teller')
 
             <div class="row">
-              <div class="col-4">
+              <div class="col-3">
+                  <div class="small-box bg-black">
+                    <div class="inner">
+                              <h3>{{number_format($individualClients)}} <span style="font-size: 18px">Individual Accounts</span></h3>
+
+                      <p>Cumulative</p>
+                    </div>
+                    <div class="icon">
+                      <i class="ion ion-bag"></i>
+                    </div>
+                    <a href="/apply/admin/ind/accounts" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="small-box bg-black">
+                    <div class="inner">
+                              <h3>{{number_format($groupClients)}} <span style="font-size: 18px">Group Accounts</span></h3>
+
+                      <p>Cumulative</p>
+                    </div>
+                    <div class="icon">
+                      <i class="ion ion-bag"></i>
+                    </div>
+                    <a href="/apply/admin/grp/accounts" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                  </div>
+                </div>
+              <div class="col-3">
                 <!-- small box -->
                 <div class="small-box bg-info">
                   <div class="inner">
@@ -526,7 +552,7 @@
                   <a href="/apply/report/collections/application" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
               </div>
-              <div class="col-4">
+              <div class="col-3">
                 <!-- small box -->
                 <div class="small-box bg-info">
                   <div class="inner">
@@ -541,8 +567,10 @@
                 </div>
               </div>
               <!-- ./col -->
-
-              <div class="col-4">
+            </div>
+            <!-- /.row -->
+            <div class="row">
+              <div class="col-3">
                 <!-- small box -->
                 <div class="small-box bg-info">
                   <div class="inner">
@@ -557,10 +585,7 @@
                 </div>
               </div>
               <!-- ./col -->
-            </div>
-            <!-- /.row -->
-            <div class="row">
-              <div class="col-4">
+              <div class="col-3">
                 <!-- small box -->
                 <div class="small-box bg-primary">
                   <div class="inner">
@@ -574,7 +599,7 @@
                   <a href="/apply/report/loan/disbursements" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
               </div>
-              <div class="col-4">
+              <div class="col-3">
                 <!-- small box -->
                 <div class="small-box bg-gray">
                   <div class="inner">
@@ -590,7 +615,7 @@
               </div>
               <!-- ./col -->
 
-              <div class="col-4">
+              <div class="col-3">
                 <!-- small box -->
                 <div class="small-box bg-gray">
                   <div class="inner">
@@ -649,7 +674,7 @@
                     <div class="icon">
                       <i class="ion ion-bag"></i>
                     </div>
-                    <a href="/apply/admin/accounts" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="/apply/admin/ind/accounts" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                   </div>
                 </div>
                 <div class="col-3">
@@ -662,7 +687,7 @@
                     <div class="icon">
                       <i class="ion ion-bag"></i>
                     </div>
-                    <a href="/apply/admin/accounts" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="/apply/admin/grp/accounts" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                   </div>
                 </div>
                 <div class="col-3">

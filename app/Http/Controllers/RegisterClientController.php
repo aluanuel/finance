@@ -69,6 +69,26 @@ class RegisterClientController extends Controller {
 
 	}
 
+	public function adminViewIndividualAccounts(){
+
+		$accounts = RegisterClient::where('id_group',NULL)
+					->get();
+
+		return view('apply.admin.ind.clients',compact('accounts'));
+
+	}
+
+	public function adminViewGroupAccounts(){
+
+		$accounts = DB::table('register_clients')
+					->join('client_groups','register_clients.id_group','client_groups.id')
+					->select('register_clients.*','client_groups.group_code','client_groups.group_name')
+					->get();
+
+		return view('apply.admin.grp.clients',compact('accounts'));
+
+	}
+
 	public function viewAccountDetails(Request $request){
 
 		$id = LoanApplication::where('id_client',$request->id)

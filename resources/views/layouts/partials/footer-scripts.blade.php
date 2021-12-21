@@ -155,13 +155,8 @@ $(document).ready(function(){
       "responsive": true,
     });
     $('#example6').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
+      "searching": true,
       "ordering": true,
-      "info": true,
-      "autoWidth": true,
-      "responsive": true,
     });
     $('#example7').DataTable({
       "paging": true,
@@ -173,40 +168,20 @@ $(document).ready(function(){
       "responsive": true,
     });
     $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": true,
       "searching": true,
-      "ordering": true,
-      "info": true,
-      "autoWidth": true,
-      "responsive": true,
+      "ordering": true
     });
     $('#example3').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": true,
+      "searching":false,
       "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
     });
     $('#example4').DataTable({
-      "paging": true,
-      "lengthChange": false,
       "searching": true,
       "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
     });
     $('#example5').DataTable({
-      "paging": true,
-      "lengthChange": false,
       "searching": true,
       "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
     });
   });
   $('#total_monthly_income').focus(function() {

@@ -32,7 +32,7 @@
             <div class="card card-default">
               <div class="card-header">
                 <ul class="nav nav-pills" id="myTab">
-                  <li class="nav-item"><a class="nav-link active" href="#ln_issue" data-toggle="tab">Loans to Issue
+                  <li class="nav-item"><a class="nav-link active" href="#ln_issue" data-toggle="tab">Loans to Disburse
                   </a></li>
                   <li class="nav-item"><a class="nav-link" href="#ln_running" data-toggle="tab">Running Loans</a></li>
                   <li class="nav-item"><a class="nav-link" href="#ln_complete" data-toggle="tab">Completed Loans</a></li>
@@ -45,24 +45,24 @@
                   <div class="active tab-pane" id="ln_issue">
                     <div class="card">
                       <div class="card-header">
-                        <h3 class="card-title">Processed loans to be issued</h3>
+                        <h3 class="card-title">Showing Loans Ready For Disbursement</h3>
                       </div>
                       <!-- /.card-header -->
                       <div class="card-body" style="overflow-x: scroll;">
                          <table id="example2" class="table table-bordered table-hover">
                           <thead>
                             <tr>
-                              <th>#</th>
-                              <th>Number</th>
+                              <th>s/n</th>
+                              <th>loan_number</th>
                               <th>Applicant</th>
-                              <th>Loan Amount</th>
-                              <th>Loan Outstanding</th>
+                              <th>loan_approved</th>
+                              <th>total_loan</th>
                               <th>Security</th>
-                              <th>Processing Fee</th>
-                              <th>Loan Payable</th>
+                              <th>Processing_Fee</th>
+                              <th>Loan_Payable</th>
                               <th>Period(Months)</th>
                               <th>Telephone</th>
-                              <th>#</th>
+                              <th>action</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -79,7 +79,7 @@
                                 <td>{{ number_format($app->loan_amount_issued)}}</td>
                                 <td>{{ $app->loan_period}}</td>
                                 <td>{{ $app->telephone }}</td>
-                                <td><a href="/apply/view/profile/{{$app->id_client}}"><button class="btn btn-outline-primary">View</button></a></td>
+                                <td><a href="/apply/view/profile/{{$app->id_client}}"><button class="btn btn-outline-primary btn-sm">View</button></a></td>
                               </tr>
                             <?php $i++;?>
                             @endforeach
@@ -95,26 +95,26 @@
                   <div class="tab-pane" id="ln_running">
                     <div class="card">
                       <div class="card-header">
-                        <h3 class="card-title">Running Loans</h3>
+                        <h3 class="card-title">Showing Running Loans</h3>
                       </div>
                       <!-- /.card-header -->
                       <div class="card-body" style="overflow-x: scroll;">
                          <table id="example3" class="table table-bordered table-hover">
                           <thead>
                             <tr>
-                              <th style="width: 12px;">#</th>
-                              <th style="width: 30px;">Number</th>
+                              <th>s/n</th>
+                              <th>loan_number</th>
                               <th>Applicant</th>
-                              <th>Loan Amount</th>
+                              <th>Loan_disbursed</th>
                               <th>Interest</th>
-                              <th>Loan Outstanding</th>
+                              <th>Total_loan</th>
                               <th>Security</th>
-                              <th>Start</th>
-                              <th>End</th>
-                              <th>Recovered</th>
-                              <th>Balance</th>
+                              <th>loan_Recovered</th>
+                              <th>loan_outstanding</th>
+                              <th>Start_date</th>
+                              <th>End_date</th>
                               <th>Telephone</th>
-                              <th style="width: 80px;">#</th>
+                              <th>action</th>
                             </tr>
                           </thead>
                          <tbody>
@@ -128,12 +128,12 @@
                                 <td>{{ number_format($run->loan_interest) }}</td>
                                 <td>{{ number_format($run->total_loan) }}</td>
                                 <td>{{ number_format($run->security) }}</td>
-                                <td>{{ date('Y-m-d', strtotime($run->start_date)) }}</td>
-                                <td>{{ date('Y-m-d',strtotime($run->end_date)) }}</td>
                                 <td>{{ number_format($run->loan_recovered) }}</td>
                                 <td>{{ number_format($run->loan_balance) }}</td>
+                                <td>{{ date('Y-m-d', strtotime($run->start_date)) }}</td>
+                                <td>{{ date('Y-m-d',strtotime($run->end_date)) }}</td>
                                 <td>{{ $run->telephone }}</td>
-                                <td><a href="/apply/view/profile/{{$run->id_client}}"><button class="btn btn-outline-primary">View</button></a></td>
+                                <td><a href="/apply/view/profile/{{$run->id_client}}"><button class="btn btn-outline-primary btn-sm">View</button></a></td>
                               </tr>
                             <?php $i++;?>
                             @endforeach
@@ -148,24 +148,24 @@
                   <div class="tab-pane" id="ln_complete">
                     <div class="card">
                       <div class="card-header">
-                        <h3 class="card-title">Completed Loans</h3>
+                        <h3 class="card-title">Showing Completed Loans</h3>
                       </div>
                       <!-- /.card-header -->
                       <div class="card-body" style="overflow-x: scroll;">
                          <table id="example4" class="table table-bordered table-hover">
                           <thead>
                             <tr>
-                              <th style="width: 12px;">#</th>
-                              <th style="width: 30px;">Number</th>
+                              <th>s/n</th>
+                              <th>loan_Number</th>
                               <th>Applicant</th>
-                              <th>Loan Amount</th>
+                              <th>Loan_disbursed</th>
                               <th>Interest</th>
-                              <th>Loan Outstanding</th>
+                              <th>Total_loan</th>
                               <th>Security</th>
-                              <th>Start</th>
-                              <th>End</th>
-                              <th>Recovered</th>
-                              <th>Balance</th>
+                              <th>loan_Recovered</th>
+                              <th>loan_outstanding</th>
+                              <th>Start_date</th>
+                              <th>End_date</th>
                               <th>Telephone</th>
                               <th>#</th>
                             </tr>
@@ -181,12 +181,12 @@
                                 <td>{{ number_format($complete->loan_interest) }}</td>
                                 <td>{{ number_format($complete->total_loan) }}</td>
                                 <td>{{ number_format($complete->security) }}</td>
-                                <td>{{ date('Y-m-d', strtotime($complete->start_date)) }}</td>
-                                <td>{{ date('Y-m-d',strtotime($complete->end_date)) }}</td>
                                 <td>{{ number_format($complete->loan_recovered) }}</td>
                                 <td>{{ number_format($complete->loan_balance) }}</td>
+                                <td>{{ date('Y-m-d', strtotime($complete->start_date)) }}</td>
+                                <td>{{ date('Y-m-d',strtotime($complete->end_date)) }}</td>
                                 <td>{{ $complete->telephone }}</td>
-                                <td><a href="/apply/view/profile/{{$complete->id_client}}"><button class="btn btn-outline-primary">View</button></a></td>
+                                <td><a href="/apply/view/profile/{{$complete->id_client}}"><button class="btn btn-outline-primary btn-sm">View</button></a></td>
                               </tr>
                             <?php $i++;?>
                             @endforeach
@@ -199,26 +199,26 @@
                   <div class="tab-pane" id="ln_suspended">
                     <div class="card">
                       <div class="card-header">
-                        <h3 class="card-title">Suspended Loans</h3>
+                        <h3 class="card-title">Showing Suspended Loans</h3>
                       </div>
                       <!-- /.card-header -->
                       <div class="card-body" style="overflow-x: scroll;">
-                         <table id="example4" class="table table-bordered table-hover">
+                         <table id="example6" class="table table-bordered table-hover">
                           <thead>
                             <tr>
-                              <th style="width: 12px;">#</th>
-                              <th style="width: 30px;">Number</th>
+                              <th>s/n</th>
+                              <th>loan_number</th>
                               <th>Applicant</th>
-                              <th>Loan Amount</th>
+                              <th>Loan_disbursed</th>
                               <th>Interest</th>
-                              <th>Loan Outstanding</th>
-                              <th>Security</th>
-                              <th>Start</th>
-                              <th>End</th>
-                              <th>Recovered</th>
-                              <th>Balance</th>
+                              <th>Total_loan</th>
+                              <th>Security</th> 
+                              <th>loan_recovered</th>
+                              <th>loan_outstanding</th>
+                              <th>Start_date</th>
+                              <th>End_date</th>
                               <th>Telephone</th>
-                              <th>#</th>
+                              <th>action</th>
                             </tr>
                           </thead>
                          <tbody>
@@ -232,12 +232,12 @@
                                 <td>{{ number_format($suspend->loan_interest) }}</td>
                                 <td>{{ number_format($suspend->total_loan) }}</td>
                                 <td>{{ number_format($suspend->security) }}</td>
-                                <td>{{ date('Y-m-d', strtotime($suspend->start_date)) }}</td>
-                                <td>{{ date('Y-m-d',strtotime($suspend->end_date)) }}</td>
                                 <td>{{ number_format($suspend->loan_recovered) }}</td>
                                 <td>{{ number_format($suspend->loan_balance) }}</td>
+                                <td>{{ date('Y-m-d', strtotime($suspend->start_date)) }}</td>
+                                <td>{{ date('Y-m-d',strtotime($suspend->end_date)) }}</td>
                                 <td>{{ $suspend->telephone }}</td>
-                                <td><a href="/apply/view/profile/{{$suspend->id}}"><button class="btn btn-outline-primary">View</button></a></td>
+                                <td><a href="/apply/view/profile/{{$suspend->id}}"><button class="btn btn-outline-primary btn-sm">View</button></a></td>
                               </tr>
                             <?php $i++;?>
                             @endforeach
