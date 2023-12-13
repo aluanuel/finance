@@ -53,7 +53,7 @@
                     <b><i class="fas fa-venus-double mr-1"></i> Marital Status</b> <a class="float-right">{{$loan->marital_status }}</a>
                   </li>
                   <li class="list-group-item">
-                    <b><i class="fas fa-laptop-house mr-1"></i> Workplace</b> <a class="float-right">{{$loan->work_place }}</a>
+                    <b><i class="fas fa-laptop-house mr-1"></i> Employer</b> <a class="float-right">{{$loan->employer }}</a>
                   </li>
                   <li class="list-group-item">
                     <b><i class="fas fa-building mr-1"></i> District of Work</b> <a class="float-right">{{$loan->district }}</a>
@@ -71,7 +71,7 @@
                     <b><i class="fas fa-map-marker-alt mr-1"></i> District of Residence</b> <a class="float-right">{{$loan->resident_district }}</a>
                   </li>
                   <li class="list-group-item">
-                    <b><i class="fas fa-user-friends mr-1"></i>Loan Group</b> <a class="float-right">{{$loan->id_group }}</a>
+                    <b><i class="fas fa-user-friends mr-1"></i>Loan Group</b> <a class="float-right"></a>
                   </li>
                   <li class="list-group-item">
                     <b><i class="fas fa-user mr-1"></i> Role</b> <a class="float-right">{{$loan->role }}</a>

@@ -97,7 +97,7 @@
                                 <th>Telephone</th>
                                 <th>Gender</th>
                                 <th>Marital Status</th>
-                                <th>Workplace</th>
+                                <th>Employer</th>
                                 <th>Occupation</th>
                                 <th>#</th>
                                 <th>Loan Officer</th>
@@ -113,7 +113,7 @@
                                   <td>{{$client->telephone}}</td>
                                   <td>{{$client->gender}}</td>
                                   <td>{{$client->marital_status}}</td>
-                                  <td>{{$client->work_place}}</td>
+                                  <td>{{$client->employer}}</td>
                                   <td>{{$client->occupation}}</td>
                                   <td>
                                     <form action="/apply/ind/cont/{{ $client->id}}" method="post">

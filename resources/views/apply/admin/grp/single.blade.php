@@ -71,7 +71,7 @@
                           <div class="row form-group">
                             <div class="col-3">
                               <label>Workplace</label>
-                              <input type="text"  autocomplete="off" class="form-control" value="{{$cont->work_place}}" readonly="readonly"> 
+                              <input type="text"  autocomplete="off" class="form-control" value="{{$cont->employer}}" readonly="readonly"> 
                             </div>
                             <div class="col-3">
                               <label>Occupation</label>

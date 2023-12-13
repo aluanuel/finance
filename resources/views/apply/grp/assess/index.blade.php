@@ -102,7 +102,7 @@
                           <div class="row form-group">
                             <div class="col-3">
                               <label>Workplace</label>
-                              <input type="text" name="work_place" autocomplete="off" class="form-control" placeholder="Workplace" value="{{ $cont->work_place }}" required="required">
+                              <input type="text" name="employer" autocomplete="off" class="form-control" placeholder="Workplace" value="{{ $cont->employer }}" required="required">
                             </div>
                             <div class="col-3">
                               <label>Occupation</label>
@@ -130,10 +130,7 @@
                               <label>District of residence</label>
                               <input type="text" name="resident_district" autocomplete="off" class="form-control" placeholder="District of residence" value="{{ $cont->resident_district }}" required="required">
                             </div>
-                            <div class="col-3">
-                              <label>Household Head</label>
-                              <input type="text" name="house_head" autocomplete="off" class="form-control" placeholder="Household Head" value="{{ $cont->house_head }}" required="required">
-                            </div>
+                            
                           </div>
                           <div class="card-header">
                             <h3 class="card-title title col-11 text-primary text-uppercase">Description of family property</h3>
@@ -398,11 +395,7 @@
                                   <i> Next of Kin:</i> {{$cont->next_of_kin}}
                                   </p>
                                 </div>
-                                <div class="col-3">
-                                  <p>
-                                  <i> Household Head:</i> {{$cont->house_head}}
-                                  </p>
-                                </div>
+                                
                               </div>
                                <h6 class="text-uppercase">residence</h6>
                               <div class="row">

@@ -130,7 +130,7 @@
                                   <td>{{ $ln->telephone }}</td>
                                   <td>{{ $ln->gender }}</td>
                                   <td>{{ $ln->marital_status }}</td>
-                                  <td>{{ $ln->work_place }}</td>
+                                  <td>{{ $ln->employer }}</td>
                                   <td>{{ $ln->occupation }}</td>
                                   <td><a href="/apply/grp/assess/{{$ln->id}}" class="btn btn-outline-primary">Assess</a></td>
                                 </tr>

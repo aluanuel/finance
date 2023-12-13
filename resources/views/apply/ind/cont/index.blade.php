@@ -73,8 +73,8 @@
               </div>
               <div class="row form-group">
                 <div class="col-3">
-                  <label>Workplace</label>
-                  <input type="text" name="work_place" autocomplete="off" class="form-control" placeholder="Workplace" value="{{ $cont->work_place }}" required="required">
+                  <label>Employer</label>
+                  <input type="text" name="employer" autocomplete="off" class="form-control" placeholder="Employer" value="{{ $cont->employer }}" required="required">
                 </div>
                 <div class="col-3">
                   <label>Occupation</label>
