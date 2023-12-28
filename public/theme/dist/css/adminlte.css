@@ -227,6 +227,8 @@ th {
 label {
   display: inline-block;
   margin-bottom: 0.5rem;
+  font-style: italic;
+  color: #17a2b8;
 }
 
 button {
@@ -1685,11 +1687,12 @@ pre code {
 
 .table thead th {
   vertical-align: bottom;
-  border-bottom: 2px solid #dee2e6;
+  border-bottom: 2px solid #17a2b8;
+  color: #17a2b8;
 }
 
 .table tbody + tbody {
-  border-top: 2px solid #dee2e6;
+  border-top: 2px solid #17a2b8;
 }
 
 .table-sm th,
@@ -2469,6 +2472,7 @@ textarea.form-control {
     display: inline-block;
     width: auto;
     vertical-align: middle;
+    font-style: italic;
   }
   .form-inline .form-control-plaintext {
     display: inline-block;

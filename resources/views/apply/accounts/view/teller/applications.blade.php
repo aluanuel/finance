@@ -46,21 +46,21 @@
                         <th>a/c name</th>
                         <th>gender</th>
                         <th>telephone</th>
-                        <th>occupation</th>
+                        <th>Fees</th>
                         <th>created_at</th>
                         <th>action</th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php $x =1;?>
-                      @foreach($application as $ac)
+                      @foreach($accounts as $ac)
                       <tr>
                         <td>{{$x}}</td>
-                        <td>{{ $ac->account }}</td>
+                        <td>{{ $ac->account_number }}</td>
                         <td>{{ $ac->name }}</td>
                         <td>{{ $ac->gender }}</td>
                         <td>{{ $ac->telephone }}</td>
-                        <td>{{ $ac->occupation }}</td>
+                        <td>{{ number_format($ac->account_opening_fee) }}</td>
                         <td>{{ date('Y-m-d',strtotime($ac->created_at)) }}</td>
                         <td>
                           <form action="/apply/accounts/applications/{{$ac->id }}" method="post">

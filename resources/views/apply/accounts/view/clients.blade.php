@@ -47,6 +47,7 @@
                         <th>gender</th>
                         <th>telephone</th>
                         <th>occupation</th>
+                        <th>account_status</th>
                         <th>created_at</th>
                       </tr>
                     </thead>
@@ -54,13 +55,21 @@
                       <?php $x =1;?>
                       @foreach($accounts as $ac)
                       <tr>
-                        <td>{{$x}}</td>
-                        <td><a href="/apply/account/profile/{{$ac->id}}">{{ $ac->account }}</a></td>
+                        <td><a href="/apply/account/profile/{{$ac->id}}">{{$x}}</a></td>
+                        <td><a href="/apply/account/profile/{{$ac->id}}">{{ $ac->account_number }}</a></td>
                         <td><a href="/apply/account/profile/{{$ac->id}}">{{ $ac->name }}</a></td>
                         <td><a href="/apply/account/profile/{{$ac->id}}">{{ $ac->gender }}</a></td>
                         <td><a href="/apply/account/profile/{{$ac->id}}">{{ $ac->telephone }}</a></td>
                         <td><a href="/apply/account/profile/{{$ac->id}}">{{ $ac->occupation }}</a></td>
-                        <td>{{ date('Y-m-d',strtotime($ac->created_at)) }}</td>
+                        @switch($ac->account_status)
+                          @case(0)
+                          <td class="text-danger">Inactive</td>
+                          @break
+                          @case(1)
+                          <td class="text-primary">Active</td>
+                          @break
+                        @endswitch
+                        <td><a href="/apply/account/profile/{{$ac->id}}">{{ date('Y-m-d',strtotime($ac->created_at)) }}</a></td>
                       </tr>
                       <?php $x++;?>
                       @endforeach

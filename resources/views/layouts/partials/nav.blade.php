@@ -824,44 +824,16 @@
                   </a>
                     <ul class="nav nav-treeview">
                       <li class="nav-item">
-                        <a href="/apply/settings/appraisal/" class="nav-link">
+                        <a href="/apply/settings/fees/" class="nav-link">
                           <i class="far fa-circle nav-icon"></i>
-                          <p>Appraisal Fee
+                          <p>Fees
                           </p>
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a href="/apply/settings/application/" class="nav-link">
+                        <a href="/apply/settings/rates/" class="nav-link">
                           <i class="far fa-circle nav-icon"></i>
-                          <p>Loan Application Fee
-                          </p>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a href="/apply/settings/processing/" class="nav-link">
-                          <i class="far fa-circle nav-icon"></i>
-                          <p>Loan Processing Fee
-                          </p>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a href="/apply/settings/security/rate/" class="nav-link">
-                          <i class="far fa-circle nav-icon"></i>
-                          <p>Loan Security Rate
-                          </p>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a href="/apply/settings/interest" class="nav-link">
-                          <i class="far fa-circle nav-icon"></i>
-                          <p>Interest on Loans
-                          </p>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a href="/apply/settings/interest/defaulting" class="nav-link">
-                          <i class="far fa-circle nav-icon"></i>
-                          <p>Interest On Defaulting
+                          <p>Rates
                           </p>
                         </a>
                       </li>

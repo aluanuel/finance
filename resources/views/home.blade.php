@@ -42,7 +42,7 @@
                       <!-- small box -->
                       <div class="small-box bg-white">
                         <div class="inner">
-                          <h3>{{number_format($individual_loan_application)}} <span style="font-size: 18px">Loan Applications</span></h3>
+                          <h3><span style="font-size: 18px">Loan Applications</span></h3>
 
                           <p>This Month</p>
                         </div>
@@ -56,7 +56,7 @@
                       <!-- small box -->
                       <div class="small-box bg-info">
                         <div class="inner">
-                          <h3>{{number_format($individual_loan_approval)}} <span style="font-size: 18px">Loans Approved</span></h3>
+                          <h3><span style="font-size: 18px">Loans Approved</span></h3>
 
                           <p>This Month</p>
                         </div>
@@ -72,7 +72,7 @@
                       <!-- small box -->
                       <div class="small-box bg-warning">
                         <div class="inner">
-                          <h3>{{number_format($individual_loan_cancelled)}} <span style="font-size: 18px">Loans Cancelled</span></h3>
+                          <h3><span style="font-size: 18px">Loans Cancelled</span></h3>
 
                           <p>This Month</p>
                         </div>
@@ -87,7 +87,7 @@
                       <!-- small box -->
                       <div class="small-box bg-success">
                         <div class="inner">
-                          <h3>{{number_format($individual_loan_running)}} <span style="font-size: 18px">Loans Running</span></h3>
+                          <h3><span style="font-size: 18px">Loans Running</span></h3>
 
                           <p>This Month</p>
                         </div>
@@ -105,7 +105,7 @@
                       <!-- small box -->
                       <div class="small-box bg-gray">
                         <div class="inner">
-                          <h3>{{number_format($individual_loan_payout)}} <span style="font-size: 18px">Loan Payouts</span></h3>
+                          <h3><span style="font-size: 18px">Loan Payouts</span></h3>
 
                           <p>This Month</p>
                         </div>
@@ -119,7 +119,7 @@
                       <!-- small box -->
                       <div class="small-box bg-gray">
                         <div class="inner">
-                          <h3>{{number_format($individual_loan_outstanding)}} <span style="font-size: 18px">Loan Outstandings</span></h3>
+                          <h3><span style="font-size: 18px">Loan Outstandings</span></h3>
 
                           <p>Cumulative</p>
                         </div>
@@ -135,7 +135,7 @@
                       <!-- small box -->
                       <div class="small-box bg-danger">
                         <div class="inner">
-                          <h3>{{number_format($individual_loan_defaulted)}} <span style="font-size: 18px">Loans Defaulted</span></h3>
+                          <h3><span style="font-size: 18px">Loans Defaulted</span></h3>
 
                           <p>This Month</p>
                         </div>
@@ -157,7 +157,7 @@
                       <!-- small box -->
                       <div class="small-box bg-white">
                         <div class="inner">
-                          <h3>{{number_format($sup_individual_loan_application)}} <span style="font-size: 18px">Loan Applications</span></h3>
+                          <h3><span style="font-size: 18px">Loan Applications</span></h3>
 
                           <p>This Month</p>
                         </div>
@@ -171,7 +171,7 @@
                       <!-- small box -->
                       <div class="small-box bg-info">
                         <div class="inner">
-                          <h3>{{number_format($sup_individual_loan_approval)}} <span style="font-size: 18px">Loans Approved</span></h3>
+                          <h3><span style="font-size: 18px">Loans Approved</span></h3>
 
                           <p>This Month</p>
                         </div>
@@ -187,7 +187,7 @@
                       <!-- small box -->
                       <div class="small-box bg-warning">
                         <div class="inner">
-                          <h3>{{number_format($sup_individual_loan_cancelled)}} <span style="font-size: 18px">Loans Cancelled</span></h3>
+                          <h3><span style="font-size: 18px">Loans Cancelled</span></h3>
 
                           <p>This Month</p>
                         </div>
@@ -202,7 +202,7 @@
                       <!-- small box -->
                       <div class="small-box bg-success">
                         <div class="inner">
-                          <h3>{{number_format($sup_individual_loan_running)}} <span style="font-size: 18px">Loans Running</span></h3>
+                          <h3><span style="font-size: 18px">Loans Running</span></h3>
 
                           <p>This Month</p>
                         </div>
@@ -220,7 +220,7 @@
                       <!-- small box -->
                       <div class="small-box bg-gray">
                         <div class="inner">
-                          <h3>{{number_format($sup_individual_loan_payout)}} <span style="font-size: 18px">Loan Payouts</span></h3>
+                          <h3><span style="font-size: 18px">Loan Payouts</span></h3>
 
                           <p>This Month</p>
                         </div>
@@ -234,7 +234,7 @@
                       <!-- small box -->
                       <div class="small-box bg-gray">
                         <div class="inner">
-                          <h3>{{number_format($sup_individual_loan_outstanding)}} <span style="font-size: 18px">Loan Outstandings</span></h3>
+                          <h3><span style="font-size: 18px">Loan Outstandings</span></h3>
 
                           <p>Cumulative</p>
                         </div>
@@ -250,7 +250,7 @@
                       <!-- small box -->
                       <div class="small-box bg-danger">
                         <div class="inner">
-                          <h3>{{number_format($sup_individual_loan_defaulted)}} <span style="font-size: 18px">Loans Defaulted</span></h3>
+                          <h3><span style="font-size: 18px">Loans Defaulted</span></h3>
 
                           <p>This Month</p>
                         </div>
@@ -393,7 +393,7 @@
                       <!-- small box -->
                       <div class="small-box bg-white">
                         <div class="inner">
-                          <h3>{{number_format($sup_group_loan_application)}} <span style="font-size: 18px">Loan Applications</span></h3>
+                          <h3><span style="font-size: 18px">Loan Applications</span></h3>
 
                           <p>This Month</p>
                         </div>
@@ -407,7 +407,7 @@
                       <!-- small box -->
                       <div class="small-box bg-info">
                         <div class="inner">
-                          <h3>{{number_format($sup_group_loan_approval)}} <span style="font-size: 18px">Loans Approved</span></h3>
+                          <h3><span style="font-size: 18px">Loans Approved</span></h3>
 
                           <p>This Month</p>
                         </div>
@@ -423,7 +423,7 @@
                       <!-- small box -->
                       <div class="small-box bg-warning">
                         <div class="inner">
-                          <h3>{{number_format($sup_group_loan_cancelled)}} <span style="font-size: 18px">Loans Cancelled</span></h3>
+                          <h3><span style="font-size: 18px">Loans Cancelled</span></h3>
 
                           <p>This Month</p>
                         </div>
@@ -438,7 +438,7 @@
                       <!-- small box -->
                       <div class="small-box bg-success">
                         <div class="inner">
-                          <h3>{{number_format($sup_group_loan_running)}} <span style="font-size: 18px">Loans Running</span></h3>
+                          <h3><span style="font-size: 18px">Loans Running</span></h3>
 
                           <p>This Month</p>
                         </div>
@@ -486,7 +486,7 @@
                       <!-- small box -->
                       <div class="small-box bg-danger">
                         <div class="inner">
-                          <h3>{{number_format($sup_group_loan_defaulted)}} <span style="font-size: 18px">Loans Defaulted</span></h3>
+                          <h3><span style="font-size: 18px">Loans Defaulted</span></h3>
 
                           <p>This Month</p>
                         </div>
@@ -515,7 +515,7 @@
               <div class="col-3">
                   <div class="small-box bg-black">
                     <div class="inner">
-                              <h3>{{number_format($individualClients)}} <span style="font-size: 18px">Individual Accounts</span></h3>
+                              <h3><span style="font-size: 18px">Individual Accounts</span></h3>
 
                       <p>Cumulative</p>
                     </div>
@@ -528,7 +528,7 @@
                 <div class="col-3">
                   <div class="small-box bg-black">
                     <div class="inner">
-                              <h3>{{number_format($groupClients)}} <span style="font-size: 18px">Group Accounts</span></h3>
+                              <h3><span style="font-size: 18px">Group Accounts</span></h3>
 
                       <p>Cumulative</p>
                     </div>
@@ -542,7 +542,7 @@
                 <!-- small box -->
                 <div class="small-box bg-info">
                   <div class="inner">
-                    <h4>{{number_format($application)}} <span style="font-size: 18px">Application Fee</span></h4>
+                    <h4><span style="font-size: 18px">Application Fee</span></h4>
 
                     <p>This Month</p>
                   </div>
@@ -556,7 +556,7 @@
                 <!-- small box -->
                 <div class="small-box bg-info">
                   <div class="inner">
-                    <h4>{{number_format($appraisal)}} <span style="font-size: 18px">Appraisal Fee</span></h4>
+                    <h4><span style="font-size: 18px">Appraisal Fee</span></h4>
 
                     <p>This Month</p>
                   </div>
@@ -574,7 +574,7 @@
                 <!-- small box -->
                 <div class="small-box bg-info">
                   <div class="inner">
-                    <h4>{{number_format($processing)}} <span style="font-size: 18px">Processing Fee</span></h4>
+                    <h4><span style="font-size: 18px">Processing Fee</span></h4>
 
                     <p>This Month</p>
                   </div>
@@ -589,7 +589,7 @@
                 <!-- small box -->
                 <div class="small-box bg-primary">
                   <div class="inner">
-                    <h4>{{number_format($disburse)}} <span style="font-size: 18px">Loan Disbursements</span></h4>
+                    <h4><span style="font-size: 18px">Loan Disbursements</span></h4>
 
                     <p>This Month</p>
                   </div>
@@ -603,7 +603,7 @@
                 <!-- small box -->
                 <div class="small-box bg-gray">
                   <div class="inner">
-                    <h4>{{number_format($expenses)}} <span style="font-size: 18px">Expenses</span></h4>
+                    <h4><span style="font-size: 18px">Expenses</span></h4>
 
                     <p>This Month</p>
                   </div>
@@ -619,7 +619,7 @@
                 <!-- small box -->
                 <div class="small-box bg-gray">
                   <div class="inner">
-                    <h4>{{number_format($incomes)}} <span style="font-size: 18px">Incomes</span></h4>
+                    <h4><span style="font-size: 18px">Incomes</span></h4>
 
                     <p>This Month</p>
                   </div>
@@ -654,7 +654,7 @@
                   <!-- small box -->
                   <div class="small-box bg-primary">
                     <div class="inner">
-                              <h3>{{number_format($clients)}} <span style="font-size: 18px">New Clients</span></h3>
+                              <h3><span style="font-size: 18px">New Clients</span></h3>
 
                       <p>This Month</p>
                     </div>
@@ -667,7 +667,7 @@
                 <div class="col-3">
                   <div class="small-box bg-black">
                     <div class="inner">
-                              <h3>{{number_format($individualClients)}} <span style="font-size: 18px">Individual Accounts</span></h3>
+                              <h3><span style="font-size: 18px">Individual Accounts</span></h3>
 
                       <p>Cumulative</p>
                     </div>
@@ -680,7 +680,7 @@
                 <div class="col-3">
                   <div class="small-box bg-black">
                     <div class="inner">
-                              <h3>{{number_format($groupClients)}} <span style="font-size: 18px">Group Accounts</span></h3>
+                              <h3><span style="font-size: 18px">Group Accounts</span></h3>
 
                       <p>Cumulative</p>
                     </div>
@@ -693,7 +693,7 @@
                 <div class="col-3">
                   <div class="small-box bg-purple">
                     <div class="inner">
-                              <h3>{{number_format($groups)}} <span style="font-size: 18px">Loan Groups</span></h3>
+                              <h3><span style="font-size: 18px">Loan Groups</span></h3>
 
                       <p>Cumulative</p>
                     </div>
@@ -742,7 +742,7 @@
                           <!-- small box -->
                           <div class="small-box bg-white">
                             <div class="inner">
-                              <h3>{{number_format($sup_individual_loan_application)}} <span style="font-size: 18px">Loan Applications</span></h3>
+                              <h3><span style="font-size: 18px">Loan Applications</span></h3>
 
                               <p>This Month</p>
                             </div>
@@ -756,7 +756,7 @@
                           <!-- small box -->
                           <div class="small-box bg-info">
                             <div class="inner">
-                              <h3>{{number_format($sup_individual_loan_approval)}} <span style="font-size: 18px">Loans Approved</span></h3>
+                              <h3><span style="font-size: 18px">Loans Approved</span></h3>
 
                               <p>This Month</p>
                             </div>
@@ -772,7 +772,7 @@
                           <!-- small box -->
                           <div class="small-box bg-warning">
                             <div class="inner">
-                              <h3>{{number_format($sup_individual_loan_cancelled)}} <span style="font-size: 18px">Loans Cancelled</span></h3>
+                              <h3><span style="font-size: 18px">Loans Cancelled</span></h3>
 
                               <p>This Month</p>
                             </div>
@@ -787,7 +787,7 @@
                           <!-- small box -->
                           <div class="small-box bg-success">
                             <div class="inner">
-                              <h3>{{number_format($sup_individual_loan_running)}} <span style="font-size: 18px">Loans Running</span></h3>
+                              <h3><span style="font-size: 18px">Loans Running</span></h3>
 
                               <p>This Month</p>
                             </div>
@@ -806,7 +806,7 @@
                           <!-- small box -->
                           <div class="small-box bg-danger">
                             <div class="inner">
-                              <h3>{{number_format($sup_individual_loan_defaulted)}} <span style="font-size: 18px">Loans Defaulted</span></h3>
+                              <h3><span style="font-size: 18px">Loans Defaulted</span></h3>
 
                               <p>This Month</p>
                             </div>
@@ -842,7 +842,7 @@
                           <!-- small box -->
                           <div class="small-box bg-white">
                             <div class="inner">
-                              <h3>{{number_format($sup_group_loan_application)}} <span style="font-size: 18px">Loan Applications</span></h3>
+                              <h3><span style="font-size: 18px">Loan Applications</span></h3>
 
                               <p>This Month</p>
                             </div>
@@ -856,7 +856,7 @@
                           <!-- small box -->
                           <div class="small-box bg-info">
                             <div class="inner">
-                              <h3>{{number_format($sup_group_loan_approval)}} <span style="font-size: 18px">Loans Approved</span></h3>
+                              <h3> <span style="font-size: 18px">Loans Approved</span></h3>
 
                               <p>This Month</p>
                             </div>
@@ -872,7 +872,7 @@
                           <!-- small box -->
                           <div class="small-box bg-warning">
                             <div class="inner">
-                              <h3>{{number_format($sup_group_loan_cancelled)}} <span style="font-size: 18px">Loans Cancelled</span></h3>
+                              <h3><span style="font-size: 18px">Loans Cancelled</span></h3>
 
                               <p>This Month</p>
                             </div>
@@ -887,7 +887,7 @@
                           <!-- small box -->
                           <div class="small-box bg-success">
                             <div class="inner">
-                              <h3>{{number_format($sup_group_loan_running)}} <span style="font-size: 18px">Loans Running</span></h3>
+                              <h3><span style="font-size: 18px">Loans Running</span></h3>
 
                               <p>This Month</p>
                             </div>
@@ -905,7 +905,7 @@
                           <!-- small box -->
                           <div class="small-box bg-danger">
                             <div class="inner">
-                              <h3>{{number_format($sup_group_loan_defaulted)}} <span style="font-size: 18px">Loans Defaulted</span></h3>
+                              <h3><span style="font-size: 18px">Loans Defaulted</span></h3>
 
                               <p>This Month</p>
                             </div>
@@ -945,7 +945,7 @@
                 <!-- small box -->
                 <div class="small-box bg-info">
                   <div class="inner">
-                    <h4>{{number_format($application)}} <span style="font-size: 18px">Application Fee</span></h4>
+                    <h4><span style="font-size: 18px">Application Fee</span></h4>
 
                     <p>This Month</p>
                   </div>
@@ -959,7 +959,7 @@
                 <!-- small box -->
                 <div class="small-box bg-info">
                   <div class="inner">
-                    <h4>{{number_format($appraisal)}} <span style="font-size: 18px">Appraisal Fee</span></h4>
+                    <h4><span style="font-size: 18px">Appraisal Fee</span></h4>
 
                     <p>This Month</p>
                   </div>
@@ -975,7 +975,7 @@
                 <!-- small box -->
                 <div class="small-box bg-info">
                   <div class="inner">
-                    <h4>{{number_format($processing)}} <span style="font-size: 18px">Processing Fee</span></h4>
+                    <h4><span style="font-size: 18px">Processing Fee</span></h4>
 
                     <p>This Month</p>
                   </div>
@@ -993,7 +993,7 @@
                 <!-- small box -->
                 <div class="small-box bg-primary">
                   <div class="inner">
-                    <h4>{{number_format($disburse)}} <span style="font-size: 18px">Loan Disbursements</span></h4>
+                    <h4><span style="font-size: 18px">Loan Disbursements</span></h4>
 
                     <p>This Month</p>
                   </div>
@@ -1007,7 +1007,7 @@
                 <!-- small box -->
                 <div class="small-box bg-gray">
                   <div class="inner">
-                    <h4>{{number_format($expenses)}} <span style="font-size: 18px">Expenses</span></h4>
+                    <h4><span style="font-size: 18px">Expenses</span></h4>
 
                     <p>This Month</p>
                   </div>
@@ -1023,7 +1023,7 @@
                 <!-- small box -->
                 <div class="small-box bg-gray">
                   <div class="inner">
-                    <h4>{{number_format($incomes)}} <span style="font-size: 18px">Incomes</span></h4>
+                    <h4><span style="font-size: 18px">Incomes</span></h4>
 
                     <p>This Month</p>
                   </div>
