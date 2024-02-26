@@ -28,9 +28,13 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::post('/apply/loan/new', [App\Http\Controllers\LoansController::class, 'create_new_loan']);
 
-	Route::get('/apply/ind/loan/{id}', [App\Http\Controllers\LoansController::class, 'view_loan_details']);
+	Route::get('/apply/ind/loan/{id}', [App\Http\Controllers\LoansController::class, 'view_individual_loan_details']);
 
+	Route::post('/apply/ind/loan/{id}', [App\Http\Controllers\LoansController::class, 'update_loan_application']);
 
+	Route::post('/apply/admin/ind/loan/{id}', [App\Http\Controllers\LoansController::class, 'admin_update_loan_application']);
+
+	Route::get('/apply/grp/loan/{id}', [App\Http\Controllers\LoansController::class, 'view_group_loan_details']);
 
 
 
@@ -82,8 +86,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 
-	Route::get('/apply/settings/members/{id}', [App\Http\Controllers\ClientsController::class, 'ViewGroupMembers']);
-	Route::post('/apply/settings/members/{id}', [App\Http\Controllers\ClientsController::class, 'updateGroupMemberRole']);
+	Route::get('/apply/settings/group/members/{id}', [App\Http\Controllers\LoanGroupsController::class, 'view_loan_group_members']);
+	Route::post('/apply/settings/group/members/{id}', [App\Http\Controllers\LoanGroupsController::class, 'update_loan_group_member_role']);
 
 
 	Route::get('/apply/view/ind/processed', [App\Http\Controllers\LoansController::class, 'viewIndividualProcessedLoan'])->name('tellerSingleProcessedLoans');
@@ -178,7 +182,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/apply/settings/cashflow/',[App\Http\Controllers\TransactionCategoryController::class,'index']);
 	Route::post('/apply/settings/cashflow/',[App\Http\Controllers\TransactionCategoryController::class,'create']);
 
-	Route::get('/apply/grp', [App\Http\Controllers\LoansController::class, 'showGroupApplicationForm'])->name('OfficerViewGroupApplications');
+	Route::get('/apply/grp', [App\Http\Controllers\LoansController::class, 'view_group_loans_list']);
 	Route::post('/apply/grp',[App\Http\Controllers\LoansController::class, 'NewGroupApplication']);
 
 	Route::get('/apply/settings/users', [App\Http\Controllers\SystemUsersController::class, 'system_users']);

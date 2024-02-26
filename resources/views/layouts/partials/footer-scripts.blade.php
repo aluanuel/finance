@@ -239,7 +239,7 @@ $(document).ready(function(){
         if (x < max_fields) {
             x++;
             counter++;
-            $(wrapper).append('<div class="row form-group"><div class="input-group col-6"><div class="input-group-prepend"><span class="input-group-text">'+ counter+'</span></div><input type="text" class="form-control" name="security_name[]" placeholder="Security name" autocomplete="off"></div><div class="col-3"><input type="text" class="form-control" name="security_value[]" placeholder="Estimated security value" autocomplete="off"></div><div class="input-group col-3"><div class="custom-file"><input type="file" name="security_attachment[]" class="form-control custom-file-input" id="exampleInputFile"><label class="custom-file-label" for="exampleInputFile">Upload security</label></div></div></div>'); //add input box
+            $(wrapper).append('<div class="row form-group"><div class="input-group col-4"><div class="input-group-prepend"><span class="input-group-text">'+ counter+'</span></div><input type="text" class="form-control" name="security_name[]" placeholder="Security name" autocomplete="off"></div><div class="col-4"><input type="text" class="form-control" name="security_value[]" placeholder="Security value" autocomplete="off"></div><div class="input-group col-4"><div class="custom-file"><input type="file" name="security_attachment[]" class="form-control custom-file-input" id="exampleInputFile"><label class="custom-file-label" for="exampleInputFile">Upload security</label></div></div></div>'); //add input box
         } else {
             alert('You Reached the limits')
         }

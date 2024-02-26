@@ -1,7 +1,7 @@
  <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/home" class="brand-link">
-      <img src="{{ asset('theme/dist/img/logo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <img src="{{ asset('theme/dist/img/start.png') }}" alt="Company Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">{{ config('app.name', 'Laravel') }}</span>
     </a>
 
@@ -10,7 +10,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{{ asset('storage/photos/'.Auth::user()->photo)}}" class="img-circle elevation-2" alt="User Image">
+          <img src="{{ asset('theme/dist/img/avatar.png')}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="/apply/user/{{Auth::user()->id}}" class="d-block">{{ Auth::user()->name }}</a>
@@ -127,7 +127,7 @@
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a href="/apply/grp/list" class="nav-link">
+                      <a href="/apply/settings/loan/groups" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Loan Groups
                         </p>
@@ -262,7 +262,7 @@
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a href="/apply/grp/list" class="nav-link">
+                      <a href="/apply/settings/loan/groups" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Loan Groups
                         </p>

@@ -278,7 +278,7 @@
                       <!-- small box -->
                       <div class="small-box bg-white">
                         <div class="inner">
-                          <h3>{{number_format($group_loan_application)}} <span style="font-size: 18px">Loan Applications</span></h3>
+                          <h3><span style="font-size: 18px">Loan Applications</span></h3>
 
                           <p>This Month</p>
                         </div>
@@ -292,7 +292,7 @@
                       <!-- small box -->
                       <div class="small-box bg-info">
                         <div class="inner">
-                          <h3>{{number_format($group_loan_approval)}} <span style="font-size: 18px">Loans Approved</span></h3>
+                          <h3> <span style="font-size: 18px">Loans Approved</span></h3>
 
                           <p>This Month</p>
                         </div>
@@ -308,7 +308,7 @@
                       <!-- small box -->
                       <div class="small-box bg-warning">
                         <div class="inner">
-                          <h3>{{number_format($group_loan_cancelled)}} <span style="font-size: 18px">Loans Cancelled</span></h3>
+                          <h3><span style="font-size: 18px">Loans Cancelled</span></h3>
 
                           <p>This Month</p>
                         </div>
@@ -323,7 +323,7 @@
                       <!-- small box -->
                       <div class="small-box bg-success">
                         <div class="inner">
-                          <h3>{{number_format($group_loan_running)}} <span style="font-size: 18px">Loans Running</span></h3>
+                          <h3><span style="font-size: 18px">Loans Running</span></h3>
 
                           <p>This Month</p>
                         </div>
@@ -341,7 +341,7 @@
                       <!-- small box -->
                       <div class="small-box bg-gray">
                         <div class="inner">
-                          <h3>{{number_format($group_loan_payout)}} <span style="font-size: 18px">Loan Payouts</span></h3>
+                          <h3><span style="font-size: 18px">Loan Payouts</span></h3>
 
                           <p>This Month</p>
                         </div>
@@ -355,7 +355,7 @@
                       <!-- small box -->
                       <div class="small-box bg-gray">
                         <div class="inner">
-                          <h3>{{number_format($group_loan_outstanding)}} <span style="font-size: 18px">Loan Outstandings</span></h3>
+                          <h3> <span style="font-size: 18px">Loan Outstandings</span></h3>
 
                           <p>Cumulative</p>
                         </div>
@@ -371,7 +371,7 @@
                       <!-- small box -->
                       <div class="small-box bg-danger">
                         <div class="inner">
-                          <h3>{{number_format($group_loan_defaulted)}} <span style="font-size: 18px">Loans Defaulted</span></h3>
+                          <h3><span style="font-size: 18px">Loans Defaulted</span></h3>
 
                           <p>This Month</p>
                         </div>
@@ -456,7 +456,7 @@
                       <!-- small box -->
                       <div class="small-box bg-gray">
                         <div class="inner">
-                          <h3>{{number_format($sup_group_loan_payout)}} <span style="font-size: 18px">Loan Payouts</span></h3>
+                          <h3><span style="font-size: 18px">Loan Payouts</span></h3>
 
                           <p>This Month</p>
                         </div>
@@ -470,7 +470,7 @@
                       <!-- small box -->
                       <div class="small-box bg-gray">
                         <div class="inner">
-                          <h3>{{number_format($sup_group_loan_outstanding)}} <span style="font-size: 18px">Loan Outstandings</span></h3>
+                          <h3><span style="font-size: 18px">Loan Outstandings</span></h3>
 
                           <p>Cumulative</p>
                         </div>
