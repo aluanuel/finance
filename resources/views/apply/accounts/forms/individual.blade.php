@@ -545,9 +545,9 @@
                               <div class="col-3">
                                 <label>Passport Photo</label>
                                 <div class="custom-file">
-                                    <input type="file" name="photo" class="form-control custom-file-input" id="exampleInputFile">
-                                    <label class="custom-file-label" for="exampleInputFile">Upload</label>
-                                  </div>
+                                  <input type="file" name="photo" class="form-control custom-file-input" id="exampleInputFile">
+                                  <label class="custom-file-label" for="exampleInputFile">Upload</label>
+                                </div>
                               </div>
                               <div class="col-3">
                                 <label>Account Opening Fee </label>

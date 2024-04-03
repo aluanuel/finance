@@ -31,10 +31,8 @@
               <div class="card">
                 <div class="card-header">
                   <h3 class="card-title">Showing Client Accounts</h3>
-                  <div class="card-tools" id="admin_only">
-                    <a href="/generate/report/accounts" title="Download Report">
-                      <i class="fa fa-download" title="Download Report"></i>
-                    </a>
+                  <div class="card-tools">
+                    <a class="btn btn-outline-primary" href="/apply/accounts/new">NEW ACCOUNT</a>
                   </div>
                 </div>
                 <div class="card-body">

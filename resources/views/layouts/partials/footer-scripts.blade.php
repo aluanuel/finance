@@ -239,7 +239,7 @@ $(document).ready(function(){
         if (x < max_fields) {
             x++;
             counter++;
-            $(wrapper).append('<div class="row form-group"><div class="input-group col-4"><div class="input-group-prepend"><span class="input-group-text">'+ counter+'</span></div><input type="text" class="form-control" name="security_name[]" placeholder="Security name" autocomplete="off"></div><div class="col-4"><input type="text" class="form-control" name="security_value[]" placeholder="Security value" autocomplete="off"></div><div class="input-group col-4"><div class="custom-file"><input type="file" name="security_attachment[]" class="form-control custom-file-input" id="exampleInputFile"><label class="custom-file-label" for="exampleInputFile">Upload security</label></div></div></div>'); //add input box
+            $(wrapper).append('<div class="row form-group"><div class="input-group col-4"><div class="input-group-prepend"><span class="input-group-text">'+ counter+'</span></div><input type="text" class="form-control" name="document_name[]" placeholder="Document name" autocomplete="off"></div><div class="col-4"><input type="text" class="form-control" name="document_description[]" placeholder="Description" autocomplete="off"></div><div class="input-group col-4"><div class="custom-file"><input type="file" name="document_attachment[]" class="form-control custom-file-input" id="exampleInputFile"><label class="custom-file-label" for="exampleInputFile">Upload</label></div></div></div>'); //add input box
         } else {
             alert('You Reached the limits')
         }
@@ -268,7 +268,19 @@ $(document).ready(function(){
         }
     });
 
+    $('#loan_selected').change(function(){
 
+        var loan_details = $('#loan_selected option:selected').attr('label');
+        const loan_items = loan_details.split(',',2);
+
+        $('#loan_balance').val(loan_items[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+
+        $('#instalment_amount').val(loan_items[1].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+
+        $('#loan_balance').show();
+        $('#instalment_amount').show();
+
+    })
 
     $('#id_loan').change(function(){
 

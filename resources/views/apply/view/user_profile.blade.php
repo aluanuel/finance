@@ -34,7 +34,7 @@
                     <div class="card-body box-profile">
                       <div class="text-center">
                         <img class="profile-user-img img-fluid img-circle"
-                             src="{{ asset('storage/photos/'.$user->photo)}}"
+                             src="{{ asset('/img/'.$user->photo)}}"
                              alt="User profile picture">
                       </div>
 
@@ -100,7 +100,7 @@
                               <div class="row form-group">
                                 <div class="col-10 input-group">
                                   <div class="custom-file">
-                                    <input type="file" name="photo" class="form-control custom-file-input" id="exampleInputFile" required="required">
+                                    <input type="file" name="photo" class="form-control custom-file-input" id="exampleInputFile" required="required" accept="image/png, image/jpeg">
                                     <label class="custom-file-label" for="exampleInputFile">Upload Photo</label>
                                   </div>
                                 </div>
