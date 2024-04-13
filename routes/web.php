@@ -164,6 +164,13 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/apply/report/cash_outflow',[App\Http\Controllers\ReportController::class,'report_cash_outflow']);
 
+	/*=================== Reports accessible by loan officers ==============*/
+
+	Route::get('/apply/report/officer/loan_disbursements/{id}',[App\Http\Controllers\ReportController::class,'report_officer_loan_disbursements']);
+
+	Route::get('/apply/report/officer/loan_recovery/{id}',[App\Http\Controllers\ReportController::class,'report_officer_loan_recovery']);
+
+	/*=================== Reports accessible by loan officers ==============*/
 
 
 

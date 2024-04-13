@@ -33,13 +33,13 @@
               <div class="card-header">
                 <h3 class="card-title">{{$heading}}</h3>
                 <div class="card-tools">
-                  <!-- <a href="/generate/report/cashbook" title="Download Report">
+                  <a href="/generate/report/cashbook" title="Download Report">
                     <i class="fa fa-download"></i>
-                  </a> -->
+                  </a>
 
-                  <button type="button" class="btn btn-primary btn-sm" title="Print form" onclick="printContent('printArea')">
+                  <!-- <button type="button" class="btn btn-primary btn-sm" title="Print form" onclick="printContent('printArea')">
                 <i class="fa fa-print"></i>
-               </button>
+               </button> -->
                 </div>
               </div>
               <div class="card-body">

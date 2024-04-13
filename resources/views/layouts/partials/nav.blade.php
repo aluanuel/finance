@@ -80,35 +80,32 @@
               </ul>
             </li>
             <li class="nav-item">
-                  <a href="#" class="nav-link">
-                    <i class="fas fa-list nav-icon"></i>
-                    <p>Reports
-                      <i class="fas fa-angle-left right"></i>
-                    </p>
+              <a href="#" class="nav-link">
+                <i class="fas fa-list nav-icon"></i>
+                  <p>Reports
+                    <i class="fas fa-angle-left right"></i>
+                  </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/apply/report/officer/loan_disbursements/{{Auth::user()->id}}" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Loan Disbursements</p>
                   </a>
-                  <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                      <a href="/apply/report/loan/payout/" class="nav-link">
-                        <i class="fas fa-angle-right nav-icon"></i>
-                        <p>Loan Payouts
-                        </p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="/apply/report/loan/outstanding/" class="nav-link">
-                        <i class="fas fa-angle-right nav-icon"></i>
-                        <p>Loan Outstandings
-                        </p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="/apply/report/loan/overdue/" class="nav-link">
-                        <i class="fas fa-angle-right nav-icon"></i>
-                        <p>Loan Overdue
-                        </p>
-                      </a>
-                    </li>
-                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/report/officer/loan_recovery/{{Auth::user()->id}}" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Loan Recovery</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/report/officer/defaulted_loans/{{Auth::user()->id}}" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Defaulted Loans</p>
+                  </a>
+                </li>
+              </ul>
             </li>
           @elseif(Auth::user()->usertype == 'Loan Officer' && Auth::user()->role == 'Supervisor')
             <li class="nav-item">
@@ -154,62 +151,34 @@
                 @endif
               </ul>
             </li>
-            
             <li class="nav-item">
-                  <a href="#" class="nav-link">
-                    <i class="fas fa-list nav-icon"></i>
-                    <p>Reports
-                      <i class="fas fa-angle-left right"></i>
-                    </p>
+              <a href="#" class="nav-link">
+                <i class="fas fa-list nav-icon"></i>
+                  <p>Reports
+                    <i class="fas fa-angle-left right"></i>
+                  </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/apply/report/officer/loan_disbursements/{{Auth::user()->id}}" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Loan Disbursements</p>
                   </a>
-                  <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                      <a href="/apply/report/loan/payout/" class="nav-link">
-                        <i class="fas fa-angle-right nav-icon"></i>
-                        <p>Loan Payouts
-                        </p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="/apply/report/loan/outstanding/" class="nav-link">
-                        <i class="fas fa-angle-right nav-icon"></i>
-                        <p>Loan Outstandings
-                        </p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="/apply/report/loan/overdue/" class="nav-link">
-                        <i class="fas fa-angle-right nav-icon"></i>
-                        <p>Loan Overdue
-                        </p>
-                      </a>
-                    </li>
-                    <!-- <li class="nav-item">
-                      <a href="/apply/report/loan/recovery/" class="nav-link">
-                        <i class="fas fa-angle-right nav-icon"></i>
-                        <p>Loan Recovery
-                        </p>
-                      </a>
-                    </li> -->
-                  </ul>
                 </li>
-            <li class="nav-item">
-                  <a href="#" class="nav-link">
-                    <i class="fas fa-cog nav-icon"></i>
-                    <p>
-                     Settings
-                      <i class="fas fa-angle-left right"></i>
-                    </p>
+                <li class="nav-item">
+                  <a href="/apply/report/officer/loan_recovery/{{Auth::user()->id}}" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Loan Recovery</p>
                   </a>
-                  <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="/apply/settings/groups" class="nav-link">
-                          <i class="fas fa-angle-right nav-icon"></i>
-                          <p>Loan Groups</p>
-                        </a>
-                    </li>
-                  </ul>
                 </li>
+                <li class="nav-item">
+                  <a href="/apply/report/officer/defaulted_loans/{{Auth::user()->id}}" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Defaulted Loans</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
           @elseif(Auth::user()->usertype == 'Teller')
             <li class="nav-item">
               <a href="#" class="nav-link">
