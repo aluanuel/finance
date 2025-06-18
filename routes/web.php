@@ -42,7 +42,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('apply/loan/repayment',[App\Http\Controllers\TransactionsController::class,'view_loan_repayments']);
 
-	Route::post('apply/loan/repayment',[App\Http\Controllers\TransactionsController::class,'create_loan_repayment_entry']);
+	Route::post('apply/loan/repayment/{id}',[App\Http\Controllers\TransactionsController::class,'create_loan_repayment_entry']);
 
 
 
@@ -182,15 +182,21 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/apply/analysis/loan/{id}',[App\Http\Controllers\ReportController::class,'LoanPerformance']);
 
 	/*******************************settings************************************/
-	Route::get('/apply/settings/loan/groups',[App\Http\Controllers\LoanGroupsController::class,'index']);
-	Route::post('/apply/settings/loan/groups',[App\Http\Controllers\LoanGroupsController::class,'create_new_loan_group']);
+	
 	Route::get('/apply/grp/list',[App\Http\Controllers\ClientGroupController::class,'view']);
 	Route::post('/apply/grp/list',[App\Http\Controllers\ClientGroupController::class,'newMemberRole']);
 	Route::get('/apply/settings/cashflow/',[App\Http\Controllers\TransactionCategoryController::class,'index']);
 	Route::post('/apply/settings/cashflow/',[App\Http\Controllers\TransactionCategoryController::class,'create']);
 
 	Route::get('/apply/grp', [App\Http\Controllers\LoansController::class, 'view_group_loans_list']);
-	Route::post('/apply/grp',[App\Http\Controllers\LoansController::class, 'NewGroupApplication']);
+
+	Route::get('/apply/grp/{id}',[App\Http\Controllers\LoansController::class, 'index']);
+
+	Route::post('/apply/grp/{id}',[App\Http\Controllers\LoansController::class, 'new_group_loan_application']);
+
+	Route::post('/apply/grp/loan/assess/{id}',[App\Http\Controllers\LoansController::class, 'loan_assessment']);
+
+	Route::post('/apply/grp/loan/disburse/{id}',[App\Http\Controllers\LoansController::class, 'loan_disbursement']);
 
 	Route::get('/apply/settings/users', [App\Http\Controllers\SystemUsersController::class, 'system_users']);
 	Route::post('/apply/settings/user', [App\Http\Controllers\SystemUsersController::class, 'create_system_user']);
@@ -205,6 +211,9 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/apply/settings/rates/',[App\Http\Controllers\RatesController::class, 'index']);
 	Route::post('/apply/settings/rates/',[App\Http\Controllers\RatesController::class, 'create_new_rate']);
+
+	Route::get('/apply/settings/loan/groups',[App\Http\Controllers\LoanGroupsController::class,'index']);
+	Route::post('/apply/settings/loan/groups',[App\Http\Controllers\LoanGroupsController::class,'create_new_loan_group']);
 	
 	Route::get('/apply/grp/assess/{id}',[App\Http\Controllers\GroupLoanAssessmentController::class, 'index']);
 	Route::post('/apply/grp/assess/{id}',[App\Http\Controllers\GroupLoanAssessmentController::class, 'fillAssessment']);
@@ -229,7 +238,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/apply/accounts/applications/',[App\Http\Controllers\ClientsController::class,'view_inactive_new_client_accounts']);
 
-	Route::post('/apply/accounts/applications/{id}',[App\Http\Controllers\ClientsController::class,'activate_new_client_accounts']);
+	Route::post('/apply/accounts/applications/{id}',[App\Http\Controllers\ClientsController::class,'activate_new_client_account']);
 
 	Route::get('/apply/admin/accounts',[App\Http\Controllers\ClientsController::class,'view_client_accounts']);
 	Route::get('/apply/admin/ind/accounts',[App\Http\Controllers\ClientsController::class,'adminViewIndividualAccounts']);

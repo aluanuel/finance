@@ -96,8 +96,14 @@
                                 <input type="text" name="occupation" autocomplete="off" class="form-control" placeholder="Your Occupation/Job" required="required">
                               </div>
                               <div class="col-3">
-                                <label>Employer</label>
-                                <input type="text" name="employer" autocomplete="off" class="form-control" placeholder="Employer" required="required">
+                                <label>Employment Type</label>
+                                <div class="form-group">
+                                  <select class="form-control select2bs4" name="employment_type" data-placeholder="Select" style="width: 100%;" required="required">
+                                    <option></option>   
+                                    <option>Self Employed</option>
+                                    <option>Employed</option>
+                                  </select>
+                                </div>
                               </div>
                             </div>
                             <div class="row form-group">
@@ -547,14 +553,14 @@
                               <div class="col-3">
                                 <label>Passport Photo</label>
                                 <div class="custom-file">
-                                    <input type="file" name="photo" class="form-control custom-file-input" id="exampleInputFile">
+                                    <input type="file" name="photo_client" class="form-control custom-file-input" id="exampleInputFile">
                                     <label class="custom-file-label" for="exampleInputFile">Upload ID</label>
                                   </div>
                               </div>
                               <div class="col-3">
                                 <label>Loan Group</label>
                                 <div class="form-group">
-                                  <select class="form-control select2bs4" name="id_group" data-placeholder="Select" style="width: 100%;" required="required">
+                                  <select class="form-control select2bs4" name="id_loan_group" data-placeholder="Select" style="width: 100%;" required="required">
                                     <option></option>
                                     @foreach($groups as $grp)
                                       <option value="{{ $grp->id }}">{{ $grp->group_name }}</option>
@@ -563,14 +569,14 @@
                                 </div>
                               </div>
                               <div class="col-3">
-                                <label>Account Opening Fee </label>
-                                <input type="text" name="account_opening_fee" autocomplete="off" class="form-control" value="{{ number_format($fees->amount)}}" readonly>
+                                <label>Registration Fee</label>
+                                <input type="text" name="registration_fee" autocomplete="off" class="form-control" value="{{ number_format($fees->amount)}}" readonly>
                               </div>
                             </div>
                             <div class="row form-group d-flex justify-content-center">
                               <button class="btn btn-primary ml-2">Submit</button>
                             </div>
-                          </form>
+                        </form>
                       </div>
                   </div>
               </div>
