@@ -1,21 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Clients;
-
-use App\Models\Rates;
-
-use App\Models\Loans;
-
-use App\Models\Transactions;
-
-use DB;
-
-use Auth;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Models\Clients;
+use App\Models\Rates;
+use App\Models\Loans;
+use App\Models\Transactions;
+use App\Models\LoanSchedule;
+use DB;
+use Auth;
 
 class LoansController extends Controller
 {
@@ -37,16 +31,33 @@ class LoansController extends Controller
                 ->join('clients','loans.id_client','clients.id')
                 ->join('loan_groups','clients.id_loan_group','loan_groups.id')
                 ->select('loans.*','clients.name','clients.telephone','loan_groups.group_name','loan_groups.group_code')
+                ->where('loans.loan_status','!=','Completed')
+                ->orderBy('date_loan_application','desc')
+                ->limit(250)
                 ->get();
 
             return view('apply.grp.group_loan_list',compact('loan'));
     }
 
-    public function new_group_loan_application(Request $request){
+    public function view_individual_loans_list(){
 
-        $check = Loans::where('id',$request->id)->latest()->first();
+        $loan = DB::table('loans')
+                ->join('clients','loans.id_client','clients.id')
+                ->select('loans.*','clients.name','clients.telephone')
+                ->where('loans.loan_status','!=','Completed')
+                ->where('clients.id_loan_group',null)
+                ->orderBy('date_loan_application','desc')
+                ->limit(250)
+                ->get();
+            return view('apply.ind.ind_loan_list',compact('loan'));
 
-        if(is_null($check)){
+    }
+
+    public function new_loan_application(Request $request){
+
+        $check = Loans::where('id_client',$request->id)->latest()->first();
+
+        if(is_null($check) || $check->loan_status == "Completed"){
 
             $loan_request = $request->loan_request_amount;
 
@@ -63,6 +74,8 @@ class LoansController extends Controller
             $new_loan->loan_period = $request->loan_period;
 
             $new_loan->interest_rate = $request->interest_rate;
+
+            $new_loan->loan_processing_rate = $request->loan_processing_rate;
 
             $new_loan->date_loan_application = $request->date_loan_application;
 
@@ -116,9 +129,34 @@ class LoansController extends Controller
 
         $loan_request->date_loan_approved = $request->date_loan_approved;
 
-        $loan_request->save();
+        if($loan_request->save()){
 
-        return redirect()->back()->with('success','Success');
+            $loan_period = $request->loan_period;
+
+            $schedule = [];
+
+            $days = 7;
+
+            for($i = 1; $i <= $loan_period; $i++){
+
+                $schedule[] = [
+
+                    'instalment_date' => $this->calculate_instalment_date($days),
+
+                    'instalment_amount' => ($loan_request->total_loan)/$loan_period,
+
+                    'id_loan' => $request->id
+                ];
+
+                $days += 7;
+            }
+
+            LoanSchedule::insert($schedule);
+
+            return redirect()->back()->with('success','Success');
+        }
+
+        return redirect()->back()->with('error','Error');
     }
 
     public function loan_disbursement(Request $request){
@@ -137,7 +175,9 @@ class LoansController extends Controller
 
         $record = new Transactions();
 
-        $record->transaction_detail = "Loan Processing Fee";
+        $record->transaction_date = date('Y-m-d');
+
+        $record->transaction_detail = "Loan Processing Fee - ".$approved->loan_number;
 
         $record->transaction_type = "Income";
 
@@ -153,11 +193,89 @@ class LoansController extends Controller
 
     }
 
+
+    public function restore_previous_loan(){
+
+        $groups = DB::table('loan_groups')->get();
+
+        return view('apply.restore.loan.index',compact('groups'));
+
+    }
+
+    public function record_previous_loan(Request $request){
+
+        $client = new Clients();
+
+        $account_number = (\App::call('\App\Http\Controllers\ClientsController@generate_account_number'));
+
+        $client->name = $request->name;
+
+        $client->gender = $request->gender;
+
+        $client->dob = $request->dob;
+
+        $client->telephone = $request->telephone;
+
+        $client->permanent_address = $request->permanent_address;
+
+        $client->account_number = $account_number;
+
+        if(is_int($request->id_loan_group)){
+
+            $client->id_loan_group = $request->id_loan_group;
+
+        }else{
+
+            $client->id_loan_group = null;
+
+        }
+        
+        $client->save();
+
+
+        $interest_rate = $request->interest_rate;
+
+        $loan_disbursed = $request->loan_approved;
+
+        $total_loan = ((($interest_rate/100)*$loan_disbursed)+$loan_disbursed);
+
+        $loan_recovered = $request->loan_recovered;
+
+        $loan = new Loans();
+
+        $loan->id_client = $client->id;
+
+        $loan->loan_request_amount = $loan_disbursed;
+
+        $loan->loan_approved = $loan_disbursed;
+
+        $loan->interest_rate = $interest_rate;
+
+        $loan->total_loan = $total_loan;
+
+        $loan->loan_period = $request->loan_period;
+
+        $loan->loan_recovered = $loan_recovered;
+
+        $loan->loan_outstanding = ($total_loan - $loan_recovered);
+
+        $loan->date_loan_application  = $request->date_loan_disbursed;
+
+        $loan->date_loan_disbursed = $request->date_loan_disbursed;
+
+        $loan->loan_status = $request->loan_status;
+
+        $loan->save();
+
+        return redirect()->back()->with('success','Success');
+
+    }
+
     private function generate_loan_number(){
 
         $number = Loans::latest()->first();
 
-        if(is_null($number)){
+        if(empty($number)){
 
             $x = date('Y');
 
@@ -165,10 +283,13 @@ class LoansController extends Controller
 
             return $loan_number;
 
-        }
+        }else{
+
             $loan_number = $number->loan_number;
 
-            return $loan_number++;
+            return $loan_number += 1;
+
+        }
 
     }
 
@@ -180,5 +301,13 @@ class LoansController extends Controller
 
         return $Carbon->addDays($days);
 
+    }
+
+    private function calculate_instalment_date($days){
+
+        $dates = Carbon::now();
+
+        return $dates->addDays($days);
+        
     }
 }

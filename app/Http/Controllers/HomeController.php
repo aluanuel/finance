@@ -29,46 +29,15 @@ class HomeController extends Controller
         $start_date = Carbon::now()->startOfMonth()->toDateTimeString();
         $end_date = Carbon::now()->toDateTimeString();
 
-        return view('home');
+        $disbursement = DB::table('loans')
+                        ->where('loans.loan_status','Running')
+                        ->sum('loan_approved');
+
+        $recovery = DB::table('transactions')
+                        ->sum('amount');
+
+        return view('home',compact('disbursement','recovery'));
     }
 
-    public function countTasks($usertype,$activity,$result = null){
-
-        if($usertype == 'Loan Officer'){
-
-            if($activity == 'loan_application'){
-
-                $result = DB::table('loan_applications')->where('proposed_amount',null)->count('id');
-
-            }elseif($activity == 'loan_assessments'){
-
-                $result = DB::table('loan_applications')->where('application_status',1)
-                            ->where('assessment_status',0)->count('id');
-
-            }
-
-            return $result;
-
-        }elseif ($usertype == 'Teller') {
-            
-            $result = DB::table('loan_applications')->where('application_status',0)->count('id');
-
-            return $result;
-
-        }elseif ($usertype == 'Manager') {
-            
-            if($activity == 'loan_application'){
-
-                $result = DB::table('loan_applications')->where('proposed_amount',null)->count('id');
-
-            }elseif($activity == 'loan_assessments'){
-
-                $result = DB::table('loan_applications')->where('application_status',1)
-                            ->where('approval_status',0)->count('id');
-
-            }
-
-            return $result;
-        }
-    }
+    
 }

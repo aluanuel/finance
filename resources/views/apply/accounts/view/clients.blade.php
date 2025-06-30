@@ -98,9 +98,6 @@
                                                     <li class="list-group-item">
                                                       <b>Telephone</b> <a class="float-right">{{ $ac->telephone }} {{ $ac->alt_telephone }}</a>
                                                     </li>
-                                                    <li class="list-group-item">
-                                                      <b>Loan Group</b> <a class="float-right">{{ $ac->group_name }}</a>
-                                                    </li>
                                                   </ul>
                                                 </div>
                                           </div> 
@@ -129,6 +126,7 @@
                                               <input type="date" name="date_loan_application" class="form-control" placeholder="Date" required>
                                             </div>
                                             <!-- col-3 -->
+                                            <input type="hidden" name="loan_processing_rate" value="{{ $processing->rate }}">
                                           </div>
                                           <!-- row -->
                                           <div class="row form-group">

@@ -12,14 +12,12 @@ class TransactionsController extends Controller
 {
     public function index(){
 
-        $transaction = Transactions::all();
+        $transaction = Transactions::orderBy('created_at','desc')->limit(100)->get();
 
         return view('apply.transactions.teller.index',compact('transaction'));
     }
 
     public function view_loan_repayments(){
-
-
 
         $loans = DB::table('loans')
                 ->join('clients','loans.id_client','clients.id')

@@ -20,7 +20,7 @@ class CreateLoansTable extends Migration
             $table->double('loan_request_amount');
             $table->integer('loan_period');
             $table->double('interest_rate');
-            $table->double('loan_processing_rate')->default(15);
+            $table->double('loan_processing_rate');
             $table->double('loan_approved')->nullable();
             $table->double('total_loan')->nullable();
             $table->date('date_loan_application');
@@ -36,8 +36,6 @@ class CreateLoansTable extends Migration
             $table->string('loan_status')->default('Pending Assessment');
             $table->double('loan_recovered')->default(0);
             $table->double('loan_outstanding')->default(0);
-            $table->date('loan_start_date')->nullable();
-            $table->date('loan_end_date')->nullable();
             $table->timestamps();
         });
     }

@@ -24,7 +24,7 @@ class ClientsController extends Controller
     public function view_client_accounts(){
 
         $accounts = DB::table('clients')
-                ->join('loan_groups','clients.id_loan_group','loan_groups.id')
+                ->leftJoin('loan_groups','clients.id_loan_group','loan_groups.id')
                 ->select('clients.*','loan_groups.group_name','loan_groups.group_code')
                 ->limit(100)
                 ->get();
@@ -33,11 +33,17 @@ class ClientsController extends Controller
                     ->where('rate_type','Interest on Loan Borrowing')
                     ->latest()
                     ->first();
+
+        $processing = DB::table('rates')
+                    ->where('rate_type','Loan Processing')
+                    ->latest()
+                    ->first();
+
         $groups = DB::table('loan_groups')->get();
 
         $fees = DB::table('fees')->first();
 
-        return view('apply.accounts.view.clients',compact('accounts','interest','groups','fees'));
+        return view('apply.accounts.view.clients',compact('accounts','interest','groups','fees','processing'));
     }
 
     public function create_client_account(Request $request){
@@ -92,7 +98,9 @@ class ClientsController extends Controller
 
             $record = new Transactions();
 
-            $record->transaction_detail = "Registration Fee";
+            $record->transaction_date = date('Y-m-d');
+
+            $record->transaction_detail = "Registration Fee - ".$request->name;
 
             $record->transaction_type = "Income";
 
@@ -112,9 +120,57 @@ class ClientsController extends Controller
 
     public function view_client_details(Request $request){
 
-        $client = Clients::where('id',$request->id)->first();
+        $client = DB::table('clients')
+                ->leftJoin('loan_groups','clients.id_loan_group','loan_groups.id')
+                ->select('clients.*','loan_groups.group_name','loan_groups.group_code')
+                ->where('clients.id',$request->id)
+                ->first();
+                
+        $last_loan = DB::table('loans')
+                    ->where('id_client',$request->id)->latest()->first();
 
-        return view('apply.accounts.view.client_profile',compact('client'));
+        if(is_null($last_loan)){
+
+            $last_loan_recovery = [];
+
+            $schedule = [];
+
+        }else{
+
+            $last_loan_recovery = DB::table('transactions')
+                            ->where('id_loan',$last_loan->id)
+                            ->where('transaction_detail','like','Loan Repayment%')->get();
+            $schedule = DB::table('loan_schedules')->where('id_loan',$last_loan->id)->get();
+        }
+
+        $loans = DB::table('loans')->where('id_client',$request->id)->get();
+
+        $groups = DB::table('loan_groups')->get();
+
+        return view('apply.accounts.view.client_profile',compact('client','last_loan','last_loan_recovery','loans','groups','schedule'));
+    }
+
+    public function update_client_account_details(Request $request){
+
+        $info = Clients::where('id',$request->id)->first();
+
+        $info->dob = $request->dob;
+
+        $info->telephone = $request->telephone;
+
+        $info->alt_telephone = $request->alt_telephone;
+
+        $info->id_number = $request->id_number;
+
+        $info->permanent_address = $request->permanent_address;
+
+        if($info->save()){
+
+            return redirect()->back()->with('success','Success');
+        }
+
+        return redirect()->back()->with('error','Update failed');
+
     }
 
     public function view_inactive_new_client_accounts(){
@@ -139,7 +195,9 @@ class ClientsController extends Controller
 
             $record = new Transactions();
 
-            $record->transaction_detail = "Registration Fee";
+            $record->transaction_date = date('Y-m-d');
+
+            $record->transaction_detail = "Registration Fee - ".$client->account_number;
 
             $record->transaction_type = "Income";
 
@@ -158,7 +216,7 @@ class ClientsController extends Controller
         return redirect()->back()->with('error','Password mismatch');
     }
 
-    private function generate_account_number(){
+    public function generate_account_number(){
 
         $account = Clients::latest()->first();
 

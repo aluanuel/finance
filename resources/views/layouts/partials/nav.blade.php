@@ -61,25 +61,61 @@
             <li class="nav-item">
               <a href="/apply/ind/" class="nav-link">
                 <i class="fas fa-angle-right nav-icon"></i>
-                <p>Individual Loans</p>
+                <p>Individual loans</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="/apply/grp" class="nav-link">
                 <i class="fas fa-angle-right nav-icon"></i>
-                <p>Group Loans</p>
+                <p>Group loans</p>
               </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a href="/apply/loan/repayment" class="nav-link">
                 <i class="fas fa-angle-right nav-icon"></i>
                 <p>Loan Repayment</p>
               </a>
-            </li>
+            </li> -->
             <li class="nav-item">
               <a href="/apply/teller/transaction/" class="nav-link">
                 <i class="fas fa-angle-right nav-icon"></i>
                 <p>Transactions</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-circle"></i>
+                <p>
+                  Reports
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/apply/report/disbursements/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Loan disbursement</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/report/loan-recovery/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Loan recovery</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/report/loans-fully-settled/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Loans fully settled</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item">
+              <a href="/apply/restore/previous/loan/" class="nav-link">
+                <i class="fas fa-angle-right nav-icon"></i>
+                <p>Restore previous loan</p>
               </a>
             </li>
             <li class="nav-item">
@@ -119,13 +155,13 @@
                 <li class="nav-item">
                   <a href="/apply/settings/loan/groups" class="nav-link">
                     <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Loan Groups</p>
+                    <p>Loan groups</p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="/apply/settings/users" class="nav-link">
                     <i class="fas fa-angle-right nav-icon"></i>
-                    <p>System Users</p>
+                    <p>System users</p>
                   </a>
                 </li>
               </ul>

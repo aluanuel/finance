@@ -44,7 +44,7 @@
                     <th>Group_name</th>
                     <th>Loan_request</th>
                     <th>Loan_approved</th>
-                    <th>loan_disbursed</th>
+                    <th>total_loan</th>
                     <th>loan_recovered</th>
                     <th>loan_outstanding</th>
                     <th>date_loan_recovery</th>
@@ -348,12 +348,12 @@
                           </div>
                           <!-- modal -->  
                         @elseif($loan->loan_status == "Running")  
-                          <td><a href="" class="btn btn-xs btn-outline-primary" data-toggle="modal" data-target="#loan_repayment{{$loan->id}}">Reimburse</a></td>
+                          <td><a href="" class="btn btn-xs btn-outline-primary" data-toggle="modal" data-target="#loan_repayment{{$loan->id}}">Repay</a></td>
                             <div class="modal fade" id="loan_repayment{{$loan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                               <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
                                   <div class="modal-header">
-                                    <h6 class="modal-title justify-content-center text-uppercase" id="exampleModalLongTitle"> reimbursing loan {{ $loan->loan_number }} - <span class="badge bg-info">{{ $loan->loan_status }} up to {{ $loan->loan_end_date }}</span> </h6>
+                                    <h6 class="modal-title justify-content-center text-uppercase" id="exampleModalLongTitle"> Repaying loan {{ $loan->loan_number }} - <span class="badge bg-info">{{ $loan->loan_status }} up to {{ $loan->date_loan_fully_recovered }}</span> </h6>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                       <span aria-hidden="true">&times;</span>
                                     </button>
