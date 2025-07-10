@@ -37,7 +37,7 @@
                 <!-- /.card-header -->
               <div class="card-body">
 
-                <form method="POST" action="/apply/settings/loan/groups">
+                <form id="submitForm1" method="POST" action="/apply/settings/loan/groups">
                 @csrf
                   
                   <div class="form-group row">

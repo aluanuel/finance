@@ -161,6 +161,8 @@ class LoansController extends Controller
 
     public function loan_disbursement(Request $request){
 
+        $last_instalment_date = LoanSchedule::where('id_loan',$request->id)->select('instalment_date')->latest()->first();
+
         $approved = Loans::where('id',$request->id)->first();
 
         $approved->loan_status = "Running";
@@ -169,7 +171,9 @@ class LoansController extends Controller
 
         $approved->date_loan_disbursed = date('Y-m-d');
 
-        $approved->date_loan_fully_recovered = $this->calculate_end_date($approved->loan_period);
+        $approved->loan_start_date = date('Y-m-d');
+
+        $approved->loan_end_date = $last_instalment_date->instalment_date;
 
         $approved->save();
 

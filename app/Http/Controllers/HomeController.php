@@ -26,17 +26,25 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $start_date = Carbon::now()->startOfMonth()->toDateTimeString();
-        $end_date = Carbon::now()->toDateTimeString();
+        $start_date = date('Y-m-d',strtotime(Carbon::now()->startOfMonth()->toDateTimeString()));
+        $end_date = date('Y-m-d',strtotime(Carbon::now()->toDateTimeString()));
+
+        $month = Carbon::now()->format('F, Y');
 
         $disbursement = DB::table('loans')
-                        ->where('loans.loan_status','Running')
+                        ->whereBetween('date_loan_disbursed',[$start_date,$end_date])
                         ->sum('loan_approved');
 
         $recovery = DB::table('transactions')
+                        ->where('transaction_detail','like','%Loan Repayment%')
+                        ->whereBetween('transaction_date',[$start_date,$end_date])
+                        ->sum('amount');
+        $expense = DB::table('transactions')
+                        ->where('transaction_type','Expenditure')
+                        ->whereBetween('transaction_date',[$start_date,$end_date])
                         ->sum('amount');
 
-        return view('home',compact('disbursement','recovery'));
+        return view('home',compact('disbursement','recovery','expense','month'));
     }
 
     

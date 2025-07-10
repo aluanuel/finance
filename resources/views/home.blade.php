@@ -29,36 +29,36 @@
         <!-- Small boxes (Stat box) -->
         <div class="row">
           <div class="col-md-4 col-sm-12">
-            <a href="/apply/report/disbursements/{{ date('y-m')}}">
+            <a href="/apply/report/disbursements/{{ date('m')}}">
                 <!-- small box -->
               <div class="small-box bg-info">
                 <div class="inner">
                   <h5>UGX {{ number_format($disbursement) }} &nbsp; <small class="text-uppercase">disbursements</small></h5>
-                  <p class="pt-4"><small>This month</small></p>
+                  <p class="pt-4"><small>{{ $month }}</small></p>
                 </div>
               </div>
             </a>
           </div>
           <!-- col-4 -->
           <div class="col-md-4 col-sm-12">
-            <a href="/apply/report/loan-recovery/{{ date('y-m')}}">
+            <a href="/apply/report/loan-recovery/{{ date('m')}}">
                 <!-- small box -->
               <div class="small-box bg-info">
                 <div class="inner">
                   <h5>UGX {{ number_format($recovery) }} &nbsp; <small class="text-uppercase">loan recovery</small></h5>
-                  <p class="pt-4"><small>This month</small></p>
+                  <p class="pt-4"><small>{{ $month }}</small></p>
                 </div>
               </div>
             </a>
           </div>
           <!-- col-4 -->
           <div class="col-md-4 col-sm-12">
-            <a href="/apply/report/loans-fully-settled/{{ date('y-m')}}">
+            <a href="/apply/report/loans-fully-settled/{{ date('m')}}">
                 <!-- small box -->
               <div class="small-box bg-info">
                 <div class="inner">
-                  <h5>12 &nbsp; <small class="text-uppercase">Loans fully settled</small></h5>
-                  <p class="pt-4"><small>This month</small></p>
+                  <h5>UGX {{ number_format($expense) }} &nbsp; <small class="text-uppercase">Expenditure</small></h5>
+                  <p class="pt-4"><small>{{ $month }}</small></p>
                 </div>
               </div>
             </a>

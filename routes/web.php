@@ -152,9 +152,13 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/apply/report/disbursements/{id}',[App\Http\Controllers\ReportsController::class,'report_loan_disbursements']);
 
+	Route::post('/apply/report/disbursements/',[App\Http\Controllers\ReportsController::class,'query_report_loan_disbursements']);
+
 	Route::get('/apply/report/loan-recovery/',[App\Http\Controllers\ReportsController::class,'report_loan_recovery']);
 
 	Route::get('/apply/report/loan-recovery/{id}',[App\Http\Controllers\ReportsController::class,'report_loan_recovery']);
+
+	Route::post('/apply/report/loan-recovery/',[App\Http\Controllers\ReportsController::class,'query_report_loan_recovery']);
 
 	Route::get('/apply/report/loans-fully-settled/',[App\Http\Controllers\ReportsController::class,'report_loans_fully_settled']);
 

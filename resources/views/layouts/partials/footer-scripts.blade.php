@@ -49,6 +49,7 @@ $(document).ready(function(){
             a.print();
         }
 </script>
+
 <script>
   $(function () {
     //Initialize Select2 Elements
