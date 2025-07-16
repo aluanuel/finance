@@ -79,14 +79,33 @@
                     <form>
                       <div class="row form-group">
                         <div class="col-12">
-                          <label>Transaction Type</label>
-                          <input type="number" name="amount" class="form-control" required placeholder="Amount">
+                          <label>Transaction Category</label>
+                          <div class="form-group">
+                            <select class="form-control select2bs4" name="transaction_category" data-placeholder="Select" style="width: 100%;" required="required" id="transaction_category">
+                              <option></option>
+                              <option>Income</option>
+                              <option>Expenditure</option>
+                            </select>
+                          </div>
                         </div>
                       </div>
                       <div class="row form-group">
                         <div class="col-12">
-                          <label>Category</label>
-                          <input type="text" name="transaction_type" class="form-control" required placeholder="Category" readonly>
+                          <label>Transaction Type</label>
+                          <div class="form-group">
+                            <select class="form-control select2bs4" name="transaction_type" data-placeholder="Select" style="width: 100%;" required="required">
+                              <option></option>
+                              <optgroup id="income">
+                                <option>Income</option>
+                                <option>Expenditure</option>
+                              </optgroup>
+                              <optgroup id="expense">
+                                <option>Office supplies</option>
+                                <option>Transport</option>
+                                <option>Allowance</option>
+                              </optgroup>
+                            </select>
+                          </div>
                         </div>
                       </div>
                       <div class="row form-group">

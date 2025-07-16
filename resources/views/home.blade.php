@@ -57,7 +57,7 @@
                 <!-- small box -->
               <div class="small-box bg-info">
                 <div class="inner">
-                  <h5>UGX {{ number_format($expense) }} &nbsp; <small class="text-uppercase">Expenditure</small></h5>
+                  <h5> {{ number_format($completed) }} &nbsp; <small class="text-uppercase">Loans fully settled</small></h5>
                   <p class="pt-4"><small>{{ $month }}</small></p>
                 </div>
               </div>

@@ -43,7 +43,7 @@ class LoansController extends Controller
 
         $loan = DB::table('loans')
                 ->join('clients','loans.id_client','clients.id')
-                ->select('loans.*','clients.name','clients.telephone')
+                ->select('loans.*','clients.name')
                 ->where('loans.loan_status','!=','Completed')
                 ->where('clients.id_loan_group',null)
                 ->orderBy('date_loan_application','desc')
@@ -224,15 +224,7 @@ class LoansController extends Controller
 
         $client->account_number = $account_number;
 
-        if(is_int($request->id_loan_group)){
-
-            $client->id_loan_group = $request->id_loan_group;
-
-        }else{
-
-            $client->id_loan_group = null;
-
-        }
+        $client->id_loan_group = $request->id_loan_group;
         
         $client->save();
 
@@ -248,6 +240,8 @@ class LoansController extends Controller
         $loan = new Loans();
 
         $loan->id_client = $client->id;
+
+        $loan->loan_number = 10101010;
 
         $loan->loan_request_amount = $loan_disbursed;
 
@@ -277,21 +271,20 @@ class LoansController extends Controller
 
     private function generate_loan_number(){
 
-        $number = Loans::latest()->first();
+        $number = Loans::max('loan_number');
 
-        if(empty($number)){
+        if($number == 10101010 ){
 
             $x = date('Y');
 
-            $loan_number = $x.'0001';
+            $number = $x.'0001';
 
-            return $loan_number;
+            return $number;
 
         }else{
 
-            $loan_number = $number->loan_number;
+            return $number += 1;
 
-            return $loan_number += 1;
 
         }
 

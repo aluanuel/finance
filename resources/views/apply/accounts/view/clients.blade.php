@@ -1,7 +1,7 @@
 @extends('layouts.custom')
 
 @section('content')
-	  <!-- Content Wrapper. Contains page content -->
+    <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -24,9 +24,9 @@
 
     <!-- Main content -->
     <div class="content">
-      	<div class="container-fluid">
+        <div class="container-fluid">
         @include('layouts.flash')
-        	<div class="row">
+          <div class="row">
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
@@ -203,7 +203,7 @@
                           </button>
                         </div>
                         <div class="modal-body">
-                          <form action="/apply/accounts/new/" method="post">
+                          <form action="/apply/accounts/new" method="post">
                             @csrf
                             <div class="row form-group">
                               <div class="col-6">

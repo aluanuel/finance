@@ -39,12 +39,12 @@ class HomeController extends Controller
                         ->where('transaction_detail','like','%Loan Repayment%')
                         ->whereBetween('transaction_date',[$start_date,$end_date])
                         ->sum('amount');
-        $expense = DB::table('transactions')
-                        ->where('transaction_type','Expenditure')
-                        ->whereBetween('transaction_date',[$start_date,$end_date])
-                        ->sum('amount');
+        $completed = DB::table('loans')
+                        ->where('loan_status','Completed')
+                        ->whereBetween('date_loan_fully_recovered',[$start_date,$end_date])
+                        ->count('loan_number');
 
-        return view('home',compact('disbursement','recovery','expense','month'));
+        return view('home',compact('disbursement','recovery','completed','month'));
     }
 
     

@@ -145,20 +145,20 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/apply/account/profile/{id}', [App\Http\Controllers\ClientsController::class, 'view_client_details'])->name('clientProfile');
 
-	Route::post('/apply/account/profile/{id}', [App\Http\Controllers\ClientsController::class, 'update_client_account_details'])->name('clientProfile');	
+	Route::post('/apply/account/profile/{id}', [App\Http\Controllers\ClientsController::class, 'update_client_account_details']);	
 
 	/**********************************Reports******************************************/
 	Route::get('/apply/report/disbursements/',[App\Http\Controllers\ReportsController::class,'report_loan_disbursements']);
 
 	Route::get('/apply/report/disbursements/{id}',[App\Http\Controllers\ReportsController::class,'report_loan_disbursements']);
 
-	Route::post('/apply/report/disbursements/',[App\Http\Controllers\ReportsController::class,'query_report_loan_disbursements']);
+	Route::post('/apply/report/disbursements',[App\Http\Controllers\ReportsController::class,'query_report_loan_disbursements']);
 
 	Route::get('/apply/report/loan-recovery/',[App\Http\Controllers\ReportsController::class,'report_loan_recovery']);
 
 	Route::get('/apply/report/loan-recovery/{id}',[App\Http\Controllers\ReportsController::class,'report_loan_recovery']);
 
-	Route::post('/apply/report/loan-recovery/',[App\Http\Controllers\ReportsController::class,'query_report_loan_recovery']);
+	Route::post('/apply/report/loan-recovery',[App\Http\Controllers\ReportsController::class,'query_report_loan_recovery']);
 
 	Route::get('/apply/report/loans-fully-settled/',[App\Http\Controllers\ReportsController::class,'report_loans_fully_settled']);
 
@@ -183,7 +183,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/apply/restore/previous/loan/',[App\Http\Controllers\LoansController::class,'restore_previous_loan']);
 
-	Route::post('/apply/restore/previous/loan/',[App\Http\Controllers\LoansController::class,'record_previous_loan']);
+	Route::post('/apply/restore/previous/loan',[App\Http\Controllers\LoansController::class,'record_previous_loan']);
 
 
 	/*=================== Reports accessible by loan officers ==============*/
@@ -223,10 +223,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/apply/user/update/photo/{id}',[App\Http\Controllers\SystemUsersController::class, 'update_user_photo']);
 
 	Route::get('/apply/settings/fees/',[App\Http\Controllers\FeesController::class, 'index']);
-	Route::post('/apply/settings/fees/',[App\Http\Controllers\FeesController::class, 'create_new_fees']);
+	Route::post('/apply/settings/fees',[App\Http\Controllers\FeesController::class, 'create_new_fees']);
 
 	Route::get('/apply/settings/rates/',[App\Http\Controllers\RatesController::class, 'index']);
-	Route::post('/apply/settings/rates/',[App\Http\Controllers\RatesController::class, 'create_new_rate']);
+	Route::post('/apply/settings/rates',[App\Http\Controllers\RatesController::class, 'create_new_rate']);
 
 	Route::get('/apply/settings/loan/groups',[App\Http\Controllers\LoanGroupsController::class,'index']);
 	Route::post('/apply/settings/loan/groups',[App\Http\Controllers\LoanGroupsController::class,'create_new_loan_group']);
@@ -244,13 +244,13 @@ Route::group(['middleware' => 'auth'], function () {
 	
 
 	// view active accounts by the loan officer
-	Route::get('/apply/accounts',[App\Http\Controllers\ClientsController::class,'view_client_accounts']);
+	Route::get('/apply/accounts',[App\Http\Controllers\ClientsController::class,'index']);
 
 	// display account creation form by the loan officer
 	Route::get('/apply/accounts/new/',[App\Http\Controllers\ClientsController::class,'index']);
 
 	// register a new client by the loan officer
-	Route::post('/apply/accounts/new/',[App\Http\Controllers\ClientsController::class,'create_client_account']);
+	Route::post('/apply/accounts/new',[App\Http\Controllers\ClientsController::class,'create_client_account']);
 
 	Route::get('/apply/accounts/applications/',[App\Http\Controllers\ClientsController::class,'view_inactive_new_client_accounts']);
 

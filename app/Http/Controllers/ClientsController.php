@@ -12,16 +12,16 @@ use Illuminate\Support\Facades\Hash;
 class ClientsController extends Controller
 {
     
+    // public function index(){
+
+    //     $groups = DB::table('loan_groups')->get();
+
+    //     $fees = DB::table('fees')->first();
+
+    //     return view('apply.accounts.forms.group',compact('groups','fees'));
+    // }
+
     public function index(){
-
-        $groups = DB::table('loan_groups')->get();
-
-        $fees = DB::table('fees')->first();
-
-        return view('apply.accounts.forms.group',compact('groups','fees'));
-    }
-
-    public function view_client_accounts(){
 
         $accounts = DB::table('clients')
                 ->leftJoin('loan_groups','clients.id_loan_group','loan_groups.id')
