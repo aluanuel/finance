@@ -104,6 +104,12 @@
                   </a>
                 </li>
                 <li class="nav-item">
+                  <a href="/apply/report/loans-defaulted" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Loans defaulted</p>
+                  </a>
+                </li>
+                <li class="nav-item">
                   <a href="/apply/report/loans-fully-settled/" class="nav-link">
                     <i class="fas fa-angle-right nav-icon"></i>
                     <p>Loans fully settled</p>

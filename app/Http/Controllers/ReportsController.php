@@ -16,6 +16,7 @@ class ReportsController extends Controller
 
             $loan = DB::table('loans')->join('clients','loans.id_client','clients.id')
                 ->select('clients.name','clients.account_number','loans.interest_rate','loans.loan_approved','loans.date_loan_disbursed','loans.loan_processing_rate','loans.total_loan','loans.loan_number','loans.loan_status')
+                ->where('loans.loan_status','Running')
                 ->orderBy('loans.date_loan_disbursed','desc')
                 ->get();
 
@@ -30,6 +31,7 @@ class ReportsController extends Controller
 
             $loan = DB::table('loans')->join('clients','loans.id_client','clients.id')
                 ->select('clients.name','clients.account_number','loans.interest_rate','loans.loan_approved','loans.date_loan_disbursed','loans.loan_processing_rate','loans.total_loan','loans.loan_number','loans.loan_status')
+                ->where('loans.loan_status','Running')
                 ->whereBetween('loans.date_loan_disbursed',[$start_date,$end_date])
                 ->get();
 
@@ -49,6 +51,7 @@ class ReportsController extends Controller
 
         $loan = DB::table('loans')->join('clients','loans.id_client','clients.id')
                 ->select('clients.name','clients.account_number','loans.interest_rate','loans.loan_approved','loans.date_loan_disbursed','loans.loan_processing_rate','loans.total_loan','loans.loan_number','loans.loan_status')
+                ->where('loans.loan_status','Running')
                 ->whereBetween('loans.date_loan_disbursed',[$start_date,$end_date])
                 ->get();
 
@@ -125,7 +128,6 @@ class ReportsController extends Controller
                     ->select('clients.name','loans.*')
                     ->where('loans.loan_status','Completed')
                     ->orderBy('loans.loan_number','desc')
-                    ->limit(200)
                     ->get();
             $heading = 'Showing loans fully settled recently';
 
@@ -146,6 +148,37 @@ class ReportsController extends Controller
         }
 
         return view('apply.report.loans_fully_settled',compact('loan','heading'));
+    }
+
+    public function query_report_loans_fully_settled(Request $request){
+
+        $start_date = $request->start_date;
+
+        $end_date = $request->end_date;
+
+        $loan = DB::table('loans')->join('clients','loans.id_client','clients.id')
+                    ->select('clients.name','loans.*')
+                    ->where('loans.loan_status','Completed')
+                    ->whereBetween('loans.date_loan_fully_recovered',[$start_date,$end_date])
+                    ->orderBy('loans.loan_number','desc')
+                    ->get();
+
+        $heading = "Showing loan fully settled from ".date('F d, Y',strtotime($start_date))." to ".date('F d, Y',strtotime($end_date));
+
+        return view('apply.report.loans_fully_settled',compact('loan','heading'));
+
+    }
+
+    public function report_loans_defaulted(){
+
+            $loan = DB::table('loans')->join('clients','loans.id_client','clients.id')
+                    ->select('clients.name','loans.*')
+                    ->where('loans.loan_status','Defaulted')
+                    ->orderBy('loans.loan_end_date','desc')
+                    ->get();
+            $heading = 'Showing loans defaulted';
+
+        return view('apply.report.loans_defaulted',compact('loan','heading'));
     }
 
 }

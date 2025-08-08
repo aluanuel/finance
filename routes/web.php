@@ -44,6 +44,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::post('apply/loan/repayment/{id}',[App\Http\Controllers\TransactionsController::class,'create_loan_repayment_entry']);
 
+	Route::post('apply/loan/reinstate/{id}',[App\Http\Controllers\TransactionsController::class,'reinstate_loan']);
+
 
 
 
@@ -164,6 +166,10 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/apply/report/loans-fully-settled/{id}',[App\Http\Controllers\ReportsController::class,'report_loans_fully_settled']);
 
+	Route::post('/apply/report/loans-fully-settled/',[App\Http\Controllers\ReportsController::class,'query_report_loans_fully_settled']);
+
+	Route::get('/apply/report/loans-defaulted/',[App\Http\Controllers\ReportsController::class,'report_loans_defaulted']);
+
 	Route::get('/apply/report/cashbook',[App\Http\Controllers\ReportsController::class,'report_cashbook']);
 
 	Route::get('/apply/report/balance_sheet',[App\Http\Controllers\ReportsController::class,'report_balance_sheet']);
@@ -239,8 +245,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/apply/admin/grp/assess/{id}',[App\Http\Controllers\GroupLoanAssessmentController::class, 'adminViewAssessmentSingle']);
 	Route::post('/apply/admin/grp/assess/{id}',[App\Http\Controllers\GroupLoanAssessmentController::class, 'adminFillAssessmentForm']);
 	Route::get('/apply/admin/grp/processed',[App\Http\Controllers\LoansController::class, 'adminViewGroupProcessedLoans']);
-	Route::get('/apply/admin/reinstate/{id}',[App\Http\Controllers\LoansController::class,'ViewReinstateLoanForm']);
-	Route::post('/apply/admin/reinstate/{id}',[App\Http\Controllers\LoansController::class,'ReinstateLoan']);
 	
 
 	// view active accounts by the loan officer
