@@ -31,11 +31,6 @@
               <div class="card">
                 <div class="card-header">
                   <h3 class="card-title">Showing New Accounts Pending Activation</h3>
-                  <div class="card-tools" id="admin_only">
-                    <a href="/generate/report/accounts" title="Download Report">
-                      <i class="fa fa-download" title="Download Report"></i>
-                    </a>
-                  </div>
                 </div>
                 <div class="card-body">
                   <table id="example2" class="table table-bordered table-hover">
@@ -48,7 +43,7 @@
                         <th>telephone</th>
                         <th>Fees</th>
                         <th>created_at</th>
-                        <th>action</th>
+                        <th>#</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -60,23 +55,46 @@
                         <td>{{ $ac->name }}</td>
                         <td>{{ $ac->gender }}</td>
                         <td>{{ $ac->telephone }}</td>
-                        <td>{{ number_format($ac->account_opening_fee) }}</td>
+                        <td>{{ number_format($ac->registration_fee) }}</td>
                         <td>{{ date('Y-m-d',strtotime($ac->created_at)) }}</td>
-                        <td>
-                          <form action="/apply/accounts/applications/{{$ac->id }}" method="post">
-                            @csrf
-                            <div class="form-group" id="invoke_auth">
-                              <button class="btn btn-outline-danger btn-sm" id="btn_invoke_auth">Activate</button>
+
+                        <td><a class="btn btn-xs btn-outline-danger" data-toggle="modal" data-target="#activate_client_account{{$ac->id}}">Activate</a></td>
+                        <div class="modal fade" id="activate_client_account{{$ac->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                          <div class="modal-dialog modal-sm" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h6 class="modal-title justify-content-center text-uppercase" id="exampleModalLongTitle">client account activation</h6>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <form action="/apply/accounts/applications/{{$ac->id }}" method="post">
+                                  @csrf
+                                  <div class="row form-group">
+                                    <div class="col-12 text-center"> 
+                                      <label>Enter your password</label>
+                                      <input type="password" class="form-control" name="user_password" required placeholder="Enter your password">
+                                      <input type="hidden" name="registration_fee" value="{{ $ac->registration_fee }}">
+                                    </div>
+                                  </div>
+                                  <!-- row -->
+                                  <div class="row form-group">
+                                    <div class="col-12 text-center">         
+                                      <button type="submit" class="btn btn-sm btn-outline-primary">Activate</button>
+                                      <button type="submit" class="btn btn-sm btn-outline-danger" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                  </div>
+                                  <!-- row -->
+                                </form>
+                              </div>
+                              <!-- modal-body -->
                             </div>
-                            <div class="form-group" id="auth_user">
-                              <label>Password</label>
-                              <input type="password" name="password" class="form-control" required="required" placeholder="Type your password">
-                            </div>
-                            <div class="form-group" id="submit_input">
-                              <button class="btn btn-primary btn-sm">Continue</button>
-                            </div>
-                          </form>
-                        </td>
+                            <!-- modal-content -->
+                          </div>
+                          <!-- modal-dialog -->
+                        </div>
+                        <!-- modal -->
                       </tr>
                       <?php $x++;?>
                       @endforeach

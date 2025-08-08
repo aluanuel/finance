@@ -26,49 +26,26 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $start_date = Carbon::now()->startOfMonth()->toDateTimeString();
-        $end_date = Carbon::now()->toDateTimeString();
+        $start_date = date('Y-m-d',strtotime(Carbon::now()->startOfMonth()->toDateTimeString()));
+        $end_date = date('Y-m-d',strtotime(Carbon::now()->toDateTimeString()));
 
-        return view('home');
+        $month = Carbon::now()->format('F, Y');
+
+        $disbursement = DB::table('loans')
+                        ->whereBetween('date_loan_disbursed',[$start_date,$end_date])
+                        ->sum('loan_approved');
+
+        $recovery = DB::table('transactions')
+                        ->where('transaction_detail','like','%Loan Repayment%')
+                        ->whereBetween('transaction_date',[$start_date,$end_date])
+                        ->sum('amount');
+        $completed = DB::table('loans')
+                        ->where('loan_status','Completed')
+                        ->whereBetween('date_loan_fully_recovered',[$start_date,$end_date])
+                        ->count('loan_number');
+
+        return view('home',compact('disbursement','recovery','completed','month'));
     }
 
-    public function countTasks($usertype,$activity,$result = null){
-
-        if($usertype == 'Loan Officer'){
-
-            if($activity == 'loan_application'){
-
-                $result = DB::table('loan_applications')->where('proposed_amount',null)->count('id');
-
-            }elseif($activity == 'loan_assessments'){
-
-                $result = DB::table('loan_applications')->where('application_status',1)
-                            ->where('assessment_status',0)->count('id');
-
-            }
-
-            return $result;
-
-        }elseif ($usertype == 'Teller') {
-            
-            $result = DB::table('loan_applications')->where('application_status',0)->count('id');
-
-            return $result;
-
-        }elseif ($usertype == 'Manager') {
-            
-            if($activity == 'loan_application'){
-
-                $result = DB::table('loan_applications')->where('proposed_amount',null)->count('id');
-
-            }elseif($activity == 'loan_assessments'){
-
-                $result = DB::table('loan_applications')->where('application_status',1)
-                            ->where('approval_status',0)->count('id');
-
-            }
-
-            return $result;
-        }
-    }
+    
 }

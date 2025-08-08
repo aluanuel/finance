@@ -164,14 +164,7 @@
                       @if($user->user_status == 1)
                       <td class="text-success">Active</td>
                       <td>
-                        <div class="row">
-                          <div class="col-5 mr-1">
-                            <a href="/apply/settings/manage?id={{ $user->id }}&state={{ $user->user_status}}" class="btn btn-outline-danger btn-sm"><i class="fa fa-lock" aria-hidden="true"></i></a>
-                          </div>
-                          <div class="col-5 mr-1">
-                            <a href="/apply/settings/manage/{{ $user->id }}" class="btn btn-outline-primary btn-sm" ><i class="fa fa-key" aria-hidden="true"></i></a>
-                          </div>
-                        </div>
+                        <a href="/apply/settings/manage/{{ $user->id }}" class="btn btn-outline-primary btn-sm" ><i class="fa fa-key" aria-hidden="true"></i></a>
                       </td>
                       @else
                       <td class="text-danger">Inactive</td>

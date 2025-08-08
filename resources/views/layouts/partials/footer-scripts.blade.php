@@ -49,6 +49,7 @@ $(document).ready(function(){
             a.print();
         }
 </script>
+
 <script>
   $(function () {
     //Initialize Select2 Elements
@@ -293,6 +294,21 @@ $(document).ready(function(){
       $('#id_group').val(content);
       console.log(content);
     })
+
+
+    $('#transaction_category').change(function(){
+      
+      var value = $('#transaction_category option:selected').val();
+      if(value == 'Income'){
+
+        $('#income').show();
+        $('#expense').hide();
+
+      }
+
+    })
+
+
 
     $('#inflow_category').change(function(){
       var value = $('#inflow_category option:selected').val();

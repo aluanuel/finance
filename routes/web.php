@@ -42,7 +42,9 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('apply/loan/repayment',[App\Http\Controllers\TransactionsController::class,'view_loan_repayments']);
 
-	Route::post('apply/loan/repayment',[App\Http\Controllers\TransactionsController::class,'create_loan_repayment_entry']);
+	Route::post('apply/loan/repayment/{id}',[App\Http\Controllers\TransactionsController::class,'create_loan_repayment_entry']);
+
+	Route::post('apply/loan/reinstate/{id}',[App\Http\Controllers\TransactionsController::class,'reinstate_loan']);
 
 
 
@@ -145,52 +147,78 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/apply/account/profile/{id}', [App\Http\Controllers\ClientsController::class, 'view_client_details'])->name('clientProfile');
 
-	Route::post('/apply/account/profile/{id}', [App\Http\Controllers\ClientsController::class, 'update_client_account_details'])->name('clientProfile');	
+	Route::post('/apply/account/profile/{id}', [App\Http\Controllers\ClientsController::class, 'update_client_account_details']);	
 
 	/**********************************Reports******************************************/
-	Route::get('/apply/report/loan_disbursements/',[App\Http\Controllers\ReportController::class,'report_loan_disbursements']);
+	Route::get('/apply/report/disbursements/',[App\Http\Controllers\ReportsController::class,'report_loan_disbursements']);
 
-	Route::get('/apply/report/loan_disbursements/{id}',[App\Http\Controllers\ReportController::class,'report_loan_disbursements']);
+	Route::get('/apply/report/disbursements/{id}',[App\Http\Controllers\ReportsController::class,'report_loan_disbursements']);
 
-	Route::get('/apply/report/loan_recovery/',[App\Http\Controllers\ReportController::class,'report_loan_recovery']);
+	Route::post('/apply/report/disbursements',[App\Http\Controllers\ReportsController::class,'query_report_loan_disbursements']);
 
-	Route::get('/apply/report/loan_recovery/{id}',[App\Http\Controllers\ReportController::class,'report_loan_recovery']);
+	Route::get('/apply/report/loan-recovery/',[App\Http\Controllers\ReportsController::class,'report_loan_recovery']);
 
-	Route::get('/apply/report/cashbook',[App\Http\Controllers\ReportController::class,'report_cashbook']);
+	Route::get('/apply/report/loan-recovery/{id}',[App\Http\Controllers\ReportsController::class,'report_loan_recovery']);
 
-	Route::get('/apply/report/balance_sheet',[App\Http\Controllers\ReportController::class,'report_balance_sheet']);
+	Route::post('/apply/report/loan-recovery',[App\Http\Controllers\ReportsController::class,'query_report_loan_recovery']);
 
-	Route::get('/apply/report/cash_inflow',[App\Http\Controllers\ReportController::class,'report_cash_inflow']);
+	Route::get('/apply/report/loans-fully-settled/',[App\Http\Controllers\ReportsController::class,'report_loans_fully_settled']);
 
-	Route::get('/apply/report/cash_outflow',[App\Http\Controllers\ReportController::class,'report_cash_outflow']);
+	Route::get('/apply/report/loans-fully-settled/{id}',[App\Http\Controllers\ReportsController::class,'report_loans_fully_settled']);
+
+	Route::post('/apply/report/loans-fully-settled/',[App\Http\Controllers\ReportsController::class,'query_report_loans_fully_settled']);
+
+	Route::get('/apply/report/loans-defaulted/',[App\Http\Controllers\ReportsController::class,'report_loans_defaulted']);
+
+	Route::get('/apply/report/cashbook',[App\Http\Controllers\ReportsController::class,'report_cashbook']);
+
+	Route::get('/apply/report/balance_sheet',[App\Http\Controllers\ReportsController::class,'report_balance_sheet']);
+
+	Route::get('/apply/report/cash_inflow',[App\Http\Controllers\ReportsController::class,'report_cash_inflow']);
+
+	Route::get('/apply/report/cash_outflow',[App\Http\Controllers\ReportsController::class,'report_cash_outflow']);
 
 	/*=================== Reports accessible by loan officers ==============*/
 
-	Route::get('/apply/report/officer/loan_disbursements/{id}',[App\Http\Controllers\ReportController::class,'report_officer_loan_disbursements']);
+	Route::get('/apply/report/officer/loan_disbursements/{id}',[App\Http\Controllers\ReportsController::class,'report_officer_loan_disbursements']);
 
-	Route::get('/apply/report/officer/loan_recovery/{id}',[App\Http\Controllers\ReportController::class,'report_officer_loan_recovery']);
+	Route::get('/apply/report/officer/loan_recovery/{id}',[App\Http\Controllers\ReportsController::class,'report_officer_loan_recovery']);
+
+
+	/*================= Restore previous loans============================*/
+
+	Route::get('/apply/restore/previous/loan/',[App\Http\Controllers\LoansController::class,'restore_previous_loan']);
+
+	Route::post('/apply/restore/previous/loan',[App\Http\Controllers\LoansController::class,'record_previous_loan']);
+
 
 	/*=================== Reports accessible by loan officers ==============*/
 
 
 
+	
 
 
 
-
-	Route::get('/apply/analysis/loan/',[App\Http\Controllers\ReportController::class,'LoanList']);
-	Route::get('/apply/analysis/loan/{id}',[App\Http\Controllers\ReportController::class,'LoanPerformance']);
+	Route::get('/apply/analysis/loan/',[App\Http\Controllers\ReportsController::class,'LoanList']);
+	Route::get('/apply/analysis/loan/{id}',[App\Http\Controllers\ReportsController::class,'LoanPerformance']);
 
 	/*******************************settings************************************/
-	Route::get('/apply/settings/loan/groups',[App\Http\Controllers\LoanGroupsController::class,'index']);
-	Route::post('/apply/settings/loan/groups',[App\Http\Controllers\LoanGroupsController::class,'create_new_loan_group']);
+	
 	Route::get('/apply/grp/list',[App\Http\Controllers\ClientGroupController::class,'view']);
 	Route::post('/apply/grp/list',[App\Http\Controllers\ClientGroupController::class,'newMemberRole']);
 	Route::get('/apply/settings/cashflow/',[App\Http\Controllers\TransactionCategoryController::class,'index']);
 	Route::post('/apply/settings/cashflow/',[App\Http\Controllers\TransactionCategoryController::class,'create']);
 
 	Route::get('/apply/grp', [App\Http\Controllers\LoansController::class, 'view_group_loans_list']);
-	Route::post('/apply/grp',[App\Http\Controllers\LoansController::class, 'NewGroupApplication']);
+
+	Route::get('/apply/grp/{id}',[App\Http\Controllers\LoansController::class, 'index']);
+
+	Route::post('/apply/grp/{id}',[App\Http\Controllers\LoansController::class, 'new_loan_application']);
+
+	Route::post('/apply/grp/loan/assess/{id}',[App\Http\Controllers\LoansController::class, 'loan_assessment']);
+
+	Route::post('/apply/grp/loan/disburse/{id}',[App\Http\Controllers\LoansController::class, 'loan_disbursement']);
 
 	Route::get('/apply/settings/users', [App\Http\Controllers\SystemUsersController::class, 'system_users']);
 	Route::post('/apply/settings/user', [App\Http\Controllers\SystemUsersController::class, 'create_system_user']);
@@ -201,10 +229,13 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/apply/user/update/photo/{id}',[App\Http\Controllers\SystemUsersController::class, 'update_user_photo']);
 
 	Route::get('/apply/settings/fees/',[App\Http\Controllers\FeesController::class, 'index']);
-	Route::post('/apply/settings/fees/',[App\Http\Controllers\FeesController::class, 'create_new_fees']);
+	Route::post('/apply/settings/fees',[App\Http\Controllers\FeesController::class, 'create_new_fees']);
 
 	Route::get('/apply/settings/rates/',[App\Http\Controllers\RatesController::class, 'index']);
-	Route::post('/apply/settings/rates/',[App\Http\Controllers\RatesController::class, 'create_new_rate']);
+	Route::post('/apply/settings/rates',[App\Http\Controllers\RatesController::class, 'create_new_rate']);
+
+	Route::get('/apply/settings/loan/groups',[App\Http\Controllers\LoanGroupsController::class,'index']);
+	Route::post('/apply/settings/loan/groups',[App\Http\Controllers\LoanGroupsController::class,'create_new_loan_group']);
 	
 	Route::get('/apply/grp/assess/{id}',[App\Http\Controllers\GroupLoanAssessmentController::class, 'index']);
 	Route::post('/apply/grp/assess/{id}',[App\Http\Controllers\GroupLoanAssessmentController::class, 'fillAssessment']);
@@ -214,22 +245,20 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/apply/admin/grp/assess/{id}',[App\Http\Controllers\GroupLoanAssessmentController::class, 'adminViewAssessmentSingle']);
 	Route::post('/apply/admin/grp/assess/{id}',[App\Http\Controllers\GroupLoanAssessmentController::class, 'adminFillAssessmentForm']);
 	Route::get('/apply/admin/grp/processed',[App\Http\Controllers\LoansController::class, 'adminViewGroupProcessedLoans']);
-	Route::get('/apply/admin/reinstate/{id}',[App\Http\Controllers\LoansController::class,'ViewReinstateLoanForm']);
-	Route::post('/apply/admin/reinstate/{id}',[App\Http\Controllers\LoansController::class,'ReinstateLoan']);
 	
 
 	// view active accounts by the loan officer
-	Route::get('/apply/accounts',[App\Http\Controllers\ClientsController::class,'view_client_accounts']);
+	Route::get('/apply/accounts',[App\Http\Controllers\ClientsController::class,'index']);
 
 	// display account creation form by the loan officer
 	Route::get('/apply/accounts/new/',[App\Http\Controllers\ClientsController::class,'index']);
 
 	// register a new client by the loan officer
-	Route::post('/apply/accounts/new/',[App\Http\Controllers\ClientsController::class,'create_client_account']);
+	Route::post('/apply/accounts/new',[App\Http\Controllers\ClientsController::class,'create_client_account']);
 
 	Route::get('/apply/accounts/applications/',[App\Http\Controllers\ClientsController::class,'view_inactive_new_client_accounts']);
 
-	Route::post('/apply/accounts/applications/{id}',[App\Http\Controllers\ClientsController::class,'activate_new_client_accounts']);
+	Route::post('/apply/accounts/applications/{id}',[App\Http\Controllers\ClientsController::class,'activate_new_client_account']);
 
 	Route::get('/apply/admin/accounts',[App\Http\Controllers\ClientsController::class,'view_client_accounts']);
 	Route::get('/apply/admin/ind/accounts',[App\Http\Controllers\ClientsController::class,'adminViewIndividualAccounts']);

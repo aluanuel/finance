@@ -32,215 +32,59 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-          @if(Auth::user()->usertype == 'Loan Officer' && Auth::user()->role == 'None')
+          @if(Auth::user()->usertype == 'admin')
             <li class="nav-item">
               <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-circle"></i>
+                <i class="nav-icon fas fa-cog"></i>
                 <p>
-                  Accounts
+                  Settings
                   <i class="fas fa-angle-left right"></i>
                 </p>
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="/apply/accounts/" class="nav-link">
-                    <i class="fas fa-angle-right nav-icon"></i>
-                    <p>View Accounts</p>
+                  <a href="/apply/settings/users" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>System Users
+                    </p>
                   </a>
                 </li>
               </ul>
+            </li>
+          @else
+            <li class="nav-item">
+              <a href="/apply/accounts/" class="nav-link">
+                <i class="fas fa-angle-right nav-icon"></i>
+                <p>Accounts</p>
+              </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-circle"></i>
-                <p>
-                  Loans
-                  <i class="fas fa-angle-left right"></i>
-                </p>
+              <a href="/apply/ind/" class="nav-link">
+                <i class="fas fa-angle-right nav-icon"></i>
+                <p>Individual loans</p>
               </a>
-              <ul class="nav nav-treeview">
-                @if(Auth::user()->category == 'Individual')
-                
-                <li class="nav-item">
-                  <a href="/apply/ind/" class="nav-link">
-                    <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Individual Loan</p>
-                  </a>
-                </li>
-                @elseif(Auth::user()->category == 'Group')
-                <li class="nav-item">
-                  <a href="/apply/grp" class="nav-link">
-                    <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Group Loan</p>
-                  </a>
-                </li>
-                @endif
-              </ul>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="fas fa-list nav-icon"></i>
-                  <p>Reports
-                    <i class="fas fa-angle-left right"></i>
-                  </p>
+              <a href="/apply/grp" class="nav-link">
+                <i class="fas fa-angle-right nav-icon"></i>
+                <p>Group loans</p>
               </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="/apply/report/officer/loan_disbursements/{{Auth::user()->id}}" class="nav-link">
-                    <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Loan Disbursements</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/apply/report/officer/loan_recovery/{{Auth::user()->id}}" class="nav-link">
-                    <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Loan Recovery</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/apply/report/officer/defaulted_loans/{{Auth::user()->id}}" class="nav-link">
-                    <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Defaulted Loans</p>
-                  </a>
-                </li>
-              </ul>
             </li>
-          @elseif(Auth::user()->usertype == 'Loan Officer' && Auth::user()->role == 'Supervisor')
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-circle"></i>
-                <p>
-                  Accounts
-                  <i class="fas fa-angle-left right"></i>
-                </p>
+            <!-- <li class="nav-item">
+              <a href="/apply/loan/repayment" class="nav-link">
+                <i class="fas fa-angle-right nav-icon"></i>
+                <p>Loan Repayment</p>
               </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="/apply/accounts/" class="nav-link">
-                    <i class="fas fa-angle-right nav-icon"></i>
-                    <p>View Accounts</p>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-circle"></i>
-                <p>
-                  Loans
-                  <i class="fas fa-angle-left right"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                @if(Auth::user()->category == 'Individual')
-                <li class="nav-item">
-                  <a href="/apply/ind/" class="nav-link">
-                    <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Individual Loan</p>
-                  </a>
-                </li>
-                @elseif(Auth::user()->category == 'Group')
-                <li class="nav-item">
-                  <a href="/apply/grp" class="nav-link">
-                    <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Group Loan</p>
-                  </a>
-                </li>
-                @endif
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="fas fa-list nav-icon"></i>
-                  <p>Reports
-                    <i class="fas fa-angle-left right"></i>
-                  </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="/apply/report/officer/loan_disbursements/{{Auth::user()->id}}" class="nav-link">
-                    <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Loan Disbursements</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/apply/report/officer/loan_recovery/{{Auth::user()->id}}" class="nav-link">
-                    <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Loan Recovery</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/apply/report/officer/defaulted_loans/{{Auth::user()->id}}" class="nav-link">
-                    <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Defaulted Loans</p>
-                  </a>
-                </li>
-              </ul>
-            </li>
-          @elseif(Auth::user()->usertype == 'Teller')
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-circle"></i>
-                <p>
-                  Accounts
-                  <i class="fas fa-angle-left right"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="/apply/accounts/applications" class="nav-link">
-                    <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Account Application</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/apply/accounts/" class="nav-link">
-                    <i class="fas fa-angle-right nav-icon"></i>
-                    <p>View Accounts</p>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-circle"></i>
-                <p>
-                  Loans
-                  <i class="fas fa-angle-left right"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="/apply/ind/teller/" class="nav-link">
-                    <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Individual Loan</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/apply/grp/teller/" class="nav-link">
-                  <i class="fas fa-angle-right nav-icon"></i>
-                  <p>Group Loan</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/apply/loan/repayment" class="nav-link">
-                  <i class="fas fa-angle-right nav-icon"></i>
-                  <p>Loan Repayment</p>
-                  </a>
-                </li>
-              </ul>
-            </li>
+            </li> -->
             <li class="nav-item">
               <a href="/apply/teller/transaction/" class="nav-link">
-                <i class="nav-icon fas fa-circle"></i>
+                <i class="fas fa-angle-right nav-icon"></i>
                 <p>Transactions</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-list"></i>
+                <i class="nav-icon fas fa-circle"></i>
                 <p>
                   Reports
                   <i class="fas fa-angle-left right"></i>
@@ -248,151 +92,38 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="/apply/report/loan_disbursements/" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Loan Disbursements</p>
+                  <a href="/apply/report/disbursements/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Loan disbursement</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/apply/report/loan_recovery" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Loan Recovery</p>
+                  <a href="/apply/report/loan-recovery/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Loan recovery</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/apply/report/cashbook" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Cashbook</p>
+                  <a href="/apply/report/loans-defaulted" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Loans defaulted</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/apply/report/balance_sheet" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Balance Sheet</p>
+                  <a href="/apply/report/loans-fully-settled/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Loans fully settled</p>
                   </a>
-                </li>  
+                </li>
               </ul>
             </li>
-          @elseif(Auth::user()->usertype == 'Manager')
+            
             <li class="nav-item">
-              <a href="/apply/admin/accounts" class="nav-link">
-                <i class="nav-icon fas fa-circle"></i>
-                <p>
-                  Accounts
-                </p>
+              <a href="/apply/restore/previous/loan/" class="nav-link">
+                <i class="fas fa-angle-right nav-icon"></i>
+                <p>Restore previous loan</p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-circle"></i>
-                <p>
-                  Loans
-                  <i class="fas fa-angle-left right"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="apply/ind/" class="nav-link">
-                    <i class="fas fa-angle-right left"></i>
-                    <p>Individual Loans    
-                    </p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/apply/grp/" class="nav-link">
-                    <i class="fas fa-angle-right left"></i>
-                    <p>Group Loans      
-                    </p>
-                  </a>
-                </li>
-                
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                    <i class="fa fa-list nav-icon"></i>
-                    <p>Reports
-                      <i class="fas fa-angle-left right"></i>
-                    </p>
-                  </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="/apply/report/collections" class="nav-link">
-                    <i class="fas fa-circle nav-icon"></i>
-                    <p>Loans
-                      <i class="fas fa-angle-left right"></i>
-                    </p>
-                  </a>
-                  <ul class="nav nav-treeview">                    <li class="nav-item">
-                      <a href="/apply/report/loan_disbursements" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Loan Disbursements
-                        </p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="/apply/report/loan_recovery" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Loan Recovery
-                        </p>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link">
-                    <i class="fas fa-circle nav-icon"></i>
-                    <p>Teller
-                      <i class="fas fa-angle-left right"></i>
-                    </p>
-                  </a>
-                
-                  <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                      <a href="/apply/report/cash_outflow" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Cash Outflows</p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="/apply/report/cash_inflow" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Cash Inflows</p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="/apply/report/cashbook" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Cashbook</p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="/apply/report/balance_sheet" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Balance Sheet</p>
-                      </a>
-                    </li>  
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <!-- <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-bars"></i>
-                <p>
-                  Analysis
-                  <i class="fas fa-angle-left right"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="/apply/analysis/loan" class="nav-link">
-                    <i class="fas fa-circle nav-icon"></i>
-                        <p>Loan Performance</p>
-                  </a>
-                </li>
-              </ul>
-            </li> -->
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-cog"></i>
@@ -428,50 +159,33 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                  <a href="/apply/settings/groups" class="nav-link">
+                  <a href="/apply/settings/loan/groups" class="nav-link">
                     <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Loan Groups</p>
+                    <p>Loan groups</p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="/apply/settings/users" class="nav-link">
                     <i class="fas fa-angle-right nav-icon"></i>
-                    <p>System Users</p>
-                  </a>
-                </li>
-              </ul>
-            </li>
-          @elseif(Auth::user()->usertype == 'admin')
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-cog"></i>
-                <p>
-                  Settings
-                  <i class="fas fa-angle-left right"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="/apply/settings/users" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>System Users
-                    </p>
+                    <p>System users</p>
                   </a>
                 </li>
               </ul>
             </li>
           @endif
-            <li class="nav-item">
-              <a href="{{ route('logout') }}" class="nav-link"
+
+          <li class="nav-item">
+            <a href="{{ route('logout') }}" class="nav-link"
               onclick="event.preventDefault();
                   document.getElementById('logout-form').submit();">
                 <i class="fas fa-power-off nav-icon"></i>
                 <p>Sign out</p>
-              </a>
-              <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                 @csrf
-              </form>
-            </li>
+            </form>
+          </li>
+            <!-- sign-out -->
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
