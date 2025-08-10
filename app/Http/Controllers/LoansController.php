@@ -74,7 +74,7 @@ class LoansController extends Controller
 
         if(is_null($check) || $check->loan_status == "Completed"){
 
-            $loan_request = $request->loan_request_amount;
+            $loan_request = str_replace(',','',$request->loan_request_amount);
 
             $loan_interest = $request->interest_rate/100 * $loan_request;
 
@@ -128,7 +128,7 @@ class LoansController extends Controller
 
         $loan_request = Loans::where('id',$request->id)->first();
 
-        $loan_approval = $request->loan_approved;
+        $loan_approval = str_replace(',','',$request->loan_approved);
 
         $loan_interest = $request->interest_rate/100 * $loan_approval;
 
@@ -192,36 +192,39 @@ class LoansController extends Controller
 
         $approved->save();
 
-        $disburse = new Transactions();
+        $loan_disbursement = [
+                                [
+                                    'transaction_date' => Carbon::now(),
 
-        $disburse->transaction_date = date('Y-m-d');
+                                    'transaction_detail' => "Loan disbursement - ".$approved->loan_number,
+                                    'transaction_type' => 'Expense',
 
-        $disburse->transaction_detail = "Loan disbursement - ".$approved->loan_number;
+                                    'id_loan' => $request->id,
 
-        $disburse->transaction_type = "Expense";
+                                    'amount' => str_replace(',','',$approved->loan_approved),
 
-        $disburse->id_loan = $request->id;
+                                    'created_by' => Auth::user()->id,
 
-        $disburse->amount = str_replace(',','',$approved->loan_approved);
+                                    'created_at' => Carbon::now()
+                                ],
+                                [
+                                    'transaction_date' => Carbon::now(),
 
-        $disburse->created_by = Auth::user()->id;
+                                    'transaction_detail' => "Loan Processing Fee - ".$approved->loan_number,
 
+                                    'transaction_type' => "Income",
 
-        $record = new Transactions();
+                                    'id_loan' => $request->id,
 
-        $record->transaction_date = date('Y-m-d');
+                                    'amount' => str_replace(',','',$request->loan_processing_fee),
 
-        $record->transaction_detail = "Loan Processing Fee - ".$approved->loan_number;
+                                    'created_by' => Auth::user()->id,
 
-        $record->transaction_type = "Income";
+                                    'created_at' =>Carbon::now()
+                                ]
+                            ];
 
-        $record->id_loan = $request->id;
-
-        $record->amount = str_replace(',','',$request->loan_processing_fee);
-
-        $record->created_by = Auth::user()->id;
-
-        $record->save();
+            Transactions::insert($loan_disbursement);
 
         return redirect()->back()->with('success','Success');
 

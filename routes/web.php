@@ -172,6 +172,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/apply/report/cashbook',[App\Http\Controllers\ReportsController::class,'report_cashbook']);
 
+	Route::post('/apply/report/cashbook',[App\Http\Controllers\ReportsController::class,'query_report_cashbook']);
+
 	Route::get('/apply/report/balance_sheet',[App\Http\Controllers\ReportsController::class,'report_balance_sheet']);
 
 	Route::get('/apply/report/cash_inflow',[App\Http\Controllers\ReportsController::class,'report_cash_inflow']);

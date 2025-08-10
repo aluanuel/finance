@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Transactions;
 use App\Models\Loans;
+use Carbon\Carbon;
 use DB;
 use Auth;
 
@@ -12,7 +13,7 @@ class TransactionsController extends Controller
 {
     public function index(){
 
-        $transaction = Transactions::orderBy('created_at','desc')->limit(100)->get();
+        $transaction = Transactions::orderBy('created_at','desc')->limit(500)->get();
 
         return view('apply.transactions.teller.index',compact('transaction'));
     }
@@ -72,6 +73,77 @@ class TransactionsController extends Controller
         }
 
         return redirect()->back()->with('success','Success');
+
+    }
+
+        public function reinstate_loan(Request $request){
+
+        $loan = Loans::where('id',$request->id)->first();
+
+        $loan_outstanding = str_replace(',','',$request->loan_outstanding);
+
+        $total_loan_outstanding = str_replace(',','',$request->total_loan_outstanding);
+
+        $amount = str_replace(',','',$request->amount);
+
+        $penalty = $amount - $loan_outstanding;
+
+
+        if($amount >= $total_loan_outstanding){
+
+            $entry = new Transactions();
+
+            $entry->transaction_detail = "Loan Repayment - ".$loan->loan_number;
+
+            $entry->transaction_type = "Income";
+
+            $entry->id_client = $loan->id_client;
+
+            $entry->id_loan = $loan->id;
+
+            $entry->amount = $loan_outstanding;
+
+            $entry->transaction_date = Carbon::today();
+
+            $entry->created_by = Auth::user()->id;
+
+            $entry->save();
+
+
+            $loan->loan_recovered = $loan_outstanding;
+
+            $loan->loan_outstanding = 0;
+
+            $loan->date_loan_fully_recovered = date('Y-m-d');
+
+            $loan->loan_status = "Completed";
+
+            $loan->save();
+
+            $trans = new Transactions();
+
+            $trans->transaction_detail = "Penalty (default) - ".$loan->loan_number;
+
+            $trans->transaction_type = "Income";
+
+            $trans->id_client = $loan->id_client;
+
+            $trans->id_loan = $loan->id;
+
+            $trans->amount = $penalty;
+
+            $trans->transaction_date = Carbon::today();
+
+            $trans->created_by = Auth::user()->id;
+
+            $trans->save();
+
+            return redirect()->back()->with('success','Success');
+
+        }else{
+
+            return redirect()->back()->with('error','Error! Deposit amount is less than Total Loan Outstanding');
+        }
 
     }
 

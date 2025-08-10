@@ -33,18 +33,19 @@
               <div class="card-header">
                 <h3 class="card-title">{{$heading}}</h3>
                 <div class="card-tools">
-                  <a href="/generate/report/cashbook" title="Download Report">
-                    <i class="fa fa-download"></i>
-                  </a>
-
-                  <!-- <button type="button" class="btn btn-primary btn-sm" title="Print form" onclick="printContent('printArea')">
-                <i class="fa fa-print"></i>
-               </button> -->
+                  <form action="/apply/report/cashbook" method="post">
+                    @csrf
+                    <div class="row">
+                      <input type="date" class="form-control col-4 mr-1" name="start_date" placeholder="start date">
+                      <input type="date" class="form-control col-4" name="end_date" placeholder="end date">
+                      <input type="submit" name="submit" class="btn btn-sm btn-default ml-1" value="Search">
+                    </div>
+                  </form>
                 </div>
               </div>
               <div class="card-body">
                
-                <table id="example2" class="table table-bordered table-hover">
+                <table id="example3" class="table table-bordered table-hover">
                   <thead>
                     <tr>
                       <th width="150">Date</th>
@@ -64,7 +65,7 @@
 
                       <tr>
                         <td>{{ date('Y-m-d h:i:s',strtotime($tra->created_at)) }}</td>
-                        <td>{{ $tra->transaction_name }}</td>
+                        <td>{{ $tra->transaction_detail }}</td>
                         <td>{{ number_format($tra->amount,2) }}</td>
                         <td></td>
                       </tr>
@@ -75,7 +76,7 @@
 
                       <tr>
                         <td>{{ date('Y-m-d h:i:s',strtotime($tra->created_at)) }}</td>
-                        <td>{{ $tra->transaction_name }}</td>
+                        <td>{{ $tra->transaction_detail }}</td>
                         <td></td>
                         <td>{{ number_format($tra->amount,2) }}</td>
                       </tr>

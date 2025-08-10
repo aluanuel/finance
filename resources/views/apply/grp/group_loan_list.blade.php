@@ -173,7 +173,7 @@
                                       <!-- col-4 -->
                                       <div class="col-3">
                                         <label>Loan Amount to Approve</label>
-                                        <input type="number" class="form-control" required name="loan_approved" placeholder="Loan amount to approve"> 
+                                        <input type="text" class="form-control" required name="loan_approved" placeholder="Loan amount to approve"> 
                                       </div>
                                       <!-- col-3 -->
                                       <div class="col-3">
@@ -414,6 +414,127 @@
                                           <input type="date" class="form-control" required name="repayment_date" placeholder="Date">
                                         </div>
                                         <!-- col-4 -->
+                                      </div>
+                                      <!-- row -->
+                                      <div class="row form-group">
+                                      <div class="col-12 text-center">         
+                                        <button type="submit" class="btn btn-sm btn-outline-primary">Submit</button>
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" data-dismiss="modal">Cancel</button>
+                                      </div>
+                                    </div>
+                                    <!-- row -->
+                                    </form>
+                                  </div>
+                                  <!-- modal-body -->
+                                </div>
+                                <!-- modal_content -->
+                              </div>
+                              <!-- modal-dialog -->
+                            </div>
+                            <!-- modal -->
+                          @elseif($loan->loan_status == "Defaulted")
+                          <td class="text-danger">{{ $loan->loan_status }}</td>  
+                          <td><a href="" class="btn btn-xs btn-outline-danger" data-toggle="modal" data-target="#reinstate_loan{{$loan->id}}">Settle</a></td>
+                            <div class="modal modal-bg-danger fade" id="reinstate_loan{{$loan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h6 class="modal-title justify-content-center text-uppercase" id="exampleModalLongTitle"> Settling loan {{ $loan->loan_number }} </h6>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form action="/apply/loan/reinstate/{{$loan->id}}" method="post">
+                                      @csrf
+                                      <div class="row form-group">
+                                        <div class="col-4">
+                                          <label>Client Name</label>
+                                          <input type="text" class="form-control" value="{{ $loan->name }}" readonly>
+                                        </div>
+                                        <!-- col-4 -->
+                                        <div class="col-4">
+                                          <label>Telephone</label>
+                                          <input type="text" class="form-control" value="{{ $loan->telephone }}" readonly>
+                                        </div>
+                                        <!-- col-4 -->
+                                        <div class="col-4">
+                                          <label>Group Name</label>
+                                          <input type="text" class="form-control" value="{{ $loan->group_name }}" readonly>
+                                        </div>
+                                        <!-- col-4 -->
+                                      </div>
+                                      <!-- row -->
+                                      <div class="row form-group">
+                                        <div class="col-3">
+                                          <label>Total Loan</label>
+                                          <input type="text" class="form-control" value="{{ number_format($loan->total_loan) }}" readonly>
+                                        </div>
+                                        <!-- col-3 -->
+                                        <div class="col-3">
+                                          <label>Loan Recovered</label>
+                                          <input type="text" class="form-control" value="{{ number_format($loan->loan_recovered) }}" readonly>
+                                        </div>
+                                        <!-- col-3 -->
+                                        <div class="col-3">
+                                          <label>Loan Outstanding</label>
+                                          <input type="text" class="form-control" name="loan_outstanding" value="{{ number_format($loan->loan_outstanding) }}" readonly>
+                                        </div>
+                                        <!-- col-3 -->
+                                          @php
+
+                                              $end_date = strtotime($loan->loan_end_date);
+
+                                              $today = strtotime(date('Y-m-d'));
+
+                                              $difference = $today - $end_date;
+
+                                              $default_days = floor($difference / (60 * 60 * 24));
+
+                                              $loan_outstanding = $loan->loan_outstanding;
+
+                                              $rate_on_defaulting = $loan->interest_on_defaulting;
+
+                                              $penalty = (($rate_on_defaulting/100) * $loan_outstanding) * $default_days;
+
+                                              $total_loan_outstanding = $loan_outstanding +  $penalty;
+
+
+                                          @endphp
+
+                                        <div class="col-3">
+                                          <label>Days Defaulted</label>
+                                          <input type="number" class="form-control" required name="loan_repayment" placeholder="Loan Repayment" value="{{ $default_days }}">
+                                        </div>
+                                        <!-- col-3 -->
+                                      </div>
+                                      <!-- row -->
+                                      <div class="row form-group">
+                                        <div class="col-3">
+                                          <label>Interest on defaulting</label>
+                                          <input type="text" class="form-control" name="interest_on_defaulting" value="{{ number_format($penalty) }}">
+                                        </div>
+                                        <!-- col-3 -->
+                                        <div class="col-3">
+                                          <label>Total loan outstanding</label>
+                                          <input type="text" class="form-control" required name="total_loan_outstanding" value="{{ number_format($total_loan_outstanding) }}">
+                                        </div>
+                                        <!-- col-3 -->
+                                        <div class="col-3">
+                                          <label>Deposit amount</label>
+                                          <input type="text" class="form-control" required name="amount" placeholder="Deposit amount">
+                                        </div>
+                                        <!-- col-3 -->
+                                        <!-- <div class="col-3">
+                                          <label>Loan Status</label>
+                                          <div class="form-group">
+                                            <select class="form-control select2bs4" name="loan_status" data-placeholder="Select" style="width: 100%;" required="required">
+                                              <option></option>
+                                              <option>Completed</option>
+                                            </select>
+                                          </div>
+                                        </div> -->
+                                      <!-- col-3 -->
                                       </div>
                                       <!-- row -->
                                       <div class="row form-group">

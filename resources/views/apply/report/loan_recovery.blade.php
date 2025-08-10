@@ -33,7 +33,7 @@
               <div class="card-header">
                 <h3 class="card-title"> {{ $heading }}</h3>
                 <div class="card-tools">
-                  <form action="/apply/report/loan-recovery/" method="post">
+                  <form action="/apply/report/loan-recovery" method="post">
                     @csrf
                     <div class="row">
                       <input type="date" class="form-control col-4 mr-1" name="start_date" placeholder="start date">

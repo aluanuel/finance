@@ -115,6 +115,12 @@
                     <p>Loans fully settled</p>
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a href="/apply/report/cashbook/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Cashbook</p>
+                  </a>
+                </li>
               </ul>
             </li>
             
