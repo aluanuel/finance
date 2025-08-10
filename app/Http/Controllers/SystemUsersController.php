@@ -28,7 +28,7 @@ class SystemUsersController extends Controller
 
         $user = new User();
 
-        $user->name = $request->name;
+        $user->name = ucfirst($request->name);
         $user->email = $request->email;
         $user->telephone = $request->telephone;
         $user->usertype = $request->usertype;

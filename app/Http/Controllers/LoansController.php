@@ -33,10 +33,25 @@ class LoansController extends Controller
                 ->select('loans.*','clients.name','clients.telephone','loan_groups.group_name','loan_groups.group_code')
                 ->where('loans.loan_status','!=','Completed')
                 ->orderBy('date_loan_application','desc')
-                ->limit(250)
+                ->limit(50)
                 ->get();
 
             return view('apply.grp.group_loan_list',compact('loan'));
+    }
+
+    public function loan_search(Request $request){
+
+        $loan = DB::table('loans')
+                ->join('clients','loans.id_client','clients.id')
+                ->join('loan_groups','clients.id_loan_group','loan_groups.id')
+                ->select('loans.*','clients.name','clients.telephone','loan_groups.group_name','loan_groups.group_code')
+                ->where('clients.name','like','%'.$request->name.'%')
+                ->where('loans.loan_status','!=','Completed')
+                ->orderBy('date_loan_application','desc')
+                ->get();
+
+            return view('apply.grp.group_loan_list',compact('loan'));
+
     }
 
     public function view_individual_loans_list(){
@@ -176,6 +191,21 @@ class LoansController extends Controller
         $approved->loan_end_date = $last_instalment_date->instalment_date;
 
         $approved->save();
+
+        $disburse = new Transactions();
+
+        $disburse->transaction_date = date('Y-m-d');
+
+        $disburse->transaction_detail = "Loan disbursement - ".$approved->loan_number;
+
+        $disburse->transaction_type = "Expense";
+
+        $disburse->id_loan = $request->id;
+
+        $disburse->amount = str_replace(',','',$approved->loan_approved);
+
+        $disburse->created_by = Auth::user()->id;
+
 
         $record = new Transactions();
 

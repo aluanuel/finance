@@ -212,7 +212,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/apply/grp', [App\Http\Controllers\LoansController::class, 'view_group_loans_list']);
 
-	Route::get('/apply/grp/{id}',[App\Http\Controllers\LoansController::class, 'index']);
+	Route::post('/apply/grp/',[App\Http\Controllers\LoansController::class, 'loan_search']);
 
 	Route::post('/apply/grp/{id}',[App\Http\Controllers\LoansController::class, 'new_loan_application']);
 

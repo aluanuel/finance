@@ -32,23 +32,30 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Showing Group Loans</h3>
+                <div class="card-tools">
+                  <form action="/apply/grp/" method="post">
+                    @csrf
+                    <div class="row">
+                      <input type="text" class="form-control col-8 mr-1" name="name" placeholder="Enter client name">
+                      <input type="submit" name="submit" class="btn btn-sm btn-default ml-1" value="Search">
+                    </div>
+                  </form>
+                </div>
               </div>
               <!-- /.card-header -->
               <div class="card-body" style="overflow-x: scroll;">
                 <table id="example2" class="table table-bordered table-hover">
                   <thead>
                   <tr>
-                    <th>#</th>
                     <th>loan_number</th>
                     <th>Client_name</th>
-                    <th>Group_name</th>
-                    <th>Loan_request</th>
-                    <th>Loan_approved</th>
+                    <th>loan_group</th>
+                    <th>request</th>
+                    <th>approved</th>
                     <th>total_loan</th>
-                    <th>loan_recovered</th>
-                    <th>loan_outstanding</th>
-                    <th>date_loan_recovery</th>
-                    <th>Loan_status</th>
+                    <th>recovered</th>
+                    <th>outstanding</th>
+                    <th>status</th>
                     <th>action</th>
                   </tr>
                   </thead>
@@ -56,7 +63,6 @@
                     @php $x = 1 @endphp
                     @foreach($loan as $loan)
                       <tr>
-                        <td>{{ $x }}</td>
                         <td><a href="/apply/account/profile/{{$loan->id_client}}">{{ $loan->loan_number }}</a></td>
                         <td><a href="/apply/account/profile/{{$loan->id_client}}">{{ $loan->name }}</a></td>
                         <td>{{ $loan->group_name }}</td>
@@ -65,7 +71,6 @@
                         <td>{{ number_format($loan->total_loan) }}</td>
                         <td>{{ number_format($loan->loan_recovered) }}</td>
                         <td>{{ number_format($loan->loan_outstanding) }}</td>
-                        <td>{{ $loan->date_loan_fully_recovered }}</td>
                         <td>{{ $loan->loan_status }}</td>
 
                         @if($loan->loan_status == "Pending Assessment")

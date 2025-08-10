@@ -546,7 +546,7 @@
                               <div class="col-3">
                                 <label>Copy of Identity Document</label>
                                 <div class="custom-file">
-                                    <input type="file" name="photo_id" class="form-control custom-file-input" id="exampleInputFile" required="required">
+                                    <input type="file" name="photo_id" class="form-control custom-file-input" id="exampleInputFile" z>
                                     <label class="custom-file-label" for="exampleInputFile">Upload ID</label>
                                   </div>
                               </div>

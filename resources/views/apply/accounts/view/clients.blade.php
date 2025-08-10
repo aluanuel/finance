@@ -260,7 +260,7 @@
                               </div>
                               <div class="col-3">
                                 <label>ID Number</label>
-                                <input type="text" name="id_number" autocomplete="off" class="form-control" placeholder="Identity Number" required="required">
+                                <input type="text" name="id_number" autocomplete="off" class="form-control" placeholder="Identity Number">
                               </div>
                               
                             </div>
@@ -275,7 +275,7 @@
                               <div class="col-3">
                                 <label>Copy of National ID</label>
                                 <div class="custom-file">
-                                    <input type="file" name="photo_id" class="form-control custom-file-input" id="exampleInputFile" required="required">
+                                    <input type="file" name="photo_id" class="form-control custom-file-input" id="exampleInputFile">
                                     <label class="custom-file-label" for="exampleInputFile">Upload ID</label>
                                   </div>
                               </div>

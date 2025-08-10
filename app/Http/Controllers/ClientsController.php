@@ -26,7 +26,7 @@ class ClientsController extends Controller
         $accounts = DB::table('clients')
                 ->leftJoin('loan_groups','clients.id_loan_group','loan_groups.id')
                 ->select('clients.*','loan_groups.group_name','loan_groups.group_code')
-                ->limit(100)
+                ->orderBy('clients.id','desc')
                 ->get();
 
         $interest = DB::table('rates')
@@ -50,29 +50,29 @@ class ClientsController extends Controller
 
         $new_client = new Clients();
 
-        $new_client->name = $request->name;
+        $new_client->name = strtoupper($request->name);
 
         $new_client->gender = $request->gender;
 
         $new_client->dob = $request->dob;
 
-        $new_client->resident_district = $request->resident_district;
+        $new_client->resident_district = ucfirst($request->resident_district);
 
-        $new_client->resident_division = $request->resident_division;
+        $new_client->resident_division = ucfirst($request->resident_division);
 
-        $new_client->resident_parish = $request->resident_parish;
+        $new_client->resident_parish = ucfirst($request->resident_parish);
 
-        $new_client->resident_village = $request->resident_village;
+        $new_client->resident_village = ucfirst($request->resident_village);
 
         $new_client->telephone = $request->telephone;
 
         $new_client->marital_status = $request->marital_status;
 
-        $new_client->occupation = $request->occupation;
+        $new_client->occupation = ucfirst($request->occupation);
 
         $new_client->employment_type = $request->employment_type;
 
-        $new_client->district_of_work = $request->district_of_work;
+        $new_client->district_of_work = ucfirst($request->district_of_work);
 
         $new_client->nationality = $request->nationality;
 
@@ -80,7 +80,7 @@ class ClientsController extends Controller
 
         $new_client->id_number = $request->id_number;
 
-        $new_client->permanent_address = $request->permanent_address;
+        $new_client->permanent_address = ucfirst($request->permanent_address);
 
         $new_client->country = $request->country;
 

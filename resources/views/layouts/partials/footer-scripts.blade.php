@@ -160,17 +160,15 @@ $(document).ready(function(){
       "ordering": true,
     });
     $('#example7').DataTable({
-      "paging": true,
-      "lengthChange": false,
       "searching": false,
       "ordering": true,
-      "info": true,
-      "autoWidth": true,
-      "responsive": true,
     });
     $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": true,
       "searching": true,
-      "ordering": true
+      "ordering": true,
+      "autoWidth": true
     });
     $('#example3').DataTable({
       "searching":false,
