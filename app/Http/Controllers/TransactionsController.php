@@ -147,6 +147,26 @@ class TransactionsController extends Controller
 
     }
 
+    public function create_new_transaction_entry(Request $request){
+
+            $entry = new Transactions();
+
+            $entry->transaction_detail = $request->transaction_detail;
+
+            $entry->transaction_type = $request->transaction_type;
+
+            $entry->amount = str_replace(',','',$request->amount);
+
+            $entry->transaction_date = $request->transaction_date;
+
+            $entry->created_by = Auth::user()->id;
+
+            $entry->save();
+
+        return redirect()->back()->with('success','Success');
+
+    }
+
     private function calculate_loan_recovered($recovery,$repayment){
 
         return ($recovery + $repayment);

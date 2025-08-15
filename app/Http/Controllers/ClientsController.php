@@ -27,6 +27,7 @@ class ClientsController extends Controller
                 ->leftJoin('loan_groups','clients.id_loan_group','loan_groups.id')
                 ->select('clients.*','loan_groups.group_name','loan_groups.group_code')
                 ->orderBy('clients.id','desc')
+                ->limit(100)
                 ->get();
 
         $interest = DB::table('rates')
@@ -214,6 +215,33 @@ class ClientsController extends Controller
         }
 
         return redirect()->back()->with('error','Password mismatch');
+    }
+
+
+    public function search_client_account(Request $request){
+        $accounts = DB::table('clients')
+                ->leftJoin('loan_groups','clients.id_loan_group','loan_groups.id')
+                ->select('clients.*','loan_groups.group_name','loan_groups.group_code')
+                ->where('clients.name',$request->name)
+                ->orWhere('loan_groups.group_name','like','%'.$request->name.'%')
+                ->orderBy('clients.id','desc')
+                ->get();
+
+        $interest = DB::table('rates')
+                    ->where('rate_type','Interest on Loan Borrowing')
+                    ->latest()
+                    ->first();
+
+        $processing = DB::table('rates')
+                    ->where('rate_type','Loan Processing')
+                    ->latest()
+                    ->first();
+
+        $groups = DB::table('loan_groups')->get();
+
+        $fees = DB::table('fees')->first();
+
+        return view('apply.accounts.view.clients',compact('accounts','interest','groups','fees','processing'));
     }
 
     public function generate_account_number(){

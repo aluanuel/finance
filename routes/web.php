@@ -255,8 +255,10 @@ Route::group(['middleware' => 'auth'], function () {
 	// display account creation form by the loan officer
 	Route::get('/apply/accounts/new/',[App\Http\Controllers\ClientsController::class,'index']);
 
+	Route::post('/apply/accounts',[App\Http\Controllers\ClientsController::class,'search_client_account'])->name('search-client');
+
 	// register a new client by the loan officer
-	Route::post('/apply/accounts/new',[App\Http\Controllers\ClientsController::class,'create_client_account']);
+	Route::post('/apply/accounts/new',[App\Http\Controllers\ClientsController::class,'create_client_account'])->name('new-account');
 
 	Route::get('/apply/accounts/applications/',[App\Http\Controllers\ClientsController::class,'view_inactive_new_client_accounts']);
 

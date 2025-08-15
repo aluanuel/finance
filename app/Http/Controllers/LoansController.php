@@ -46,6 +46,7 @@ class LoansController extends Controller
                 ->join('loan_groups','clients.id_loan_group','loan_groups.id')
                 ->select('loans.*','clients.name','clients.telephone','loan_groups.group_name','loan_groups.group_code')
                 ->where('clients.name','like','%'.$request->name.'%')
+                ->orWhere('loan_groups.group_name','like','%'.$request->name.'%')
                 ->where('loans.loan_status','!=','Completed')
                 ->orderBy('date_loan_application','desc')
                 ->get();
@@ -74,6 +75,8 @@ class LoansController extends Controller
 
         if(is_null($check) || $check->loan_status == "Completed"){
 
+            $rates = Rates::where('rate_type','Interest on Loan Defaulting')->latest()->first();
+
             $loan_request = str_replace(',','',$request->loan_request_amount);
 
             $loan_interest = $request->interest_rate/100 * $loan_request;
@@ -91,6 +94,8 @@ class LoansController extends Controller
             $new_loan->interest_rate = $request->interest_rate;
 
             $new_loan->loan_processing_rate = $request->loan_processing_rate;
+
+            $new_loan->interest_on_defaulting = $rates->rate;
 
             $new_loan->date_loan_application = $request->date_loan_application;
 
@@ -272,6 +277,8 @@ class LoansController extends Controller
 
         $loan = new Loans();
 
+        $rates = Rates::where('rate_type','Interest on Loan Defaulting')->latest()->first();
+
         $loan->id_client = $client->id;
 
         $loan->loan_number = 10101010;
@@ -281,6 +288,8 @@ class LoansController extends Controller
         $loan->loan_approved = $loan_disbursed;
 
         $loan->interest_rate = $interest_rate;
+
+        $loan->interest_on_defaulting = $rates->rate;
 
         $loan->total_loan = $total_loan;
 

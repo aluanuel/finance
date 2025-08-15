@@ -33,13 +33,7 @@
               <div class="card-header">
                 <h3 class="card-title">Showing Group Loans</h3>
                 <div class="card-tools">
-                  <form action="/apply/grp/" method="post">
-                    @csrf
-                    <div class="row">
-                      <input type="text" class="form-control col-8 mr-1" name="name" placeholder="Enter client name">
-                      <input type="submit" name="submit" class="btn btn-sm btn-default ml-1" value="Search">
-                    </div>
-                  </form>
+                  <a href="" class="btn btn-md btn-outline-success btn-sm" data-toggle="modal" data-target="#search-loan">SEARCH LOAN</a>
                 </div>
               </div>
               <!-- /.card-header -->
@@ -559,6 +553,31 @@
                     @endforeach
                   </tbody>
                 </table>
+                <div class="modal fade" id="search-loan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-xl" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h6 class="modal-title justify-content-center text-uppercase" id="exampleModalLongTitle">Client Registration Form</h6>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <form action="/apply/grp" method="post">
+                            @csrf
+                            <div class="row form-group">
+                              <input type="text" class="form-control col-12" name="name" placeholder="Enter client name or group name" required="required">
+                            </div>
+                            <div class="row form-group d-flex justify-content-center">
+                              <button class="btn btn-success ml-2">Search</button>
+                          </div>
+                          </form>
+                        </div>
+                      </div>
+                      <!-- modal-content -->
+                    </div>
+                  </div>
+                  <!-- modal -->
               </div>
               <!-- card-body -->
             </div>

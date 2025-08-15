@@ -32,7 +32,8 @@
                 <div class="card-header">
                   <h3 class="card-title">Showing Client Accounts</h3>
                   <div class="card-tools">
-                    <a href="" class="btn btn-xs btn-outline-primary" data-toggle="modal" data-target="#new-account">NEW CLIENT</a>
+                    <a href="" class="btn btn-md btn-outline-primary btn-sm" data-toggle="modal" data-target="#new-account">NEW ACCOUNT</a>
+                    <a href="" class="btn btn-md btn-outline-success btn-sm" data-toggle="modal" data-target="#search-account">SEARCH ACCOUNT</a>
                   </div>
                 </div>
                 <div class="card-body">
@@ -40,11 +41,11 @@
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>a/c number</th>
-                        <th>a/c name</th>
+                        <th>a/c_number</th>
+                        <th>a/c_name</th>
                         <th>gender</th>
                         <th>telephone</th>
-                        <th>occupation</th>
+                        <th>group_name</th>
                         <th>account_status</th>
                         <th>#</th>
                       </tr>
@@ -58,7 +59,7 @@
                         <td><a href="/apply/account/profile/{{$ac->id}}">{{ $ac->name }}</a></td>
                         <td><a href="/apply/account/profile/{{$ac->id}}">{{ $ac->gender }}</a></td>
                         <td><a href="/apply/account/profile/{{$ac->id}}">{{ $ac->telephone }}</a></td>
-                        <td><a href="/apply/account/profile/{{$ac->id}}">{{ $ac->occupation }}</a></td>
+                        <td><a href="/apply/account/profile/{{$ac->id}}">{{ $ac->group_name }}</a></td>
                         @switch($ac->account_status)
                           @case(0)
                           <td class="text-danger">Inactive</td>
@@ -203,7 +204,7 @@
                           </button>
                         </div>
                         <div class="modal-body">
-                          <form action="/apply/accounts/new" method="post">
+                          <form action="{{ route('new-account') }}" method="post">
                             @csrf
                             <div class="row form-group">
                               <div class="col-6">
@@ -222,7 +223,7 @@
                               </div>
                               <div class="col-3">
                                 <label>Date of Birth</label>
-                                <input type="date" name="dob" autocomplete="off" class="form-control" placeholder="Date of Birth" required="required">
+                                <input type="date" name="dob" autocomplete="off" class="form-control" placeholder="Date of Birth">
                               </div>
 
                             </div>
@@ -248,7 +249,7 @@
                             <div class="row form-group">
                               <div class="col-3">
                                 <label>Telephone Number</label>
-                                <input type="text" name="telephone" autocomplete="off" class="form-control" placeholder="Telephone Number" required="required">
+                                <input type="text" name="telephone" autocomplete="off" class="form-control" placeholder="Telephone Number">
                               </div>
                               <div class="col-3">
                                 <label>Nationality</label>
@@ -306,6 +307,34 @@
                               <button class="btn btn-primary ml-2">Submit</button>
                             </div>
                         </form>
+                        </div>
+                        <!-- modal-body -->
+                      </div>
+                    </div>
+                  </div>
+                  <!-- modal -->
+                  <div class="modal fade" id="search-account" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h6 class="modal-title justify-content-center text-uppercase" id="exampleModalLongTitle">Search Client Account</h6>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                         <form action="{{ route('search-client')}}" method="POST">
+                          @csrf
+                          <div class="row form-group">
+                            <div class="col-12">
+                              <label>Search Account</label>
+                              <input type="text" class="form-control" name="name" placeholder="Enter account name or group name" required="required">
+                            </div>
+                          </div>
+                          <div class="row form-group d-flex justify-content-center">
+                              <button class="btn btn-success ml-2">Search</button>
+                          </div>
+                        </form> 
                         </div>
                         <!-- modal-body -->
                       </div>

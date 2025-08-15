@@ -32,7 +32,7 @@
               <div class="card-header">
                 <h3 class="card-title">Showing Recent Transactions</h3>
                 <div class="card-tools">
-                  <a class="btn btn-xs btn-outline-primary" data-toggle="modal" data-target="#new_transaction">NEW TRANSACTION</a>
+                  <a class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#new_transaction">NEW TRANSACTION</a>
                 </div>
               </div>
               <!-- /.card-header -->
@@ -45,7 +45,6 @@
                     <th>category</th>
                     <th>narration</th>
                     <th>amount</th>
-                    <th>#</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -53,11 +52,10 @@
                     @foreach($transaction as $item)
                       <tr>
                         <td>{{ $i }}</td>
-                        <td>{{ date('Y-m-d',strtotime($item->created_at)) }}</td>
+                        <td>{{ $item->created_at }}</td>
                         <td>{{ $item->transaction_type }}</td>
                         <td>{{ $item->transaction_detail }}</td>
                         <td>{{ number_format($item->amount) }}</td>
-                        <td></td>
                       </tr>
                       @php $i++ @endphp
                     @endforeach
@@ -76,33 +74,29 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                    <form>
+                    <form action="/apply/teller/transaction" method="post">
+                      @csrf
                       <div class="row form-group">
                         <div class="col-12">
-                          <label>Transaction Category</label>
-                          <div class="form-group">
-                            <select class="form-control select2bs4" name="transaction_category" data-placeholder="Select" style="width: 100%;" required="required" id="transaction_category">
-                              <option></option>
-                              <option>Income</option>
-                              <option>Expenditure</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row form-group">
-                        <div class="col-12">
-                          <label>Transaction Type</label>
+                          <label>Transaction Item</label>
                           <div class="form-group">
                             <select class="form-control select2bs4" name="transaction_type" data-placeholder="Select" style="width: 100%;" required="required">
                               <option></option>
-                              <optgroup id="income">
-                                <option>Income</option>
-                                <option>Expenditure</option>
+                              <optgroup label="Category A (Income)">
+                                  <option value="Income">Bank to Cash (B2C) Transfer</option>
+                                  <option>Investment Income</option>
+                                  <option>Borrowing</option>
+                                  <option>Donation and Grants</option>
+                                  <option value="Income">Other</option>
                               </optgroup>
-                              <optgroup id="expense">
-                                <option>Office supplies</option>
-                                <option>Transport</option>
-                                <option>Allowance</option>
+                              <optgroup label="Category B (Expenditure)">
+                                  <option value="Expense">Cash to Bank (C2B) Transfer</option>
+                                  <option value="Expense">Utilities</option>
+                                  <option value="Expense">Transport</option>
+                                  <option value="Expense">Repairs and Fittings</option>
+                                  <option value="Expense">Allowance</option>
+                                  <option value="Expense">Fees and Taxes</option>
+                                  <option value="Expense">Other</option>
                               </optgroup>
                             </select>
                           </div>
@@ -111,13 +105,13 @@
                       <div class="row form-group">
                         <div class="col-12">
                           <label>Narration</label>
-                          <input type="text" name="transaction_detail" class="form-control" required placeholder="Narration">
+                          <textarea class="form-control" name="transaction_detail" required placeholder="Narration here.."></textarea>
                         </div>
                       </div>
                       <div class="row form-group">
                         <div class="col-6">
                           <label>Amount</label>
-                          <input type="number" name="amount" class="form-control" required placeholder="Amount">
+                          <input type="text" name="amount" class="form-control" required placeholder="Amount">
                         </div>
                         <div class="col-6">
                           <label>Date</label>

@@ -244,28 +244,6 @@ $(document).ready(function(){
         }
     });
 
-    $(wrapper).on("click", ".delete", function(e) {
-        e.preventDefault();
-        $(this).parent('div').remove();
-        x--;
-    })
-
-    var max = 5;
-    var wrapper_family = $(".add_security_family");
-    var add_button_family = $("#add_new_row_family");
-
-    var x = 1;
-    var counter = 1;
-    $(add_button_family).click(function(e) {
-        e.preventDefault();
-        if (x < max) {
-            x++;
-            counter++;
-            $(wrapper_family).append('<div class="row form-group"><div class="input-group col-5"><div class="input-group-prepend"><span class="input-group-text">'+counter+'</span></div><input type="text" class="form-control" name="security_name[]" placeholder="Property name" autocomplete="off"></div><div class="col-2"><input type="text" class="form-control" name="security_number[]" placeholder="Quantity" autocomplete="off"></div><div class="col-2"><input type="text" class="form-control" name="security_value[]" placeholder="Estimated value" autocomplete="off"></div><div class="input-group col-3"><div class="custom-file"><input type="file" name="security_attachment[]" class="form-control custom-file-input" id="exampleInputFile"><label class="custom-file-label" for="exampleInputFile">Upload attachment</label></div></div></div>'); //add input box
-        } else {
-            alert('You Reached the limits')
-        }
-    });
 
     $('#loan_selected').change(function(){
 
@@ -296,8 +274,8 @@ $(document).ready(function(){
 
     $('#transaction_category').change(function(){
       
-      var value = $('#transaction_category option:selected').val();
-      if(value == 'Income'){
+      var optionSelected = $('#transaction_category option:selected');
+      if(optionSelected == 'Income'){
 
         $('#income').show();
         $('#expense').hide();
