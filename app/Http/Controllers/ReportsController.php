@@ -183,7 +183,7 @@ class ReportsController extends Controller
 
     public function report_cashbook(){
 
-        $trans = DB::table('transactions')->where('created_at','like','%'.date('Y-m-d').'%')->orderBy('created_at','desc')->get();
+        $trans = DB::table('transactions')->where('created_at','like','%'.date('Y-m-d').'%')->orderBy('id','desc')->get();
 
         $heading = "Showing cash transactions of today";
 
@@ -198,7 +198,7 @@ class ReportsController extends Controller
 
 
 
-        $trans = DB::table('transactions')->whereBetween('created_at',[$start_date,$end_date])->orderBy('created_at','desc')->get();
+        $trans = DB::table('transactions')->whereBetween('created_at',[$start_date,$end_date])->orderBy('id','desc')->get();
 
         $heading = "Showing cash transactions from ".date('Y-m-d',strtotime($start_date))." to ".date('Y-m-d',strtotime($end_date));
 

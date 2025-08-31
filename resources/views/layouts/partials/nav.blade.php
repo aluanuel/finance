@@ -51,6 +51,48 @@
                 </li>
               </ul>
             </li>
+          @elseif(Auth::user()->usertype == 'User')
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-circle"></i>
+                <p>
+                  Reports
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/apply/report/disbursements/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Loan disbursement</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/report/loan-recovery/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Loan recovery</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/report/loans-defaulted" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Loans defaulted</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/report/loans-fully-settled/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Loans fully settled</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/report/cashbook/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Cashbook</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
           @else
             <li class="nav-item">
               <a href="/apply/accounts/" class="nav-link">

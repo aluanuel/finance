@@ -64,7 +64,7 @@
                     @if($tra->transaction_type == 'Income')
 
                       <tr>
-                        <td>{{ date('Y-m-d h:i:s',strtotime($tra->created_at)) }}</td>
+                        <td>{{ $tra->created_at }}</td>
                         <td>{{ $tra->transaction_detail }}</td>
                         <td>{{ number_format($tra->amount,2) }}</td>
                         <td></td>
@@ -75,7 +75,7 @@
                     @elseif($tra->transaction_type == 'Expense')
 
                       <tr>
-                        <td>{{ date('Y-m-d h:i:s',strtotime($tra->created_at)) }}</td>
+                        <td>{{ $tra->created_at }}</td>
                         <td>{{ $tra->transaction_detail }}</td>
                         <td></td>
                         <td>{{ number_format($tra->amount,2) }}</td>
