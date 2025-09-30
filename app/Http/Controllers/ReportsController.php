@@ -55,7 +55,7 @@ class ReportsController extends Controller
                 ->whereBetween('loans.date_loan_disbursed',[$start_date,$end_date])
                 ->get();
 
-         $heading = "Showing loans disbursed from ".date('F d, Y',strtotime($start_date))." to ".date('F d, Y',strtotime($end_date));
+        $heading = "Showing loans disbursed from ".date('F d, Y',strtotime($start_date))." to ".date('F d, Y',strtotime($end_date));
 
         return view('apply.report.loan_disbursement',compact('loan','heading'));
 
@@ -180,5 +180,29 @@ class ReportsController extends Controller
 
         return view('apply.report.loans_defaulted',compact('loan','heading'));
     }
+
+    public function report_cashbook(){
+
+        $trans = DB::table('transactions')->where('created_at','like','%'.date('Y-m-d').'%')->orderBy('id','desc')->get();
+
+        $heading = "Showing cash transactions of today";
+
+        return view('apply.report.cashbook',compact('trans','heading'));
+    } 
+
+    public function query_report_cashbook(Request $request){
+
+        $start_date = $request->start_date.' 00:00:00';
+
+        $end_date = $request->end_date.' 23:59:59';
+
+
+
+        $trans = DB::table('transactions')->whereBetween('created_at',[$start_date,$end_date])->orderBy('id','desc')->get();
+
+        $heading = "Showing cash transactions from ".date('Y-m-d',strtotime($start_date))." to ".date('Y-m-d',strtotime($end_date));
+
+        return view('apply.report.cashbook',compact('trans','heading'));
+    } 
 
 }

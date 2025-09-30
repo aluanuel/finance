@@ -33,10 +33,27 @@ class LoansController extends Controller
                 ->select('loans.*','clients.name','clients.telephone','loan_groups.group_name','loan_groups.group_code')
                 ->where('loans.loan_status','!=','Completed')
                 ->orderBy('date_loan_application','desc')
-                ->limit(250)
+                ->limit(200)
                 ->get();
 
             return view('apply.grp.group_loan_list',compact('loan'));
+    }
+
+    public function loan_search(Request $request){
+
+        $loan = DB::table('loans')
+                ->join('clients','loans.id_client','clients.id')
+                ->join('loan_groups','clients.id_loan_group','loan_groups.id')
+                ->select('loans.*','clients.name','clients.telephone','loan_groups.group_name','loan_groups.group_code')
+                ->where('clients.name','like','%'.$request->name.'%')
+                ->orWhere('loans.loan_number','like','%'.$request->name.'%')
+                ->orWhere('loan_groups.group_name','like','%'.$request->name.'%')
+                ->where('loans.loan_status','!=','Completed')
+                ->orderBy('date_loan_application','desc')
+                ->get();
+
+            return view('apply.grp.group_loan_list',compact('loan'));
+
     }
 
     public function view_individual_loans_list(){
@@ -59,9 +76,9 @@ class LoansController extends Controller
 
         if(is_null($check) || $check->loan_status == "Completed"){
 
-            $rates = Rates::where('rate_type','Interest on loan defaulting')->latest()->first();
+            $rates = Rates::where('rate_type','Interest on Loan Defaulting')->latest()->first();
 
-            $loan_request = $request->loan_request_amount;
+            $loan_request = str_replace(',','',$request->loan_request_amount);
 
             $loan_interest = $request->interest_rate/100 * $loan_request;
 
@@ -117,7 +134,7 @@ class LoansController extends Controller
 
         $loan_request = Loans::where('id',$request->id)->first();
 
-        $loan_approval = $request->loan_approved;
+        $loan_approval = str_replace(',','',$request->loan_approved);
 
         $loan_interest = $request->interest_rate/100 * $loan_approval;
 
@@ -181,21 +198,39 @@ class LoansController extends Controller
 
         $approved->save();
 
-        $record = new Transactions();
+        $loan_disbursement = [
+                                [
+                                    'transaction_date' => Carbon::now(),
 
-        $record->transaction_date = date('Y-m-d');
+                                    'transaction_detail' => "Loan disbursement - ".$approved->loan_number,
+                                    'transaction_type' => 'Expense',
 
-        $record->transaction_detail = "Loan Processing Fee - ".$approved->loan_number;
+                                    'id_loan' => $request->id,
 
-        $record->transaction_type = "Income";
+                                    'amount' => str_replace(',','',$approved->loan_approved),
 
-        $record->id_loan = $request->id;
+                                    'created_by' => Auth::user()->id,
 
-        $record->amount = str_replace(',','',$request->loan_processing_fee);
+                                    'created_at' => Carbon::now()
+                                ],
+                                [
+                                    'transaction_date' => Carbon::now(),
 
-        $record->created_by = Auth::user()->id;
+                                    'transaction_detail' => "Loan Processing Fee - ".$approved->loan_number,
 
-        $record->save();
+                                    'transaction_type' => "Income",
+
+                                    'id_loan' => $request->id,
+
+                                    'amount' => str_replace(',','',$request->loan_processing_fee),
+
+                                    'created_by' => Auth::user()->id,
+
+                                    'created_at' =>Carbon::now()
+                                ]
+                            ];
+
+            Transactions::insert($loan_disbursement);
 
         return redirect()->back()->with('success','Success');
 
@@ -222,6 +257,10 @@ class LoansController extends Controller
 
         $client->dob = $request->dob;
 
+        $client->telephone = $request->telephone;
+
+        $client->permanent_address = $request->permanent_address;
+
         $client->account_number = $account_number;
 
         $client->id_loan_group = $request->id_loan_group;
@@ -239,6 +278,8 @@ class LoansController extends Controller
 
         $loan = new Loans();
 
+        $rates = Rates::where('rate_type','Interest on Loan Defaulting')->latest()->first();
+
         $loan->id_client = $client->id;
 
         $loan->loan_number = 10101010;
@@ -249,7 +290,7 @@ class LoansController extends Controller
 
         $loan->interest_rate = $interest_rate;
 
-        $loan->loan_processing_rate = $request->loan_processing_rate;
+        $loan->interest_on_defaulting = $rates->rate;
 
         $loan->total_loan = $total_loan;
 

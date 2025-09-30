@@ -20,7 +20,7 @@ class LoanGroupsController extends Controller
 
         $groups = new LoanGroups();
 
-        $groups->group_name = $request->group_name;
+        $groups->group_name = ucfirst($request->group_name);
 
         $groups->group_description = $request->group_description;
 

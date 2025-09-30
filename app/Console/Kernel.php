@@ -4,8 +4,6 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Carbon;
 
 class Kernel extends ConsoleKernel
 {
@@ -27,10 +25,6 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-
-       $schedule->call(function () {
-            DB::table('loans')->where('loan_end_date',Carbon::today())->update(['loan_status'=>'Defaulted']);
-        })->daily();
     }
 
     /**
@@ -44,6 +38,4 @@ class Kernel extends ConsoleKernel
 
         require base_path('routes/console.php');
     }
-
-
 }

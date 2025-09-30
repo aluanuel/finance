@@ -32,6 +32,7 @@ class HomeController extends Controller
         $month = Carbon::now()->format('F, Y');
 
         $disbursement = DB::table('loans')
+                        ->where('loan_status','Running')
                         ->whereBetween('date_loan_disbursed',[$start_date,$end_date])
                         ->sum('loan_approved');
 

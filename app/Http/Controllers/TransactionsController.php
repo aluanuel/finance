@@ -13,7 +13,7 @@ class TransactionsController extends Controller
 {
     public function index(){
 
-        $transaction = Transactions::orderBy('created_at','desc')->limit(100)->get();
+        $transaction = Transactions::orderBy('created_at','desc')->limit(500)->get();
 
         return view('apply.transactions.teller.index',compact('transaction'));
     }
@@ -76,7 +76,7 @@ class TransactionsController extends Controller
 
     }
 
-    public function reinstate_loan(Request $request){
+        public function reinstate_loan(Request $request){
 
         $loan = Loans::where('id',$request->id)->first();
 
@@ -101,7 +101,7 @@ class TransactionsController extends Controller
 
             $entry->id_loan = $loan->id;
 
-            $entry->amount = $loan_outstanding;
+            $entry->amount = $amount;
 
             $entry->transaction_date = Carbon::today();
 
@@ -142,8 +142,67 @@ class TransactionsController extends Controller
 
         }else{
 
-            return redirect()->back()->with('error','Error! Deposit amount is less than Total Loan Outstanding');
+            $entry = new Transactions();
+
+            $entry->transaction_detail = "Loan Repayment - ".$loan->loan_number;
+
+            $entry->transaction_type = "Income";
+
+            $entry->id_client = $loan->id_client;
+
+            $entry->id_loan = $loan->id;
+
+            $entry->amount = $amount;
+
+            $entry->transaction_date = Carbon::today();
+
+            $entry->created_by = Auth::user()->id;
+
+            $entry->save();
+
+            $loan->loan_recovered = $this->calculate_loan_recovered($loan->loan_recovered, $amount);
+
+            $outstanding = $this->calculate_loan_outstanding($loan->loan_outstanding,$amount);
+
+            $loan->loan_outstanding = $outstanding;
+
+            if($outstanding == 0){
+
+                $loan->date_loan_fully_recovered = date('Y-m-d');
+
+                $loan->loan_status = "Completed";
+
+                $loan->save();
+
+            }else{
+
+                $loan->loan_status = "Running";
+
+                $loan->save();
+            }
+
+            return redirect()->back()->with('success','Success');
         }
+
+    }
+
+    public function create_new_transaction_entry(Request $request){
+
+            $entry = new Transactions();
+
+            $entry->transaction_detail = $request->transaction_detail;
+
+            $entry->transaction_type = $request->transaction_type;
+
+            $entry->amount = str_replace(',','',$request->amount);
+
+            $entry->transaction_date = $request->transaction_date;
+
+            $entry->created_by = Auth::user()->id;
+
+            $entry->save();
+
+        return redirect()->back()->with('success','Success');
 
     }
 
