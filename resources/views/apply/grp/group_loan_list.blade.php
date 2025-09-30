@@ -65,10 +65,11 @@
                         <td>{{ number_format($loan->total_loan) }}</td>
                         <td>{{ number_format($loan->loan_recovered) }}</td>
                         <td>{{ number_format($loan->loan_outstanding) }}</td>
-                        <td>{{ $loan->loan_status }}</td>
+                        
 
                         @if($loan->loan_status == "Pending Assessment")
-                          <td><a href="" class="btn btn-xs btn-outline-primary" data-toggle="modal" data-target="#groupLoanApplication{{$loan->id}}">Assess</a></td>
+                            <td>{{ $loan->loan_status }}</td>
+                          <td><a href="" class="btn btn-xs" data-toggle="modal" data-target="#groupLoanApplication{{$loan->id}}">Assess</a></td>
                           <div class="modal fade" id="groupLoanApplication{{$loan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                             <div class="modal-dialog modal-xl" role="document">
                               <div class="modal-content">
@@ -206,7 +207,8 @@
                           </div>
                           <!-- modal -->
                         @elseif($loan->loan_status == "Approved")
-                          <td><a href="" class="btn btn-xs btn-outline-primary" data-toggle="modal" data-target="#groupLoanApplication{{$loan->id}}">Disburse</a></td>
+                        <td class="text-success">{{ $loan->loan_status }}</td>
+                          <td><a href="" class="btn btn-xs btn-outline-success" data-toggle="modal" data-target="#groupLoanApplication{{$loan->id}}">Disburse</a></td>
                           <div class="modal fade" id="groupLoanApplication{{$loan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                             <div class="modal-dialog modal-xl" role="document">
                               <div class="modal-content">
@@ -347,6 +349,7 @@
                           </div>
                           <!-- modal -->  
                         @elseif($loan->loan_status == "Running")  
+                            <td class="text-primary">{{ $loan->loan_status }}</td>
                           <td><a href="" class="btn btn-xs btn-outline-primary" data-toggle="modal" data-target="#loan_repayment{{$loan->id}}">Repay</a></td>
                             <div class="modal fade" id="loan_repayment{{$loan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                               <div class="modal-dialog modal-lg" role="document">
@@ -428,12 +431,12 @@
                             <!-- modal -->
                           @elseif($loan->loan_status == "Defaulted")
                           <td class="text-danger">{{ $loan->loan_status }}</td>  
-                          <td><a href="" class="btn btn-xs btn-outline-danger" data-toggle="modal" data-target="#reinstate_loan{{$loan->id}}">Settle</a></td>
+                          <td><a href="" class="btn btn-xs btn-outline-danger" data-toggle="modal" data-target="#reinstate_loan{{$loan->id}}">Reinstate</a></td>
                             <div class="modal modal-bg-danger fade" id="reinstate_loan{{$loan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                               <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
                                   <div class="modal-header">
-                                    <h6 class="modal-title justify-content-center text-uppercase" id="exampleModalLongTitle"> Settling loan {{ $loan->loan_number }} </h6>
+                                    <h6 class="modal-title justify-content-center text-uppercase" id="exampleModalLongTitle"> Reinstating loan {{ $loan->loan_number }} </h6>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                       <span aria-hidden="true">&times;</span>
                                     </button>
@@ -554,10 +557,10 @@
                   </tbody>
                 </table>
                 <div class="modal fade" id="search-loan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-dialog modal-lg" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h6 class="modal-title justify-content-center text-uppercase" id="exampleModalLongTitle">Client Registration Form</h6>
+                          <h6 class="modal-title justify-content-center text-uppercase" id="exampleModalLongTitle">Search</h6>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
@@ -566,7 +569,7 @@
                           <form action="/apply/grp" method="post">
                             @csrf
                             <div class="row form-group">
-                              <input type="text" class="form-control col-12" name="name" placeholder="Enter client name or group name" required="required">
+                              <input type="text" class="form-control col-12" name="name" placeholder="Search by loan number, client name or group name" required="required">
                             </div>
                             <div class="row form-group d-flex justify-content-center">
                               <button class="btn btn-success ml-2">Search</button>

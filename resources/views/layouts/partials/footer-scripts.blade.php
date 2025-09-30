@@ -148,9 +148,9 @@ $(document).ready(function(){
   $(function () {
     $('#example1').DataTable({
       "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": false,
       "info": true,
       "autoWidth": true,
       "responsive": true,

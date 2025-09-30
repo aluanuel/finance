@@ -44,63 +44,71 @@
                 </div>
               </div>
               <div class="card-body">
-               
-                <table id="example2" class="table table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <th width="100">Date</th>
-                      <th>loan_status</th>
-                      <th>loan_number</th>
-                      <th>client_details</th>
-                      <th>amount_disbursed</th>
-                      <th>processing_fee</th>
-                      <th>total_loan</th>              
-                    </tr>
-                  </thead>
-                  <tbody>
+                <div class="table-responsive">
+                    <table id="example1" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                        <th>Date</th>
+                        <th>loan_status</th>
+                        <th>loan_number</th>
+                        <th>client_details</th>
+                        <th>amount_disbursed</th>
+                        <th>processing_fee</th>
+                        <th>loan_interest</th>
+                        <th>total_loan</th>              
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                    @php 
+                        @php 
 
-                        $total_disbursed = 0;
+                            $total_disbursed = 0;
 
-                        $total_processing_fee = 0;
+                            $total_processing_fee = 0;
 
-                        $total_borrowing = 0;
+                            $total_loan_interest = 0;
 
-                    @endphp
+                            $total_borrowing = 0;
 
-                    @foreach($loan as $loan)
-                      <tr>
-                        <td>{{ $loan->date_loan_disbursed }}</td>
-                        <td>{{ $loan->loan_status }}</td>
-                        <td>{{ $loan->loan_number }}</td>
-                        <td>{{ $loan->account_number }} - {{ $loan->name }}</td>
-                        <td>{{ number_format($loan->loan_approved) }}</td>
-                        <td>{{ number_format(($loan->loan_processing_rate/100) * $loan->loan_approved) }}</td>
-                        <td>{{ number_format($loan->total_loan )}}</td>
-                      </tr>
+                        @endphp
 
-                      @php 
+                        @foreach($loan as $loan)
+                        <tr>
+                            <td>{{ date('d-m-Y',strtotime($loan->date_loan_disbursed)) }}</td>
+                            <td>{{ $loan->loan_status }}</td>
+                            <td>{{ $loan->loan_number }}</td>
+                            <td>{{ $loan->account_number }} - {{ $loan->name }}</td>
+                            <td>{{ number_format($loan->loan_approved) }}</td>
+                            <td>{{ number_format(($loan->loan_processing_rate/100) * $loan->loan_approved) }}</td>
+                            <td>{{ number_format(($loan->interest_rate/100) * $loan->loan_approved) }}</td>
+                            <td>{{ number_format($loan->total_loan )}}</td>
+                        </tr>
 
-                        $total_disbursed += $loan->loan_approved;
+                        @php 
 
-                        $total_processing_fee += ($loan->loan_processing_rate/100) * $loan->loan_approved;
+                            $total_disbursed += $loan->loan_approved;
 
-                        $total_borrowing += $loan->total_loan;
+                            $total_processing_fee += ($loan->loan_processing_rate/100) * $loan->loan_approved;
 
-                    @endphp
+                            $total_loan_interest += ($loan->interest_rate/100) * $loan->loan_approved;
 
-                    @endforeach
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      <th colspan="4">Total</th>
-                      <th>{{ number_format($total_disbursed) }}</th>
-                      <th>{{ number_format($total_processing_fee) }}</th>
-                      <th>{{ number_format($total_borrowing) }}</th>
-                    </tr>
-                  </tfoot>
-                </table>
+                            $total_borrowing += $loan->total_loan;
+
+                        @endphp
+
+                        @endforeach
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                        <th colspan="4">Total</th>
+                        <th>{{ number_format($total_disbursed) }}</th>
+                        <th>{{ number_format($total_processing_fee) }}</th>
+                        <th>{{ number_format($total_loan_interest) }}</th>
+                        <th>{{ number_format($total_borrowing) }}</th>
+                        </tr>
+                    </tfoot>
+                    </table>
+                </div>
               </div>
             </div>
           </div>
