@@ -66,9 +66,9 @@
           <!-- col-4 -->
         </div>
         <!-- row -->
-        <div class="card">
+        <div class="card card-purple">
           <div class="card-header">
-            <h3 class="card-title"> Accounts Summary</h3>
+            <h3 class="card-title text-uppercase">weekly loan recovery schedule</h3>
             <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
@@ -82,7 +82,7 @@
             <div class="row">
               <div class="col-md-6 col-sm-12 table-responsive">
                 <h6 class="text-center text-info text-uppercase">Monday</h6>
-                <table class="table table-bordered table-hover bg-info">
+                <table class="table table-bordered table-hover bg-dark">
                   <thead class="text-uppercase">
                     <tr>
                       <th class="text-white">group_name</th>
@@ -103,7 +103,7 @@
               </div>
               <div class="col-md-6 col-sm-12 table-responsive">
                 <h6 class="text-center text-info text-uppercase">tuesday</h6>
-                <table class="table table-bordered table-hover bg-info">
+                <table class="table table-bordered table-hover bg-dark">
                   <thead class="text-uppercase">
                     <tr>
                       <th class="text-white">group_name</th>
@@ -127,7 +127,7 @@
             <div class="row">
               <div class="col-md-6 col-sm-12 table-responsive">
                 <h6 class="text-center text-info text-uppercase">wednesday</h6>
-                <table class="table table-bordered table-hover bg-info">
+                <table class="table table-bordered table-hover bg-dark">
                   <thead class="text-uppercase">
                     <tr>
                       <th class="text-white">group_name</th>
@@ -148,7 +148,7 @@
               </div>
               <div class="col-md-6 col-sm-12 table-responsive">
                 <h6 class="text-center text-info text-uppercase">thursday</h6>
-                <table class="table table-bordered table-hover bg-info">
+                <table class="table table-bordered table-hover bg-dark">
                   <thead class="text-uppercase">
                     <tr>
                       <th class="text-white">group_name</th>
@@ -172,7 +172,7 @@
             <div class="row">
               <div class="col-md-6 col-sm-12 table-responsive">
                 <h6 class="text-center text-info text-uppercase">friday</h6>
-                <table class="table table-bordered table-hover bg-info border-white">
+                <table class="table table-bordered table-hover bg-dark border-white">
                   <thead class="text-uppercase">
                     <tr>
                       <th class="text-white">group_name</th>
@@ -193,7 +193,7 @@
               </div>
               <div class="col-md-6 col-sm-12 table-responsive">
                 <h6 class="text-center text-info text-uppercase">Saturday</h6>
-                <table class="table table-bordered table-hover bg-info">
+                <table class="table table-bordered table-hover bg-dark">
                   <thead class="text-uppercase">
                     <tr>
                       <th class="text-white">group_name</th>

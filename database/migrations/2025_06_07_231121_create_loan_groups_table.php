@@ -19,6 +19,8 @@ class CreateLoanGroupsTable extends Migration
             $table->string('group_description');
             $table->string('group_address');
             $table->integer('group_code');
+            $table->string('group_schedule_day')->nullable();
+            $table->unsignedBigInteger('id_lead_credit_officer');
             $table->boolean('group_status')->default(0);
             $table->timestamps();
         });
