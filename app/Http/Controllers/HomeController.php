@@ -46,10 +46,23 @@ class HomeController extends Controller
         
         $now = Carbon::now();
 
+        $days_of_week = $now->startOfWeek();       
+        
         $start_of_week = $now->startOfWeek()->toDateString();
 
-        $end_of_week = $now->endOfWeek()->toDateString();
+        $end_of_week = $now->endOfWeek()->toDateString(); 
 
+        $day_one_of_week = $days_of_week->startOfWeek()->isoFormat('dddd, MMMM D, YYYY');
+
+        $day_two_of_week = $days_of_week->addDays(1)->isoFormat('dddd, MMMM D, YYYY');
+
+        $day_three_of_week = $days_of_week->addDays(1)->isoFormat('dddd, MMMM D, YYYY');
+
+        $day_four_of_week = $days_of_week->addDays(1)->isoFormat('dddd, MMMM D, YYYY');
+
+        $day_five_of_week = $days_of_week->addDays(1)->isoFormat('dddd, MMMM D, YYYY');
+
+        $day_six_of_week = $days_of_week->addDays(1)->isoFormat('dddd, MMMM D, YYYY');
 
         $mon_groups = DB::table('loan_groups')->leftJoin('users','loan_groups.id_lead_credit_officer','users.id')
                         ->select('loan_groups.*','users.name')
@@ -243,9 +256,10 @@ class HomeController extends Controller
                                             ];
                     $x++;
                 }
+
             }
         
-        return view('home',compact('disbursement','recovery','completed','month','monday_disbursement','tuesday_disbursement','wednesday_disbursement','thursday_disbursement','friday_disbursement','saturday_disbursement'));
+        return view('home',compact('disbursement','recovery','completed','month','monday_disbursement','tuesday_disbursement','wednesday_disbursement','thursday_disbursement','friday_disbursement','saturday_disbursement','day_one_of_week','day_two_of_week','day_three_of_week','day_four_of_week','day_five_of_week','day_six_of_week'));
     }
 
     

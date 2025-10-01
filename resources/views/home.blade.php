@@ -66,29 +66,29 @@
           <!-- col-4 -->
         </div>
         <!-- row -->
-        <div class="card card-purple">
+        <div class="card card-gray">
           <div class="card-header">
             <h3 class="card-title text-uppercase">weekly loan recovery schedule</h3>
             <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
                   </button>
-                  <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
                     <i class="fas fa-times"></i>
-                  </button> -->
+                  </button>
                 </div>
           </div>
           <div class="card-body">
             <div class="row">
               <div class="col-md-6 col-sm-12 table-responsive">
-                <h6 class="text-center text-info text-uppercase">Monday</h6>
-                <table class="table table-bordered table-hover bg-dark">
+                <h6 class="text-center text-info text-uppercase">{{ $day_one_of_week }}</h6>
+                <table class="table table-bordered table-hover">
                   <thead class="text-uppercase">
                     <tr>
-                      <th class="text-white">group_name</th>
-                      <th class="text-white">target_recovery</th>
-                      <th class="text-white">actual_recovery</th>
-                      <th class="text-white">credit_officer</th>
+                      <th>group_name</th>
+                      <th>target_recovery</th>
+                      <th>actual_recovery</th>
+                      <th>credit_officer</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -104,14 +104,14 @@
                 </table>
               </div>
               <div class="col-md-6 col-sm-12 table-responsive">
-                <h6 class="text-center text-info text-uppercase">tuesday</h6>
-                <table class="table table-bordered table-hover bg-dark">
+                <h6 class="text-center text-info text-uppercase">{{ $day_two_of_week }}</h6>
+                <table class="table table-bordered table-hover">
                   <thead class="text-uppercase">
                     <tr>
-                      <th class="text-white">group_name</th>
-                      <th class="text-white">target_recovery</th>
-                      <th class="text-white">actual_recovery</th>
-                      <th class="text-white">credit_officer</th>
+                      <th>group_name</th>
+                      <th>target_recovery</th>
+                      <th>actual_recovery</th>
+                      <th>credit_officer</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -130,14 +130,14 @@
             <!-- row -->
             <div class="row">
               <div class="col-md-6 col-sm-12 table-responsive">
-                <h6 class="text-center text-info text-uppercase">wednesday</h6>
-                <table class="table table-bordered table-hover bg-dark">
+                <h6 class="text-center text-info text-uppercase">{{ $day_three_of_week }}</h6>
+                <table class="table table-bordered table-hover">
                   <thead class="text-uppercase">
                     <tr>
-                      <th class="text-white">group_name</th>
-                      <th class="text-white">target_recovery</th>
-                      <th class="text-white">actual_recovery</th>
-                      <th class="text-white">credit_officer</th>
+                      <th>group_name</th>
+                      <th>target_recovery</th>
+                      <th>actual_recovery</th>
+                      <th>credit_officer</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -153,14 +153,14 @@
                 </table>
               </div>
               <div class="col-md-6 col-sm-12 table-responsive">
-                <h6 class="text-center text-info text-uppercase">thursday</h6>
-                <table class="table table-bordered table-hover bg-dark">
+                <h6 class="text-center text-info text-uppercase">{{ $day_four_of_week }}</h6>
+                <table class="table table-bordered table-hover">
                   <thead class="text-uppercase">
                     <tr>
-                      <th class="text-white">group_name</th>
-                      <th class="text-white">target_recovery</th>
-                      <th class="text-white">actual_recovery</th>
-                      <th class="text-white">credit_officer</th>
+                      <th>group_name</th>
+                      <th>target_recovery</th>
+                      <th>actual_recovery</th>
+                      <th>credit_officer</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -179,14 +179,14 @@
             <!-- row -->
             <div class="row">
               <div class="col-md-6 col-sm-12 table-responsive">
-                <h6 class="text-center text-info text-uppercase">friday</h6>
-                <table class="table table-bordered table-hover bg-dark border-white">
+                <h6 class="text-center text-info text-uppercase">{{ $day_five_of_week }}</h6>
+                <table class="table table-bordered table-hover">
                   <thead class="text-uppercase">
                     <tr>
-                      <th class="text-white">group_name</th>
-                      <th class="text-white">target_recovery</th>
-                      <th class="text-white">actual_recovery</th>
-                      <th class="text-white">credit_officer</th>
+                      <th>group_name</th>
+                      <th>target_recovery</th>
+                      <th>actual_recovery</th>
+                      <th>credit_officer</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -202,14 +202,14 @@
                 </table>
               </div>
               <div class="col-md-6 col-sm-12 table-responsive">
-                <h6 class="text-center text-info text-uppercase">Saturday</h6>
-                <table class="table table-bordered table-hover bg-dark">
+                <h6 class="text-center text-info text-uppercase">{{ $day_six_of_week }}</h6>
+                <table class="table table-bordered table-hover">
                   <thead class="text-uppercase">
                     <tr>
-                      <th class="text-white">group_name</th>
-                      <th class="text-white">target_recovery</th>
-                      <th class="text-white">actual_recovery</th>
-                      <th class="text-white">credit_officer</th>
+                      <th>group_name</th>
+                      <th>target_recovery</th>
+                      <th>actual_recovery</th>
+                      <th>credit_officer</th>
                     </tr>
                   </thead>
                   <tbody>
