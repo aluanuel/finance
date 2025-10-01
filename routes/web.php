@@ -236,8 +236,12 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/apply/settings/rates/',[App\Http\Controllers\RatesController::class, 'index']);
 	Route::post('/apply/settings/rates',[App\Http\Controllers\RatesController::class, 'create_new_rate']);
 
-	Route::get('/apply/settings/loan/groups',[App\Http\Controllers\LoanGroupsController::class,'index']);
+	Route::get('/apply/settings/loan/groups',[App\Http\Controllers\LoanGroupsController::class,'index'])->name('loan_groups');
 	Route::post('/apply/settings/loan/groups',[App\Http\Controllers\LoanGroupsController::class,'create_new_loan_group']);
+	Route::post('/apply/settings/loan/groups/{id}',[App\Http\Controllers\LoanGroupsController::class,'update_loan_group']);
+
+	Route::get('/apply/settings/loan/groups/schedule',[App\Http\Controllers\GroupLoanScheduleController::class,'index']);
+	Route::post('/apply/settings/loan/groups/schedule',[App\Http\Controllers\LoanGroupsController::class,'create_new_loan_group']);
 	
 	Route::get('/apply/grp/assess/{id}',[App\Http\Controllers\GroupLoanAssessmentController::class, 'index']);
 	Route::post('/apply/grp/assess/{id}',[App\Http\Controllers\GroupLoanAssessmentController::class, 'fillAssessment']);

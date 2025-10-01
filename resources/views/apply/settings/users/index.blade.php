@@ -82,7 +82,7 @@
                                 <div class="form-group">
                                   <select class="form-control select2bs4" name="usertype" data-placeholder="Select" style="width: 100%;" required="required">
                                     <option></option>
-                                    <option value="Loan Officer">Loan Officer</option>
+                                    <option value="Credit Officer">Credit Officer</option>
                                     <option value="Teller">Teller</option>
                                     <option value="Manager">Manager</option>
                                     <option value="User">System User</option>

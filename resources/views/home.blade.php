@@ -92,12 +92,14 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>Aaaagjhetyy</td>
-                      <td>100,0000</td>
-                      <td>55,000</td>
-                      <td>Gift Emmanuel</td>
-                    </tr>
+                    @foreach($monday_disbursement as $mon)
+                      <tr>
+                        <td>{{ $mon['group_name'] }}</td>
+                        <td>{{ number_format($mon['target_recovery']) }}</td>
+                        <td>{{ number_format($mon['actual_recovery']) }}</td>
+                        <td>{{ $mon['lead_credit_officer'] }}</td>
+                      </tr>
+                    @endforeach
                   </tbody>  
                 </table>
               </div>
@@ -113,13 +115,15 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>Aaaagjhetyy</td>
-                      <td>100,0000</td>
-                      <td>55,000</td>
-                      <td>Gift Emmanuel</td>
-                    </tr>
-                  </tbody>   
+                    @foreach($tuesday_disbursement as $mon)
+                      <tr>
+                        <td>{{ $mon['group_name'] }}</td>
+                        <td>{{ number_format($mon['target_recovery']) }}</td>
+                        <td>{{ number_format($mon['actual_recovery']) }}</td>
+                        <td>{{ $mon['lead_credit_officer'] }}</td>
+                      </tr>
+                    @endforeach
+                  </tbody>  
                 </table>
               </div>
             </div>
@@ -137,12 +141,14 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>Aaaagjhetyy</td>
-                      <td>100,0000</td>
-                      <td>55,000</td>
-                      <td>Gift Emmanuel</td>
-                    </tr>
+                    @foreach($wednesday_disbursement as $mon)
+                      <tr>
+                        <td>{{ $mon['group_name'] }}</td>
+                        <td>{{ number_format($mon['target_recovery']) }}</td>
+                        <td>{{ number_format($mon['actual_recovery']) }}</td>
+                        <td>{{ $mon['lead_credit_officer'] }}</td>
+                      </tr>
+                    @endforeach
                   </tbody>  
                 </table>
               </div>
@@ -158,12 +164,14 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>Aaaagjhetyy</td>
-                      <td>100,0000</td>
-                      <td>55,000</td>
-                      <td>Gift Emmanuel</td>
-                    </tr>
+                    @foreach($thursday_disbursement as $mon)
+                      <tr>
+                        <td>{{ $mon['group_name'] }}</td>
+                        <td>{{ number_format($mon['target_recovery']) }}</td>
+                        <td>{{ number_format($mon['actual_recovery']) }}</td>
+                        <td>{{ $mon['lead_credit_officer'] }}</td>
+                      </tr>
+                    @endforeach
                   </tbody>   
                 </table>
               </div>
@@ -182,13 +190,15 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>Aaaagjhetyy</td>
-                      <td>100,0000</td>
-                      <td>55,000</td>
-                      <td>Gift Emmanuel</td>
-                    </tr>
-                  </tbody>  
+                    @foreach($friday_disbursement as $mon)
+                      <tr>
+                        <td>{{ $mon['group_name'] }}</td>
+                        <td>{{ number_format($mon['target_recovery']) }}</td>
+                        <td>{{ number_format($mon['actual_recovery']) }}</td>
+                        <td>{{ $mon['lead_credit_officer'] }}</td>
+                      </tr>
+                    @endforeach
+                  </tbody> 
                 </table>
               </div>
               <div class="col-md-6 col-sm-12 table-responsive">
@@ -203,13 +213,15 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>Aaaagjhetyy</td>
-                      <td>100,0000</td>
-                      <td>55,000</td>
-                      <td>Gift Emmanuel</td>
-                    </tr>
-                  </tbody>   
+                    @foreach($friday_disbursement as $mon)
+                      <tr>
+                        <td>{{ $mon['group_name'] }}</td>
+                        <td>{{ number_format($mon['target_recovery']) }}</td>
+                        <td>{{ number_format($mon['actual_recovery']) }}</td>
+                        <td>{{ $mon['lead_credit_officer'] }}</td>
+                      </tr>
+                    @endforeach
+                  </tbody>    
                 </table>
               </div>
             </div>

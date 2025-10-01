@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 
 class GroupLoanScheduleController extends Controller
 {
-    //
+    public function index(){
+        
+        return view('apply.settings.loan_groups.loan_group_activity_schedule');
+    }
 }
 
 

@@ -207,11 +207,30 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                  <a href="/apply/settings/loan/groups" class="nav-link">
-                    <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Loan groups</p>
+                  <a href="#" class="nav-link">
+                    <i class="fas fa-circle nav-icon"></i>
+                    <p>
+                      Group Loans
+                      <i class="fas fa-angle-left right"></i>
+                    </p>
                   </a>
-                </li>
+                    <ul class="nav nav-treeview">
+                      <li class="nav-item">
+                        <a href="/apply/settings/loan/groups" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Groups
+                          </p>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="/apply/settings/loan/groups/schedule" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Activity Schedule
+                          </p>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
                 <li class="nav-item">
                   <a href="/apply/settings/users" class="nav-link">
                     <i class="fas fa-angle-right nav-icon"></i>

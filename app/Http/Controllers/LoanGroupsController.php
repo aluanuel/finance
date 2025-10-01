@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\LoanGroups;
 use App\Models\Fees;
 use App\Models\Clients;
+use DB;
 
 use Illuminate\Http\Request;
 
@@ -11,9 +12,14 @@ class LoanGroupsController extends Controller
 {
     public function index(){
 
-        $groups = LoanGroups::all();
+        $groups = DB::table('loan_groups')
+                        ->leftJoin('users','loan_groups.id_lead_credit_officer','users.id')
+                        ->select('loan_groups.*','users.name')
+                        ->get();
 
-        return view('apply.settings.loan_groups.index',compact('groups'));
+        $officers = DB::table('users')->where('usertype','Credit Officer')->get();
+
+        return view('apply.settings.loan_groups.index',compact('groups','officers'));
     }
 
     public function create_new_loan_group(Request $request){
@@ -36,6 +42,24 @@ class LoanGroupsController extends Controller
         }
 
             return redirect()->back()->with('error','Error');
+    }
+
+    public function update_loan_group(Request $request){
+
+        $group = LoanGroups::where('id',$request->id)->first();
+
+        $group->group_address = $request->group_address;
+
+        $group->day_loan_disbursement = $request->day_loan_disbursement;
+
+        $group->day_loan_recovery = $request->day_loan_recovery;
+
+        $group->id_lead_credit_officer = $request->id_lead_credit_officer;
+
+        $group->save();
+
+        return redirect()->back()->with('success','Success');  
+
     }
 
     public function view_loan_group_members(Request $request){
