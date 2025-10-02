@@ -95,26 +95,26 @@ class TransactionsController extends Controller
 
         if(($amount - $penalty) >= 0){
 
+            if($penalty > 0){
 
-            $trans = new Transactions();
+                $trans = new Transactions();
 
-            $trans->transaction_detail = "Penalty (default) - ".$loan->loan_number;
+                $trans->transaction_detail = "Penalty (default) - ".$loan->loan_number;
 
-            $trans->transaction_type = "Income";
+                $trans->transaction_type = "Income";
 
-            $trans->id_client = $loan->id_client;
+                $trans->id_client = $loan->id_client;
 
-            $trans->id_loan = $loan->id;
+                $trans->id_loan = $loan->id;
 
-            $trans->amount = $penalty;
+                $trans->amount = $penalty;
 
-            $trans->transaction_date = Carbon::today();
+                $trans->transaction_date = Carbon::today();
 
-            $trans->created_by = Auth::user()->id;
+                $trans->created_by = Auth::user()->id;
 
-            $trans->save();
-
-            
+                $trans->save();
+            }
 
             $entry = new Transactions();
 
