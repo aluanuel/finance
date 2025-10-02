@@ -194,7 +194,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/apply/restore/previous/loan',[App\Http\Controllers\LoansController::class,'record_previous_loan']);
 
 
-	/*=================== Reports accessible by loan officers ==============*/
+	/*=================== Performance metrics ==============*/
+
+	Route::get('/apply/metrics/group/single_loan_group/{id}',[App\Http\Controllers\MetricsController::class,'single_loan_group']);
 
 
 

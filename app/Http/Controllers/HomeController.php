@@ -119,6 +119,7 @@ class HomeController extends Controller
                                         ->sum('transactions.amount');
 
                     $monday_disbursement[$i] =   [
+                                                "id" => $value->id,
                                                 "group_name" => $value->group_name,
                                                 "target_recovery" => $target_recovery,
                                                 "actual_recovery" => $actual_recovery,
@@ -145,6 +146,7 @@ class HomeController extends Controller
                                         ->sum('transactions.amount');
 
                     $tuesday_disbursement[$j] =   [
+                                                "id" => $value->id,
                                                 "group_name" => $value->group_name,
                                                 "target_recovery" => $target_recovery,
                                                 "actual_recovery" => $actual_recovery,
@@ -171,6 +173,7 @@ class HomeController extends Controller
                                         ->sum('transactions.amount');
 
                     $wednesday_disbursement[$i] =   [
+                                                "id" => $value->id,
                                                 "group_name" => $value->group_name,
                                                 "target_recovery" => $target_recovery,
                                                 "actual_recovery" => $actual_recovery,
@@ -197,6 +200,7 @@ class HomeController extends Controller
                                         ->sum('transactions.amount');
 
                     $thursday_disbursement[$x] =   [
+                                                "id" => $value->id,
                                                 "group_name" => $thur->group_name,
                                                 "target_recovery" => $target_recovery,
                                                 "actual_recovery" => $actual_recovery,
@@ -223,6 +227,7 @@ class HomeController extends Controller
                                         ->sum('transactions.amount');
 
                     $friday_disbursement[$x] =   [
+                                                "id" => $value->id,
                                                 "group_name" => $thur->group_name,
                                                 "target_recovery" => $target_recovery,
                                                 "actual_recovery" => $actual_recovery,
@@ -249,6 +254,7 @@ class HomeController extends Controller
                                         ->sum('transactions.amount');
 
                     $saturday_disbursement[$x] =   [
+                                                "id" => $value->id,
                                                 "group_name" => $thur->group_name,
                                                 "target_recovery" => $target_recovery,
                                                 "actual_recovery" => $actual_recovery,

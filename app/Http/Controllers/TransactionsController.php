@@ -82,43 +82,19 @@ class TransactionsController extends Controller
 
         $loan_outstanding = str_replace(',','',$request->loan_outstanding);
 
-        $total_loan_outstanding = str_replace(',','',$request->total_loan_outstanding);
+        // $total_loan_outstanding = str_replace(',','',$request->total_loan_outstanding);
 
         $amount = str_replace(',','',$request->amount);
 
-        $penalty = $amount - $loan_outstanding;
+        $penalty = str_replace(',','',$request->penalty_on_defaulting);
+
+        $loan_recovered = $amount - $penalty;
+
+        $new_loan_outstanding = $loan_outstanding - $loan_recovered;
 
 
-        if($amount >= $total_loan_outstanding){
+        if(($amount - $penalty) >= 0){
 
-            $entry = new Transactions();
-
-            $entry->transaction_detail = "Loan Repayment - ".$loan->loan_number;
-
-            $entry->transaction_type = "Income";
-
-            $entry->id_client = $loan->id_client;
-
-            $entry->id_loan = $loan->id;
-
-            $entry->amount = $loan_outstanding;
-
-            $entry->transaction_date = Carbon::today();
-
-            $entry->created_by = Auth::user()->id;
-
-            $entry->save();
-
-
-            $loan->loan_recovered = $loan_outstanding;
-
-            $loan->loan_outstanding = 0;
-
-            $loan->date_loan_fully_recovered = date('Y-m-d');
-
-            $loan->loan_status = "Completed";
-
-            $loan->save();
 
             $trans = new Transactions();
 
@@ -138,11 +114,52 @@ class TransactionsController extends Controller
 
             $trans->save();
 
+            
+
+            $entry = new Transactions();
+
+            $entry->transaction_detail = "Loan Repayment - ".$loan->loan_number;
+
+            $entry->transaction_type = "Income";
+
+            $entry->id_client = $loan->id_client;
+
+            $entry->id_loan = $loan->id;
+
+            $entry->amount = $loan_recovered;
+
+            $entry->transaction_date = Carbon::today();
+
+            $entry->created_by = Auth::user()->id;
+
+            $entry->save();
+
+
+            $loan->loan_recovered = $loan_recovered;
+
+            $loan->loan_outstanding = $new_loan_outstanding;
+
+            if($new_loan_outstanding <= 0){
+
+                $loan->date_loan_fully_recovered = date('Y-m-d');
+
+                $loan->loan_status = "Completed";
+
+            }else{
+
+                $loan->loan_status = "Running";
+
+            }
+
+                $loan->save();
+
+
+
             return redirect()->back()->with('success','Success');
 
         }else{
 
-            return redirect()->back()->with('error','Error! Deposit amount is less than Total Loan Outstanding');
+            return redirect()->back()->with('error','Error! Deposit amount is less than the penalty');
         }
 
     }

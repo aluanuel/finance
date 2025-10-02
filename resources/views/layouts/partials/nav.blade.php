@@ -93,6 +93,7 @@
                 </li>
               </ul>
             </li>
+
           @else
             <li class="nav-item">
               <a href="/apply/accounts/" class="nav-link">
@@ -165,7 +166,35 @@
                 </li>
               </ul>
             </li>
-            
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-circle"></i>
+                <p>
+                  Metrics
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/apply/metrics/individual/loans/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Individual Loan Performance</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/metrics/group/loans/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Group Loan Performance</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/metrics/credit_officer/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Credit Officer Performance</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
             <li class="nav-item">
               <a href="/apply/restore/previous/loan/" class="nav-link">
                 <i class="fas fa-angle-right nav-icon"></i>

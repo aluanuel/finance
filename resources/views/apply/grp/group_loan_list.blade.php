@@ -508,8 +508,8 @@
                                       <!-- row -->
                                       <div class="row form-group">
                                         <div class="col-3">
-                                          <label>Interest on defaulting</label>
-                                          <input type="text" class="form-control" name="interest_on_defaulting" value="{{ number_format($penalty) }}">
+                                          <label>Penalty on defaulting</label>
+                                          <input type="text" class="form-control" name="penalty_on_defaulting" value="{{ number_format($penalty) }}">
                                         </div>
                                         <!-- col-3 -->
                                         <div class="col-3">

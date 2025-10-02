@@ -182,6 +182,42 @@ $(document).ready(function(){
       "searching": true,
       "ordering": true,
     });
+    $('#example8').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "autoWidth": true
+    });
+    $('#example9').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "autoWidth": true
+    });
+    $('#example10').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "autoWidth": true
+    });
+    $('#example11').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "autoWidth": true
+    });
+    $('#example12').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "autoWidth": true
+    });
+
   });
   $('#total_monthly_income').focus(function() {
 
