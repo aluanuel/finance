@@ -103,17 +103,17 @@ class HomeController extends Controller
 
                 foreach ($mon_groups as $value) {
                     
-                    $target_recovery = DB::table('loan_schedules')
-                                        ->join('loans','loan_schedules.id_loan','loans.id')
+                    $target_recovery = DB::table('loans')
                                         ->join('clients','loans.id_client','clients.id')
                                         ->where('clients.id_loan_group',$value->id)
-                                        ->whereBetween('loan_schedules.instalment_date',[$start_of_week,$end_of_week])
-                                        ->sum('loan_schedules.instalment_amount');
+                                        ->where('loans.loan_status','!=','Completed')
+                                        ->sum('loans.instalment_amount');
 
                     $actual_recovery = DB::table('transactions')
                                         ->join('loans','transactions.id_loan','loans.id')
                                         ->join('clients','loans.id_client','clients.id')
                                         ->where('clients.id_loan_group',$value->id)
+                                        ->where('loans.loan_status','!=','Completed')
                                         ->where('transactions.transaction_detail','like','%Loan Repayment%')
                                         ->whereBetween('transactions.transaction_date',[$start_of_week,$end_of_week])
                                         ->sum('transactions.amount');

@@ -24,6 +24,7 @@ class CreateLoansTable extends Migration
             $table->double('loan_processing_rate');
             $table->double('loan_approved')->nullable();
             $table->double('total_loan')->nullable();
+            $table->double('loan_instalment')->nullable();
             $table->date('date_loan_application');
             $table->date('date_loan_approved')->nullable();
             $table->date('date_loan_disbursed')->nullable();

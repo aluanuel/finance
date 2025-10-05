@@ -275,6 +275,8 @@ class LoansController extends Controller
 
         $loan_recovered = $request->loan_recovered;
 
+        $loan->loan_period = $request->loan_period;
+
         $loan = new Loans();
 
         $rates = Rates::where('rate_type','Interest on Loan Defaulting')->latest()->first();
@@ -293,7 +295,9 @@ class LoansController extends Controller
 
         $loan->total_loan = $total_loan;
 
-        $loan->loan_period = $request->loan_period;
+        $loan->loan_period = $loan_period;
+
+        $loan->instalment_amount = $total_loan/$loan_period;
 
         $loan->loan_recovered = $loan_recovered;
 

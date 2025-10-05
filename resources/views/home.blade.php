@@ -96,9 +96,9 @@
                     @foreach($monday_disbursement as $mon)
                       <tr>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['group_name'] }}</a></td>
-                        <td>{{ number_format($mon['target_recovery']) }}</td>
-                        <td>{{ number_format($mon['actual_recovery']) }}</td>
-                        <td>{{ $mon['lead_credit_officer'] }}</td>
+                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['target_recovery']) }}</a></td>
+                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['actual_recovery']) }}</a></td>
+                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['lead_credit_officer'] }}</a></td>
                       </tr>
                       @php
                         $mon_target += $mon['target_recovery'];
@@ -132,9 +132,9 @@
                     @foreach($tuesday_disbursement as $mon)
                       <tr>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['group_name'] }}</a></td>
-                        <td>{{ number_format($mon['target_recovery']) }}</td>
-                        <td>{{ number_format($mon['actual_recovery']) }}</td>
-                        <td>{{ $mon['lead_credit_officer'] }}</td>
+                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['target_recovery']) }}</a></td>
+                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['actual_recovery']) }}</a></td>
+                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['lead_credit_officer'] }}</a></td>
                       </tr>
                       @php
                         $tue_target += $mon['target_recovery'];
@@ -171,9 +171,9 @@
                     @foreach($wednesday_disbursement as $mon)
                       <tr>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['group_name'] }}</a></td>
-                        <td>{{ number_format($mon['target_recovery']) }}</td>
-                        <td>{{ number_format($mon['actual_recovery']) }}</td>
-                        <td>{{ $mon['lead_credit_officer'] }}</td>
+                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['target_recovery']) }}</a></td>
+                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['actual_recovery']) }}</a></td>
+                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['lead_credit_officer'] }}</a></td>
                       </tr>
                       @php
                         $wed_target += $mon['target_recovery'];
@@ -207,9 +207,9 @@
                     @foreach($thursday_disbursement as $mon)
                       <tr>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['group_name'] }}</a></td>
-                        <td>{{ number_format($mon['target_recovery']) }}</td>
-                        <td>{{ number_format($mon['actual_recovery']) }}</td>
-                        <td>{{ $mon['lead_credit_officer'] }}</td>
+                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['target_recovery']) }}</a></td>
+                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['actual_recovery']) }}</a></td>
+                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['lead_credit_officer'] }}</a></td>
                       </tr>
                       @php
                         $thur_target += $mon['target_recovery'];
@@ -246,9 +246,9 @@
                     @foreach($friday_disbursement as $mon)
                       <tr>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['group_name'] }}</a></td>
-                        <td>{{ number_format($mon['target_recovery']) }}</td>
-                        <td>{{ number_format($mon['actual_recovery']) }}</td>
-                        <td>{{ $mon['lead_credit_officer'] }}</td>
+                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['target_recovery']) }}</a></td>
+                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['actual_recovery']) }}</a></td>
+                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['lead_credit_officer'] }}</a></td>
                       </tr>
                       @php
                         $fri_target += $mon['target_recovery'];
@@ -282,9 +282,9 @@
                     @foreach($saturday_disbursement as $mon)
                       <tr>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['group_name'] }}</a></td>
-                        <td>{{ number_format($mon['target_recovery']) }}</td>
-                        <td>{{ number_format($mon['actual_recovery']) }}</td>
-                        <td>{{ $mon['lead_credit_officer'] }}</td>
+                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['target_recovery']) }}</a></td>
+                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['actual_recovery']) }}</a></td>
+                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['lead_credit_officer'] }}</a></td>
                       </tr>
                       @php
                         $sat_target += $mon['target_recovery'];

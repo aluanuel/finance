@@ -170,7 +170,7 @@
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-circle"></i>
                 <p>
-                  Metrics
+                  Performance Metrics
                   <i class="fas fa-angle-left right"></i>
                 </p>
               </a>
@@ -178,32 +178,32 @@
                 <li class="nav-item">
                   <a href="/apply/metrics/individual/loans/" class="nav-link">
                     <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Individual Loan Performance</p>
+                    <p>Individual Loans</p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="/apply/metrics/group/loans/" class="nav-link">
                     <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Group Loan Performance</p>
+                    <p>Group Loans</p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="/apply/metrics/credit_officer/" class="nav-link">
                     <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Credit Officer Performance</p>
+                    <p>Credit Officers</p>
                   </a>
                 </li>
               </ul>
             </li>
             <li class="nav-item">
               <a href="/apply/restore/previous/loan/" class="nav-link">
-                <i class="fas fa-angle-right nav-icon"></i>
+                <i class="fa fa-spinner nav-icon"></i>
                 <p>Restore previous loan</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-cog"></i>
+                <i class="nav-icon fas fa-cog fa-fw"></i>
                 <p>
                   Settings
                   <i class="fas fa-angle-left right"></i>
@@ -239,7 +239,7 @@
                   <a href="#" class="nav-link">
                     <i class="fas fa-circle nav-icon"></i>
                     <p>
-                      Group Loans
+                      Loan Groups
                       <i class="fas fa-angle-left right"></i>
                     </p>
                   </a>
@@ -252,9 +252,9 @@
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a href="/apply/settings/loan/groups/schedule" class="nav-link">
+                        <a href="/apply/settings/loan/groups/officers" class="nav-link">
                           <i class="far fa-circle nav-icon"></i>
-                          <p>Activity Schedule
+                          <p>Credit Officers
                           </p>
                         </a>
                       </li>
@@ -262,7 +262,7 @@
                   </li>
                 <li class="nav-item">
                   <a href="/apply/settings/users" class="nav-link">
-                    <i class="fas fa-angle-right nav-icon"></i>
+                    <i class="fas fa-user nav-icon"></i>
                     <p>System users</p>
                   </a>
                 </li>

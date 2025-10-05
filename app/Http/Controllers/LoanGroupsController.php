@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\LoanGroups;
 use App\Models\Fees;
 use App\Models\Clients;
+use App\Models\CreditOfficerLoanGroups;
 use DB;
 
 use Illuminate\Http\Request;
@@ -57,6 +58,16 @@ class LoanGroupsController extends Controller
         $group->id_lead_credit_officer = $request->id_lead_credit_officer;
 
         $group->save();
+
+        $officer = new CreditOfficerLoanGroups();
+
+        $officer->id_credit_officer = $request->id_lead_credit_officer;
+
+        $officer->id_loan_group = $request->id;
+
+        $officer->credit_officer_role = "Lead Officer";
+
+        $officer->save();
 
         return redirect()->back()->with('success','Success');  
 

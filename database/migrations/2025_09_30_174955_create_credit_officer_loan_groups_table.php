@@ -17,6 +17,7 @@ class CreateCreditOfficerLoanGroupsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('id_credit_officer');
             $table->unsignedBigInteger('id_loan_group');
+            $table->string('credit_officer_role');
             $table->timestamps();
         });
     }

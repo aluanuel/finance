@@ -242,7 +242,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/apply/settings/loan/groups',[App\Http\Controllers\LoanGroupsController::class,'create_new_loan_group']);
 	Route::post('/apply/settings/loan/groups/{id}',[App\Http\Controllers\LoanGroupsController::class,'update_loan_group']);
 
-	Route::get('/apply/settings/loan/groups/schedule',[App\Http\Controllers\GroupLoanScheduleController::class,'index']);
+	Route::get('/apply/settings/loan/groups/officers',[App\Http\Controllers\CreditOfficerLoanGroupsController::class,'index']);
+
+	Route::post('/apply/settings/loan_groups/officers',[App\Http\Controllers\CreditOfficerLoanGroupsController::class,'assign_credit_officer_a_loan_group']);
+	
 	Route::post('/apply/settings/loan/groups/schedule',[App\Http\Controllers\LoanGroupsController::class,'create_new_loan_group']);
 	
 	Route::get('/apply/grp/assess/{id}',[App\Http\Controllers\GroupLoanAssessmentController::class, 'index']);
