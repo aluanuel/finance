@@ -64,14 +64,15 @@ class HomeController extends Controller
 
         $day_six_of_week = $days_of_week->addDays(1)->isoFormat('dddd, MMMM D, YYYY');
 
-        $mon_groups = DB::table('loan_groups')->leftJoin('users','loan_groups.id_lead_credit_officer','users.id')
+        $mon_groups = DB::table('loan_groups')
+                        ->join('users','loan_groups.id_lead_credit_officer','users.id')
                         ->select('loan_groups.*','users.name')
-                        ->where('day_loan_disbursement','Monday')
+                        ->where('loan_groups.day_loan_disbursement','Monday')
                         ->get();
 
         $tue_groups = DB::table('loan_groups')->join('users','loan_groups.id_lead_credit_officer','users.id')
                         ->select('loan_groups.*','users.name')
-                        ->where('day_loan_disbursement','Tuesday')
+                        ->where('loan_groups.day_loan_disbursement','Tuesday')
                         ->get();
 
         $wed_groups = DB::table('loan_groups')->join('users','loan_groups.id_lead_credit_officer','users.id')
@@ -93,6 +94,7 @@ class HomeController extends Controller
                         ->select('loan_groups.*','users.name')
                         ->where('day_loan_disbursement','Saturday')
                         ->get();
+
         if(sizeof($mon_groups) == 0 || sizeof($tue_groups) == 0 || sizeof($wed_groups) == 0 || sizeof($thur_groups) == 0 || sizeof($fri_groups) == 0 || sizeof($sat_groups) == 0){
 
             return redirect()->route('loan_groups')->with('error','Incomplete settings');
@@ -130,12 +132,11 @@ class HomeController extends Controller
 
                 foreach ($tue_groups as $value) {
                     
-                    $target_recovery = DB::table('loan_schedules')
-                                        ->join('loans','loan_schedules.id_loan','loans.id')
+                    $target_recovery = DB::table('loans')
                                         ->join('clients','loans.id_client','clients.id')
                                         ->where('clients.id_loan_group',$value->id)
-                                        ->whereBetween('loan_schedules.instalment_date',[$start_of_week,$end_of_week])
-                                        ->sum('loan_schedules.instalment_amount');
+                                        ->where('loans.loan_status','!=','Completed')
+                                        ->sum('loans.instalment_amount');
 
                     $actual_recovery = DB::table('transactions')
                                         ->join('loans','transactions.id_loan','loans.id')
@@ -157,12 +158,11 @@ class HomeController extends Controller
 
                 foreach ($wed_groups as $value) {
                     
-                    $target_recovery = DB::table('loan_schedules')
-                                        ->join('loans','loan_schedules.id_loan','loans.id')
+                    $target_recovery = DB::table('loans')
                                         ->join('clients','loans.id_client','clients.id')
                                         ->where('clients.id_loan_group',$value->id)
-                                        ->whereBetween('loan_schedules.instalment_date',[$start_of_week,$end_of_week])
-                                        ->sum('loan_schedules.instalment_amount');
+                                        ->where('loans.loan_status','!=','Completed')
+                                        ->sum('loans.instalment_amount');
 
                     $actual_recovery = DB::table('transactions')
                                         ->join('loans','transactions.id_loan','loans.id')
@@ -182,83 +182,80 @@ class HomeController extends Controller
                     $i++;
                 }
 
-                foreach ($thur_groups as $thur) {
+                foreach ($thur_groups as $value) {
                     
-                    $target_recovery = DB::table('loan_schedules')
-                                        ->join('loans','loan_schedules.id_loan','loans.id')
+                    $target_recovery = DB::table('loans')
                                         ->join('clients','loans.id_client','clients.id')
-                                        ->where('clients.id_loan_group',$thur->id)
-                                        ->whereBetween('loan_schedules.instalment_date',[$start_of_week,$end_of_week])
-                                        ->sum('loan_schedules.instalment_amount');
+                                        ->where('clients.id_loan_group',$value->id)
+                                        ->where('loans.loan_status','!=','Completed')
+                                        ->sum('loans.instalment_amount');
 
                     $actual_recovery = DB::table('transactions')
                                         ->join('loans','transactions.id_loan','loans.id')
                                         ->join('clients','loans.id_client','clients.id')
-                                        ->where('clients.id_loan_group',$thur->id)
+                                        ->where('clients.id_loan_group',$value->id)
                                         ->where('transactions.transaction_detail','like','%Loan Repayment%')
                                         ->whereBetween('transactions.transaction_date',[$start_of_week,$end_of_week])
                                         ->sum('transactions.amount');
 
                     $thursday_disbursement[$x] =   [
                                                 "id" => $value->id,
-                                                "group_name" => $thur->group_name,
+                                                "group_name" => $value->group_name,
                                                 "target_recovery" => $target_recovery,
                                                 "actual_recovery" => $actual_recovery,
-                                                "lead_credit_officer" =>$thur->name
+                                                "lead_credit_officer" =>$value->name
                                             ];
                     $x++;
                 }
 
-                foreach ($fri_groups as $thur) {
+                foreach ($fri_groups as $value) {
                     
-                    $target_recovery = DB::table('loan_schedules')
-                                        ->join('loans','loan_schedules.id_loan','loans.id')
+                    $target_recovery = DB::table('loans')
                                         ->join('clients','loans.id_client','clients.id')
-                                        ->where('clients.id_loan_group',$thur->id)
-                                        ->whereBetween('loan_schedules.instalment_date',[$start_of_week,$end_of_week])
-                                        ->sum('loan_schedules.instalment_amount');
+                                        ->where('clients.id_loan_group',$value->id)
+                                        ->where('loans.loan_status','!=','Completed')
+                                        ->sum('loans.instalment_amount');
 
                     $actual_recovery = DB::table('transactions')
                                         ->join('loans','transactions.id_loan','loans.id')
                                         ->join('clients','loans.id_client','clients.id')
-                                        ->where('clients.id_loan_group',$thur->id)
+                                        ->where('clients.id_loan_group',$value->id)
                                         ->where('transactions.transaction_detail','like','%Loan Repayment%')
                                         ->whereBetween('transactions.transaction_date',[$start_of_week,$end_of_week])
                                         ->sum('transactions.amount');
 
                     $friday_disbursement[$x] =   [
                                                 "id" => $value->id,
-                                                "group_name" => $thur->group_name,
+                                                "group_name" => $value->group_name,
                                                 "target_recovery" => $target_recovery,
                                                 "actual_recovery" => $actual_recovery,
-                                                "lead_credit_officer" =>$thur->name
+                                                "lead_credit_officer" =>$value->name
                                             ];
                     $x++;
                 }
 
-                foreach ($sat_groups as $thur) {
+                foreach ($sat_groups as $value) {
                     
-                    $target_recovery = DB::table('loan_schedules')
-                                        ->join('loans','loan_schedules.id_loan','loans.id')
+                    $target_recovery = DB::table('loans')
                                         ->join('clients','loans.id_client','clients.id')
-                                        ->where('clients.id_loan_group',$thur->id)
-                                        ->whereBetween('loan_schedules.instalment_date',[$start_of_week,$end_of_week])
-                                        ->sum('loan_schedules.instalment_amount');
+                                        ->where('clients.id_loan_group',$value->id)
+                                        ->where('loans.loan_status','!=','Completed')
+                                        ->sum('loans.instalment_amount');
 
                     $actual_recovery = DB::table('transactions')
                                         ->join('loans','transactions.id_loan','loans.id')
                                         ->join('clients','loans.id_client','clients.id')
-                                        ->where('clients.id_loan_group',$thur->id)
+                                        ->where('clients.id_loan_group',$value->id)
                                         ->where('transactions.transaction_detail','like','%Loan Repayment%')
                                         ->whereBetween('transactions.transaction_date',[$start_of_week,$end_of_week])
                                         ->sum('transactions.amount');
 
                     $saturday_disbursement[$x] =   [
                                                 "id" => $value->id,
-                                                "group_name" => $thur->group_name,
+                                                "group_name" => $value->group_name,
                                                 "target_recovery" => $target_recovery,
                                                 "actual_recovery" => $actual_recovery,
-                                                "lead_credit_officer" =>$thur->name
+                                                "lead_credit_officer" =>$value->name
                                             ];
                     $x++;
                 }
