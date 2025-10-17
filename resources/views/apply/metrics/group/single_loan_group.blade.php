@@ -29,16 +29,27 @@
         @include('layouts.flash')
       	<div class="row">
          <div class="col-12">
-            <div class="card" id="printArea">
+            <div class="card">
               <div class="card-header">
                 <h3 class="card-title">{{ $heading }}</h3>
                 <div class="card-tools">
-                  <form action="/apply/report/disbursements" method="post">
+                  <form action="/apply/metrics/group/single_loan_group/{{$group->id }}" method="post">
                     @csrf
                     <div class="row">
-                      <input type="date" class="form-control col-4 mr-1" name="start_date" placeholder="start date">
-                      <input type="date" class="form-control col-4" name="end_date" placeholder="end date">
-                      <input type="submit" name="submit" class="btn btn-sm btn-default ml-1" value="Search">
+                      <div class="form-group mr-2">
+                        <div class="input-group mb-3">
+                          <select class="form-control select2bs4" style="width: auto;" id="inputGroupSelect02" name="period" data-placeholder="Select week" required>
+                            <option></option>
+                            @foreach($weekly_calendar as $week)
+                            <option>{{ $week['period'] }}</option>
+                            @endforeach
+                          </select>
+                          <!-- <label class="input-group-text" for="inputGroupSelect02">Search</label> -->
+                          <input type="submit" name="submit" class="btn btn-sm btn-default btn-flat" value="Search">
+                        </div>
+
+                      </div>
+                      <!-- <input type="submit" name="submit" class="btn btn-sm btn-default ml-1" value="Search"> -->
                     </div>
                   </form>
                 </div>

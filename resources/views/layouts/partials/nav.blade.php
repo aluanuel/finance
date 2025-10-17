@@ -184,7 +184,7 @@
                 <li class="nav-item">
                   <a href="/apply/metrics/group/loans/" class="nav-link">
                     <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Group Loans</p>
+                    <p>Loan Groups</p>
                   </a>
                 </li>
                 <li class="nav-item">

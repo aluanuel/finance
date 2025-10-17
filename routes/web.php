@@ -196,7 +196,13 @@ Route::group(['middleware' => 'auth'], function () {
 
 	/*=================== Performance metrics ==============*/
 
+	Route::get('/apply/metrics/group/loans/',[App\Http\Controllers\MetricsController::class,'performance_group_loan']);
+
+	Route::post('/apply/metrics/group/loans/',[App\Http\Controllers\MetricsController::class,'search_performance_group_loan']);
+
 	Route::get('/apply/metrics/group/single_loan_group/{id}',[App\Http\Controllers\MetricsController::class,'single_loan_group']);
+
+	Route::post('/apply/metrics/group/single_loan_group/{id}',[App\Http\Controllers\MetricsController::class,'search_single_loan_group']);
 
 
 
