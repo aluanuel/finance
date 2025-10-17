@@ -275,7 +275,7 @@ class LoansController extends Controller
 
         $loan_recovered = $request->loan_recovered;
 
-        $loan->loan_period = $request->loan_period;
+        $loan_period = $request->loan_period;
 
         $loan = new Loans();
 

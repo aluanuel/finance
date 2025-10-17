@@ -46,8 +46,6 @@ class MetricsController extends Controller
                         ->whereBetween('transaction_date',[$start_of_week,$end_of_week])
                         ->first();
 
-            // dd($recovery);
-
             if(is_null($recovery)){
 
                 $actual_recovery = 0;

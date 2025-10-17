@@ -37,8 +37,6 @@ class LoanGroupsController extends Controller
 
         if($groups->save()){
 
-            $this->reset();
-
             return redirect()->back()->with('success','Success');
         }
 
