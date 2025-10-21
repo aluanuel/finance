@@ -48,6 +48,13 @@
                       <th>end_date</th>
                     </tr>
                   </thead>
+                  @php
+
+                  $sum_total_loan = 0;
+
+                  $sum_loan_recovered = 0;
+
+                  @endphp
                   <tbody>
                     @foreach($loan as $ln)
                       <tr>
@@ -60,8 +67,25 @@
                         <td>{{ $ln->loan_start_date }}</td>
                         <td>{{ $ln->loan_end_date }}</td>
                       </tr>
+                      @php
+
+                      $sum_total_loan += $ln->total_loan;
+
+                      $sum_loan_recovered += $ln->loan_recovered;
+                      
+                      @endphp
                     @endforeach
                   </tbody>
+                  <tfoot>
+                    <tr>
+                      <th colspan="3">total</th>
+                      <th>{{ number_format($sum_total_loan) }}</th>
+                      <th>{{ number_format($sum_loan_recovered) }}</th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </tfoot>
                 </table>
               </div>
             </div>
