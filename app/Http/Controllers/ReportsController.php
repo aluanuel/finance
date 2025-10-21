@@ -127,7 +127,7 @@ class ReportsController extends Controller
             $loan = DB::table('loans')->join('clients','loans.id_client','clients.id')
                     ->select('clients.name','loans.*')
                     ->where('loans.loan_status','Completed')
-                    ->orderBy('loans.loan_number','desc')
+                    ->orderBy('loans.date_loan_fully_recovered','desc')
                     ->get();
             $heading = 'Showing loans fully settled recently';
 
@@ -140,12 +140,13 @@ class ReportsController extends Controller
                     ->select('clients.name','loans.*')
                     ->where('loans.loan_status','Completed')
                     ->whereBetween('loans.date_loan_fully_recovered',[$start_date,$end_date])
-                    ->orderBy('loans.loan_number','desc')
+                    ->orderBy('loans.date_loan_fully_recovered','desc')
                     ->get();
 
             $heading = 'Showing loan fully settled in '.Carbon::now()->format('F, Y');
 
         }
+
 
         return view('apply.report.loans_fully_settled',compact('loan','heading'));
     }

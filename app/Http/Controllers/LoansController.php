@@ -248,6 +248,8 @@ class LoansController extends Controller
 
         $client = new Clients();
 
+        $id_loan_group = $request->id_loan_group;
+
         $account_number = (\App::call('\App\Http\Controllers\ClientsController@generate_account_number'));
 
         $client->name = $request->name;
@@ -262,7 +264,15 @@ class LoansController extends Controller
 
         $client->account_number = $account_number;
 
-        $client->id_loan_group = $request->id_loan_group;
+        if(is_string($id_loan_group)){
+
+            $client->id_loan_group = null;
+
+        }else{
+
+            $client->id_loan_group = $request->id_loan_group;
+
+        }
         
         $client->save();
 

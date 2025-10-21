@@ -25,7 +25,7 @@ class MetricsController extends Controller
                         ->select('loan_groups.*','users.name')
                         ->get();
 
-        $weekly_calendar = $this->showWeeklyData();
+        $weekly_calendar = $this->show_weekly_data();
 
         $i = 0;
 
@@ -94,6 +94,20 @@ class MetricsController extends Controller
                 ->get();
          $x = 0;
 
+         // $recent_target_recovery = $now->toDateString();
+         // $this->recent_target_recovery(,$now->toDateString(),$request->id);
+
+         
+        $start_of_recent_week = $now->subWeeks()->startOfWeek()->toDateString();
+
+        $end_of_recent_week = $now->endOfWeek()->toDateString();
+
+        $recent_target_recovery = $this->recent_target_recovery($start_of_recent_week,$now->toDateString(),$request->id);
+
+        $recent_actual_recovery = $this->recent_actual_recovery($start_of_recent_week,$end_of_recent_week,$request->id);
+
+        $balance_recent_target_recovery = ($recent_target_recovery - $recent_actual_recovery);
+
         foreach($group_loans as $loan){
 
             $recovery = DB::table('transactions')
@@ -128,9 +142,9 @@ class MetricsController extends Controller
 
         }
 
-        $weekly_calendar = $this->showWeeklyData();
+        $weekly_calendar = $this->show_weekly_data();
 
-        return view('apply.metrics.group.single_loan_group',compact('heading','single_loan_recovery','outstanding','officers','group','weekly_calendar'));
+        return view('apply.metrics.group.single_loan_group',compact('heading','single_loan_recovery','outstanding','officers','group','weekly_calendar','balance_recent_target_recovery'));
     }
 
     public function search_single_loan_group(Request $request){
@@ -140,6 +154,9 @@ class MetricsController extends Controller
         $start_of_week = Carbon::parse($period[0]);
 
         $end_of_week = Carbon::parse($period[1]);
+
+        // dd($balance_recent_target_recovery);
+
 
         $officers = DB::table('credit_officer_loan_groups')
                     ->join('users','credit_officer_loan_groups.id_credit_officer','users.id')
@@ -156,7 +173,6 @@ class MetricsController extends Controller
         $group_loans = DB::table('loans')
                 ->join('clients','loans.id_client','clients.id')
                 ->where('clients.id_loan_group',$request->id)
-                ->where('loans.loan_status','!=','Completed')
                 ->select('clients.name','loans.*')
                 ->get();
          $x = 0;
@@ -166,42 +182,69 @@ class MetricsController extends Controller
             $recovery = DB::table('transactions')
                         ->where('id_loan',$loan->id)
                         ->where('transaction_detail','like','%Loan Repayment%')
-                        ->whereBetween('transaction_date',[$start_of_week,$end_of_week])
-                        ->first();
+                        ->whereBetween('transaction_date',[$start_of_week->format('Y-m-d'),$end_of_week->format('Y-m-d')])
+                        ->get();
 
-            if(is_null($recovery)){
+            if(sizeof($recovery) == 0){
 
-                $actual_recovery = 0;
-
-                $created_at = $end_of_week;
-
-            }else{
-
-                $actual_recovery = $recovery->amount;
-
-                $created_at = $recovery->created_at;
-            }
-
-            
-
-            $single_loan_recovery[$x] = [
+                $single_loan_recovery[$x] = [
 
                                     "name" => $loan->name,
                                     "target_recovery" => $loan->instalment_amount,
-                                    "actual_recovery" => $actual_recovery,
-                                    "created_at" => $created_at
+                                    "actual_recovery" => 0,
+                                    "created_at" => $end_of_week
                                 ];
-            $x++;
+                    $x++;
+
+            }else{
+
+                
+
+                foreach($recovery as $rec){
+
+                    // $actual_recovery = $rec->amount;
+
+                    // $created_at = $rec->created_at;
+
+                    $single_loan_recovery[$x] = [
+
+                                    "name" => $loan->name,
+                                    "target_recovery" => $loan->instalment_amount,
+                                    "actual_recovery" => $rec->amount,
+                                    "created_at" => $rec->created_at
+                                ];
+
+                    $x++;
+
+                }
+            }
+
+
 
         }
 
-        $weekly_calendar = $this->showWeeklyData();
+        // dd($group_loans);
 
-        return view('apply.metrics.group.single_loan_group',compact('heading','single_loan_recovery','outstanding','officers','group','weekly_calendar'));
+        $start_of_recent_week = $start_of_week->subWeeks()->toDateString();
+
+        $end_of_recent_week = $end_of_week->subWeeks()->toDateString();
+
+
+        $recent_target_recovery = $this->recent_target_recovery($start_of_recent_week,Carbon::now()->toDateString(),$request->id);
+
+        $recent_actual_recovery = $this->recent_actual_recovery($start_of_recent_week,$end_of_recent_week,$request->id);
+
+        $balance_recent_target_recovery = ($recent_target_recovery - $recent_actual_recovery);
+
+        // dd($recent_actual_recovery);
+
+        $weekly_calendar = $this->show_weekly_data();
+
+        return view('apply.metrics.group.single_loan_group',compact('heading','single_loan_recovery','outstanding','officers','group','weekly_calendar','balance_recent_target_recovery'));
 
     }
 
-    private function showWeeklyData(){
+    private function show_weekly_data(){
         // $weeks = [];
 
         for ($i = 0; $i < 20; $i++) {
@@ -211,6 +254,32 @@ class MetricsController extends Controller
         }
 
         return $weeks;
+    }
+
+    private function recent_target_recovery($start_date,$end_date,$id_loan_group){
+
+        $target_recovery = DB::table('loans')
+                ->join('clients','loans.id_client','clients.id')
+                ->where('clients.id_loan_group',$id_loan_group)
+                ->where('loans.loan_status','!=','Completed')
+                // ->whereNotBetween('loans.date_loan_fully_recovered',[$start_date,$end_date])
+                ->sum('loans.instalment_amount');
+
+        return $target_recovery;
+
+    }
+
+    private function recent_actual_recovery($start_date,$end_date,$id_loan_group){
+
+        $actual_recovery = DB::table('transactions')
+                                ->join('loans','transactions.id_loan','loans.id')
+                                ->join('clients','loans.id_client','clients.id')
+                                ->where('clients.id_loan_group',$id_loan_group)
+                                ->where('transactions.transaction_detail','like','%Loan Repayment%')
+                                ->whereBetween('transactions.transaction_date',[$start_date,$end_date])
+                                ->sum('transactions.amount');
+
+        return $actual_recovery;
     }
 }
 

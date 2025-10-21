@@ -157,7 +157,7 @@ $(document).ready(function(){
     });
     $('#example6').DataTable({
       "searching": true,
-      "ordering": true,
+      "ordering": false,
     });
     $('#example7').DataTable({
       "searching": false,

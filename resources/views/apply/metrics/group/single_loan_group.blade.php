@@ -58,7 +58,7 @@
                 <div class="row">
                   <div class="col-md-9 col-sm-12">
                     <div class="table-responsive">
-                      <table id="example1" class="table table-bordered table-hover">
+                      <table id="example10" class="table table-bordered table-hover">
                         <thead>
                           <tr>
                             <th>date</th>
@@ -93,8 +93,18 @@
                         </tbody>
                         <tfoot>
                           <tr>
-                            <th colspan="2">Total</th>
+                            <th colspan="2">sub total</th>
                             <th>{{ number_format($total_target_recovery) }}</th>
+                            <th></th>
+                          </tr>
+                          <tr class="text-danger">
+                            <td colspan="2">* Balance of recent target recovery</td>
+                            <td>{{ number_format($balance_recent_target_recovery) }}</td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <th colspan="2">Total</th>
+                            <th>{{ number_format($total_target_recovery + $balance_recent_target_recovery) }}</th>
                             <th>{{ number_format($total_actual_recovery) }}</th>
                           </tr>
                         </tfoot>
