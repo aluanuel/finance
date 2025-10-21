@@ -59,6 +59,7 @@
                           <tr>
                             <th>name</th>
                             <th>target_recovery</th>
+                            <th>deficit_target_recovery</th>
                             <th>actual_recovery</th>
                             <th>calendar_day</th>
                             <th>credit_officer</th>
@@ -70,6 +71,7 @@
                       <tr>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['group_name'] }}</a></td>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['target_recovery']) }}</a></td>
+                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['balance_recent_target_recovery']) }}</a></td>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['actual_recovery']) }}</a></td>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['recovery_day'] }}</a></td>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['lead_credit_officer'] }}</a></td>

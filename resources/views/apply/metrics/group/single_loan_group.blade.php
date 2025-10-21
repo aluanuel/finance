@@ -98,7 +98,7 @@
                             <th></th>
                           </tr>
                           <tr class="text-danger">
-                            <td colspan="2">* Balance of recent target recovery</td>
+                            <td colspan="2">* Deficit in recent target recovery</td>
                             <td>{{ number_format($balance_recent_target_recovery) }}</td>
                             <td></td>
                           </tr>

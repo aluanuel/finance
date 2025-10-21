@@ -34,7 +34,9 @@ class MetricsController extends Controller
                     $target_recovery = DB::table('loans')
                                         ->join('clients','loans.id_client','clients.id')
                                         ->where('clients.id_loan_group',$value->id)
-                                        ->where('loans.loan_status','!=','Completed')
+                                        ->where('loans.loan_status','Running')
+                                        ->orWhere('clients.id_loan_group',$value->id)
+                                        ->where('loans.loan_status','Defaulted')
                                         ->sum('loans.instalment_amount');
 
                     $actual_recovery = DB::table('transactions')
@@ -46,16 +48,33 @@ class MetricsController extends Controller
                                         ->whereBetween('transactions.transaction_date',[$start_of_week,$end_of_week])
                                         ->sum('transactions.amount');
 
+
+                    $start_of_recent_week = $now->startOfWeek()->subWeeks()->toDateString();
+
+                    $end_of_recent_week = $now->endOfWeek()->toDateString();
+
+                    // dd($end_of_recent_week);
+
+
+                    $recent_target_recovery = $this->recent_target_recovery($start_of_recent_week,Carbon::now()->toDateString(),$value->id);
+
+                    $recent_actual_recovery = $this->recent_actual_recovery($start_of_recent_week,$end_of_recent_week,$value->id);
+
+                    $balance_recent_target_recovery = ($recent_target_recovery - $recent_actual_recovery);
+
                     $disbursement[$i] =   [
                                                 "id" => $value->id,
                                                 "group_name" => $value->group_name,
                                                 "target_recovery" => $target_recovery,
+                                                "balance_recent_target_recovery" => $balance_recent_target_recovery,
                                                 "actual_recovery" => $actual_recovery,
                                                 "recovery_day" => $value->day_loan_recovery,
                                                 "lead_credit_officer" =>$value->name
                                             ];
                     $i++;
                 }
+
+                // dd($disbursement);
 
         return view('apply.metrics.group.index',compact('heading','disbursement','weekly_calendar'));
     }
@@ -68,6 +87,8 @@ class MetricsController extends Controller
 
     public function single_loan_group(Request $request){
 
+        $id_loan_group = $request->id;
+
         $now = Carbon::now();      
         
         $start_of_week = $now->startOfWeek()->toDateString();
@@ -76,7 +97,7 @@ class MetricsController extends Controller
 
         $officers = DB::table('credit_officer_loan_groups')
                     ->join('users','credit_officer_loan_groups.id_credit_officer','users.id')
-                    ->where('credit_officer_loan_groups.id_loan_group',$request->id)
+                    ->where('credit_officer_loan_groups.id_loan_group',$id_loan_group)
                     ->select('users.name','credit_officer_loan_groups.credit_officer_role')
                     ->get();
         $group = DB::table('loan_groups')->where('id',$request->id)->first(); 
@@ -84,18 +105,17 @@ class MetricsController extends Controller
         $heading = "Showing ".$group->group_name." loan recovery from ".$now->startOfWeek()->format('d M, Y')." to ".$now->endOfWeek()->format('d M, Y');
 
 
-        $outstanding = DB::table('loans')->join('clients','loans.id_client','clients.id') ->where('clients.id_loan_group',$request->id)->sum('loans.loan_outstanding');
+        $outstanding = DB::table('loans')->join('clients','loans.id_client','clients.id') ->where('clients.id_loan_group',$id_loan_group)->sum('loans.loan_outstanding');
 
         $group_loans = DB::table('loans')
                 ->join('clients','loans.id_client','clients.id')
-                ->where('clients.id_loan_group',$request->id)
-                ->where('loans.loan_status','!=','Completed')
+                ->where('clients.id_loan_group',$id_loan_group)
+                ->where('loans.loan_status','Running')
+                ->orWhere('loans.loan_status','Defaulted')
+                ->where('clients.id_loan_group',$id_loan_group)
                 ->select('clients.name','loans.*')
                 ->get();
          $x = 0;
-
-         // $recent_target_recovery = $now->toDateString();
-         // $this->recent_target_recovery(,$now->toDateString(),$request->id);
 
          
         $start_of_recent_week = $now->subWeeks()->startOfWeek()->toDateString();
@@ -155,24 +175,27 @@ class MetricsController extends Controller
 
         $end_of_week = Carbon::parse($period[1]);
 
-        // dd($balance_recent_target_recovery);
+        $id_loan_group = $request->id;
 
 
         $officers = DB::table('credit_officer_loan_groups')
                     ->join('users','credit_officer_loan_groups.id_credit_officer','users.id')
-                    ->where('credit_officer_loan_groups.id_loan_group',$request->id)
+                    ->where('credit_officer_loan_groups.id_loan_group',$id_loan_group)
                     ->select('users.name','credit_officer_loan_groups.credit_officer_role')
                     ->get();
-        $group = DB::table('loan_groups')->where('id',$request->id)->first(); 
+        $group = DB::table('loan_groups')->where('id',$id_loan_group)->first(); 
 
         $heading = "Showing ".$group->group_name." loan recovery from ".$start_of_week->format('d M, Y')." to ".$end_of_week->format('d M, Y');
 
 
-        $outstanding = DB::table('loans')->join('clients','loans.id_client','clients.id') ->where('clients.id_loan_group',$request->id)->sum('loans.loan_outstanding');
+        $outstanding = DB::table('loans')->join('clients','loans.id_client','clients.id') ->where('clients.id_loan_group',$id_loan_group)->sum('loans.loan_outstanding');
 
         $group_loans = DB::table('loans')
                 ->join('clients','loans.id_client','clients.id')
-                ->where('clients.id_loan_group',$request->id)
+                ->where('clients.id_loan_group',$id_loan_group)
+                ->where('loans.loan_status','Running')
+                ->orWhere('loans.loan_status','Defaulted')
+                ->where('clients.id_loan_group',$id_loan_group)
                 ->select('clients.name','loans.*')
                 ->get();
          $x = 0;
@@ -183,47 +206,44 @@ class MetricsController extends Controller
                         ->where('id_loan',$loan->id)
                         ->where('transaction_detail','like','%Loan Repayment%')
                         ->whereBetween('transaction_date',[$start_of_week->format('Y-m-d'),$end_of_week->format('Y-m-d')])
+                        ->orderBy('id_loan','asc')
                         ->get();
 
-            if(sizeof($recovery) == 0){
+            if(sizeof($recovery) > 0 ){
+
+                $actual_recovery = $recovery->sum('amount');
+
+                    foreach($recovery as $rec){
+
+                        $created_at = $rec->created_at;
+                    }
+
 
                 $single_loan_recovery[$x] = [
 
                                     "name" => $loan->name,
                                     "target_recovery" => $loan->instalment_amount,
-                                    "actual_recovery" => 0,
-                                    "created_at" => $end_of_week
+                                    "actual_recovery" => $actual_recovery,
+                                    "created_at" => $created_at
                                 ];
-                    $x++;
 
             }else{
 
-                
-
-                foreach($recovery as $rec){
-
-                    // $actual_recovery = $rec->amount;
-
-                    // $created_at = $rec->created_at;
-
-                    $single_loan_recovery[$x] = [
+                 $single_loan_recovery[$x] = [
 
                                     "name" => $loan->name,
                                     "target_recovery" => $loan->instalment_amount,
-                                    "actual_recovery" => $rec->amount,
-                                    "created_at" => $rec->created_at
+                                    "actual_recovery" => 0,
+                                    "created_at" => $end_of_week->format('Y-m-d')
                                 ];
-
-                    $x++;
-
-                }
             }
 
+            
 
+            
+            $x++;
 
         }
-
-        // dd($group_loans);
 
         $start_of_recent_week = $start_of_week->subWeeks()->toDateString();
 
@@ -235,8 +255,6 @@ class MetricsController extends Controller
         $recent_actual_recovery = $this->recent_actual_recovery($start_of_recent_week,$end_of_recent_week,$request->id);
 
         $balance_recent_target_recovery = ($recent_target_recovery - $recent_actual_recovery);
-
-        // dd($recent_actual_recovery);
 
         $weekly_calendar = $this->show_weekly_data();
 
@@ -261,8 +279,9 @@ class MetricsController extends Controller
         $target_recovery = DB::table('loans')
                 ->join('clients','loans.id_client','clients.id')
                 ->where('clients.id_loan_group',$id_loan_group)
-                ->where('loans.loan_status','!=','Completed')
-                // ->whereNotBetween('loans.date_loan_fully_recovered',[$start_date,$end_date])
+                ->where('loans.loan_status','Running')
+                ->orWhere('clients.id_loan_group',$id_loan_group)
+                ->where('loans.loan_status','Defaulted')
                 ->sum('loans.instalment_amount');
 
         return $target_recovery;
