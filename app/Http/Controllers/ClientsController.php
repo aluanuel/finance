@@ -222,7 +222,7 @@ class ClientsController extends Controller
         $accounts = DB::table('clients')
                 ->leftJoin('loan_groups','clients.id_loan_group','loan_groups.id')
                 ->select('clients.*','loan_groups.group_name','loan_groups.group_code')
-                ->where('clients.name',$request->name)
+                ->where('clients.name','like','%'.$request->name.'%')
                 ->orWhere('loan_groups.group_name','like','%'.$request->name.'%')
                 ->orderBy('clients.id','desc')
                 ->get();

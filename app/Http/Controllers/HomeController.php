@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Traits\MyTrait;
 use DB;
 use Auth;
 
@@ -18,6 +19,8 @@ class HomeController extends Controller
     {
         $this->middleware('auth');
     }
+
+    use MyTrait;
 
     /**
      * Show the application dashboard.
@@ -63,6 +66,10 @@ class HomeController extends Controller
         $day_five_of_week = $days_of_week->addDays(1)->isoFormat('dddd, MMMM D, YYYY');
 
         $day_six_of_week = $days_of_week->addDays(1)->isoFormat('dddd, MMMM D, YYYY');
+
+        $start_of_recent_week = $now->startOfWeek()->subWeeks()->toDateString();
+
+        $end_of_recent_week = $now->endOfWeek()->toDateString();
 
         $mon_groups = DB::table('loan_groups')
                         ->join('users','loan_groups.id_lead_credit_officer','users.id')
@@ -120,15 +127,25 @@ class HomeController extends Controller
                                         ->whereBetween('transactions.transaction_date',[$start_of_week,$end_of_week])
                                         ->sum('transactions.amount');
 
+                    $recent_target_recovery = $this->recent_target_recovery($start_of_recent_week,$end_of_recent_week,$value->id);
+
+                    $recent_actual_recovery = $this->recent_actual_recovery($start_of_recent_week,$end_of_recent_week,$value->id);
+
+                    $recent_deficit = $recent_target_recovery - $recent_actual_recovery;
+
+
                     $monday_disbursement[$i] =   [
                                                 "id" => $value->id,
                                                 "group_name" => $value->group_name,
                                                 "target_recovery" => $target_recovery,
                                                 "actual_recovery" => $actual_recovery,
+                                                "recent_deficit" => $recent_deficit,
                                                 "lead_credit_officer" =>$value->name
                                             ];
                     $i++;
                 }
+
+                
 
                 foreach ($tue_groups as $value) {
                     
@@ -146,11 +163,18 @@ class HomeController extends Controller
                                         ->whereBetween('transactions.transaction_date',[$start_of_week,$end_of_week])
                                         ->sum('transactions.amount');
 
+                    $recent_target_recovery = $this->recent_target_recovery($start_of_recent_week,$end_of_recent_week,$value->id);
+
+                    $recent_actual_recovery = $this->recent_actual_recovery($start_of_recent_week,$end_of_recent_week,$value->id);
+
+                    $recent_deficit = $recent_target_recovery - $recent_actual_recovery;
+
                     $tuesday_disbursement[$j] =   [
                                                 "id" => $value->id,
                                                 "group_name" => $value->group_name,
                                                 "target_recovery" => $target_recovery,
                                                 "actual_recovery" => $actual_recovery,
+                                                "recent_deficit" => $recent_deficit,
                                                 "lead_credit_officer" =>$value->name
                                             ];
                     $j++;
@@ -172,11 +196,18 @@ class HomeController extends Controller
                                         ->whereBetween('transactions.transaction_date',[$start_of_week,$end_of_week])
                                         ->sum('transactions.amount');
 
+                    $recent_target_recovery = $this->recent_target_recovery($start_of_recent_week,$end_of_recent_week,$value->id);
+
+                    $recent_actual_recovery = $this->recent_actual_recovery($start_of_recent_week,$end_of_recent_week,$value->id);
+
+                    $recent_deficit = $recent_target_recovery - $recent_actual_recovery;
+
                     $wednesday_disbursement[$i] =   [
                                                 "id" => $value->id,
                                                 "group_name" => $value->group_name,
                                                 "target_recovery" => $target_recovery,
                                                 "actual_recovery" => $actual_recovery,
+                                                "recent_deficit" => $recent_deficit,
                                                 "lead_credit_officer" =>$value->name
                                             ];
                     $i++;
@@ -198,11 +229,18 @@ class HomeController extends Controller
                                         ->whereBetween('transactions.transaction_date',[$start_of_week,$end_of_week])
                                         ->sum('transactions.amount');
 
+                    $recent_target_recovery = $this->recent_target_recovery($start_of_recent_week,$end_of_recent_week,$value->id);
+
+                    $recent_actual_recovery = $this->recent_actual_recovery($start_of_recent_week,$end_of_recent_week,$value->id);
+
+                    $recent_deficit = $recent_target_recovery - $recent_actual_recovery;
+
                     $thursday_disbursement[$x] =   [
                                                 "id" => $value->id,
                                                 "group_name" => $value->group_name,
                                                 "target_recovery" => $target_recovery,
                                                 "actual_recovery" => $actual_recovery,
+                                                "recent_deficit" => $recent_deficit,
                                                 "lead_credit_officer" =>$value->name
                                             ];
                     $x++;
@@ -224,11 +262,18 @@ class HomeController extends Controller
                                         ->whereBetween('transactions.transaction_date',[$start_of_week,$end_of_week])
                                         ->sum('transactions.amount');
 
+                    $recent_target_recovery = $this->recent_target_recovery($start_of_recent_week,$end_of_recent_week,$value->id);
+
+                    $recent_actual_recovery = $this->recent_actual_recovery($start_of_recent_week,$end_of_recent_week,$value->id);
+
+                    $recent_deficit = $recent_target_recovery - $recent_actual_recovery;
+
                     $friday_disbursement[$x] =   [
                                                 "id" => $value->id,
                                                 "group_name" => $value->group_name,
                                                 "target_recovery" => $target_recovery,
                                                 "actual_recovery" => $actual_recovery,
+                                                "recent_deficit" => $recent_deficit,
                                                 "lead_credit_officer" =>$value->name
                                             ];
                     $x++;
@@ -250,11 +295,18 @@ class HomeController extends Controller
                                         ->whereBetween('transactions.transaction_date',[$start_of_week,$end_of_week])
                                         ->sum('transactions.amount');
 
+                    $recent_target_recovery = $this->recent_target_recovery($start_of_recent_week,$end_of_recent_week,$value->id);
+
+                    $recent_actual_recovery = $this->recent_actual_recovery($start_of_recent_week,$end_of_recent_week,$value->id);
+
+                    $recent_deficit = $recent_target_recovery - $recent_actual_recovery;
+
                     $saturday_disbursement[$x] =   [
                                                 "id" => $value->id,
                                                 "group_name" => $value->group_name,
                                                 "target_recovery" => $target_recovery,
                                                 "actual_recovery" => $actual_recovery,
+                                                "recent_deficit" => $recent_deficit,
                                                 "lead_credit_officer" =>$value->name
                                             ];
                     $x++;

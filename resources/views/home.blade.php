@@ -92,7 +92,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @php $mon_target=0; $mon_actual = 0;  @endphp
+                    @php $mon_target=0; $mon_actual = 0; $mon_deficit = 0; @endphp
                     @foreach($monday_disbursement as $mon)
                       <tr>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['group_name'] }}</a></td>
@@ -103,13 +103,20 @@
                       @php
                         $mon_target += $mon['target_recovery'];
                         $mon_actual += $mon['actual_recovery'];
+                        $mon_deficit += $mon['recent_deficit'];
                       @endphp
                     @endforeach
                   </tbody>
                   <tfoot>
                     <tr>
+                      <td><a href="/apply/metrics/group/loans/" class="text-danger">* Deficit in target</a></td>
+                      <td><a href="/apply/metrics/group/loans/">{{ number_format($mon_deficit) }}</a></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
                       <th>Total</th>
-                      <th>{{ number_format($mon_target) }}</th>
+                      <th>{{ number_format($mon_target + $mon_deficit) }}</th>
                       <th>{{ number_format($mon_actual) }}</th>
                       <th></th>
                     </tr>
@@ -128,7 +135,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @php $tue_target=0; $tue_actual = 0;  @endphp
+                    @php $tue_target=0; $tue_actual = 0; $tue_deficit = 0;  @endphp
                     @foreach($tuesday_disbursement as $mon)
                       <tr>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['group_name'] }}</a></td>
@@ -139,13 +146,20 @@
                       @php
                         $tue_target += $mon['target_recovery'];
                         $tue_actual += $mon['actual_recovery'];
+                        $tue_deficit +=$mon['recent_deficit'];
                       @endphp
                     @endforeach
                   </tbody>
                   <tfoot>
                     <tr>
+                      <td><a href="/apply/metrics/group/loans/" class="text-danger">* Deficit in target</a></td>
+                      <td><a href="/apply/metrics/group/loans/">{{ number_format($tue_deficit) }}</a></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
                       <th>Total</th>
-                      <th>{{ number_format($tue_target) }}</th>
+                      <th>{{ number_format($tue_target + $tue_deficit) }}</th>
                       <th>{{ number_format($tue_actual) }}</th>
                       <th></th>
                     </tr>
@@ -167,7 +181,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @php $wed_target =0; $wed_actual = 0;  @endphp
+                    @php $wed_target =0; $wed_actual = 0; $wed_deficit = 0;  @endphp
                     @foreach($wednesday_disbursement as $mon)
                       <tr>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['group_name'] }}</a></td>
@@ -178,13 +192,20 @@
                       @php
                         $wed_target += $mon['target_recovery'];
                         $wed_actual += $mon['actual_recovery'];
+                        $wed_deficit +=$mon['recent_deficit'];
                       @endphp
                     @endforeach
                   </tbody>
                   <tfoot>
                     <tr>
+                      <td><a href="/apply/metrics/group/loans/" class="text-danger">* Deficit in target</a></td>
+                      <td><a href="/apply/metrics/group/loans/">{{ number_format($wed_deficit) }}</a></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
                       <th>Total</th>
-                      <th>{{ number_format($wed_target) }}</th>
+                      <th>{{ number_format($wed_target + $wed_deficit) }}</th>
                       <th>{{ number_format($wed_actual) }}</th>
                       <th></th>
                     </tr>
@@ -203,7 +224,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @php $thur_target =0; $thur_actual = 0;  @endphp
+                    @php $thur_target =0; $thur_actual = 0; $thur_deficit = 0;  @endphp
                     @foreach($thursday_disbursement as $mon)
                       <tr>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['group_name'] }}</a></td>
@@ -214,13 +235,20 @@
                       @php
                         $thur_target += $mon['target_recovery'];
                         $thur_actual += $mon['actual_recovery'];
+                        $thur_deficit +=$mon['recent_deficit'];
                       @endphp
                     @endforeach
                   </tbody>
                   <tfoot>
                     <tr>
+                      <td><a href="/apply/metrics/group/loans/" class="text-danger">* Deficit in target</a></td>
+                      <td><a href="/apply/metrics/group/loans/">{{ number_format($thur_deficit) }}</a></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
                       <th>Total</th>
-                      <th>{{ number_format($thur_target) }}</th>
+                      <th>{{ number_format($thur_target + $thur_deficit) }}</th>
                       <th>{{ number_format($thur_actual) }}</th>
                       <th></th>
                     </tr>
@@ -242,7 +270,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @php $fri_target =0; $fri_actual = 0;  @endphp
+                    @php $fri_target =0; $fri_actual = 0; $fri_deficit = 0;  @endphp
                     @foreach($friday_disbursement as $mon)
                       <tr>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['group_name'] }}</a></td>
@@ -253,13 +281,20 @@
                       @php
                         $fri_target += $mon['target_recovery'];
                         $fri_actual += $mon['actual_recovery'];
+                        $fri_deficit +=$mon['recent_deficit'];
                       @endphp
                     @endforeach
                   </tbody>
                   <tfoot>
                     <tr>
+                      <td><a href="/apply/metrics/group/loans/" class="text-danger">* Deficit in target</a></td>
+                      <td><a href="/apply/metrics/group/loans/">{{ number_format($fri_deficit) }}</a></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
                       <th>Total</th>
-                      <th>{{ number_format($fri_target) }}</th>
+                      <th>{{ number_format($fri_target + $fri_deficit) }}</th>
                       <th>{{ number_format($fri_actual) }}</th>
                       <th></th>
                     </tr>
@@ -278,7 +313,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @php $sat_target =0; $sat_actual = 0;  @endphp
+                    @php $sat_target =0; $sat_actual = 0; $sat_deficit = 0;  @endphp
                     @foreach($saturday_disbursement as $mon)
                       <tr>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['group_name'] }}</a></td>
@@ -289,13 +324,20 @@
                       @php
                         $sat_target += $mon['target_recovery'];
                         $sat_actual += $mon['actual_recovery'];
+                        $sat_deficit +=$mon['recent_deficit'];
                       @endphp
                     @endforeach
                   </tbody>
                   <tfoot>
                     <tr>
+                      <td><a href="/apply/metrics/group/loans/" class="text-danger">* Deficit in target</a></td>
+                      <td><a href="/apply/metrics/group/loans/">{{ number_format($sat_deficit) }}</a></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
                       <th>Total</th>
-                      <th>{{ number_format($sat_target) }}</th>
+                      <th>{{ number_format($sat_target + $sat_deficit) }}</th>
                       <th>{{ number_format($sat_actual) }}</th>
                       <th></th>
                     </tr>

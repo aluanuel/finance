@@ -37,6 +37,20 @@
                     <div class="row">
                       <div class="form-group mr-2">
                         <div class="input-group mb-3">
+                          <select class="form-control select2bs4" style="width: auto;" id="inputGroupSelect2" name="calendar_day" data-placeholder="Select day" required>
+                            <option></option>
+                            <option>Monday</option>
+                            <option>Tuesday</option>
+                            <option>Wednesday</option>
+                            <option>Thursday</option>
+                            <option>Friday</option>
+                            <option>Saturday</option>
+                            <option>Entire week</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group mr-2">
+                        <div class="input-group mb-3">
                           <select class="form-control select2bs4" style="width: auto;" id="inputGroupSelect02" name="period" data-placeholder="Select week" required>
                             <option></option>
                             @foreach($weekly_calendar as $week)

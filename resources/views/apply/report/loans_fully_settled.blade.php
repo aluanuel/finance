@@ -41,6 +41,7 @@
                       <th>date</th>
                       <th>loan_number</th>
                       <th>client_name</th>
+                      <th>amount_disbursed</th>
                       <th>total_loan</th>
                       <th>loan_recovered</th>
                       <th>period(weeks)</th>
@@ -54,6 +55,8 @@
 
                   $sum_loan_recovered = 0;
 
+                  $sum_loan_disbursed = 0;
+
                   @endphp
                   <tbody>
                     @foreach($loan as $ln)
@@ -61,6 +64,7 @@
                         <td>{{ $ln->date_loan_fully_recovered }}</td>
                         <td><a href="/apply/account/profile/{{$ln->id_client}}">{{ $ln->loan_number }}</a></td>
                         <td><a href="/apply/account/profile/{{$ln->id_client}}"> {{ $ln->name }}</a></td>
+                        <td>{{ number_format($ln->loan_approved) }}</td>
                         <td>{{ number_format($ln->total_loan) }}</td>
                         <td>{{ number_format($ln->loan_recovered) }}</td>
                         <td>{{ $ln->loan_period }}</td>
@@ -72,6 +76,8 @@
                       $sum_total_loan += $ln->total_loan;
 
                       $sum_loan_recovered += $ln->loan_recovered;
+
+                      $sum_loan_disbursed +=$ln->loan_approved
                       
                       @endphp
                     @endforeach
@@ -79,6 +85,7 @@
                   <tfoot>
                     <tr>
                       <th colspan="3">total</th>
+                      <th>{{ number_format($sum_loan_disbursed) }}</th>
                       <th>{{ number_format($sum_total_loan) }}</th>
                       <th>{{ number_format($sum_loan_recovered) }}</th>
                       <th></th>
