@@ -87,6 +87,7 @@
                     <tr>
                       <th>group_name</th>
                       <th>target_recovery</th>
+                      <th>deficit</th>
                       <th>actual_recovery</th>
                       <th>credit_officer</th>
                     </tr>
@@ -97,6 +98,7 @@
                       <tr>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['group_name'] }}</a></td>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['target_recovery']) }}</a></td>
+                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}" class="text-danger">{{ number_format($mon['recent_deficit']) }}</a></td>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['actual_recovery']) }}</a></td>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['lead_credit_officer'] }}</a></td>
                       </tr>
@@ -109,14 +111,15 @@
                   </tbody>
                   <tfoot>
                     <tr>
-                      <td><a href="/apply/metrics/group/loans/" class="text-danger">* Deficit in target</a></td>
-                      <td><a href="/apply/metrics/group/loans/">{{ number_format($mon_deficit) }}</a></td>
-                      <td></td>
-                      <td></td>
+                      <th>Sub Total</th>
+                      <th>{{ number_format($mon_target) }}</th>
+                      <th>{{ number_format($mon_deficit) }}</th>
+                      <th></th>
+                      <th></th>
                     </tr>
                     <tr>
                       <th>Total</th>
-                      <th>{{ number_format($mon_target + $mon_deficit) }}</th>
+                      <th colspan="2">{{ number_format($mon_target + $mon_deficit) }}</th>
                       <th>{{ number_format($mon_actual) }}</th>
                       <th></th>
                     </tr>
@@ -130,6 +133,7 @@
                     <tr>
                       <th>group_name</th>
                       <th>target_recovery</th>
+                      <th>deficit</th>
                       <th>actual_recovery</th>
                       <th>credit_officer</th>
                     </tr>
@@ -140,6 +144,7 @@
                       <tr>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['group_name'] }}</a></td>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['target_recovery']) }}</a></td>
+                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}" class="text-danger">{{ number_format($mon['recent_deficit']) }}</a></td>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['actual_recovery']) }}</a></td>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['lead_credit_officer'] }}</a></td>
                       </tr>
@@ -152,14 +157,15 @@
                   </tbody>
                   <tfoot>
                     <tr>
-                      <td><a href="/apply/metrics/group/loans/" class="text-danger">* Deficit in target</a></td>
-                      <td><a href="/apply/metrics/group/loans/">{{ number_format($tue_deficit) }}</a></td>
-                      <td></td>
-                      <td></td>
+                      <th>Sub Total</th>
+                      <th>{{ number_format($tue_target) }}</th>
+                      <th>{{ number_format($tue_deficit) }}</th>
+                      <th></th>
+                      <th></th>
                     </tr>
                     <tr>
                       <th>Total</th>
-                      <th>{{ number_format($tue_target + $tue_deficit) }}</th>
+                      <th colspan="2">{{ number_format($tue_target + $tue_deficit) }}</th>
                       <th>{{ number_format($tue_actual) }}</th>
                       <th></th>
                     </tr>
@@ -176,6 +182,7 @@
                     <tr>
                       <th>group_name</th>
                       <th>target_recovery</th>
+                      <th>deficit</th>
                       <th>actual_recovery</th>
                       <th>credit_officer</th>
                     </tr>
@@ -186,6 +193,7 @@
                       <tr>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['group_name'] }}</a></td>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['target_recovery']) }}</a></td>
+                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}" class="text-danger">{{ number_format($mon['recent_deficit']) }}</a></td>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['actual_recovery']) }}</a></td>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['lead_credit_officer'] }}</a></td>
                       </tr>
@@ -198,14 +206,15 @@
                   </tbody>
                   <tfoot>
                     <tr>
-                      <td><a href="/apply/metrics/group/loans/" class="text-danger">* Deficit in target</a></td>
-                      <td><a href="/apply/metrics/group/loans/">{{ number_format($wed_deficit) }}</a></td>
-                      <td></td>
-                      <td></td>
+                      <th>sub Total</th>
+                      <th>{{ number_format($wed_target) }}</th>
+                      <th>{{ number_format($wed_deficit) }}</th>
+                      <th></th>
+                      <th></th>
                     </tr>
                     <tr>
                       <th>Total</th>
-                      <th>{{ number_format($wed_target + $wed_deficit) }}</th>
+                      <th colspan="2">{{ number_format($wed_target + $wed_deficit) }}</th>
                       <th>{{ number_format($wed_actual) }}</th>
                       <th></th>
                     </tr>
@@ -219,6 +228,7 @@
                     <tr>
                       <th>group_name</th>
                       <th>target_recovery</th>
+                      <th>deficit</th>
                       <th>actual_recovery</th>
                       <th>credit_officer</th>
                     </tr>
@@ -229,6 +239,7 @@
                       <tr>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['group_name'] }}</a></td>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['target_recovery']) }}</a></td>
+                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}" class="text-danger">{{ number_format($mon['recent_deficit']) }}</a></td>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['actual_recovery']) }}</a></td>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['lead_credit_officer'] }}</a></td>
                       </tr>
@@ -241,14 +252,15 @@
                   </tbody>
                   <tfoot>
                     <tr>
-                      <td><a href="/apply/metrics/group/loans/" class="text-danger">* Deficit in target</a></td>
-                      <td><a href="/apply/metrics/group/loans/">{{ number_format($thur_deficit) }}</a></td>
-                      <td></td>
-                      <td></td>
+                      <th>sub Total</th>
+                      <th>{{ number_format($thur_target) }}</th>
+                      <th>{{ number_format($thur_deficit) }}</th>
+                      <th></th>
+                      <th></th>
                     </tr>
                     <tr>
                       <th>Total</th>
-                      <th>{{ number_format($thur_target + $thur_deficit) }}</th>
+                      <th colspan="2">{{ number_format($thur_target + $thur_deficit) }}</th>
                       <th>{{ number_format($thur_actual) }}</th>
                       <th></th>
                     </tr>
@@ -265,6 +277,7 @@
                     <tr>
                       <th>group_name</th>
                       <th>target_recovery</th>
+                      <th>deficit</th>
                       <th>actual_recovery</th>
                       <th>credit_officer</th>
                     </tr>
@@ -275,6 +288,7 @@
                       <tr>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['group_name'] }}</a></td>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['target_recovery']) }}</a></td>
+                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}" class="text-danger">{{ number_format($mon['recent_deficit']) }}</a></td>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['actual_recovery']) }}</a></td>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['lead_credit_officer'] }}</a></td>
                       </tr>
@@ -287,14 +301,15 @@
                   </tbody>
                   <tfoot>
                     <tr>
-                      <td><a href="/apply/metrics/group/loans/" class="text-danger">* Deficit in target</a></td>
-                      <td><a href="/apply/metrics/group/loans/">{{ number_format($fri_deficit) }}</a></td>
-                      <td></td>
-                      <td></td>
+                      <th>sub Total</th>
+                      <th>{{ number_format($fri_target) }}</th>
+                      <th>{{ number_format($fri_deficit) }}</th>
+                      <th></th>
+                      <th></th>
                     </tr>
                     <tr>
                       <th>Total</th>
-                      <th>{{ number_format($fri_target + $fri_deficit) }}</th>
+                      <th colspan="2">{{ number_format($fri_target + $fri_deficit) }}</th>
                       <th>{{ number_format($fri_actual) }}</th>
                       <th></th>
                     </tr>
@@ -308,6 +323,7 @@
                     <tr>
                       <th>group_name</th>
                       <th>target_recovery</th>
+                      <th>deficit</th>
                       <th>actual_recovery</th>
                       <th>credit_officer</th>
                     </tr>
@@ -318,6 +334,7 @@
                       <tr>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['group_name'] }}</a></td>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['target_recovery']) }}</a></td>
+                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}" class="text-danger">{{ number_format($mon['recent_deficit']) }}</a></td>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['actual_recovery']) }}</a></td>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['lead_credit_officer'] }}</a></td>
                       </tr>
@@ -330,14 +347,15 @@
                   </tbody>
                   <tfoot>
                     <tr>
-                      <td><a href="/apply/metrics/group/loans/" class="text-danger">* Deficit in target</a></td>
-                      <td><a href="/apply/metrics/group/loans/">{{ number_format($sat_deficit) }}</a></td>
-                      <td></td>
-                      <td></td>
+                      <th>sub Total</th>
+                      <th>{{ number_format($sat_target) }}</th>
+                      <th>{{ number_format($sat_deficit) }}</th>
+                      <th></th>
+                      <th></th>
                     </tr>
                     <tr>
                       <th>Total</th>
-                      <th>{{ number_format($sat_target + $sat_deficit) }}</th>
+                      <th colspan="2">{{ number_format($sat_target + $sat_deficit) }}</th>
                       <th>{{ number_format($sat_actual) }}</th>
                       <th></th>
                     </tr>

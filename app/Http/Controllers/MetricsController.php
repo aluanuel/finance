@@ -12,7 +12,7 @@ class MetricsController extends Controller
 {
     use MyTrait;
 
-    public function performance_group_loan(){
+    public function performance_group_loan(Request $request){
 
         $now = Carbon::now();
 
@@ -22,9 +22,68 @@ class MetricsController extends Controller
 
         $heading = "Showing performance of loan groups from ".$now->startOfWeek()->format('d M, Y')." to ".$now->endOfWeek()->format('d M,Y');
 
-        $groups = DB::table('loan_groups')->join('users','loan_groups.id_lead_credit_officer','users.id')
+        switch($request->id){
+
+            case 1:
+
+                $groups = DB::table('loan_groups')->join('users','loan_groups.id_lead_credit_officer','users.id')
+                        ->where('loan_groups.day_loan_recovery','Monday')
                         ->select('loan_groups.*','users.name')
                         ->get();
+
+                        break;
+            case 2:
+
+                $groups = DB::table('loan_groups')->join('users','loan_groups.id_lead_credit_officer','users.id')
+                        ->where('loan_groups.day_loan_recovery','Tuesday')
+                        ->select('loan_groups.*','users.name')
+                        ->get();
+
+                        break;
+
+            case 3:
+
+                $groups = DB::table('loan_groups')->join('users','loan_groups.id_lead_credit_officer','users.id')
+                        ->where('loan_groups.day_loan_recovery','Wednesday')
+                        ->select('loan_groups.*','users.name')
+                        ->get();
+
+                        break;
+            case 4:
+
+                $groups = DB::table('loan_groups')->join('users','loan_groups.id_lead_credit_officer','users.id')
+                        ->where('loan_groups.day_loan_recovery','Thursday')
+                        ->select('loan_groups.*','users.name')
+                        ->get();
+
+                        break;
+
+            case 5:
+
+                $groups = DB::table('loan_groups')->join('users','loan_groups.id_lead_credit_officer','users.id')
+                        ->where('loan_groups.day_loan_recovery','Friday')
+                        ->select('loan_groups.*','users.name')
+                        ->get();
+
+                        break;
+
+            case 6:
+
+                $groups = DB::table('loan_groups')->join('users','loan_groups.id_lead_credit_officer','users.id')
+                        ->where('loan_groups.day_loan_recovery','Saturday')
+                        ->select('loan_groups.*','users.name')
+                        ->get();
+
+                        break;
+
+            default:
+
+                $groups = DB::table('loan_groups')->join('users','loan_groups.id_lead_credit_officer','users.id')
+                        ->select('loan_groups.*','users.name')
+                        ->get();
+
+                        break;
+        }        
 
         $weekly_calendar = $this->show_weekly_data();
 
@@ -82,6 +141,14 @@ class MetricsController extends Controller
 
     public function search_performance_group_loan(Request $request){
 
+        $calendar_day = $request->calendar_day;
+
+        $period = $request->period;
+
+
+        $weekly_calendar = $this->show_weekly_data();
+
+        return view('apply.metrics.group.index',compact('heading','disbursement','weekly_calendar'));
         
 
     }
@@ -264,7 +331,6 @@ class MetricsController extends Controller
     }
 
     private function show_weekly_data(){
-        // $weeks = [];
 
         for ($i = 0; $i < 20; $i++) {
             $startOfWeek = Carbon::now()->subWeeks($i)->startOfWeek(Carbon::MONDAY);

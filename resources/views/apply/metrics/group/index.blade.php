@@ -39,13 +39,13 @@
                         <div class="input-group mb-3">
                           <select class="form-control select2bs4" style="width: auto;" id="inputGroupSelect2" name="calendar_day" data-placeholder="Select day" required>
                             <option></option>
-                            <option>Monday</option>
-                            <option>Tuesday</option>
-                            <option>Wednesday</option>
-                            <option>Thursday</option>
-                            <option>Friday</option>
-                            <option>Saturday</option>
-                            <option>Entire week</option>
+                            <option value="1">Monday</option>
+                            <option value="2">Tuesday</option>
+                            <option value="3">Wednesday</option>
+                            <option value="4">Thursday</option>
+                            <option value="5">Friday</option>
+                            <option value="6">Saturday</option>
+                            <option value="all">Entire week</option>
                           </select>
                         </div>
                       </div>
@@ -80,7 +80,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                    @php $tue_target=0; $tue_actual = 0;  @endphp
+                    @php $tue_target=0; $tue_actual = 0; $sum_balance_recent_target_recovery = 0; @endphp
                     @foreach($disbursement as $mon)
                       <tr>
                         <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['group_name'] }}</a></td>
@@ -93,6 +93,7 @@
                       @php
                         $tue_target += $mon['target_recovery'];
                         $tue_actual += $mon['actual_recovery'];
+                        $sum_balance_recent_target_recovery += $mon['balance_recent_target_recovery'];
                       @endphp
                     @endforeach
                   </tbody>
@@ -100,7 +101,8 @@
                     <tr>
                       <th>Total</th>
                       <th>{{ number_format($tue_target) }}</th>
-                      <th>{{ number_format($tue_actual) }}</th>
+                      <th>{{ number_format($sum_balance_recent_target_recovery) }}</th>
+                      <th></th>
                       <th></th>
                       <th></th>
                     </tr>
