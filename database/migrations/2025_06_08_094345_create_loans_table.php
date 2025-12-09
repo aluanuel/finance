@@ -17,7 +17,7 @@ class CreateLoansTable extends Migration
             $table->id();
             $table->integer('loan_number');
             $table->unsignedBigInteger('id_client');
-            $table->unsignedBigInteger('id_group_loan_cohort')->nullable();
+            $table->unsignedBigInteger('id_loan_batch_number')->nullable();
             $table->double('loan_request_amount');
             $table->integer('loan_period');
             $table->double('interest_rate');

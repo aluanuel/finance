@@ -21,7 +21,7 @@ trait MyTrait
 
         }
 
-        public function recent_actual_recovery($start_date,$end_date,$id_loan_group){
+    public function recent_actual_recovery($start_date,$end_date,$id_loan_group){
 
                 $actual_recovery = DB::table('transactions')
                                         ->join('loans','transactions.id_loan','loans.id')
@@ -32,5 +32,16 @@ trait MyTrait
                                         ->sum('transactions.amount');
 
                 return $actual_recovery;
-            }
+    }
+
+    public function date_first_loan_issued_using_this_app(){
+
+        $start = DB::table('loans')
+                ->where('loan_number','20250001')
+                ->select('date_loan_disbursed')
+                ->first();
+
+        return $start->date_loan_disbursed;
+
+    }
 }

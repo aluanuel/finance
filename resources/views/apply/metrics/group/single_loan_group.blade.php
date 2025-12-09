@@ -122,6 +122,13 @@
                           <td>{{ number_format($outstanding) }}</td>
                         </tr>
                         <tr>
+                          <th colspan="2">Cummilative loan deficits</th>
+                        </tr>
+                        <tr>
+                          <td>Loan deficit</td>
+                          <td>{{ number_format($outstanding) }}</td>
+                        </tr>
+                        <tr>
                           <th colspan="2">Group Credit Officers</th>
                         </tr>
                         @foreach($officers as $o)
