@@ -4,6 +4,8 @@ namespace App\Traits;
 
 use DB;
 
+use Carbon\Carbon;
+
 trait MyTrait
 {
 
@@ -34,14 +36,44 @@ trait MyTrait
                 return $actual_recovery;
     }
 
-    public function date_first_loan_issued_using_this_app(){
+    // public function date_first_loan_issued_using_this_app(){
 
-        $start = DB::table('loans')
-                ->where('loan_number','20250001')
-                ->select('date_loan_disbursed')
-                ->first();
+    //     $start = DB::table('loans')
+    //             ->where('loan_number','20250001')
+    //             ->select('date_loan_disbursed')
+    //             ->first();
                 
-        return $start->date_loan_disbursed;
+    //     return $start->date_loan_disbursed;
+
+    // }
+
+     public function deficit_in_loan_recovery($loan_end_date,$instalment_amount,$total_loan,$loan_recovered){
+
+        $now = Carbon::now();
+
+        // if(is_null($loan_end_date)){
+
+        //     $end_date = Carbon::now();
+
+        // }else{
+
+            $end_date = Carbon::parse($loan_end_date);
+        // }
+
+        $number_of_weeks = $now->diffInWeeks($end_date);
+
+        if( $now->gt($end_date) || $number_of_weeks == 0 ){
+
+            return ($total_loan - $loan_recovered);
+
+        }else{
+
+            $remaining_instalment = ($instalment_amount * $number_of_weeks);
+
+            return $total_loan - ($remaining_instalment + $loan_recovered);
+
+        }
+        // return $number_of_weeks;
 
     }
 }

@@ -64,6 +64,7 @@
                             <th>date</th>
                             <th>name</th>
                             <th>target_recovery</th>
+                            <th>cumm_recovery_deficit</th>
                             <th>actual_recovery</th>
                           </tr>
                         </thead>
@@ -72,6 +73,7 @@
 
                             $total_target_recovery = 0;
                             $total_actual_recovery = 0;
+                            $total_deficit_loan_recovery = 0;
 
                           @endphp
                           @foreach($single_loan_recovery as $recovery)
@@ -80,6 +82,8 @@
                           
                             $total_target_recovery += $recovery['target_recovery'];
 
+                            $total_deficit_loan_recovery += $recovery['deficit_loan_recovery'];
+
                             $total_actual_recovery += $recovery['actual_recovery'];
 
                             @endphp
@@ -87,25 +91,22 @@
                               <td>{{ date('d-m-Y',strtotime($recovery['created_at'])) }}</td>
                               <td>{{ $recovery['name'] }}</td>
                               <td>{{ number_format($recovery['target_recovery']) }}</td>
+                              <td>{{ number_format($recovery['deficit_loan_recovery']) }}</td>
                               <td>{{ number_format($recovery['actual_recovery']) }}</td>
                             </tr>
                           @endforeach
                         </tbody>
                         <tfoot>
                           <tr>
-                            <th colspan="2">sub total</th>
+                            <th colspan="2">total</th>
                             <th>{{ number_format($total_target_recovery) }}</th>
-                            <th></th>
+                            <th>{{ number_format($total_deficit_loan_recovery) }}</th>
+                            <th>{{ number_format($total_actual_recovery) }}</th>
                           </tr>
                           <tr class="text-danger">
-                            <td colspan="2">* Deficit in recent target recovery</td>
-                            <td>{{ number_format($balance_recent_target_recovery) }}</td>
-                            <td></td>
-                          </tr>
-                          <tr>
-                            <th colspan="2">Total</th>
-                            <th>{{ number_format($total_target_recovery + $balance_recent_target_recovery) }}</th>
-                            <th>{{ number_format($total_actual_recovery) }}</th>
+                            <th colspan="2">Total Target Recovery</th>
+                            <th colspan="2">{{ number_format($total_target_recovery + $total_deficit_loan_recovery) }}</th>
+                            <th></th>
                           </tr>
                         </tfoot>
                       </table>
@@ -119,13 +120,6 @@
                         </tr>
                         <tr>
                           <td>Loan outstanding</td>
-                          <td>{{ number_format($outstanding) }}</td>
-                        </tr>
-                        <tr>
-                          <th colspan="2">Cummilative loan deficits</th>
-                        </tr>
-                        <tr>
-                          <td>Loan deficit</td>
                           <td>{{ number_format($outstanding) }}</td>
                         </tr>
                         <tr>

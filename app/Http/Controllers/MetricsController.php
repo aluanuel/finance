@@ -217,12 +217,23 @@ class MetricsController extends Controller
                 $created_at = $recovery->created_at;
             }
 
-            
+            if(is_null($loan->loan_end_date)){
+
+                $loan_end_date = Carbon::now();
+
+            }else{
+
+                $loan_end_date = $loan->loan_end_date;
+            }
+
+
+            $deficit_loan_recovery = $this->deficit_in_loan_recovery($loan_end_date,$loan->instalment_amount,$loan->total_loan,$loan->loan_recovered);
 
             $single_loan_recovery[$x] = [
 
                                     "name" => $loan->name,
                                     "target_recovery" => $loan->instalment_amount,
+                                    "deficit_loan_recovery" => $deficit_loan_recovery,
                                     "actual_recovery" => $actual_recovery,
                                     "created_at" => $created_at
                                 ];
