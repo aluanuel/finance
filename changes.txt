@@ -1,0 +1,4 @@
+-------------------10/12/2025---------------------
+1. Created a table named loan_batch_number to track group loans
+2. Added id_loan_batch_number to loans table
+3. Added checks on loan disbursement. Group loans are disbursed only when all members have fully cleared their loans

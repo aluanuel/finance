@@ -180,7 +180,8 @@ $(document).ready(function(){
     });
     $('#example5').DataTable({
       "searching": true,
-      "ordering": true,
+      "ordering": false,
+      "paging":false
     });
     $('#example8').DataTable({
       "paging": true,

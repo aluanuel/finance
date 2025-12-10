@@ -40,7 +40,7 @@ trait MyTrait
                 ->where('loan_number','20250001')
                 ->select('date_loan_disbursed')
                 ->first();
-
+                
         return $start->date_loan_disbursed;
 
     }

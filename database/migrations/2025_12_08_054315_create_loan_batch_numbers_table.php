@@ -20,8 +20,8 @@ class CreateLoanBatchNumbersTable extends Migration
             $table->double('total_group_loan');
             $table->double('total_loan_recovered');
             $table->double('total_loan_outstanding');
-            $table->date('loan_start_date')->nullable();
-            $table->date('loan_end_date')->nullable();
+            $table->date('batch_start_date')->nullable();
+            $table->date('batch_end_date')->nullable();
             $table->string('batch_status');
             $table->timestamps();
         });
