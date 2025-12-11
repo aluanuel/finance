@@ -47,18 +47,11 @@ trait MyTrait
 
     // }
 
-     public function deficit_in_loan_recovery($loan_end_date,$instalment_amount,$total_loan,$loan_recovered){
+     public function deficit_in_loan_recovery($end_of_week = null, $loan_end_date,$instalment_amount,$total_loan,$loan_recovered){
 
-        $now = Carbon::now();
-
-        // if(is_null($loan_end_date)){
-
-        //     $end_date = Carbon::now();
-
-        // }else{
+            $now = Carbon::parse($end_of_week);
 
             $end_date = Carbon::parse($loan_end_date);
-        // }
 
         $number_of_weeks = $now->diffInWeeks($end_date);
 

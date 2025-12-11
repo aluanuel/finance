@@ -87,7 +87,7 @@
                     <tr>
                       <th>group_name</th>
                       <th>target_recovery</th>
-                      <th>deficit</th>
+                      <th>cumm_deficit</th>
                       <th>actual_recovery</th>
                       <th>credit_officer</th>
                     </tr>

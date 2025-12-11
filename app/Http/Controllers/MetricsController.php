@@ -181,6 +181,7 @@ class MetricsController extends Controller
                 ->where('loans.loan_status','Running')
                 ->orWhere('loans.loan_status','Defaulted')
                 ->where('clients.id_loan_group',$id_loan_group)
+                ->where('loans.date_loan_disbursed','<',$start_of_week)
                 ->select('clients.name','loans.*')
                 ->get();
          $x = 0;
@@ -227,7 +228,7 @@ class MetricsController extends Controller
             }
 
 
-            $deficit_loan_recovery = $this->deficit_in_loan_recovery($loan_end_date,$loan->instalment_amount,$loan->total_loan,$loan->loan_recovered);
+            $deficit_loan_recovery = $this->deficit_in_loan_recovery(Carbon::now(),$loan_end_date,$loan->instalment_amount,$loan->total_loan,$loan->loan_recovered);
 
             $single_loan_recovery[$x] = [
 
@@ -275,6 +276,7 @@ class MetricsController extends Controller
                 ->where('loans.loan_status','Running')
                 ->orWhere('loans.loan_status','Defaulted')
                 ->where('clients.id_loan_group',$id_loan_group)
+                ->where('loans.date_loan_disbursed','<',$start_of_week)
                 ->select('clients.name','loans.*')
                 ->get();
          $x = 0;
@@ -287,6 +289,14 @@ class MetricsController extends Controller
                         ->whereBetween('transaction_date',[$start_of_week->format('Y-m-d'),$end_of_week->format('Y-m-d')])
                         ->orderBy('id_loan','asc')
                         ->get();
+            if(is_null($loan->loan_end_date)){
+
+                $loan_end_date = $end_of_week;
+
+            }else{
+
+                $loan_end_date = $loan->loan_end_date;
+            }
 
             if(sizeof($recovery) > 0 ){
 
@@ -298,23 +308,45 @@ class MetricsController extends Controller
                     }
 
 
+                // $single_loan_recovery[$x] = [
+
+                //                     "name" => $loan->name,
+                //                     "target_recovery" => $loan->instalment_amount,
+                //                     "actual_recovery" => $actual_recovery,
+                //                     "created_at" => $created_at
+                //                 ];
+
+                $deficit_loan_recovery = $this->deficit_in_loan_recovery($start_of_week,$loan_end_date,$loan->instalment_amount,$loan->total_loan,$loan->loan_recovered);
+
                 $single_loan_recovery[$x] = [
 
-                                    "name" => $loan->name,
-                                    "target_recovery" => $loan->instalment_amount,
-                                    "actual_recovery" => $actual_recovery,
-                                    "created_at" => $created_at
-                                ];
+                                        "name" => $loan->name,
+                                        "target_recovery" => $loan->instalment_amount,
+                                        "deficit_loan_recovery" => $deficit_loan_recovery,
+                                        "actual_recovery" => $actual_recovery,
+                                        "created_at" => $created_at
+                                    ];
+
 
             }else{
 
-                 $single_loan_recovery[$x] = [
+                 // $single_loan_recovery[$x] = [
 
-                                    "name" => $loan->name,
-                                    "target_recovery" => $loan->instalment_amount,
-                                    "actual_recovery" => 0,
-                                    "created_at" => $end_of_week->format('Y-m-d')
-                                ];
+                 //                    "name" => $loan->name,
+                 //                    "target_recovery" => $loan->instalment_amount,
+                 //                    "actual_recovery" => 0,
+                 //                    "created_at" => $end_of_week->format('Y-m-d')
+                 //                ];
+                $deficit_loan_recovery = $this->deficit_in_loan_recovery($start_of_week,$loan_end_date,$loan->instalment_amount,$loan->total_loan,$loan->loan_recovered);
+
+                $single_loan_recovery[$x] = [
+
+                                        "name" => $loan->name,
+                                        "target_recovery" => $loan->instalment_amount,
+                                        "deficit_loan_recovery" => $deficit_loan_recovery,
+                                        "actual_recovery" => 0,
+                                        "created_at" => $end_of_week->format('Y-m-d')
+                                    ];
             }
 
             
