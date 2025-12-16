@@ -178,15 +178,11 @@ class MetricsController extends Controller
         $group_loans = DB::table('loans')
                 ->join('clients','loans.id_client','clients.id')
                 ->where('clients.id_loan_group',$id_loan_group)
-                ->where('loans.loan_status','Running')
-                ->orWhere('loans.loan_status','Defaulted')
-                ->where('clients.id_loan_group',$id_loan_group)
-                ->where('loans.date_loan_disbursed','<',$start_of_week)
+                ->where('loans.loan_status','!=','Pending Assessment')
                 ->select('clients.name','loans.*')
                 ->get();
          $x = 0;
 
-         
         $start_of_recent_week = $now->subWeeks()->startOfWeek()->toDateString();
 
         $end_of_recent_week = $now->endOfWeek()->toDateString();
@@ -194,6 +190,7 @@ class MetricsController extends Controller
         $recent_target_recovery = $this->recent_target_recovery($start_of_recent_week,$now->toDateString(),$request->id);
 
         $recent_actual_recovery = $this->recent_actual_recovery($start_of_recent_week,$end_of_recent_week,$request->id);
+        dd($start_of_recent_week);
 
         $balance_recent_target_recovery = ($recent_target_recovery - $recent_actual_recovery);
 

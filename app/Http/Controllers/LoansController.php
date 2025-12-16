@@ -74,7 +74,43 @@ class LoansController extends Controller
 
         $check = Loans::where('id_client',$request->id)->latest()->first();
 
-        if(is_null($check) || $check->loan_status == "Completed"){
+        if(is_null($check)){
+
+            $rates = Rates::where('rate_type','Interest on Loan Defaulting')->latest()->first();
+
+                    $loan_request = str_replace(',','',$request->loan_request_amount);
+
+                    $loan_interest = $request->interest_rate/100 * $loan_request;
+
+                    $new_loan = new Loans();
+
+                    $new_loan->id_client = $request->id;
+
+                    $new_loan->loan_number = $this->generate_loan_number();
+
+                    $new_loan->loan_request_amount = $loan_request;
+
+                    $new_loan->loan_period = $request->loan_period;
+
+                    $new_loan->interest_rate = $request->interest_rate;
+
+                    $new_loan->loan_processing_rate = $request->loan_processing_rate;
+
+                    $new_loan->interest_on_defaulting = $rates->rate;
+
+                    $new_loan->date_loan_application = $request->date_loan_application;
+
+                    $new_loan->total_loan = ($loan_request + $loan_interest);
+
+                    $new_loan->borrowing_purpose = $request->borrowing_purpose;
+
+                    $new_loan->collateral_security = $request->collateral_security;
+
+                    $new_loan->save();
+
+                    return redirect()->back()->with('success','Success');
+
+        }elseif($check->loan_status == "Completed"){
 
             $loan_group = Clients::where('id',$check->id_client)->select('id_loan_group')->first(); //select the loan group
 

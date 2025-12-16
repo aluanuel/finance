@@ -165,6 +165,11 @@ class ClientsController extends Controller
 
         $info->permanent_address = $request->permanent_address;
 
+        if($request->id_loan_group){
+
+            $info->id_loan_group = $request->id_loan_group;
+        }
+
         if($info->save()){
 
             return redirect()->back()->with('success','Success');
