@@ -36,16 +36,13 @@ trait MyTrait
                 return $actual_recovery;
     }
 
-    // public function date_first_loan_issued_using_this_app(){
+    public function date_first_transaction_using_this_app($transaction_detail){
 
-    //     $start = DB::table('loans')
-    //             ->where('loan_number','20250001')
-    //             ->select('date_loan_disbursed')
-    //             ->first();
-                
-    //     return $start->date_loan_disbursed;
+        $first = DB::table('transactions')->where('transaction_detail','like','%'.$transaction_detail.'%')->orderBy('transaction_date','asc')->first();
 
-    // }
+        return $first->transaction_date;
+
+    }
 
      public function deficit_in_loan_recovery($end_of_week = null, $loan_end_date,$instalment_amount,$total_loan,$loan_recovered){
 

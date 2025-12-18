@@ -175,71 +175,161 @@ class MetricsController extends Controller
 
         $outstanding = DB::table('loans')->join('clients','loans.id_client','clients.id') ->where('clients.id_loan_group',$id_loan_group)->sum('loans.loan_outstanding');
 
-        $group_loans = DB::table('loans')
-                ->join('clients','loans.id_client','clients.id')
-                ->where('clients.id_loan_group',$id_loan_group)
-                ->where('loans.loan_status','!=','Pending Assessment')
-                ->select('clients.name','loans.*')
-                ->get();
-         $x = 0;
-
-        $start_of_recent_week = $now->subWeeks()->startOfWeek()->toDateString();
-
-        $end_of_recent_week = $now->endOfWeek()->toDateString();
-
-        $recent_target_recovery = $this->recent_target_recovery($start_of_recent_week,$now->toDateString(),$request->id);
-
-        $recent_actual_recovery = $this->recent_actual_recovery($start_of_recent_week,$end_of_recent_week,$request->id);
-        dd($start_of_recent_week);
-
-        $balance_recent_target_recovery = ($recent_target_recovery - $recent_actual_recovery);
-
-        foreach($group_loans as $loan){
-
-            $recovery = DB::table('transactions')
-                        ->where('id_loan',$loan->id)
-                        ->where('transaction_detail','like','%Loan Repayment%')
-                        ->whereBetween('transaction_date',[$start_of_week,$end_of_week])
-                        ->first();
-
-            if(is_null($recovery)){
-
-                $actual_recovery = 0;
-
-                $created_at = $end_of_week;
-
-            }else{
-
-                $actual_recovery = $recovery->amount;
-
-                $created_at = $recovery->created_at;
-            }
-
-            if(is_null($loan->loan_end_date)){
-
-                $loan_end_date = Carbon::now();
-
-            }else{
-
-                $loan_end_date = $loan->loan_end_date;
-            }
+        $group_members = DB::table('clients')->where('id_loan_group',$id_loan_group)->get();
 
 
-            $deficit_loan_recovery = $this->deficit_in_loan_recovery(Carbon::now(),$loan_end_date,$loan->instalment_amount,$loan->total_loan,$loan->loan_recovered);
+        $i = 0;
 
-            $single_loan_recovery[$x] = [
+        // retrieve recent loans taken by all clients
 
-                                    "name" => $loan->name,
-                                    "target_recovery" => $loan->instalment_amount,
-                                    "deficit_loan_recovery" => $deficit_loan_recovery,
-                                    "actual_recovery" => $actual_recovery,
-                                    "created_at" => $created_at
-                                ];
-            $x++;
+        foreach($group_members as $member){
+
+            $loan_taken = DB::table('loans')->where('id_client',$member->id)->where('loan_status','!=','Pending Assessment')->latest()->first();
+
+            $member_loan[$i] = [
+                "id_loan" => $loan_taken->id,
+                "name" => $member->name,
+                "instalment_amount" => $loan_taken->instalment_amount,
+                "total_loan" => $loan_taken->total_loan,
+                "loan_recovered" => $loan_taken->loan_recovered,
+                "loan_outstanding" => $loan_taken->loan_outstanding,
+                "loan_status" => $loan_taken->loan_status,
+                "loan_end_date"=>$loan_taken->loan_end_date
+            ];
+
+            $i++;
 
         }
 
-        $weekly_calendar = $this->show_weekly_data();
+        for($j = 0; $j < sizeof($member_loan); $j++){ 
+
+            $person = $member_loan[$j];
+
+            $recovery = DB::table('transactions')->where('transaction_detail','like','%Loan Repayment%')->where('id_loan',$person['id_loan'])->latest()->first();
+            if($recovery){
+
+                $loan_recovery[$j] = ["amount"=>$recovery->amount];
+
+            }else{
+                $loan_recovery[$j] = ["amount"=> 0];
+            }     
+
+        }
+
+
+        for($j = 0; $j < sizeof($member_loan); $j++){ 
+
+            $recovery = $loan_recovery[$j];
+
+            $person = $member_loan[$j];
+
+            if(is_null($person['loan_end_date'])){
+
+                $loan_end_date = Carbon::now()->toDateString();
+
+            }else{
+
+                $loan_end_date = $person['loan_end_date'];
+
+            }
+
+            $end_date = Carbon::parse($loan_end_date);
+
+
+            if(strtotime(Carbon::now()->toDateString()) - strtotime($end_date) >= 0 ){
+
+                $difference_in_weeks = 0;
+
+            }else{
+
+                $difference_in_weeks = $end_date->diffInWeeks(Carbon::now()->toDateString());
+
+            }
+
+            $single_member_loan[$j] = [
+
+                "id_loan" => $person['id_loan'],
+                "name" => $person['name'],
+                "instalment_amount" => $person['instalment_amount'],
+                "total_loan" => $person['total_loan'],
+                "loan_recovered" => $person['loan_recovered'],
+                "loan_outstanding" => $person['loan_outstanding'],
+                "loan_status" => $person['loan_status'],
+                "loan_end_date"=>$loan_end_date,
+                "weeks_remaining" => $difference_in_weeks,
+                "amount" => $recovery['amount']
+            ];
+
+        }
+
+        dd($single_member_loan);
+
+
+        // $group_loans = DB::table('loans')
+        //         ->join('clients','loans.id_client','clients.id')
+        //         ->where('clients.id_loan_group',$id_loan_group)
+        //         ->where('loans.loan_status','Running')
+        //         ->orWhere('loans.loan_status','Defaulted')
+        //         ->select('clients.name','loans.*')
+        //         ->get();
+        //  $x = 0;
+
+        // $start_of_loan_repayment = $this->date_first_transaction_using_this_app('loan_repayment');
+
+        // $target_recovery = $this->recent_target_recovery($start_of_week,$now->toDateString(),$request->id);
+
+        // $actual_recovery = $this->recent_actual_recovery($start_of_week,$now->toDateString(),$request->id);
+
+        // dd($actual_recovery);
+
+        // $balance_recent_target_recovery = ($target_recovery - $actual_recovery);
+
+        // foreach($group_loans as $loan){
+
+        //     $recovery = DB::table('transactions')
+        //                 ->where('id_loan',$loan->id)
+        //                 ->where('transaction_detail','like','%Loan Repayment%')
+        //                 ->whereBetween('transaction_date',[$start_of_week,$end_of_week])
+        //                 ->first();
+
+        //     if(is_null($recovery)){
+
+        //         $actual_recovery = 0;
+
+        //         $created_at = $end_of_week;
+
+        //     }else{
+
+        //         $actual_recovery = $recovery->amount;
+
+        //         $created_at = $recovery->created_at;
+        //     }
+
+        //     if(is_null($loan->loan_end_date)){
+
+        //         $loan_end_date = Carbon::now();
+
+        //     }else{
+
+        //         $loan_end_date = $loan->loan_end_date;
+        //     }
+
+
+        //     $deficit_loan_recovery = $this->deficit_in_loan_recovery(Carbon::now(),$loan_end_date,$loan->instalment_amount,$loan->total_loan,$loan->loan_recovered);
+
+        //     $single_loan_recovery[$x] = [
+
+        //                             "name" => $loan->name,
+        //                             "target_recovery" => $loan->instalment_amount,
+        //                             "deficit_loan_recovery" => $deficit_loan_recovery,
+        //                             "actual_recovery" => $actual_recovery,
+        //                             "created_at" => $created_at
+        //                         ];
+        //     $x++;
+
+        // }
+
+        // $weekly_calendar = $this->show_weekly_data();
 
         return view('apply.metrics.group.single_loan_group',compact('heading','single_loan_recovery','outstanding','officers','group','weekly_calendar','balance_recent_target_recovery'));
     }
