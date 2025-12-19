@@ -38,13 +38,17 @@
                     <div class="row">
                       <div class="form-group mr-2">
                         <div class="input-group mb-3">
+                          <select class="form-control select2bs4" style="width: 8rem;" id="inputGroupSelect01" name="period" data-placeholder="Select category" required>
+                            <option></option>
+                            <option>Running</option>
+                            <option>Defaulted</option>
+                          </select>
                           <select class="form-control select2bs4" style="width: auto;" id="inputGroupSelect02" name="period" data-placeholder="Select week" required>
                             <option></option>
                             @foreach($weekly_calendar as $week)
                             <option>{{ $week['period'] }}</option>
                             @endforeach
                           </select>
-                          <!-- <label class="input-group-text" for="inputGroupSelect02">Search</label> -->
                           <input type="submit" name="submit" class="btn btn-sm btn-default btn-flat" value="Search">
                         </div>
 
@@ -66,49 +70,25 @@
                             <th>target_recovery</th>
                             <th>cumm_recovery_deficit</th>
                             <th>actual_recovery</th>
+                            <th>loan_status</th>
                           </tr>
                         </thead>
                         <tbody>
-                          @php
-
-                            $total_target_recovery = 0;
-                            $total_actual_recovery = 0;
-                            $total_deficit_loan_recovery = 0;
-
-                          @endphp
-                          @foreach($single_loan_recovery as $recovery)
-
-                            @php
                           
-                            $total_target_recovery += $recovery['target_recovery'];
+                          @foreach($single_member_loan_details as $recovery)
 
-                            $total_deficit_loan_recovery += $recovery['deficit_loan_recovery'];
-
-                            $total_actual_recovery += $recovery['actual_recovery'];
-
-                            @endphp
+                            
                             <tr>
-                              <td>{{ date('d-m-Y',strtotime($recovery['created_at'])) }}</td>
+                              <td>{{ $recovery['created_at'] }}</td>
                               <td>{{ $recovery['name'] }}</td>
-                              <td>{{ number_format($recovery['target_recovery']) }}</td>
+                              <td>{{ number_format($recovery['instalment_amount']) }}</td>
                               <td>{{ number_format($recovery['deficit_loan_recovery']) }}</td>
-                              <td>{{ number_format($recovery['actual_recovery']) }}</td>
+                              <td>{{ number_format($recovery['amount']) }}</td>
+                              <td>{{ $recovery['loan_status'] }}</td>
                             </tr>
                           @endforeach
                         </tbody>
-                        <tfoot>
-                          <tr>
-                            <th colspan="2">total</th>
-                            <th>{{ number_format($total_target_recovery) }}</th>
-                            <th>{{ number_format($total_deficit_loan_recovery) }}</th>
-                            <th>{{ number_format($total_actual_recovery) }}</th>
-                          </tr>
-                          <tr class="text-danger">
-                            <th colspan="2">Total Target Recovery</th>
-                            <th colspan="2">{{ number_format($total_target_recovery + $total_deficit_loan_recovery) }}</th>
-                            <th></th>
-                          </tr>
-                        </tfoot>
+                        
                       </table>
                     </div>
                   </div>

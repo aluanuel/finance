@@ -112,209 +112,131 @@ class HomeController extends Controller
 
                 foreach ($mon_groups as $value) {
                     
-                    $target_recovery = DB::table('loans')
-                                        ->join('clients','loans.id_client','clients.id')
-                                        ->where('clients.id_loan_group',$value->id)
-                                        ->where('loans.loan_status','!=','Completed')
-                                        ->sum('loans.instalment_amount');
+                    $monday_running_loans[$i] = [
+                        "id_loan_group" => $value->id,
+                        "group_name" => $value->group_name, 
+                        "target_recovery_running_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Running"), 'instalment_amount')),
+                        "deficit_loan_recovery_running_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Running"), 'deficit_loan_recovery')),
+                        "actual_recovery_running_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Running"), 'amount')),
+                        "lead_credit_officer" => $value->name
+                    ];
 
-                    $actual_recovery = DB::table('transactions')
-                                        ->join('loans','transactions.id_loan','loans.id')
-                                        ->join('clients','loans.id_client','clients.id')
-                                        ->where('clients.id_loan_group',$value->id)
-                                        ->where('loans.loan_status','!=','Completed')
-                                        ->where('transactions.transaction_detail','like','%Loan Repayment%')
-                                        ->whereBetween('transactions.transaction_date',[$start_of_week,$end_of_week])
-                                        ->sum('transactions.amount');
-
-                    $recent_target_recovery = $this->recent_target_recovery($start_of_recent_week,$end_of_recent_week,$value->id);
-
-                    $recent_actual_recovery = $this->recent_actual_recovery($start_of_recent_week,$end_of_recent_week,$value->id);
-
-                    $recent_deficit = $recent_target_recovery - $recent_actual_recovery;
-
-
-                    $monday_disbursement[$i] =   [
-                                                "id" => $value->id,
-                                                "group_name" => $value->group_name,
-                                                "target_recovery" => $target_recovery,
-                                                "actual_recovery" => $actual_recovery,
-                                                "recent_deficit" => $recent_deficit,
-                                                "lead_credit_officer" =>$value->name
-                                            ];
                     $i++;
+
                 }
 
-                
+                // dd($monday_default_loans);
 
                 foreach ($tue_groups as $value) {
                     
-                    $target_recovery = DB::table('loans')
-                                        ->join('clients','loans.id_client','clients.id')
-                                        ->where('clients.id_loan_group',$value->id)
-                                        ->where('loans.loan_status','!=','Completed')
-                                        ->sum('loans.instalment_amount');
+                    $tuesday_running_loans[$j] = [
+                        "id_loan_group" => $value->id,
+                        "group_name" => $value->group_name, 
+                        "target_recovery_running_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Running"), 'instalment_amount')),
+                        "deficit_loan_recovery_running_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Running"), 'deficit_loan_recovery')),
+                        "actual_recovery_running_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Running"), 'amount')),
+                        "lead_credit_officer" => $value->name
+                    ];
 
-                    $actual_recovery = DB::table('transactions')
-                                        ->join('loans','transactions.id_loan','loans.id')
-                                        ->join('clients','loans.id_client','clients.id')
-                                        ->where('clients.id_loan_group',$value->id)
-                                        ->where('transactions.transaction_detail','like','%Loan Repayment%')
-                                        ->whereBetween('transactions.transaction_date',[$start_of_week,$end_of_week])
-                                        ->sum('transactions.amount');
-
-                    $recent_target_recovery = $this->recent_target_recovery($start_of_recent_week,$end_of_recent_week,$value->id);
-
-                    $recent_actual_recovery = $this->recent_actual_recovery($start_of_recent_week,$end_of_recent_week,$value->id);
-
-                    $recent_deficit = $recent_target_recovery - $recent_actual_recovery;
-
-                    $tuesday_disbursement[$j] =   [
-                                                "id" => $value->id,
-                                                "group_name" => $value->group_name,
-                                                "target_recovery" => $target_recovery,
-                                                "actual_recovery" => $actual_recovery,
-                                                "recent_deficit" => $recent_deficit,
-                                                "lead_credit_officer" =>$value->name
-                                            ];
                     $j++;
+
                 }
 
-                foreach ($wed_groups as $value) {
+                // foreach ($wed_groups as $value) {
                     
-                    $target_recovery = DB::table('loans')
-                                        ->join('clients','loans.id_client','clients.id')
-                                        ->where('clients.id_loan_group',$value->id)
-                                        ->where('loans.loan_status','!=','Completed')
-                                        ->sum('loans.instalment_amount');
+                //     $wednesday_running_loans[$k] = [
+                //         "id_loan_group" => $value->id,
+                //         "group_name" => $value->group_name, 
+                //         "target_recovery_running_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Running"), 'instalment_amount')),
+                //         "deficit_loan_recovery_running_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Running"), 'deficit_loan_recovery')),
+                //         "actual_recovery_running_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Running"), 'amount')),
+                //         "lead_credit_officer" => $value->name
+                //     ];
 
-                    $actual_recovery = DB::table('transactions')
-                                        ->join('loans','transactions.id_loan','loans.id')
-                                        ->join('clients','loans.id_client','clients.id')
-                                        ->where('clients.id_loan_group',$value->id)
-                                        ->where('transactions.transaction_detail','like','%Loan Repayment%')
-                                        ->whereBetween('transactions.transaction_date',[$start_of_week,$end_of_week])
-                                        ->sum('transactions.amount');
+                //     $wednesday_default_loans[$k] = [
+                //         "id_loan_group" => $value->id,
+                //         "group_name" => $value->group_name,
+                //         "target_recovery_defaulted_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Defaulted"), 'instalment_amount')),
+                //         "deficit_loan_recovery_defaulted_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Defaulted"), 'deficit_loan_recovery')),
+                //         "actual_recovery_defaulted_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Defaulted"), 'amount')),
+                //         "lead_credit_officer" => $value->name
+                //     ];
 
-                    $recent_target_recovery = $this->recent_target_recovery($start_of_recent_week,$end_of_recent_week,$value->id);
+                //     $k++;
+                // }
 
-                    $recent_actual_recovery = $this->recent_actual_recovery($start_of_recent_week,$end_of_recent_week,$value->id);
-
-                    $recent_deficit = $recent_target_recovery - $recent_actual_recovery;
-
-                    $wednesday_disbursement[$i] =   [
-                                                "id" => $value->id,
-                                                "group_name" => $value->group_name,
-                                                "target_recovery" => $target_recovery,
-                                                "actual_recovery" => $actual_recovery,
-                                                "recent_deficit" => $recent_deficit,
-                                                "lead_credit_officer" =>$value->name
-                                            ];
-                    $i++;
-                }
-
-                foreach ($thur_groups as $value) {
+                // foreach ($thur_groups as $value) {
                     
-                    $target_recovery = DB::table('loans')
-                                        ->join('clients','loans.id_client','clients.id')
-                                        ->where('clients.id_loan_group',$value->id)
-                                        ->where('loans.loan_status','!=','Completed')
-                                        ->sum('loans.instalment_amount');
+                //     $thursday_running_loans[$i] = [
+                //         "id_loan_group" => $value->id,
+                //         "group_name" => $value->group_name, 
+                //         "target_recovery_running_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Running"), 'instalment_amount')),
+                //         "deficit_loan_recovery_running_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Running"), 'deficit_loan_recovery')),
+                //         "actual_recovery_running_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Running"), 'amount')),
+                //         "lead_credit_officer" => $value->name
+                //     ];
 
-                    $actual_recovery = DB::table('transactions')
-                                        ->join('loans','transactions.id_loan','loans.id')
-                                        ->join('clients','loans.id_client','clients.id')
-                                        ->where('clients.id_loan_group',$value->id)
-                                        ->where('transactions.transaction_detail','like','%Loan Repayment%')
-                                        ->whereBetween('transactions.transaction_date',[$start_of_week,$end_of_week])
-                                        ->sum('transactions.amount');
+                //     $thursday_default_loans[$i] = [
+                //         "id_loan_group" => $value->id,
+                //         "group_name" => $value->group_name,
+                //         "target_recovery_defaulted_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Defaulted"), 'instalment_amount')),
+                //         "deficit_loan_recovery_defaulted_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Defaulted"), 'deficit_loan_recovery')),
+                //         "actual_recovery_defaulted_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Defaulted"), 'amount')),
+                //         "lead_credit_officer" => $value->name
+                //     ];
 
-                    $recent_target_recovery = $this->recent_target_recovery($start_of_recent_week,$end_of_recent_week,$value->id);
+                //     $x++;
+                // }
 
-                    $recent_actual_recovery = $this->recent_actual_recovery($start_of_recent_week,$end_of_recent_week,$value->id);
-
-                    $recent_deficit = $recent_target_recovery - $recent_actual_recovery;
-
-                    $thursday_disbursement[$x] =   [
-                                                "id" => $value->id,
-                                                "group_name" => $value->group_name,
-                                                "target_recovery" => $target_recovery,
-                                                "actual_recovery" => $actual_recovery,
-                                                "recent_deficit" => $recent_deficit,
-                                                "lead_credit_officer" =>$value->name
-                                            ];
-                    $x++;
-                }
-
-                foreach ($fri_groups as $value) {
+                // foreach ($fri_groups as $value) {
                     
-                    $target_recovery = DB::table('loans')
-                                        ->join('clients','loans.id_client','clients.id')
-                                        ->where('clients.id_loan_group',$value->id)
-                                        ->where('loans.loan_status','!=','Completed')
-                                        ->sum('loans.instalment_amount');
+                //     $friday_running_loans[$i] = [
+                //         "id_loan_group" => $value->id,
+                //         "group_name" => $value->group_name, 
+                //         "target_recovery_running_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Running"), 'instalment_amount')),
+                //         "deficit_loan_recovery_running_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Running"), 'deficit_loan_recovery')),
+                //         "actual_recovery_running_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Running"), 'amount')),
+                //         "lead_credit_officer" => $value->name
+                //     ];
 
-                    $actual_recovery = DB::table('transactions')
-                                        ->join('loans','transactions.id_loan','loans.id')
-                                        ->join('clients','loans.id_client','clients.id')
-                                        ->where('clients.id_loan_group',$value->id)
-                                        ->where('transactions.transaction_detail','like','%Loan Repayment%')
-                                        ->whereBetween('transactions.transaction_date',[$start_of_week,$end_of_week])
-                                        ->sum('transactions.amount');
+                //     $friday_default_loans[$i] = [
+                //         "id_loan_group" => $value->id,
+                //         "group_name" => $value->group_name,
+                //         "target_recovery_defaulted_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Defaulted"), 'instalment_amount')),
+                //         "deficit_loan_recovery_defaulted_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Defaulted"), 'deficit_loan_recovery')),
+                //         "actual_recovery_defaulted_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Defaulted"), 'amount')),
+                //         "lead_credit_officer" => $value->name
+                //     ];
 
-                    $recent_target_recovery = $this->recent_target_recovery($start_of_recent_week,$end_of_recent_week,$value->id);
+                //     $x++;
+                // }
 
-                    $recent_actual_recovery = $this->recent_actual_recovery($start_of_recent_week,$end_of_recent_week,$value->id);
-
-                    $recent_deficit = $recent_target_recovery - $recent_actual_recovery;
-
-                    $friday_disbursement[$x] =   [
-                                                "id" => $value->id,
-                                                "group_name" => $value->group_name,
-                                                "target_recovery" => $target_recovery,
-                                                "actual_recovery" => $actual_recovery,
-                                                "recent_deficit" => $recent_deficit,
-                                                "lead_credit_officer" =>$value->name
-                                            ];
-                    $x++;
-                }
-
-                foreach ($sat_groups as $value) {
+                // foreach ($sat_groups as $value) {
                     
-                    $target_recovery = DB::table('loans')
-                                        ->join('clients','loans.id_client','clients.id')
-                                        ->where('clients.id_loan_group',$value->id)
-                                        ->where('loans.loan_status','!=','Completed')
-                                        ->sum('loans.instalment_amount');
+                //     $saturday_running_loans[$i] = [
+                //         "id_loan_group" => $value->id,
+                //         "group_name" => $value->group_name, 
+                //         "target_recovery_running_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Running"), 'instalment_amount')),
+                //         "deficit_loan_recovery_running_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Running"), 'deficit_loan_recovery')),
+                //         "actual_recovery_running_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Running"), 'amount')),
+                //         "lead_credit_officer" => $value->name
+                //     ];
 
-                    $actual_recovery = DB::table('transactions')
-                                        ->join('loans','transactions.id_loan','loans.id')
-                                        ->join('clients','loans.id_client','clients.id')
-                                        ->where('clients.id_loan_group',$value->id)
-                                        ->where('transactions.transaction_detail','like','%Loan Repayment%')
-                                        ->whereBetween('transactions.transaction_date',[$start_of_week,$end_of_week])
-                                        ->sum('transactions.amount');
+                //     $saturday_default_loans[$i] = [
+                //         "id_loan_group" => $value->id,
+                //         "group_name" => $value->group_name,
+                //         "target_recovery_defaulted_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Defaulted"), 'instalment_amount')),
+                //         "deficit_loan_recovery_defaulted_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Defaulted"), 'deficit_loan_recovery')),
+                //         "actual_recovery_defaulted_loan" => array_sum(array_column($this->single_group_loan_recovery($start_of_week,$end_of_week,$value->id,"Defaulted"), 'amount')),
+                //         "lead_credit_officer" => $value->name
+                //     ];                    
 
-                    $recent_target_recovery = $this->recent_target_recovery($start_of_recent_week,$end_of_recent_week,$value->id);
-
-                    $recent_actual_recovery = $this->recent_actual_recovery($start_of_recent_week,$end_of_recent_week,$value->id);
-
-                    $recent_deficit = $recent_target_recovery - $recent_actual_recovery;
-
-                    $saturday_disbursement[$x] =   [
-                                                "id" => $value->id,
-                                                "group_name" => $value->group_name,
-                                                "target_recovery" => $target_recovery,
-                                                "actual_recovery" => $actual_recovery,
-                                                "recent_deficit" => $recent_deficit,
-                                                "lead_credit_officer" =>$value->name
-                                            ];
-                    $x++;
-                }
+                //     $x++;
+                // }
 
             }
         
-        return view('home',compact('disbursement','recovery','completed','month','monday_disbursement','tuesday_disbursement','wednesday_disbursement','thursday_disbursement','friday_disbursement','saturday_disbursement','day_one_of_week','day_two_of_week','day_three_of_week','day_four_of_week','day_five_of_week','day_six_of_week'));
+        return view('home',compact('disbursement','recovery','completed','month','monday_running_loans','tuesday_running_loans','day_one_of_week','day_two_of_week','day_three_of_week','day_four_of_week','day_five_of_week','day_six_of_week'));
     }
 
     

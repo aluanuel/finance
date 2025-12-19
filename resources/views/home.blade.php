@@ -66,307 +66,101 @@
           <!-- col-4 -->
         </div>
         <!-- row -->
-        <div class="card card-gray">
+        <div class="card">
           <div class="card-header">
-            <h3 class="card-title text-uppercase">weekly loan recovery schedule</h3>
+            <!-- <div class="d-flex justify-content-center pb-3"> -->
+              <h6 class="card-title text-uppercase text-success">loan recovery schedule for {{ $day_one_of_week }}</h6>
+            <!-- </div> -->
             <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button>
-                </div>
+              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+            </div>
           </div>
           <div class="card-body">
             <div class="row">
-              <div class="col-md-6 col-sm-12 table-responsive">
-                <h6 class="text-center text-info text-uppercase">{{ $day_one_of_week }}</h6>
-                <table class="table table-bordered table-hover" id="example9">
-                  <thead class="text-uppercase">
-                    <tr>
-                      <th>group_name</th>
-                      <th>target_recovery</th>
-                      <th>cumm_deficit</th>
-                      <th>actual_recovery</th>
-                      <th>credit_officer</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @php $mon_target=0; $mon_actual = 0; $mon_deficit = 0; @endphp
-                    @foreach($monday_disbursement as $mon)
-                      <tr>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['group_name'] }}</a></td>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['target_recovery']) }}</a></td>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}" class="text-danger">{{ number_format($mon['recent_deficit']) }}</a></td>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['actual_recovery']) }}</a></td>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['lead_credit_officer'] }}</a></td>
+              <div class="col-md-6 col-sm-12">
+                <div class="table-responsive">
+                  <table class="table table-bordered table-hover" id="example9">
+                    <thead class="text-uppercase">
+                      <tr class="text-center">
+                        <th colspan="5" class="text-muted">running loans</th>
                       </tr>
-                      @php
-                        $mon_target += $mon['target_recovery'];
-                        $mon_actual += $mon['actual_recovery'];
-                        $mon_deficit += $mon['recent_deficit'];
-                      @endphp
-                    @endforeach
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      <th>Sub Total</th>
-                      <th>{{ number_format($mon_target) }}</th>
-                      <th>{{ number_format($mon_deficit) }}</th>
-                      <th></th>
-                      <th></th>
-                    </tr>
-                    <tr>
-                      <th>Total</th>
-                      <th colspan="2">{{ number_format($mon_target + $mon_deficit) }}</th>
-                      <th>{{ number_format($mon_actual) }}</th>
-                      <th></th>
-                    </tr>
-                  </tfoot> 
-                </table>
-              </div>
-              <div class="col-md-6 col-sm-12 table-responsive">
-                <h6 class="text-center text-info text-uppercase">{{ $day_two_of_week }}</h6>
-                <table class="table table-bordered table-hover" id="example10">
-                  <thead class="text-uppercase">
-                    <tr>
-                      <th>group_name</th>
-                      <th>target_recovery</th>
-                      <th>deficit</th>
-                      <th>actual_recovery</th>
-                      <th>credit_officer</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @php $tue_target=0; $tue_actual = 0; $tue_deficit = 0;  @endphp
-                    @foreach($tuesday_disbursement as $mon)
                       <tr>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['group_name'] }}</a></td>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['target_recovery']) }}</a></td>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}" class="text-danger">{{ number_format($mon['recent_deficit']) }}</a></td>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['actual_recovery']) }}</a></td>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['lead_credit_officer'] }}</a></td>
+                        <th>group_name</th> 
+                        <th>target_recovery</th>
+                        <th>cumm_deficit</th>
+                        <th>actual_recovery</th> 
+                        <th>credit_officer</th>                
                       </tr>
-                      @php
-                        $tue_target += $mon['target_recovery'];
-                        $tue_actual += $mon['actual_recovery'];
-                        $tue_deficit +=$mon['recent_deficit'];
-                      @endphp
-                    @endforeach
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      <th>Sub Total</th>
-                      <th>{{ number_format($tue_target) }}</th>
-                      <th>{{ number_format($tue_deficit) }}</th>
-                      <th></th>
-                      <th></th>
-                    </tr>
-                    <tr>
-                      <th>Total</th>
-                      <th colspan="2">{{ number_format($tue_target + $tue_deficit) }}</th>
-                      <th>{{ number_format($tue_actual) }}</th>
-                      <th></th>
-                    </tr>
-                  </tfoot> 
-                </table>
+                    </thead>
+                    <tbody>
+                      @foreach($monday_running_loans as $mon)
+                      <tr>
+                        <td>{{ $mon['group_name'] }}</td>
+                        <td>{{ number_format($mon['target_recovery_running_loan']) }}</td>
+                        <td>{{ number_format($mon['deficit_loan_recovery_running_loan']) }}</td>
+                        <td>{{ number_format($mon['actual_recovery_running_loan']) }}</td>
+                        <td>{{ $mon['lead_credit_officer'] }}</td>
+                      </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
               </div>
+              <!-- col-md-6               -->
+               
             </div>
-            <!-- row -->
-            <div class="row">
-              <div class="col-md-6 col-sm-12 table-responsive">
-                <h6 class="text-center text-info text-uppercase">{{ $day_three_of_week }}</h6>
-                <table class="table table-bordered table-hover" id="example11">
-                  <thead class="text-uppercase">
-                    <tr>
-                      <th>group_name</th>
-                      <th>target_recovery</th>
-                      <th>deficit</th>
-                      <th>actual_recovery</th>
-                      <th>credit_officer</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @php $wed_target =0; $wed_actual = 0; $wed_deficit = 0;  @endphp
-                    @foreach($wednesday_disbursement as $mon)
-                      <tr>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['group_name'] }}</a></td>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['target_recovery']) }}</a></td>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}" class="text-danger">{{ number_format($mon['recent_deficit']) }}</a></td>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['actual_recovery']) }}</a></td>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['lead_credit_officer'] }}</a></td>
-                      </tr>
-                      @php
-                        $wed_target += $mon['target_recovery'];
-                        $wed_actual += $mon['actual_recovery'];
-                        $wed_deficit +=$mon['recent_deficit'];
-                      @endphp
-                    @endforeach
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      <th>sub Total</th>
-                      <th>{{ number_format($wed_target) }}</th>
-                      <th>{{ number_format($wed_deficit) }}</th>
-                      <th></th>
-                      <th></th>
-                    </tr>
-                    <tr>
-                      <th>Total</th>
-                      <th colspan="2">{{ number_format($wed_target + $wed_deficit) }}</th>
-                      <th>{{ number_format($wed_actual) }}</th>
-                      <th></th>
-                    </tr>
-                  </tfoot>  
-                </table>
-              </div>
-              <div class="col-md-6 col-sm-12 table-responsive">
-                <h6 class="text-center text-info text-uppercase">{{ $day_four_of_week }}</h6>
-                <table class="table table-bordered table-hover" id="example12">
-                  <thead class="text-uppercase">
-                    <tr>
-                      <th>group_name</th>
-                      <th>target_recovery</th>
-                      <th>deficit</th>
-                      <th>actual_recovery</th>
-                      <th>credit_officer</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @php $thur_target =0; $thur_actual = 0; $thur_deficit = 0;  @endphp
-                    @foreach($thursday_disbursement as $mon)
-                      <tr>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['group_name'] }}</a></td>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['target_recovery']) }}</a></td>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}" class="text-danger">{{ number_format($mon['recent_deficit']) }}</a></td>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['actual_recovery']) }}</a></td>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['lead_credit_officer'] }}</a></td>
-                      </tr>
-                      @php
-                        $thur_target += $mon['target_recovery'];
-                        $thur_actual += $mon['actual_recovery'];
-                        $thur_deficit +=$mon['recent_deficit'];
-                      @endphp
-                    @endforeach
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      <th>sub Total</th>
-                      <th>{{ number_format($thur_target) }}</th>
-                      <th>{{ number_format($thur_deficit) }}</th>
-                      <th></th>
-                      <th></th>
-                    </tr>
-                    <tr>
-                      <th>Total</th>
-                      <th colspan="2">{{ number_format($thur_target + $thur_deficit) }}</th>
-                      <th>{{ number_format($thur_actual) }}</th>
-                      <th></th>
-                    </tr>
-                  </tfoot>   
-                </table>
-              </div>
-            </div>
-            <!-- row -->
-            <div class="row">
-              <div class="col-md-6 col-sm-12 table-responsive">
-                <h6 class="text-center text-info text-uppercase">{{ $day_five_of_week }}</h6>
-                <table class="table table-bordered table-hover" id="example2">
-                  <thead class="text-uppercase">
-                    <tr>
-                      <th>group_name</th>
-                      <th>target_recovery</th>
-                      <th>deficit</th>
-                      <th>actual_recovery</th>
-                      <th>credit_officer</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @php $fri_target =0; $fri_actual = 0; $fri_deficit = 0;  @endphp
-                    @foreach($friday_disbursement as $mon)
-                      <tr>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['group_name'] }}</a></td>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['target_recovery']) }}</a></td>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}" class="text-danger">{{ number_format($mon['recent_deficit']) }}</a></td>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['actual_recovery']) }}</a></td>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['lead_credit_officer'] }}</a></td>
-                      </tr>
-                      @php
-                        $fri_target += $mon['target_recovery'];
-                        $fri_actual += $mon['actual_recovery'];
-                        $fri_deficit +=$mon['recent_deficit'];
-                      @endphp
-                    @endforeach
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      <th>sub Total</th>
-                      <th>{{ number_format($fri_target) }}</th>
-                      <th>{{ number_format($fri_deficit) }}</th>
-                      <th></th>
-                      <th></th>
-                    </tr>
-                    <tr>
-                      <th>Total</th>
-                      <th colspan="2">{{ number_format($fri_target + $fri_deficit) }}</th>
-                      <th>{{ number_format($fri_actual) }}</th>
-                      <th></th>
-                    </tr>
-                  </tfoot> 
-                </table>
-              </div>
-              <div class="col-md-6 col-sm-12 table-responsive">
-                <h6 class="text-center text-info text-uppercase">{{ $day_six_of_week }}</h6>
-                <table class="table table-bordered table-hover" id="example8">
-                  <thead class="text-uppercase">
-                    <tr>
-                      <th>group_name</th>
-                      <th>target_recovery</th>
-                      <th>deficit</th>
-                      <th>actual_recovery</th>
-                      <th>credit_officer</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @php $sat_target =0; $sat_actual = 0; $sat_deficit = 0;  @endphp
-                    @foreach($saturday_disbursement as $mon)
-                      <tr>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['group_name'] }}</a></td>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['target_recovery']) }}</a></td>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}" class="text-danger">{{ number_format($mon['recent_deficit']) }}</a></td>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ number_format($mon['actual_recovery']) }}</a></td>
-                        <td><a href="/apply/metrics/group/single_loan_group/{{ $mon['id']}}">{{ $mon['lead_credit_officer'] }}</a></td>
-                      </tr>
-                      @php
-                        $sat_target += $mon['target_recovery'];
-                        $sat_actual += $mon['actual_recovery'];
-                        $sat_deficit +=$mon['recent_deficit'];
-                      @endphp
-                    @endforeach
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      <th>sub Total</th>
-                      <th>{{ number_format($sat_target) }}</th>
-                      <th>{{ number_format($sat_deficit) }}</th>
-                      <th></th>
-                      <th></th>
-                    </tr>
-                    <tr>
-                      <th>Total</th>
-                      <th colspan="2">{{ number_format($sat_target + $sat_deficit) }}</th>
-                      <th>{{ number_format($sat_actual) }}</th>
-                      <th></th>
-                    </tr>
-                  </tfoot>     
-                </table>
-              </div>
-            </div>
-            <!-- row -->
           </div>
         </div>
-            <!-- card -->
+        <!-- card -->
+        <div class="card">
+          <div class="card-header">
+            <!-- <div class="d-flex justify-content-center pb-3"> -->
+              <h6 class="card-title text-uppercase text-success">loan recovery schedule for {{ $day_two_of_week }}</h6>
+            <!-- </div> -->
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 col-sm-12">
+                <div class="table-responsive">
+                  <table class="table table-bordered table-hover" id="example9">
+                    <thead class="text-uppercase">
+                      <tr class="text-center">
+                        <th colspan="5" class="text-muted">running loans</th>
+                      </tr>
+                      <tr>
+                        <th>group_name</th> 
+                        <th>target_recovery</th>
+                        <th>cumm_deficit</th>
+                        <th>actual_recovery</th> 
+                        <th>credit_officer</th>                
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach($tuesday_running_loans as $mon)
+                      <tr>
+                        <td>{{ $mon['group_name'] }}</td>
+                        <td>{{ number_format($mon['target_recovery_running_loan']) }}</td>
+                        <td>{{ number_format($mon['deficit_loan_recovery_running_loan']) }}</td>
+                        <td>{{ number_format($mon['actual_recovery_running_loan']) }}</td>
+                        <td>{{ $mon['lead_credit_officer'] }}</td>
+                      </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- col-md-6               -->
+               
+            </div>
+          </div>
+        </div>
+        <!-- card -->
+        <!-- card -->
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->

@@ -192,16 +192,16 @@ $(document).ready(function(){
     });
     $('#example9').DataTable({
       "paging": true,
-      "lengthChange": true,
-      "searching": true,
-      "ordering": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": false,
       "autoWidth": true
     });
     $('#example10').DataTable({
       "paging": true,
-      "lengthChange": true,
-      "searching": true,
-      "ordering": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": false,
       "autoWidth": true
     });
     $('#example11').DataTable({
