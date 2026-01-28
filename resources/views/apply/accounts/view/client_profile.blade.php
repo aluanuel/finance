@@ -184,202 +184,205 @@
                             </div>
                           </div>
                           <!-- /.card-header -->
-                          <div class="card-body p-0">
-                            <table class="table table-sm">
-                              <tr>
-                                <td>Loan application date</td>
-                                <td>{{ $last_loan->date_loan_application }}</td>
-                              </tr>
-                              <tr>
-                                <td>Loan request amount</td>
-                                <td>{{ number_format($last_loan->loan_request_amount) }}</td>
-                              </tr>
-                              <tr>
-                                <td>Purpose for borrowing</td>
-                                <td>{{ $last_loan->borrowing_purpose }}</td>
-                              </tr>
-                              <tr>
-                                <td>Loan interest rate (%) </td>
-                                <td>{{ $last_loan->interest_rate }}</td>
-                              </tr>
-                              <tr>
-                                <td>Loan processing rate (%) </td>
-                                <td>{{ $last_loan->loan_processing_rate }}</td>
-                              </tr>
-                              <tr>
-                                <td>Loan period (weeks) </td>
-                                <td>{{ $last_loan->loan_period }}</td>
-                              </tr>
-                              <tr>
-                                <td>Loan approved </td>
-                                <td>{{ number_format($last_loan->loan_approved) }}</td>
-                              </tr>
-                              <tr>
-                                <td>Total loan </td>
-                                <td><a class="btn btn-primary btn-xs">{{ number_format($last_loan->total_loan) }}</a></td>
-                              </tr>
-                              <tr>
-                                <td>Loan recovered </td>
-                                <td><a class="btn btn-success btn-xs">{{ number_format($last_loan->loan_recovered) }}</a></td>
-                              </tr>
-                              <tr>
-                                <td>Loan outstanding </td>
-                                <td><a class="btn btn-danger btn-xs"> {{ number_format($last_loan->loan_outstanding) }}</a></td>
-                              </tr>
-                              <tr>
-                                <td>Date loan disbursed </td>
-                                <td>{{ $last_loan->date_loan_disbursed }}</td>
-                              </tr>
-                              <tr>
-                                <td>Date loan fully recovered </td>
-                                <td><a class="btn btn-danger btn-xs">{{ $last_loan->date_loan_fully_recovered }}</a></td>
-                              </tr>
-                              <tr>
-                                <td>Collateral security </td>
-                                <td>{{ $last_loan->collateral_security }}</td>
-                              </tr>
-                            </table>
+                          <div class="card-body">
+                            <div class="table-responsive">
+                              <table class="table table-hover">
+                                <tr>
+                                  <td>Loan application date</td>
+                                  <td>{{ $last_loan->date_loan_application }}</td>
+                                </tr>
+                                <tr>
+                                  <td>Loan request amount</td>
+                                  <td>{{ number_format($last_loan->loan_request_amount) }}</td>
+                                </tr>
+                                <tr>
+                                  <td>Purpose for borrowing</td>
+                                  <td>{{ $last_loan->borrowing_purpose }}</td>
+                                </tr>
+                                <tr>
+                                  <td>Loan interest rate (%) </td>
+                                  <td>{{ $last_loan->interest_rate }}</td>
+                                </tr>
+                                <tr>
+                                  <td>Loan processing rate (%) </td>
+                                  <td>{{ $last_loan->loan_processing_rate }}</td>
+                                </tr>
+                                <tr>
+                                  <td>Loan period (weeks) </td>
+                                  <td>{{ $last_loan->loan_period }}</td>
+                                </tr>
+                                <tr>
+                                  <td>Loan approved </td>
+                                  <td>{{ number_format($last_loan->loan_approved) }}</td>
+                                </tr>
+                                <tr>
+                                  <td>Total loan </td>
+                                  <td><a class="btn btn-primary btn-xs">{{ number_format($last_loan->total_loan) }}</a></td>
+                                </tr>
+                                <tr>
+                                  <td>Loan recovered </td>
+                                  <td><a class="btn btn-success btn-xs">{{ number_format($last_loan->loan_recovered) }}</a></td>
+                                </tr>
+                                <tr>
+                                  <td>Loan outstanding </td>
+                                  <td><a class="btn btn-danger btn-xs"> {{ number_format($last_loan->loan_outstanding) }}</a></td>
+                                </tr>
+                                <tr>
+                                  <td>Date loan disbursed </td>
+                                  <td>{{ $last_loan->date_loan_disbursed }}</td>
+                                </tr>
+                                <tr>
+                                  <td>Date loan fully recovered </td>
+                                  <td><a class="btn btn-danger btn-xs">{{ $last_loan->date_loan_fully_recovered }}</a></td>
+                                </tr>
+                                <tr>
+                                  <td>Collateral security </td>
+                                  <td>{{ $last_loan->collateral_security }}</td>
+                                </tr>
+                              </table>
+                            </div>
                           </div>
                           <!-- /.card-body -->
                         </div>
                         <!-- /.card -->
                       </div>
                       <div class="row">
-                        <div class="col-md-6 col-sm-12">
-                          <div class="card">
+                        <div class="card col-md-6 col-sm-12">
                           <div class="card-header text-uppercase">
                             <h3 class="card-title">loan schedule</h3>
                           </div>
-                          <!-- /.card-header -->
+                            <!-- /.card-header -->
                           <div class="card-body">
-                            <table class="table table-sm">
-                              @foreach($schedule as $sch)
-                                <tr>
-                                  <td>{{ $sch->instalment_date}}</td>
-                                  <td>{{ number_format($sch->instalment_amount) }}</td>
-                                </tr>
-                              @endforeach
-                            </table>
+                              <div class="table-responsive">
+                                <table id="example6" class="table table-hover">
+                                  <tbody>
+                                    @foreach($schedule as $sch)
+                                      <tr>
+                                        <td>{{ $sch->instalment_date}}</td>
+                                        <td>{{ number_format($sch->instalment_amount) }}</td>
+                                      </tr>
+                                    @endforeach
+                                  </tbody>
+                                </table>
+                              </div>
                           </div>
                         </div>
                         <!-- card -->  
-                        </div>
-                        <!-- col-3 -->
-                        <div class="col-md-6 col-sm-12">
-                          <div class="card">
+                        <div class="card col-md-6 col-sm-12">
                           <div class="card-header text-uppercase">
-                            <h3 class="card-title">loan recovery</h3>
+                              <h3 class="card-title">loan recovery</h3>
                           </div>
-                          <!-- /.card-header -->
+                            <!-- /.card-header -->
                           <div class="card-body">
-                            <table class="table table-sm">
-                              <tbody>
-                                @foreach($last_loan_recovery as $recovery)
-                                  <tr>
-                                    <td>{{ $recovery->transaction_date }}</td>
-                                    <td>{{ number_format($recovery->amount) }}</td>
-                                  </tr>
-                                @endforeach
-                              </tbody>
-                            </table>
+                            <div class="table-responsive">
+                              <table id="example10" class="table table-hover">
+                                <tbody>
+                                  @foreach($last_loan_recovery as $recovery)
+                                    <tr>
+                                      <td>{{ $recovery->transaction_date }}</td>
+                                      <td>{{ number_format($recovery->amount) }}</td>
+                                    </tr>
+                                  @endforeach
+                                </tbody>
+                              </table>
+                            </div>
                           </div>
                         </div>
-                        <!-- card -->  
-                        </div>
-                        <!-- col-3 -->
+                          <!-- card --> 
                       </div>
                       @endif
                     </div>
                     <!-- tab-pane -->
                     <div class="tab-pane" id="loan_history">
-                      <table class="table table-hover table-bordered">
-                        <thead>
-                          <tr>
-                            <th>number</th>
-                            <th>loan_request</th>
-                            <th>loan_approved</th>
-                            <th>total_loan</th>
-                            <th>loan_status</th>
-                            <th>#</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          @foreach($loans as $loan)
-                              <tr>
-                                <td>{{ $loan->loan_number }}</td>
-                                <td>{{ number_format($loan->loan_request_amount) }}</td>
-                                <td>{{ number_format($loan->loan_approved) }}</td>
-                                <td>{{ number_format($loan->total_loan) }}</td>
-                                <td>{{ $loan->loan_status }}</td>
-                                <td> <a class="btn btn-xs btn-default" data-toggle="modal" data-target="#loan_history_{{$loan->id}}">View</a></td>
-                              </tr>
-                            <div class="modal fade" id="loan_history_{{$loan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                              <div class="modal-dialog modal-md" role="document">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h6 class="modal-title justify-content-center text-uppercase" id="exampleModalLongTitle">View details of loan number {{ $loan->loan_number }}</h6>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                      <span aria-hidden="true">&times;</span>
-                                    </button>
-                                  </div>
-                                  <div class="modal-body">
-                                    <!-- <div class="card"> -->
-                                      <ul class="list-group list-group-unbordered mb-3">
-                                      <li class="list-group-item">
-                                        <b>Loan application date</b><span class="float-right">{{ $loan->date_loan_application }}</span>
-                                      </li>
-                                      <li class="list-group-item">
-                                        <b>Loan request amount</b><span class="float-right">{{ number_format($loan->loan_request_amount) }}</span>
-                                      </li>
-                                      <li class="list-group-item">
-                                        <b>Purpose for borrowing</b><span class="float-right">{{ $loan->borrowing_purpose }}</span>
-                                      </li>
-                                      <li class="list-group-item">
-                                        <b>Loan interest rate (%)</b><span class="float-right">{{ $loan->interest_rate }}</span>
-                                      </li>
-                                      <li class="list-group-item">
-                                        <b>Loan processing rate (%)</b><span class="float-right">{{ $loan->loan_processing_rate }}</span>
-                                      </li>
-                                      <li class="list-group-item">
-                                        <b>Loan period (weeks)</b><span class="float-right">{{ $loan->loan_period }}</span>
-                                      </li>
-                                      <li class="list-group-item">
-                                        <b>Loan approved</b><span class="float-right">{{ number_format($loan->loan_approved) }}</span>
-                                      </li>
-                                      <li class="list-group-item">
-                                        <b>Total loan</b><span class="float-right">{{ number_format($loan->total_loan) }}</span>
-                                      </li>
-                                      <li class="list-group-item">
-                                        <b>Loan recovered</b><span class="float-right">{{ number_format($loan->loan_recovered) }}</span>
-                                      </li>
-                                      <li class="list-group-item">
-                                        <b>Loan outstanding</b><span class="float-right">{{ number_format($loan->loan_outstanding) }}</span>
-                                      </li>
-                                      <li class="list-group-item">
-                                        <b>Date loan approved</b><span class="float-right">{{ $loan->date_loan_approved }}</span>
-                                      </li>
-                                      <li class="list-group-item">
-                                        <b>Date loan disbursed</b><span class="float-right">{{ $loan->date_loan_disbursed }}</span>
-                                      </li>
-                                      <li class="list-group-item">
-                                        <b>Date loan fully recovered</b><span class="float-right">{{ $loan->date_loan_fully_recovered }}</span>
-                                      </li>
-                                      <li class="list-group-item">
-                                        <b>Collateral security</b><span class="float-right">{{ $loan->collateral_security }}</span>
-                                      </li>
-                                      <li class="list-group-item">
-                                        <b>Loan status</b><span class="float-right">{{ $loan->loan_status }}</span>
-                                      </li>
-                                    </ul>
-                                    <!-- </div> -->
+                      <div class="table-responsive">
+                        <table class="table table-hover table-bordered">
+                          <thead>
+                            <tr>
+                              <th>number</th>
+                              <th>loan_request</th>
+                              <th>loan_approved</th>
+                              <th>total_loan</th>
+                              <th>loan_status</th>
+                              <th>#</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @foreach($loans as $loan)
+                                <tr>
+                                  <td>{{ $loan->loan_number }}</td>
+                                  <td>{{ number_format($loan->loan_request_amount) }}</td>
+                                  <td>{{ number_format($loan->loan_approved) }}</td>
+                                  <td>{{ number_format($loan->total_loan) }}</td>
+                                  <td>{{ $loan->loan_status }}</td>
+                                  <td> <a class="btn btn-xs btn-default" data-toggle="modal" data-target="#loan_history_{{$loan->id}}">View</a></td>
+                                </tr>
+                              <div class="modal fade" id="loan_history_{{$loan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-md" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h6 class="modal-title justify-content-center text-uppercase" id="exampleModalLongTitle">View details of loan number {{ $loan->loan_number }}</h6>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <!-- <div class="card"> -->
+                                        <ul class="list-group list-group-unbordered mb-3">
+                                        <li class="list-group-item">
+                                          <b>Loan application date</b><span class="float-right">{{ $loan->date_loan_application }}</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <b>Loan request amount</b><span class="float-right">{{ number_format($loan->loan_request_amount) }}</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <b>Purpose for borrowing</b><span class="float-right">{{ $loan->borrowing_purpose }}</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <b>Loan interest rate (%)</b><span class="float-right">{{ $loan->interest_rate }}</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <b>Loan processing rate (%)</b><span class="float-right">{{ $loan->loan_processing_rate }}</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <b>Loan period (weeks)</b><span class="float-right">{{ $loan->loan_period }}</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <b>Loan approved</b><span class="float-right">{{ number_format($loan->loan_approved) }}</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <b>Total loan</b><span class="float-right">{{ number_format($loan->total_loan) }}</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <b>Loan recovered</b><span class="float-right">{{ number_format($loan->loan_recovered) }}</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <b>Loan outstanding</b><span class="float-right">{{ number_format($loan->loan_outstanding) }}</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <b>Date loan approved</b><span class="float-right">{{ $loan->date_loan_approved }}</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <b>Date loan disbursed</b><span class="float-right">{{ $loan->date_loan_disbursed }}</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <b>Date loan fully recovered</b><span class="float-right">{{ $loan->date_loan_fully_recovered }}</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <b>Collateral security</b><span class="float-right">{{ $loan->collateral_security }}</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <b>Loan status</b><span class="float-right">{{ $loan->loan_status }}</span>
+                                        </li>
+                                      </ul>
+                                      <!-- </div> -->
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                          @endforeach
-                        </tbody>
-                      </table>
-
+                            @endforeach
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                     <!-- tab-pane -->
                   </div>

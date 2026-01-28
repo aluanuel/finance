@@ -36,64 +36,61 @@
                   <a href="/generate/report/cashbook" title="Download Report">
                     <i class="fa fa-download"></i>
                   </a>
-
-                  <!-- <button type="button" class="btn btn-primary btn-sm" title="Print form" onclick="printContent('printArea')">
-                <i class="fa fa-print"></i>
-               </button> -->
                 </div>
               </div>
               <div class="card-body">
-               
-                <table id="example2" class="table table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <th width="150">Date</th>
-                      <th>Particulars</th>
-                      <th width="120">Debit</th>
-                      <th width="120">Credit</th>
-                    </tr>
-                  </thead>
-                  @php
-                    $debit = 0;
-                    $credit = 0;
-                  @endphp
-
-                  @foreach($trans as $tra )
-
-                    @if($tra->transaction_type == 'Income')
-
+                <div class="table-responsive">
+                  <table id="example2" class="table table-bordered table-hover">
+                    <thead>
                       <tr>
-                        <td>{{ date('Y-m-d h:i:s',strtotime($tra->created_at)) }}</td>
-                        <td>{{ $tra->transaction_name }}</td>
-                        <td>{{ number_format($tra->amount,2) }}</td>
-                        <td></td>
+                        <th width="150">Date</th>
+                        <th>Particulars</th>
+                        <th width="120">Debit</th>
+                        <th width="120">Credit</th>
                       </tr>
-                      @php
-                        $debit += $tra->amount
-                      @endphp
-                    @elseif($tra->transaction_type == 'Expense')
+                    </thead>
+                    @php
+                      $debit = 0;
+                      $credit = 0;
+                    @endphp
 
-                      <tr>
-                        <td>{{ date('Y-m-d h:i:s',strtotime($tra->created_at)) }}</td>
-                        <td>{{ $tra->transaction_name }}</td>
-                        <td></td>
-                        <td>{{ number_format($tra->amount,2) }}</td>
-                      </tr>
-                      @php
-                        $credit += $tra->amount
-                      @endphp
-                    @endif
+                    @foreach($trans as $tra )
 
-                  @endforeach
-                    <tfoot>
-                      <tr>
-                        <th>TOTAL</th>
-                        <th></th>
-                        <th>{{ number_format($debit,2) }}</th>
-                        <th>{{ number_format($credit,2) }}</th>
-                      </tr>
-                    </tfoot>
-                </table>
+                      @if($tra->transaction_type == 'Income')
+
+                        <tr>
+                          <td>{{ date('Y-m-d h:i:s',strtotime($tra->created_at)) }}</td>
+                          <td>{{ $tra->transaction_name }}</td>
+                          <td>{{ number_format($tra->amount,2) }}</td>
+                          <td></td>
+                        </tr>
+                        @php
+                          $debit += $tra->amount
+                        @endphp
+                      @elseif($tra->transaction_type == 'Expense')
+
+                        <tr>
+                          <td>{{ date('Y-m-d h:i:s',strtotime($tra->created_at)) }}</td>
+                          <td>{{ $tra->transaction_name }}</td>
+                          <td></td>
+                          <td>{{ number_format($tra->amount,2) }}</td>
+                        </tr>
+                        @php
+                          $credit += $tra->amount
+                        @endphp
+                      @endif
+
+                    @endforeach
+                      <tfoot>
+                        <tr>
+                          <th>TOTAL</th>
+                          <th></th>
+                          <th>{{ number_format($debit,2) }}</th>
+                          <th>{{ number_format($credit,2) }}</th>
+                        </tr>
+                      </tfoot>
+                  </table>
+                </div>
               </div>
             </div>
           </div>

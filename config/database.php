@@ -61,6 +61,11 @@ return [
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
+            'dump' => [
+                'dump_binary_path' => 'C:/xampp/mysql/bin/', // Use forward slashes
+                'use_single_transaction' => true, // Optional: recommended for consistency
+                'timeout' => 60 * 5, // Optional: adjust timeout as needed
+            ],
         ],
 
         'pgsql' => [

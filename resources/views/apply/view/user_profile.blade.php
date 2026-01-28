@@ -26,11 +26,11 @@
     <div class="content">
       <div class="container-fluid">
         @include('layouts.flash')
-          <div class="row">
-            <div class="col-12">
+          <!-- <div class="row">
+            <div class="col-12"> -->
               <div class="card">
                 <div class="row">
-                  <div class="col-4">
+                  <div class="col-md-4 col-sm-12">
                     <div class="card-body box-profile">
                       <div class="text-center">
                         <img class="profile-user-img img-fluid img-circle"
@@ -44,10 +44,10 @@
                     </div>
                   </div>
                   <!-- col-4 -->
-                  <div class="col-md-8">
+                  <div class="col-md-8 col-sm-12">
                     <div class="card-body">
                       <div class="row">
-                        <div class="col-6">
+                        <div class="col-md-6 col-sm-12">
                           <h3 class="profile-username text-center">Profile Information</h3>
                             <ul class="list-group list-group-unbordered mb-3">
                               <li class="list-group-item">
@@ -61,7 +61,7 @@
                               </li>
                             </ul>
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-6 col-sm-12">
                           <h3 class="profile-username text-center">Account Information</h3>
                             <ul class="list-group list-group-unbordered mb-3">
                               <li class="list-group-item text-center">
@@ -84,10 +84,10 @@
                                 <div class="col-3">
                                   <input class="form-control" type="password" name="password_old" placeholder="Old password" required="required" autofocus>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-3">
                                   <input class="form-control" type="password" name="password" placeholder="New password" id="password1" required="required">
                                 </div>
-                                <div class="col-4">
+                                <div class="col-3">
                                   <input class="form-control" type="password" name="password_confirmation" placeholder="Confirm new password" id="password2" required="required">
                                 </div>
                                 <div class="col-1">
@@ -116,8 +116,8 @@
                 <!-- row -->
               </div>
               <!-- col-12 -->
-            </div>
-          </div>
+            <!-- </div>
+          </div> -->
           <!-- row -->
         </div>
       </div>

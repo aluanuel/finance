@@ -44,35 +44,36 @@
                 </div>
               </div>
               <div class="card-body">
-               
-                <table id="example2" class="table table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <th>date</th>
-                      <th>loan_number</th>
-                      <th>client_name</th>
-                      <th>total_loan</th>
-                      <th>loan_recovered</th>
-                      <th>period(weeks)</th>
-                      <th>start_date</th>
-                      <th>end_date</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach($loan as $ln)
+                <div class="table-responsive">
+                  <table id="example2" class="table table-bordered table-hover">
+                    <thead>
                       <tr>
-                        <td>{{ $ln->date_loan_fully_recovered }}</td>
-                        <td><a href="/apply/account/profile/{{$ln->id_client}}">{{ $ln->loan_number }}</a></td>
-                        <td><a href="/apply/account/profile/{{$ln->id_client}}"> {{ $ln->name }}</a></td>
-                        <td>{{ number_format($ln->total_loan) }}</td>
-                        <td>{{ number_format($ln->loan_recovered) }}</td>
-                        <td>{{ $ln->loan_period }}</td>
-                        <td>{{ $ln->loan_start_date }}</td>
-                        <td>{{ $ln->loan_end_date }}</td>
+                        <th>date</th>
+                        <th>loan_number</th>
+                        <th>client_name</th>
+                        <th>total_loan</th>
+                        <th>loan_recovered</th>
+                        <th>period(weeks)</th>
+                        <th>start_date</th>
+                        <th>end_date</th>
                       </tr>
-                    @endforeach
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      @foreach($loan as $ln)
+                        <tr>
+                          <td>{{ $ln->date_loan_fully_recovered }}</td>
+                          <td><a href="/apply/account/profile/{{$ln->id_client}}">{{ $ln->loan_number }}</a></td>
+                          <td><a href="/apply/account/profile/{{$ln->id_client}}"> {{ $ln->name }}</a></td>
+                          <td>{{ number_format($ln->total_loan) }}</td>
+                          <td>{{ number_format($ln->loan_recovered) }}</td>
+                          <td>{{ $ln->loan_period }}</td>
+                          <td>{{ $ln->loan_start_date }}</td>
+                          <td>{{ $ln->loan_end_date }}</td>
+                        </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>

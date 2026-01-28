@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ArtisanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -152,6 +153,12 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/apply/restore/previous/loan/',[App\Http\Controllers\LoansController::class,'restore_previous_loan']);
 
 	Route::post('/apply/restore/previous/loan',[App\Http\Controllers\LoansController::class,'record_previous_loan']);
+
+
+	Route::get('/apply/system/backup/',[App\Http\Controllers\ArtisanController::class,'backup']);
+	Route::post('/apply/system/backup',[App\Http\Controllers\ArtisanController::class,'run_backup']);
+	Route::get('/apply/system/restore/',[App\Http\Controllers\ArtisanController::class,'restore']);
+	Route::post('/apply/system/restore',[App\Http\Controllers\ArtisanController::class,'run_restore']);
 
 
 	/*=================== Reports accessible by loan officers ==============*/

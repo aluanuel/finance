@@ -29,7 +29,7 @@
         @include('layouts.flash')
         <div class="row">
           <!-- col-4 -->
-          <div class="col-4">
+          <div class="col-md-4 col-sm-12">
             <!-- card -->
             <div class="card">
               <div class="card-header">
@@ -131,51 +131,54 @@
             <!-- card -->
           </div>
           <!-- col-8 -->
-          <div class="col-8">
+          <div class="col-md-8 col-sm-12">
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Showing System Users</h3>
               </div>
                         <!-- /.card-header -->
               <div class="card-body">
-                <table class="table table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <th width="4">#</th>
-                      <th>Name</th>
-                      <th>Telephone</th>
-                      <th>Email</th>
-                      <th>Type</th>
-                      <th>Role</th>
-                      <th>Status</th>
-                      <th>#</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php $i = 1;?>
-                    @foreach($user as $user)
-                    <tr>
-                      <td>{{ $i }}</td>
-                      <td>{{ $user->name }}</td>
-                      <td>{{ $user->telephone }}</td>
-                      <td>{{ $user->email }}</td>
-                      <td>{{ $user->usertype }}</td>
-                      <td>{{ $user->role }}</td>
-                      @if($user->user_status == 1)
-                      <td class="text-success">Active</td>
-                      <td>
-                        <a href="/apply/settings/manage/{{ $user->id }}" class="btn btn-outline-primary btn-sm" ><i class="fa fa-key" aria-hidden="true"></i></a>
-                      </td>
-                      @else
-                      <td class="text-danger">Inactive</td>
-                      <td><a href="/apply/settings/manage?id={{ $user->id }}&state={{ $user->user_status}}" class="btn btn-outline-primary btn-sm"><i class="fa fa-unlock" aria-hidden="true"></i></a></td>
-                      @endif
-                    </tr>
-                    <?php $i++;?>
-                    @endforeach
-                  </tbody>
-                </table>
-                <!-- table -->
+                <div class="table-responsive">
+                  <table class="table table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <th width="4">#</th>
+                        <th>Name</th>
+                        <th>Telephone</th>
+                        <th>Email</th>
+                        <th>Type</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>#</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php $i = 1;?>
+                      @foreach($user as $user)
+                      <tr>
+                        <td>{{ $i }}</td>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->telephone }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td>{{ $user->usertype }}</td>
+                        <td>{{ $user->role }}</td>
+                        @if($user->user_status == 1)
+                        <td class="text-success">Active</td>
+                        <td>
+                          <a href="/apply/settings/manage/{{ $user->id }}" class="btn btn-outline-primary btn-sm" ><i class="fa fa-key" aria-hidden="true"></i></a>
+                        </td>
+                        @else
+                        <td class="text-danger">Inactive</td>
+                        <td><a href="/apply/settings/manage?id={{ $user->id }}&state={{ $user->user_status}}" class="btn btn-outline-primary btn-sm"><i class="fa fa-unlock" aria-hidden="true"></i></a></td>
+                        @endif
+                      </tr>
+                      <?php $i++;?>
+                      @endforeach
+                    </tbody>
+                  </table>
+                  <!-- table -->
+                </div>
+                <!-- table-responsive -->
               </div>
               <!-- card-body -->
             </div>

@@ -54,21 +54,32 @@
           @else
             <li class="nav-item">
               <a href="/apply/accounts/" class="nav-link">
-                <i class="fas fa-angle-right nav-icon"></i>
+                <i class="fas fa-user-circle nav-icon"></i>
                 <p>Accounts</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="/apply/ind/" class="nav-link">
-                <i class="fas fa-angle-right nav-icon"></i>
-                <p>Individual loans</p>
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-building-columns "></i>
+                <p>
+                  Loans
+                  <i class="fas fa-angle-left right"></i>
+                </p>
               </a>
-            </li>
-            <li class="nav-item">
-              <a href="/apply/grp" class="nav-link">
-                <i class="fas fa-angle-right nav-icon"></i>
-                <p>Group loans</p>
-              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/apply/ind/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Individual loans</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/grp" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Group loans</p>
+                  </a>
+                </li>
+              </ul>
             </li>
             <!-- <li class="nav-item">
               <a href="/apply/loan/repayment" class="nav-link">
@@ -78,13 +89,13 @@
             </li> -->
             <li class="nav-item">
               <a href="/apply/teller/transaction/" class="nav-link">
-                <i class="fas fa-angle-right nav-icon"></i>
+                <i class="fas fa-money-check-dollar nav-icon"></i>
                 <p>Transactions</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-circle"></i>
+                <i class="nav-icon fas fa-bars"></i>
                 <p>
                   Reports
                   <i class="fas fa-angle-left right"></i>
@@ -117,13 +128,37 @@
                 </li>
               </ul>
             </li>
-            
             <li class="nav-item">
-              <a href="/apply/restore/previous/loan/" class="nav-link">
-                <i class="fas fa-angle-right nav-icon"></i>
-                <p>Restore previous loan</p>
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-database"></i>
+                <p>
+                  System
+                  <i class="fas fa-angle-left right"></i>
+                </p>
               </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/apply/system/backup/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Backup</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/system/restore/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Restore</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/restore/previous/loan/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Restore previous loan</p>
+                  </a>
+                </li>
+              </ul>
             </li>
+            
+
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-cog"></i>

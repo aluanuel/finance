@@ -44,63 +44,64 @@
                 </div>
               </div>
               <div class="card-body">
-               
-                <table id="example2" class="table table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <th width="100">Date</th>
-                      <th>loan_status</th>
-                      <th>loan_number</th>
-                      <th>client_details</th>
-                      <th>amount_disbursed</th>
-                      <th>processing_fee</th>
-                      <th>total_loan</th>              
-                    </tr>
-                  </thead>
-                  <tbody>
-
-                    @php 
-
-                        $total_disbursed = 0;
-
-                        $total_processing_fee = 0;
-
-                        $total_borrowing = 0;
-
-                    @endphp
-
-                    @foreach($loan as $loan)
+                <div class="table-responsive">
+                  <table id="example2" class="table table-bordered table-hover">
+                    <thead>
                       <tr>
-                        <td>{{ $loan->date_loan_disbursed }}</td>
-                        <td>{{ $loan->loan_status }}</td>
-                        <td>{{ $loan->loan_number }}</td>
-                        <td>{{ $loan->account_number }} - {{ $loan->name }}</td>
-                        <td>{{ number_format($loan->loan_approved) }}</td>
-                        <td>{{ number_format(($loan->loan_processing_rate/100) * $loan->loan_approved) }}</td>
-                        <td>{{ number_format($loan->total_loan )}}</td>
+                        <th width="100">Date</th>
+                        <th>loan_status</th>
+                        <th>loan_number</th>
+                        <th>client_details</th>
+                        <th>amount_disbursed</th>
+                        <th>processing_fee</th>
+                        <th>total_loan</th>              
                       </tr>
+                    </thead>
+                    <tbody>
 
                       @php 
 
-                        $total_disbursed += $loan->loan_approved;
+                          $total_disbursed = 0;
 
-                        $total_processing_fee += ($loan->loan_processing_rate/100) * $loan->loan_approved;
+                          $total_processing_fee = 0;
 
-                        $total_borrowing += $loan->total_loan;
+                          $total_borrowing = 0;
 
-                    @endphp
+                      @endphp
 
-                    @endforeach
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      <th colspan="4">Total</th>
-                      <th>{{ number_format($total_disbursed) }}</th>
-                      <th>{{ number_format($total_processing_fee) }}</th>
-                      <th>{{ number_format($total_borrowing) }}</th>
-                    </tr>
-                  </tfoot>
-                </table>
+                      @foreach($loan as $loan)
+                        <tr>
+                          <td>{{ $loan->date_loan_disbursed }}</td>
+                          <td>{{ $loan->loan_status }}</td>
+                          <td>{{ $loan->loan_number }}</td>
+                          <td>{{ $loan->account_number }} - {{ $loan->name }}</td>
+                          <td>{{ number_format($loan->loan_approved) }}</td>
+                          <td>{{ number_format(($loan->loan_processing_rate/100) * $loan->loan_approved) }}</td>
+                          <td>{{ number_format($loan->total_loan )}}</td>
+                        </tr>
+
+                        @php 
+
+                          $total_disbursed += $loan->loan_approved;
+
+                          $total_processing_fee += ($loan->loan_processing_rate/100) * $loan->loan_approved;
+
+                          $total_borrowing += $loan->total_loan;
+
+                      @endphp
+
+                      @endforeach
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th colspan="4">Total</th>
+                        <th>{{ number_format($total_disbursed) }}</th>
+                        <th>{{ number_format($total_processing_fee) }}</th>
+                        <th>{{ number_format($total_borrowing) }}</th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
               </div>
             </div>
           </div>

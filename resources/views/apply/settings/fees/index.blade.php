@@ -28,7 +28,7 @@
         @include('layouts.flash')
         <div class="row">
           <!-- col-4 -->
-          <div class="col-4">
+          <div class="col-md-4 col-sm-12">
             <!-- card -->
             <div class="card">
               <div class="card-header">
@@ -78,35 +78,37 @@
             <!-- card -->
           </div>
           <!-- col-8 -->
-          <div class="col-8">
+          <div class="col-md-8 col-sm-12">
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Showing Fees</h3>
               </div>
                         <!-- /.card-header -->
               <div class="card-body">
-                <table class="table table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <th width="4">#</th>
-                      <th>Fees Type</th>
-                      <th>Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @php $i = 1 @endphp
-
-                    @foreach($fees as $fee)
+                <div class="table-responsive">
+                  <table class="table table-bordered table-hover">
+                    <thead>
                       <tr>
-                        <td>{{ $i }}</td>
-                        <td>{{ $fee -> fees_type }}</td>
-                        <td>{{ $fee -> amount }}</td>
+                        <th width="4">#</th>
+                        <th>Fees Type</th>
+                        <th>Amount</th>
                       </tr>
-                      @php $i++ @endphp
-                    @endforeach
-                  </tbody>
-                </table>
-                <!-- table -->
+                    </thead>
+                    <tbody>
+                      @php $i = 1 @endphp
+
+                      @foreach($fees as $fee)
+                        <tr>
+                          <td>{{ $i }}</td>
+                          <td>{{ $fee -> fees_type }}</td>
+                          <td>{{ $fee -> amount }}</td>
+                        </tr>
+                        @php $i++ @endphp
+                      @endforeach
+                    </tbody>
+                  </table>
+                  <!-- table -->
+                </div>
               </div>
               <!-- card-body -->
             </div>

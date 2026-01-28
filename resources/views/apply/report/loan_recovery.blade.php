@@ -44,37 +44,38 @@
                 </div>
               </div>
               <div class="card-body">
-               
-                <table id="example2" class="table table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <th width="150">Date</th>
-                      <th>loan_status</th>
-                      <th>loan_number</th>
-                      <th>Client_details</th>
-                      <th>deposit_amount</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @php $total = 0 @endphp
-                    @foreach($recovery as $loan)
+                <div class="table-responsive">
+                  <table id="example2" class="table table-bordered table-hover">
+                    <thead>
                       <tr>
-                        <td>{{ $loan->transaction_date }}</td>
-                        <td>{{ $loan->loan_status }}</td>
-                        <td>{{ $loan->loan_number }}</td>
-                        <td>{{ $loan->name }}</td>
-                        <td>{{ number_format($loan->amount) }}</td>
+                        <th width="150">Date</th>
+                        <th>loan_status</th>
+                        <th>loan_number</th>
+                        <th>Client_details</th>
+                        <th>deposit_amount</th>
                       </tr>
-                      @php $total += $loan->amount @endphp
-                    @endforeach
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      <th colspan="4">Total</th>
-                      <th>{{ number_format($total) }}</th>
-                    </tr>
-                  </tfoot>
-                </table>
+                    </thead>
+                    <tbody>
+                      @php $total = 0 @endphp
+                      @foreach($recovery as $loan)
+                        <tr>
+                          <td>{{ $loan->transaction_date }}</td>
+                          <td>{{ $loan->loan_status }}</td>
+                          <td>{{ $loan->loan_number }}</td>
+                          <td>{{ $loan->name }}</td>
+                          <td>{{ number_format($loan->amount) }}</td>
+                        </tr>
+                        @php $total += $loan->amount @endphp
+                      @endforeach
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th colspan="4">Total</th>
+                        <th>{{ number_format($total) }}</th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
               </div>
             </div>
           </div>

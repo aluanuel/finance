@@ -28,7 +28,7 @@
         @include('layouts.flash')
         <div class="row">
           <!-- col-4 -->
-          <div class="col-4">
+          <div class="col-md-4 col-sm-12">
             <!-- card -->
             <div class="card">
               <div class="card-header">
@@ -90,45 +90,47 @@
             <!-- card -->
           </div>
           <!-- col-8 -->
-          <div class="col-8">
+          <div class="col-md-8 col-sm-12">
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Showing Loan Groups</h3>
               </div>
                         <!-- /.card-header -->
               <div class="card-body">
-                <table id="example2" class="table table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <th width="4">#</th>
-                      <th>Name</th>
-                      <th>Code</th>
-                      <th>Description</th>
-                      <th>Address</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @php $i =1 @endphp
-                    @foreach($groups as $group)
+                <div class="table-responsive">
+                  <table id="example2" class="table table-bordered table-hover">
+                    <thead>
                       <tr>
-                        <td>{{ $i }}</td>
-                        <td><a href="/apply/settings/loan/group/members/{{$group->id}}">{{ $group->group_name }}</a></td>
-                        <td>{{ $group->group_code }}</td>
-                        <td>{{ $group->group_description}}</td>
-                        <td>{{ $group->group_address }}</td>
-
-                        @if($group->group_status == 1)
-                          <td class="text-success">Active</td>
-                        @else
-                          <td class="text-danger">Inactive</td>
-                        @endif
+                        <th width="4">#</th>
+                        <th>Name</th>
+                        <th>Code</th>
+                        <th>Description</th>
+                        <th>Address</th>
+                        <th>Status</th>
                       </tr>
-                      @php $i++ @endphp
-                    @endforeach
-                  </tbody>
-                </table>
-                <!-- table -->
+                    </thead>
+                    <tbody>
+                      @php $i =1 @endphp
+                      @foreach($groups as $group)
+                        <tr>
+                          <td>{{ $i }}</td>
+                          <td><a href="/apply/settings/loan/group/members/{{$group->id}}">{{ $group->group_name }}</a></td>
+                          <td>{{ $group->group_code }}</td>
+                          <td>{{ $group->group_description}}</td>
+                          <td>{{ $group->group_address }}</td>
+
+                          @if($group->group_status == 1)
+                            <td class="text-success">Active</td>
+                          @else
+                            <td class="text-danger">Inactive</td>
+                          @endif
+                        </tr>
+                        @php $i++ @endphp
+                      @endforeach
+                    </tbody>
+                  </table>
+                  <!-- table -->
+                </div>
               </div>
               <!-- card-body -->
             </div>
