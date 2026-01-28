@@ -69,7 +69,7 @@ class RegisterController extends Controller
     {
         // dd($data);
         return User::create([
-            'name' => $data['name'],
+            'name' => strtoupper($data['name']),
             'telephone' => $data['telephone'],
             'email' => $data['email'],
             'usertype' => $data['usertype'],

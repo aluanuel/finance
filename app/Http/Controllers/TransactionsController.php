@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Transactions;
 use App\Models\Loans;
+use App\Models\Ledger;
 use Carbon\Carbon;
 use DB;
 use Auth;
@@ -35,48 +36,181 @@ class TransactionsController extends Controller
 
         $loan = Loans::where('id',$request->id)->first();
 
+        $loan_repayment = str_replace(',','',$request->loan_repayment);
+
+        $date_loan_fully_recovered = null;
+
         $entry = new Transactions();
 
-        $entry->transaction_detail = "Loan Repayment - ".$loan->loan_number;
+        $transaction_detail = "Loan Repayment - ".$loan->loan_number;
 
-        $entry->transaction_type = "Income";
+        $transaction_type = "Income";
 
-        $entry->id_client = $loan->id_client;
+        $id_client = $loan->id_client;
 
-        $entry->id_loan = $loan->id;
+        $id_loan = $loan->id;
 
-        $entry->amount = $request->loan_repayment;
+        $transaction_date = $request->repayment_date;
 
-        $entry->transaction_date = $request->repayment_date;
+        $created_by = Auth::user()->id;
 
-        $entry->created_by = Auth::user()->id;
 
-        $entry->save();
+        $entry = Transactions::where('id_client',$id_client)->where('transaction_detail',$transaction_detail)->where('transaction_date',$transaction_date)->where('amount',$loan_repayment)->latest()->first();
 
-        $loan->loan_recovered = $this->calculate_loan_recovered($loan->loan_recovered, $request->loan_repayment);
+        if($entry){
 
-        $loan_outstanding = $this->calculate_loan_outstanding($loan->loan_outstanding,$request->loan_repayment);
-
-        $loan->loan_outstanding = $loan_outstanding;
-
-        if($loan_outstanding == 0){
-
-            $loan->date_loan_fully_recovered = date('Y-m-d');
-
-            $loan->loan_status = "Completed";
-
-            $loan->save();
+            return redirect()->back()->with('error','Duplicate entry forbidden');
 
         }else{
 
-            $loan->save();
-        }
+            $entry = new Transactions();
 
-        return redirect()->back()->with('success','Success');
+            $entry->transaction_detail = $transaction_detail;
+
+            $entry->transaction_type = "Income";
+
+            $entry->id_client = $id_client;
+
+            $entry->id_loan = $loan->id;
+
+            $entry->amount = $loan_repayment;
+
+            $entry->transaction_date = $transaction_date;
+
+            $entry->created_by = Auth::user()->id;
+
+            $entry->save();
+
+            $loan->loan_recovered = $this->calculate_loan_recovered($loan->loan_recovered, $loan_repayment);
+
+            $loan_outstanding = $this->calculate_loan_outstanding($loan->loan_outstanding,$loan_repayment);
+
+            $loan->loan_outstanding = $loan_outstanding;
+
+            if($loan_outstanding == 0){
+
+                $date_loan_fully_recovered = date('Y-m-d');
+
+                $loan_status = "Completed";
+
+                $loan->date_loan_fully_recovered = $date_loan_fully_recovered;
+
+                $loan->loan_status = $loan_status;
+
+                $loan->save();
+
+            }else{
+
+                $loan->save();
+            }
+
+            $ledger = new Ledger();
+
+            $ledger->id_transaction = $entry->id;
+
+            $ledger->id_loan = $entry->id_loan;
+
+            $ledger->id_client = $entry->id_client;
+
+            $ledger->loan_approved = $loan->loan_approved;
+
+            $ledger->total_loan = $loan->total_loan;
+
+            $ledger->date_loan_disbursed = $loan->date_loan_disbursed;
+
+            $ledger->date_loan_fully_recovered = $date_loan_fully_recovered;
+
+            $ledger->loan_status = $loan->loan_status;
+
+            $ledger->loan_recovered = $loan->loan_recovered;
+
+            $ledger->loan_outstanding = $loan->loan_outstanding;
+
+            $ledger->save();
+
+                return redirect()->back()->with('success','Success');
+        }
 
     }
 
-        public function reinstate_loan(Request $request){
+
+    public function update_transaction_entry(Request $request){
+
+        $id_transaction = $request->id;
+
+        $amount = str_replace(',','',$request->amount);
+
+        $transaction_detail = explode('-',$request->transaction_detail);
+
+        $transaction = Transactions::where('id',$id_transaction)->first();
+
+        if($transaction){
+
+            $amount = str_replace(',','',$request->amount);
+
+            // dd($transaction);
+
+            if($transaction_detail[0] == 'Loan Repayment '){
+
+                $recent_transaction = $transaction->amount;
+
+                $loans = Loans::where('id',$transaction->id_loan)->first();
+
+                $ledger = Ledger::where('id_transaction',$id_transaction)->first();
+
+                $transaction->amount = $amount;
+
+                $transaction->save();
+
+                $previous_loan_balance = ($recent_transaction + $loans->loan_outstanding);
+
+                $previous_loan_recovered = ($loans->total_loan - $previous_loan_balance);
+
+                $new_loan_recoverd = $previous_loan_recovered + $amount;
+
+                $new_loan_balance = $loans->total_loan - $new_loan_recoverd;
+
+                $loans->loan_outstanding = $new_loan_balance;
+
+                $loans->loan_recovered = $new_loan_recoverd;
+
+                if($new_loan_balance <= 0){
+
+                    $loans->loan_status = "Completed";
+
+                    $ledger->loan_status = "Completed";
+                }else{
+
+                    $loans->loan_status = "Running";
+
+                    $ledger->loan_status = "Running";
+
+                }
+
+                $loans->save();
+
+
+                $ledger->loan_outstanding = $new_loan_balance;
+
+                $ledger->loan_recovered = $new_loan_recoverd;
+
+                $ledger->save();
+
+
+            }else{
+
+                return redirect()->back()->with('error','Transaction update failed. Consult your system administrator for help');
+
+            }
+
+            return redirect()->back()->with('success','Success');
+
+        }
+        return redirect()->back()->with('error','Transaction record not found');
+        
+    }
+
+    public function reinstate_loan(Request $request){
 
         $loan = Loans::where('id',$request->id)->first();
 

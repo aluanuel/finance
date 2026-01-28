@@ -108,12 +108,12 @@
                                           <div class="row form-group">
                                             <div class="col-3">
                                               <label>Loan Request</label>
-                                              <input type="number" name="loan_request_amount" class="form-control" required="required" placeholder="Loan request" autocomplete="off">
+                                              <input type="text" name="loan_request_amount" class="form-control" required="required" placeholder="Loan request" autocomplete="off">
                                             </div>
                                             <!-- col-3 -->
                                             <div class="col-3">
                                               <label>Loan Period (Weeks)</label>
-                                              <input type="number" name="loan_period" class="form-control" required="required" placeholder="Loan period in weeks" autocomplete="off">
+                                              <input type="text" name="loan_period" class="form-control" required="required" placeholder="Loan period in weeks" autocomplete="off">
                                             </div>
                                             <!-- col-3 -->
                                             <div class="col-3">
@@ -289,7 +289,7 @@
                               <div class="col-3">
                                 <label>Loan Group</label>
                                 <div class="form-group">
-                                  <select class="form-control select2bs4" name="id_loan_group" data-placeholder="Select" style="width: 100%;" required="required">
+                                  <select class="form-control select2bs4" name="id_loan_group" data-placeholder="Select" style="width: 100%;">
                                     <option></option>
                                     @foreach($groups as $grp)
                                       <option value="{{ $grp->id }}">{{ $grp->group_name }}</option>

@@ -42,6 +42,8 @@
                     <th>loan_number</th>
                     <th>Client_name</th>
                     <th>Group_name</th>
+                    <th>loan_request</th>
+                    <th>loan_approved</th>
                     <th>total_loan</th>
                     <th>loan_recovered</th>
                     <th>loan_outstanding</th>
@@ -57,6 +59,8 @@
                         <td><a href="/apply/account/profile/{{$loan->id_client}}">{{ $loan->loan_number }}</a></td>
                         <td><a href="/apply/account/profile/{{$loan->id_client}}">{{ $loan->name }}</a></td>
                         <td>{{ $loan->group_name }}</td>
+                        <td>{{ number_format($loan->loan_request_amount) }}</td>
+                        <td>{{ number_format($loan->loan_approved) }}</td>
                         <td>{{ number_format($loan->total_loan) }}</td>
                         <td>{{ number_format($loan->loan_recovered) }}</td>
                         <td>{{ number_format($loan->loan_outstanding) }}</td>
@@ -167,7 +171,7 @@
                                       <!-- col-2 -->
                                       <div class="col-2">
                                         <label>Loan Amount to Approve</label>
-                                        <input type="number" class="form-control" required name="loan_approved" placeholder="Loan to approve"> 
+                                        <input type="text" class="form-control" required name="loan_approved" placeholder="Loan to approve"> 
                                       </div>
                                       <!-- col-2 -->
                                       <div class="col-2">
@@ -402,7 +406,7 @@
 
                                         <div class="col-4">
                                           <label>Loan Repayment</label>
-                                          <input type="number" class="form-control" required name="loan_repayment" placeholder="Loan Repayment">
+                                          <input type="text" class="form-control" required name="loan_repayment" placeholder="Loan Repayment">
                                         </div>
                                         <!-- col-4 -->
                                         <div class="col-4">

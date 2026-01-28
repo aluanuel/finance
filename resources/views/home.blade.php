@@ -33,7 +33,7 @@
                 <!-- small box -->
               <div class="small-box bg-info">
                 <div class="inner">
-                  <h5>UGX {{ number_format($disbursement) }} &nbsp; <small class="text-uppercase">disbursements</small></h5>
+                  <h5>{{ number_format($disbursement) }}&nbsp; <small class="text-uppercase">loans disbursed</small></h5>
                   <p class="pt-4"><small>{{ $month }}</small></p>
                 </div>
               </div>
@@ -45,7 +45,7 @@
                 <!-- small box -->
               <div class="small-box bg-info">
                 <div class="inner">
-                  <h5>UGX {{ number_format($recovery) }} &nbsp; <small class="text-uppercase">loan recovery</small></h5>
+                  <h5>{{ number_format($completed) }} &nbsp; <small class="text-uppercase">loans completed</small></h5>
                   <p class="pt-4"><small>{{ $month }}</small></p>
                 </div>
               </div>
@@ -57,8 +57,47 @@
                 <!-- small box -->
               <div class="small-box bg-info">
                 <div class="inner">
-                  <h5> {{ number_format($completed) }} &nbsp; <small class="text-uppercase">Loans fully settled</small></h5>
+                  <h5> {{ number_format($defaulted) }} &nbsp; <small class="text-uppercase">loans defaulted</small></h5>
                   <p class="pt-4"><small>{{ $month }}</small></p>
+                </div>
+              </div>
+            </a>
+          </div>
+          <!-- col-4 -->
+        </div>
+        <!-- row -->
+        <div class="row">
+          <div class="col-md-4 col-sm-12">
+            <a href="/apply/report/disbursements/{{ date('m')}}">
+                <!-- small box -->
+              <div class="small-box bg-info">
+                <div class="inner">
+                  <h5>{{ number_format($new_clients) }}  &nbsp; <small class="text-uppercase">new clients</small></h5>
+                  <p class="pt-4"><small>{{ $month }}</small></p>
+                </div>
+              </div>
+            </a>
+          </div>
+          <!-- col-4 -->
+          <div class="col-md-4 col-sm-12">
+            <a href="/apply/report/loan-recovery/{{ date('m')}}">
+                <!-- small box -->
+              <div class="small-box bg-info">
+                <div class="inner">
+                  <h5>{{ number_format($loan_groups) }} &nbsp; <small class="text-uppercase">active loan groups</small></h5>
+                  <p class="pt-4"><small>Cummulative</small></p>
+                </div>
+              </div>
+            </a>
+          </div>
+          <!-- col-4 -->
+          <div class="col-md-4 col-sm-12">
+            <a href="/apply/accounts">
+                <!-- small box -->
+              <div class="small-box bg-info">
+                <div class="inner">
+                  <h5> {{ number_format($clients) }} &nbsp; <small class="text-uppercase">Clients</small></h5>
+                  <p class="pt-4"><small>Cummulative</small></p>
                 </div>
               </div>
             </a>

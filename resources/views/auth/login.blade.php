@@ -5,7 +5,6 @@
     <div class="card card-outline card-primary">
       <div class="card-header text-center">
         <a href="/login" class="h3"><b>{{ config('app.name', 'Laravel') }}</b></a>
-        @include('layouts.flash')
       </div>
       <div class="card-body">
         <p class="login-msg">Sign in to start your session</p>
@@ -28,6 +27,12 @@
               </div>
             </div>
           </div>
+          @error('email')
+            <div class="label -mt-4 mb-4">
+              <span class="label-text-alt text-danger">{{ $message }}</span>
+            </div>
+          @enderror
+
           <div class="row">
             <!-- /.col -->
             <div class="col-4">
@@ -36,7 +41,7 @@
             <!-- /.col -->
             <div class="col-8">
               <p class="mb-1 pl-5">
-                <a href="{{ route('register') }}">I forgot my password</a>
+                <a href="{{ route('password.request') }}">I forgot my password</a>
               </p>
             </div>
             <!-- col -->

@@ -137,7 +137,7 @@
                 <h3 class="card-title">Showing System Users</h3>
               </div>
                         <!-- /.card-header -->
-              <div class="card-body" style="overflow-x: scroll;">
+              <div class="card-body">
                 <table class="table table-bordered table-hover">
                   <thead>
                     <tr>

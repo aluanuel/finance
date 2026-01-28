@@ -18,24 +18,32 @@ class LoanGroupsController extends Controller
 
     public function create_new_loan_group(Request $request){
 
-        $groups = new LoanGroups();
 
-        $groups->group_name = ucfirst($request->group_name);
+        $check = LoanGroups::where('group_name',$request->group_name)->where('group_address',$request->group_address)->first();
 
-        $groups->group_description = $request->group_description;
+        if($check){
 
-        $groups->group_address = $request->group_address;
+            return redirect()->back()->with('error',$check->group_name.' exists');
+        }else{
 
-        $groups->group_code = $this->generate_group_codes();
+            $groups = new LoanGroups();
+
+            $groups->group_name = strtoupper($request->group_name);
+
+            $groups->group_description = ucwords($request->group_description);
+
+            $groups->group_address = ucwords($request->group_address);
+
+            $groups->group_code = $this->generate_group_codes();
 
         if($groups->save()){
 
-            $this->reset();
-
             return redirect()->back()->with('success','Success');
         }
+             return redirect()->back()->with('error','Error');
 
-            return redirect()->back()->with('error','Error');
+        }
+           
     }
 
     public function view_loan_group_members(Request $request){

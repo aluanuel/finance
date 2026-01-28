@@ -8,6 +8,7 @@ use App\Models\Rates;
 use App\Models\Loans;
 use App\Models\Transactions;
 use App\Models\LoanSchedule;
+use App\Models\Ledger;
 use DB;
 use Auth;
 
@@ -78,37 +79,47 @@ class LoansController extends Controller
 
             $rates = Rates::where('rate_type','Interest on Loan Defaulting')->latest()->first();
 
-            $loan_request = str_replace(',','',$request->loan_request_amount);
+            if($rates){
 
-            $loan_interest = $request->interest_rate/100 * $loan_request;
+                $loan_request = str_replace(',','',$request->loan_request_amount);
 
-            $new_loan = new Loans();
+                $loan_interest = $request->interest_rate/100 * $loan_request;
 
-            $new_loan->id_client = $request->id;
+                $new_loan = new Loans();
 
-            $new_loan->loan_number = $this->generate_loan_number();
+                $new_loan->id_client = $request->id;
 
-            $new_loan->loan_request_amount = $loan_request;
+                $new_loan->loan_number = $this->generate_loan_number();
 
-            $new_loan->loan_period = $request->loan_period;
+                $new_loan->loan_request_amount = $loan_request;
 
-            $new_loan->interest_rate = $request->interest_rate;
+                $new_loan->loan_period = str_replace(',','',$request->loan_period);
 
-            $new_loan->loan_processing_rate = $request->loan_processing_rate;
+                $new_loan->interest_rate = $request->interest_rate;
 
-            $new_loan->interest_on_defaulting = $rates->rate;
+                $new_loan->loan_processing_rate = $request->loan_processing_rate;
 
-            $new_loan->date_loan_application = $request->date_loan_application;
+                $new_loan->interest_on_defaulting = $rates->rate;
 
-            $new_loan->total_loan = ($loan_request + $loan_interest);
+                $new_loan->date_loan_application = $request->date_loan_application;
 
-            $new_loan->borrowing_purpose = $request->borrowing_purpose;
+                $new_loan->total_loan = ($loan_request + $loan_interest);
 
-            $new_loan->collateral_security = $request->collateral_security;
+                $new_loan->borrowing_purpose = $request->borrowing_purpose;
 
-            $new_loan->save();
+                $new_loan->collateral_security = $request->collateral_security;
 
-            return redirect()->back()->with('success','Success');
+                $new_loan->save();
+
+                return redirect()->back()->with('success','Success');
+
+            }else{
+
+                return redirect()->back()->with('error',"Interest on loan defaulting not found, please set");
+
+            }
+
+            
 
         }elseif($check->loan_status == "Pending Assessment"){
 
@@ -202,20 +213,6 @@ class LoansController extends Controller
                                 [
                                     'transaction_date' => Carbon::now(),
 
-                                    'transaction_detail' => "Loan disbursement - ".$approved->loan_number,
-                                    'transaction_type' => 'Expense',
-
-                                    'id_loan' => $request->id,
-
-                                    'amount' => str_replace(',','',$approved->loan_approved),
-
-                                    'created_by' => Auth::user()->id,
-
-                                    'created_at' => Carbon::now()
-                                ],
-                                [
-                                    'transaction_date' => Carbon::now(),
-
                                     'transaction_detail' => "Loan Processing Fee - ".$approved->loan_number,
 
                                     'transaction_type' => "Income",
@@ -227,10 +224,51 @@ class LoansController extends Controller
                                     'created_by' => Auth::user()->id,
 
                                     'created_at' =>Carbon::now()
+                                ],
+                                [
+                                    'transaction_date' => Carbon::now(),
+
+                                    'transaction_detail' => "Loan disbursement - ".$approved->loan_number,
+                                    'transaction_type' => 'Expense',
+
+                                    'id_loan' => $request->id,
+
+                                    'amount' => str_replace(',','',$approved->loan_approved),
+
+                                    'created_by' => Auth::user()->id,
+
+                                    'created_at' => Carbon::now()
                                 ]
                             ];
 
-            Transactions::insert($loan_disbursement);
+            $result = Transactions::insert($loan_disbursement);
+
+            if($result){
+
+                $last_transaction = Transactions::latest()->first();
+
+                $entry = new Ledger();
+
+                $entry->id_transaction = $last_transaction->id;
+
+                $entry->id_loan = $approved->id;
+
+                $entry->id_client = $approved->id_client;
+
+                $entry->loan_approved = $approved->loan_approved;
+
+                $entry->total_loan = $approved->total_loan;
+
+                $entry->date_loan_disbursed = date('Y-m-d');
+
+                $entry->loan_status = "Running";
+
+                $entry->loan_recovered = 0;
+
+                $entry->loan_outstanding = $approved->total_loan;
+
+                $entry->save();
+            }
 
         return redirect()->back()->with('success','Success');
 
@@ -316,18 +354,27 @@ class LoansController extends Controller
 
         $number = Loans::max('loan_number');
 
-        if($number == 10101010 ){
+        $x = date('Y');
 
-            $x = date('Y');
+        if($number){
 
-            $number = $x.'0001';
+            if($number == 10101010){
 
-            return $number;
+                $number = $x.'0001';
+
+                return $number;
+
+            }else{
+
+                return $number += 1;
+
+            }
 
         }else{
 
-            return $number += 1;
+             $number = $x.'0001';
 
+             return $number;
 
         }
 

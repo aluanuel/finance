@@ -36,33 +36,85 @@
                 </div>
               </div>
               <!-- /.card-header -->
-              <div class="card-body" style="overflow-x: scroll;">
-                <table id="example2" class="table table-bordered table-hover">
-                  <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>date</th>
-                    <th>category</th>
-                    <th>narration</th>
-                    <th>amount</th>
-                    <th>#</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                    @php $i = 1 @endphp
-                    @foreach($transaction as $item)
-                      <tr>
-                        <td>{{ $i }}</td>
-                        <td>{{ date('Y-m-d',strtotime($item->created_at)) }}</td>
-                        <td>{{ $item->transaction_type }}</td>
-                        <td>{{ $item->transaction_detail }}</td>
-                        <td>{{ number_format($item->amount) }}</td>
-                        <td></td>
-                      </tr>
-                      @php $i++ @endphp
-                    @endforeach
-                  </tbody>
-                </table>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table id="example2" class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>date</th>
+                      <th>category</th>
+                      <th>narration</th>
+                      <th>amount</th>
+                      <th>#</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      @php $i = 1 @endphp
+                      @foreach($transaction as $item)
+                        <tr>
+                          <td>{{ $i }}</td>
+                          <td>{{ date('Y-m-d',strtotime($item->created_at)) }}</td>
+                          <td>{{ $item->transaction_type }}</td>
+                          <td>{{ $item->transaction_detail }}</td>
+                          <td>{{ number_format($item->amount) }}</td>
+                          <td><a href="" class="btn btn-xs btn-outline-primary" data-toggle="modal" data-target="#edit_transaction{{ $item->id}}">Edit</a></td>
+                            <div class="modal fade" id="edit_transaction{{ $item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-md" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h6 class="modal-title justify-content-center" id="exampleModalLongTitle"> EDIT TRANSACTION: ID - {{ $item->id }} </h6>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form action="/apply/teller/transaction/{{ $item->id}}" method="post">
+                                      @csrf
+                                      <div class="row form-group">
+                                        <div class="col-12">
+                                          <label>Transaction Date</label>
+                                          <input type="date" class="form-control" value="{{ date('Y-m-d',strtotime($item->created_at)) }}" readonly>
+                                        </div>
+                                        <!-- col-12 -->
+                                      </div>
+                                      <!-- row -->
+                                      <div class="row form-group">
+                                        <div class="col-12">
+                                          <label>Narration</label>
+                                          <input type="text" class="form-control" name="transaction_detail" value="{{ $item->transaction_detail }}" readonly>
+                                        </div>
+                                        <!-- col-12 -->
+                                      </div>
+                                      <!-- row -->
+                                      <div class="row form-group">
+                                        <div class="col-12">
+                                          <label>Amount</label>
+                                          <input type="text" class="form-control" name="amount" value="{{ number_format($item->amount) }}" required>
+                                        </div>
+                                        <!-- col-12 -->
+                                      </div>
+                                      <!-- row -->
+                                      <div class="row form-group">
+                                      <div class="col-12 text-center">         
+                                        <button type="submit" class="btn btn-sm btn-outline-primary">Submit</button>
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" data-dismiss="modal">Cancel</button>
+                                      </div>
+                                    </div>
+                                    <!-- row -->
+                                    </form>
+                                  </div>
+                                  <!-- modal-body -->
+                                </div>
+                              </div>
+                              <!-- modal-dialog -->
+                            </div>
+                        </tr>
+                        @php $i++ @endphp
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
               </div>
               <!-- card-body -->
             </div>
@@ -117,7 +169,7 @@
                       <div class="row form-group">
                         <div class="col-6">
                           <label>Amount</label>
-                          <input type="number" name="amount" class="form-control" required placeholder="Amount">
+                          <input type="number" name="amount" class="form-control" required placeholder="Amount" onautocomplete="off">
                         </div>
                         <div class="col-6">
                           <label>Date</label>

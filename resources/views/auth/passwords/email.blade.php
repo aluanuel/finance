@@ -5,7 +5,7 @@
     <!-- /.login-logo -->
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
-            <a href="#" class="h1">{{ __('Reset Password') }}</a>
+            <a href="#" class="h3">{{ __('Reset Password') }}</a>
         </div>
         <div class="card-body">
                     @if (session('status'))

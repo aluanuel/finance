@@ -27,6 +27,11 @@ class CreateLoansTable extends Migration
             $table->date('date_loan_application');
             $table->date('date_loan_approved')->nullable();
             $table->date('date_loan_disbursed')->nullable();
+            $table->date('loan_start_date')->nullable();
+            $table->date('loan_end_date')->nullable();
+            $table->string('loan_status')->default('Pending Assessment');
+            $table->double('loan_recovered')->default(0);
+            $table->double('loan_outstanding')->default(0);
             $table->date('date_loan_fully_recovered')->nullable();
             $table->string('borrowing_purpose');
             $table->string('main_income_source')->nullable();
@@ -34,9 +39,6 @@ class CreateLoansTable extends Migration
             $table->double('total_monthly_income')->nullable();
             $table->double('total_monthly_expenditure')->nullable();
             $table->string('collateral_security');
-            $table->string('loan_status')->default('Pending Assessment');
-            $table->double('loan_recovered')->default(0);
-            $table->double('loan_outstanding')->default(0);
             $table->timestamps();
         });
     }
