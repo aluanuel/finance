@@ -24,8 +24,28 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group(['middleware' => 'auth'], function () {
 
-/**************************** Loan Officer ***********************************/
-	Route::get('/apply/ind/', [App\Http\Controllers\LoansController::class, 'view_individual_loans_list']);
+/**************************** loans ***********************************/
+	Route::get('/apply/loans/all/', [App\Http\Controllers\LoansController::class, 'view_all_loans'])->name('view_all_loans');
+
+	Route::post('/apply/loans/all',[App\Http\Controllers\LoansController::class, 'search_all_loans']);
+
+	Route::get('/apply/loans/individual/', [App\Http\Controllers\LoansController::class, 'view_individual_loans'])->name('view_individual_loans');
+
+	Route::post('/apply/loans/individual/',[App\Http\Controllers\LoansController::class, 'search_individual_loans']);
+
+	Route::get('/apply/loans/group/', [App\Http\Controllers\LoansController::class, 'view_group_loans'])->name('view_group_loans');
+
+	Route::post('/apply/loans/group',[App\Http\Controllers\LoansController::class, 'search_group_loans']);
+
+
+
+
+
+
+
+
+
+	
 
 	Route::post('/apply/loan/new', [App\Http\Controllers\LoansController::class, 'create_new_loan']);
 

@@ -26,6 +26,32 @@ class LoansController extends Controller
         return view('apply.grp.index',compact('client'));
     }
 
+    public function view_all_loans(){
+
+        $loan = DB::table('loans')
+                ->join('clients','loans.id_client','clients.id')
+                ->select('loans.*','clients.name')
+                ->where('loans.loan_status','!=','Completed')
+                ->orderBy('date_loan_application','desc')
+                ->get();
+        $heading = "View all loans"; 
+
+            return view('apply.loans.view_all_loans',compact('loan','heading'));
+    }
+
+    public function search_all_loans(Request $request){
+
+        $loan = DB::table('loans')
+                ->join('clients','loans.id_client','clients.id')
+                ->select('loans.*','clients.name')
+                ->where('loans.loan_status',$request->id)
+                ->orderBy('date_loan_application','desc')
+                ->get();
+        $heading = "View ".strtolower($request->id)." loans"; 
+
+        return view('apply.loans.view_all_loans',compact('loan','heading'));;
+    }
+
     public function view_group_loans_list(){
 
         $loan = DB::table('loans')
@@ -57,17 +83,69 @@ class LoansController extends Controller
 
     }
 
-    public function view_individual_loans_list(){
+    public function view_individual_loans(){
 
         $loan = DB::table('loans')
                 ->join('clients','loans.id_client','clients.id')
                 ->select('loans.*','clients.name')
                 ->where('loans.loan_status','!=','Completed')
-                ->where('clients.id_loan_group',null)
+                ->whereNull('clients.id_loan_group')
                 ->orderBy('date_loan_application','desc')
-                ->limit(250)
                 ->get();
-            return view('apply.ind.ind_loan_list',compact('loan'));
+
+        $heading = "View individual loans"; 
+        
+        return view('apply.loans.view_individual_loans',compact('loan','heading'));
+
+    }
+
+    public function search_individual_loans(Request $request){
+
+        $loan = DB::table('loans')
+                ->join('clients','loans.id_client','clients.id')
+                ->select('loans.*','clients.name')
+                ->where('loans.loan_status',$request->id)
+                ->whereNull('clients.id_loan_group')
+                ->orderBy('date_loan_application','desc')
+                ->get();
+
+        $heading = "View ".strtolower($request->id)." loans"; 
+        
+        return view('apply.loans.view_individual_loans',compact('loan','heading'));
+
+    }
+
+
+
+    public function view_group_loans(){
+
+        $loan = DB::table('loans')
+                ->join('clients','loans.id_client','clients.id')
+                ->join('loan_groups','clients.id_loan_group','loan_groups.id')
+                ->select('loans.*','clients.name','loan_groups.group_name','loan_groups.group_code')
+                ->where('loans.loan_status','!=','Completed')
+                ->orderBy('date_loan_application','desc')
+                ->get();
+
+        $heading = "View all loans"; 
+
+        return view('apply.loans.view_group_loans',compact('loan','heading'));
+
+    }
+
+    public function search_group_loans(Request $request){
+
+        $loan = DB::table('loans')
+                ->join('clients','loans.id_client','clients.id')
+                ->join('loan_groups','clients.id_loan_group','loan_groups.id')
+                ->select('loans.*','clients.name','loan_groups.group_name','loan_groups.group_code')
+                ->where('loans.loan_status',$request->id)
+                ->orderBy('date_loan_application','desc')
+                ->get();
+
+        $heading = "View ".strtolower($request->id)." loans"; 
+
+        return view('apply.loans.view_group_loans',compact('loan','heading'));
 
     }
 

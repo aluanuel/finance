@@ -2878,6 +2878,17 @@ fieldset:disabled a.btn {
   border-color: #007bff;
 }
 
+.btn-outline-default {
+  color: #6c757d;
+  border-color: #ced4da;
+}
+
+.btn-outline-default:hover {
+  color: #343a40;
+  background-color: #fff;
+  border-color: #6c757d;
+}
+
 .btn-outline-primary:focus, .btn-outline-primary.focus {
   box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.5);
 }

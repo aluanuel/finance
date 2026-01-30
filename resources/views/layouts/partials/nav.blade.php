@@ -110,19 +110,19 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="/apply/ind/" class="nav-link">
+                  <a href="/apply/loans/all" class="nav-link">
                     <i class="fas fa-angle-right nav-icon"></i>
                     <p>All loans</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/apply/ind/" class="nav-link">
+                  <a href="/apply/loans/individual/" class="nav-link">
                     <i class="fas fa-angle-right nav-icon"></i>
                     <p>Individual loans</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/apply/grp" class="nav-link">
+                  <a href="/apply/loans/group/" class="nav-link">
                     <i class="fas fa-angle-right nav-icon"></i>
                     <p>Group loans</p>
                   </a>
