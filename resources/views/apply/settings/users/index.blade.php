@@ -28,113 +28,14 @@
       <div class="container-fluid">
         @include('layouts.flash')
         <div class="row">
-          <!-- col-4 -->
-          <div class="col-md-4 col-sm-12">
-            <!-- card -->
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">New System User</h3>
-              </div>
-                <!-- /.card-header -->
-              <div class="card-body">
-
-                <form method="POST" action="/apply/settings/user">
-                @csrf
-                        <div class="form-group row">
-                            <div class="col-12">
-                              <label>Name</label>
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required="required" autofocus placeholder="Full Name" autocomplete="off">
-                                @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                          <div class="col-12">
-                            <label>Telephone</label>
-                              <input id="telephone" type="text" class="form-control @error('telephone') is-invalid @enderror" name="telephone" value="{{ old('telephone') }}" required="required" placeholder="Telephone" autocomplete="off" pattern="[0-9]{10}">
-                              @error('telephone')
-                              <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $message }}</strong>
-                              </span>
-                              @enderror
-                          </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-12">
-                              <label>Email</label>
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required  placeholder="Email Address" autocomplete="off">
-                                @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-12">
-                                <label>Usertype</label>
-                                <div class="form-group">
-                                  <select class="form-control select2bs4" name="usertype" data-placeholder="Select" style="width: 100%;" required="required">
-                                    <option></option>
-                                    <option value="Loan Officer">Loan Officer</option>
-                                    <option value="Teller">Teller</option>
-                                    <option value="Manager">Manager</option>
-                                  </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-12">
-                                <label>User role</label>
-                                <div class="form-group">
-                                  <select class="form-control select2bs4" name="role" data-placeholder="Select" style="width: 100%;" required="required">
-                                    <option></option>
-                                    <option value="None">None</option>
-                                    <option value="Supervisor">Supervisor</option>
-                                    <option value="Manager">Manager</option>
-                                  </select>
-                                </div>
-                              </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-12">
-                                <label>Category</label>
-                                <div class="form-group">
-                                  <select class="form-control select2bs4" name="category" data-placeholder="Select" style="width: 100%;" required="required">
-                                    <option></option>
-                                    <option value="None">None</option>
-                                    <option value="Individual">Individual</option>
-                                    <option value="Group">Group</option>
-                                  </select>
-                                </div>
-                              </div>
-                        </div>
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-outline-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-
-
-              </div>
-              <!-- card-body -->
-            </div>
-            <!-- card -->
-          </div>
           <!-- col-8 -->
-          <div class="col-md-8 col-sm-12">
+          <div class="col-12">
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Showing System Users</h3>
+                <div class="card-tools">
+                  <a href="" class="btn btn-xs btn-outline-primary" data-toggle="modal" data-target="#new-user">ADD USER</a>
+                </div>
               </div>
                         <!-- /.card-header -->
               <div class="card-body">
@@ -179,6 +80,123 @@
                   <!-- table -->
                 </div>
                 <!-- table-responsive -->
+                <div class="modal fade" id="new-user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h6 class="modal-title text-uppercase" id="exampleModalLongTitle">Register system user</h6>
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                         </button>
+                      </div>
+                      <div class="modal-body">
+                        <form method="POST" action="/apply/settings/user">
+                          @csrf
+                        <div class="form-group row">
+                          <div class="col-lg-4 col-md-12">
+                            <label>Name</label>
+                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required="required" autofocus placeholder="Full name" autocomplete="off">
+                              @error('name')
+                              <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                              @enderror
+                          </div>
+                          <!-- col-lg-4 -->
+                          <div class="col-lg-4 col-md-12">
+                            <label>Telephone</label>
+                              <input id="telephone" type="text" class="form-control @error('telephone') is-invalid @enderror" name="telephone" value="{{ old('telephone') }}" required="required" placeholder="Telephone" autocomplete="off" pattern="[0-9]{10}">
+                              @error('telephone')
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $message }}</strong>
+                              </span>
+                              @enderror
+                          </div>
+                          <!-- col-lg-4 -->
+                          <div class="col-lg-4 col-md-12">
+                              <label>Email</label>
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required  placeholder="Email address" autocomplete="off">
+                                @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-lg-4 col-md-12">
+                                <label>Usertype</label>
+                                <div class="form-group">
+                                  <select class="form-control select2bs4" name="usertype" data-placeholder="Select" style="width: 100%;" required="required">
+                                    <option></option>
+                                    <option value="Loan Officer">Loan Officer</option>
+                                    <option value="Teller">Teller</option>
+                                    <option value="Manager">Manager</option>
+                                  </select>
+                                </div>
+                            </div>
+                            <!-- col-lg-4 -->
+                            <div class="col-lg-4 col-md-12">
+                                <label>User role</label>
+                                <div class="form-group">
+                                  <select class="form-control select2bs4" name="role" data-placeholder="Select" style="width: 100%;" required="required">
+                                    <option></option>
+                                    <option value="None">None</option>
+                                    <option value="Supervisor">Supervisor</option>
+                                    <option value="Manager">Manager</option>
+                                  </select>
+                                </div>
+                            </div>
+                            <!-- col-lg-4 -->
+                            <div class="col-lg-4 col-md-12">
+                                <label>Branch</label>
+                                <div class="form-group">
+                                  <select class="form-control select2bs4" name="category" data-placeholder="Select" style="width: 100%;" required="required">
+                                    <option></option>
+                                    <option value="Main Branch">Main Branch</option>
+                                    <option value="Individual">Individual</option>
+                                    <option value="Group">Group</option>
+                                  </select>
+                                </div>
+                              </div>
+                        </div>
+                        <hr>
+                        <!-- row -->
+                        <div class="form-group row">
+                          <div class="col-12">
+                            <div class="form-group">
+                              <div class="checkbox">
+                                <!-- <span> -->
+                                  <input type="checkbox" class="pb-1" required style="vertical-align: middle;">&nbsp;Register user with default permissions
+                                <!-- </span> -->
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- <div class="col-lg-4 col-md-12">
+                            <div class="radio">
+                                <input type="radio"> View
+                            </div>
+                            <div class="radio">
+                                <input type="radio"> Edit
+                            </div>
+                            
+                          </div> -->
+                          
+                        </div>
+                        <!-- row -->
+                        <div class="form-group row mb-0">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-outline-primary">
+                                    {{ __('Register') }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- modal -->
               </div>
               <!-- card-body -->
             </div>

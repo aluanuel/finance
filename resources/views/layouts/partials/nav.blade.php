@@ -18,7 +18,7 @@
       </div>
 
       <!-- SidebarSearch Form -->
-      <div class="form-inline">
+      <!-- <div class="form-inline">
         <div class="input-group" data-widget="sidebar-search">
           <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
           <div class="input-group-append">
@@ -27,11 +27,36 @@
             </button>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-home"></i>
+                <p>
+                  Main Branch
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/apply/settings/koboko-branch" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Main Branch
+                    </p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/settings/koboko-branch" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Koboko Branch
+                    </p>
+                  </a>
+                </li>
+              </ul>
+            </li>
           @if(Auth::user()->usertype == 'admin')
             <li class="nav-item">
               <a href="#" class="nav-link">
@@ -52,21 +77,44 @@
               </ul>
             </li>
           @else
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a href="/apply/accounts/" class="nav-link">
                 <i class="fas fa-user-circle nav-icon"></i>
                 <p>Accounts</p>
               </a>
+            </li> -->
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-user-circle"></i>
+                <p>
+                  Accounts
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/apply/accounts/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>View Accounts</p>
+                  </a>
+                </li>
+              </ul>
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-building-columns "></i>
+                <i class="nav-icon fas fa-balance-scale"></i>
                 <p>
                   Loans
                   <i class="fas fa-angle-left right"></i>
                 </p>
               </a>
               <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/apply/ind/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>All loans</p>
+                  </a>
+                </li>
                 <li class="nav-item">
                   <a href="/apply/ind/" class="nav-link">
                     <i class="fas fa-angle-right nav-icon"></i>
@@ -88,10 +136,109 @@
               </a>
             </li> -->
             <li class="nav-item">
-              <a href="/apply/teller/transaction/" class="nav-link">
-                <i class="fas fa-money-check-dollar nav-icon"></i>
-                <p>Transactions</p>
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-dollar"></i>
+                <p>
+                  Transactions
+                  <i class="fas fa-angle-left right"></i>
+                </p>
               </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/apply/teller/transaction/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Loan disbursement</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/teller/transaction/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Loan repayment</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/teller/transaction/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Penalties</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/teller/transaction/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Expenses</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/teller/transaction/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Other Incomes</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-list"></i>
+                <p>
+                  Collection Sheets
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/apply/report/disbursements/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Daily collections</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/report/loan-recovery/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Missed repayments</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/report/loans-defaulted" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Past maturity</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-file"></i>
+                <p>
+                  Collateral Register
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/apply/report/disbursements/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Loan disbursement</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/report/loan-recovery/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Loan recovery</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/report/loans-defaulted" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Loans defaulted</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/report/loans-fully-settled/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Loans fully settled</p>
+                  </a>
+                </li>
+              </ul>
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
@@ -130,6 +277,35 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-book"></i>
+                <p>
+                  Accounting
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/apply/report/disbursements/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Cashflow</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/report/loan-recovery/" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Profit/Loss</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/apply/report/loans-defaulted" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Balancesheet</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-database"></i>
                 <p>
                   System
@@ -159,7 +335,7 @@
             </li>
             
 
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-cog"></i>
                 <p>
@@ -206,10 +382,10 @@
                   </a>
                 </li>
               </ul>
-            </li>
+            </li> -->
           @endif
 
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="{{ route('logout') }}" class="nav-link"
               onclick="event.preventDefault();
                   document.getElementById('logout-form').submit();">
@@ -219,7 +395,7 @@
             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                 @csrf
             </form>
-          </li>
+          </li> -->
             <!-- sign-out -->
         </ul>
       </nav>

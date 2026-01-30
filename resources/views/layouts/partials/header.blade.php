@@ -12,11 +12,46 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-      <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
+      <!-- settings -->
+      <li class="nav-item">
         <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
+          <i class="fas fa-cog" title="Settings"></i>
+          <span class="hidden-xs">Settings</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <span class="dropdown-item dropdown-header">Settings</span>
+          <div class="dropdown-divider"></div>
+          <a href="/apply/settings/users" class="dropdown-item">
+            <i class="fas fa-angle-right"></i>Users
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-angle-right"></i>Loans
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-angle-right"></i>Branches
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-angle-right"></i>Borrowers
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-angle-right"></i>Repayments
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-angle-right"></i>System configuration
+          </a>
+        </div>
+      </li>
+      <!-- Notifications Dropdown Menu -->
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="far fa-bell" title="Notifications"></i>
+          <!-- <span class="badge badge-warning navbar-badge">15</span> -->
+          <span class="hidden-xs">Notifications</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <span class="dropdown-item dropdown-header">Notifications</span>
@@ -40,16 +75,23 @@
         </div>
       </li>
       <!-- <li class="nav-item">
-        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-          <i class="fas fa-expand-arrows-alt"></i>
+        <a class="nav-link" href="https://codestoreinvestments.com" target="blank">
+          <i class="fas fa-question"></i>
+          <span class="hidden-xs">Help</span>
         </a>
       </li> -->
-
       <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-          <i class="fas fa-th-large"></i>
-        </a>
-      </li>
+            <a href="{{ route('logout') }}" class="nav-link"
+              onclick="event.preventDefault();
+                  document.getElementById('logout-form').submit();">
+                <i class="fas fa-power-off nav-icon" title="Sign out"></i>
+                <span class="hidden-xs">Sign out</span>
+            </a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
+          </li>
     </ul>
   </nav>
   <!-- /.navbar -->
