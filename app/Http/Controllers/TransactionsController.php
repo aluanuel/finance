@@ -220,8 +220,6 @@ class TransactionsController extends Controller
 
         $amount = str_replace(',','',$request->amount);
 
-        $penalty = $amount - $loan_outstanding;
-
 
         if($amount >= $total_loan_outstanding){
 
@@ -264,7 +262,7 @@ class TransactionsController extends Controller
 
             $trans->id_loan = $loan->id;
 
-            $trans->amount = $penalty;
+            $trans->amount = $this->calculate_penalty($amount,$loan_outstanding);
 
             $trans->transaction_date = Carbon::today();
 
@@ -349,6 +347,19 @@ class TransactionsController extends Controller
     private function calculate_loan_outstanding($loan_outstanding,$repayment){
 
         return ($loan_outstanding - $repayment);
+    }
+
+    private function calculate_penalty($deposit,$loan_outstanding){
+
+        if($deposit >= $loan_outstanding ){
+
+            return ($deposit - $loan_outstanding);
+
+        }else{
+
+            return 0;
+        }
+
     }
 
 }

@@ -38,17 +38,6 @@ $(document).ready(function(){
     }
 });
 </script>
-<script>
-  function printDiv() {
-            var divContents = document.getElementById("print_area").innerHTML;
-            var a = window.open();
-            a.document.write('<html>');
-            a.document.write(divContents);
-            a.document.write('</body></html>');
-            a.document.close();
-            a.print();
-        }
-</script>
 
 <script>
   $(function () {
@@ -184,6 +173,10 @@ $(document).ready(function(){
       "searching": true,
       "ordering": true,
     });
+    $('#example9').DataTable({
+      "searching": true,
+      "ordering": false,
+    });
   });
   $('#total_monthly_income').focus(function() {
 
@@ -295,6 +288,20 @@ $(document).ready(function(){
       console.log(content);
     })
 
+    $('#id_loan_product').change(function(){
+
+      var content = $('#id_loan_product option:selected').attr('label');
+      
+      var rates = content.split(",");
+
+      $('#interest_rate').val(rates[0]);
+
+      $('#loan_processing_rate').val(rates[1]);
+
+      $('#interest_on_defaulting').val(rates[2]);
+
+    })
+
 
     $('#transaction_category').change(function(){
       
@@ -329,42 +336,7 @@ $(document).ready(function(){
         $('#new_outflow_category').hide();
         $('#new_outflow_category').removeAttr('required');
       }
-    })
-
-    $('#applicant_type').change(function(){
-      var value = $('#applicant_type option:selected').val();
-      if(value == "Business person"){
-        $('#business_type').show();
-        $('#business_license').show();
-        $('#business_account_statement').show();
-        $('#leader_recommendation').show();
-        $('#appointment_letter').hide();
-        $('#bank_statement').hide();
-        $('#supervisor_recommendation').hide();
-
-        $('#business_type').attr('required', 'required');
-        $('#business_license').attr('required', 'required');
-        $('#business_account_statement').attr('required', 'required');
-        $('#appointment_letter').removeAttr('required');
-        $('#bank_statement').removeAttr('required');
-        $('#supervisor_recommendation').removeAttr('required');
-      }else{
-        $('#business_type').hide();
-        $('#business_license').hide();
-        $('#business_account_statement').hide();
-        $('#leader_recommendation').show();
-        $('#appointment_letter').show();
-        $('#bank_statement').show();
-        $('#supervisor_recommendation').show();
-
-        $('#business_type').removeAttr('required');
-        $('#business_license').removeAttr('required');
-        $('#business_account_statement').removeAttr('required');
-        $('#appointment_letter').attr('required', 'required');
-        $('#bank_statement').attr('required', 'required');
-        $('#supervisor_recommendation').attr('required', 'required');
-      }
-    });  
+    }) 
 
     $('#btnChangePassword').click(function(){
       $('#formChangePassword').show();
@@ -395,27 +367,6 @@ $(document).ready(function(){
       $('#addGroupMemberRole').show();
        $('#btnShowFormAddGroupMemberRole').hide();
     });
-    // $('#income_source').change(function(){
-    //   var value = $('#income_source option:selected').val();
-    //   if(value == "Other"){
-    //     $('#new_income').show();
-    //     $('#new_income').attr('required', 'required');
-    //   }else{
-    //     $('#new_income').hide();
-    //     $('#new_income').removeAttr('required');
-    //   }
-    // }); 
-
-    // $('#expense_source').change(function(){
-    //   var value = $('#expense_source option:selected').val();
-    //   if(value == "Other"){
-    //     $('#new_expense').show();
-    //     $('#new_expense').attr('required', 'required');
-    //   }else{
-    //     $('#new_expense').hide();
-    //     $('#new_expense').removeAttr('required');
-    //   }
-    // }); 
 
 });
 var ctx = document.getElementById('myChart').getContext('2d');

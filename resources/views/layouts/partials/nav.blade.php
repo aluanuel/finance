@@ -17,18 +17,6 @@
         </div>
       </div>
 
-      <!-- SidebarSearch Form -->
-      <!-- <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-sidebar">
-              <i class="fas fa-search fa-fw"></i>
-            </button>
-          </div>
-        </div>
-      </div> -->
-
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -36,26 +24,10 @@
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-home"></i>
                 <p>
-                  Main Branch
-                  <i class="fas fa-angle-left right"></i>
+                  <strong>HEAD OFFICE</strong>
+                  <!-- <i class="fas fa-angle-left right"></i> -->
                 </p>
               </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="/apply/settings/koboko-branch" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Main Branch
-                    </p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/apply/settings/koboko-branch" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Koboko Branch
-                    </p>
-                  </a>
-                </li>
-              </ul>
             </li>
           @if(Auth::user()->usertype == 'admin')
             <li class="nav-item">
@@ -147,31 +119,7 @@
                 <li class="nav-item">
                   <a href="/apply/teller/transaction/" class="nav-link">
                     <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Loan disbursement</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/apply/teller/transaction/" class="nav-link">
-                    <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Loan repayment</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/apply/teller/transaction/" class="nav-link">
-                    <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Penalties</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/apply/teller/transaction/" class="nav-link">
-                    <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Expenses</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/apply/teller/transaction/" class="nav-link">
-                    <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Other Incomes</p>
+                    <p>View transactions</p>
                   </a>
                 </li>
               </ul>
@@ -186,21 +134,9 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="/apply/report/disbursements/" class="nav-link">
+                  <a href="/apply/sheets/view-collections/" class="nav-link">
                     <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Daily collections</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/apply/report/loan-recovery/" class="nav-link">
-                    <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Missed repayments</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/apply/report/loans-defaulted" class="nav-link">
-                    <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Past maturity</p>
+                    <p>View collections</p>
                   </a>
                 </li>
               </ul>
@@ -215,27 +151,9 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="/apply/report/disbursements/" class="nav-link">
+                  <a href="#" class="nav-link">
                     <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Loan disbursement</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/apply/report/loan-recovery/" class="nav-link">
-                    <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Loan recovery</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/apply/report/loans-defaulted" class="nav-link">
-                    <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Loans defaulted</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/apply/report/loans-fully-settled/" class="nav-link">
-                    <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Loans fully settled</p>
+                    <p>View collateral register</p>
                   </a>
                 </li>
               </ul>
@@ -268,9 +186,9 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/apply/report/loans-fully-settled/" class="nav-link">
+                  <a href="/apply/report/loans-completed/" class="nav-link">
                     <i class="fas fa-angle-right nav-icon"></i>
-                    <p>Loans fully settled</p>
+                    <p>Loans completed</p>
                   </a>
                 </li>
               </ul>
@@ -285,19 +203,19 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="/apply/report/disbursements/" class="nav-link">
+                  <a href="/apply/report/teller/cashbook/" class="nav-link">
                     <i class="fas fa-angle-right nav-icon"></i>
                     <p>Cashflow</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/apply/report/loan-recovery/" class="nav-link">
+                  <a href="/apply/report/teller/profit-loss/" class="nav-link">
                     <i class="fas fa-angle-right nav-icon"></i>
                     <p>Profit/Loss</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/apply/report/loans-defaulted" class="nav-link">
+                  <a href="/apply/report/teller/balance-sheet/" class="nav-link">
                     <i class="fas fa-angle-right nav-icon"></i>
                     <p>Balancesheet</p>
                   </a>

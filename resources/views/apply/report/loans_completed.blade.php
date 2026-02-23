@@ -8,13 +8,13 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Loans fully settled</h1>
+            <h1 class="m-0">Loans completed</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/home">Home</a></li>
               <li class="breadcrumb-item"><a href="#">Reports</a></li>
-              <li class="breadcrumb-item active">Loans fully settled</li>
+              <li class="breadcrumb-item active">Loans completed</li>
             </ol>
           </div>
           <!-- /.col -->
@@ -35,10 +35,16 @@
                 <div class="card-tools">
                   <form action="/apply/report/loans-fully-settled" method="post">
                     @csrf
-                    <div class="row">
-                      <input type="date" class="form-control col-4 mr-1" name="start_date" placeholder="start date">
-                      <input type="date" class="form-control col-4" name="end_date" placeholder="end date">
-                      <input type="submit" name="submit" class="btn btn-sm btn-default ml-1" value="Search">
+                    <div class="input-group">
+                        <div class="input-group-prepend" id="button-addon3">
+                          <input type="date" name="start_date" class="form-control" placeholder="Select date" required>
+                        </div>
+                        <input type="date" name="end_date" class="form-control" placeholder="Select date" required>
+                        <div class="input-group-append">
+                          <button type="submit" name="submit" class="btn btn-default">
+                            <i class="fa fa-search"></i>
+                          </button>
+                        </div>
                     </div>
                   </form>
                 </div>

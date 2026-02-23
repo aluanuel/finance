@@ -30,7 +30,7 @@ class LoanGroupsController extends Controller
 
             $groups->group_name = strtoupper($request->group_name);
 
-            $groups->group_description = ucwords($request->group_description);
+            $groups->group_description = ucfirst($request->group_description);
 
             $groups->group_address = ucwords($request->group_address);
 
@@ -44,6 +44,22 @@ class LoanGroupsController extends Controller
 
         }
            
+    }
+
+    public function update_loan_group(Request $request){
+
+        $groups = LoanGroups::where('id',$request->id)->first();
+
+        $groups->group_name = strtoupper($request->group_name);
+
+        $groups->group_description = ucfirst($request->group_description);
+
+        $groups->group_address = ucwords($request->group_address);
+
+        $groups->save();
+
+        return redirect()->back()->with('success','Success');
+
     }
 
     public function view_loan_group_members(Request $request){

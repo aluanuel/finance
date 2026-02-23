@@ -20,7 +20,7 @@ class ReportsController extends Controller
                 ->orderBy('loans.date_loan_disbursed','desc')
                 ->get();
 
-            $heading = "Showing loans disbursed recently";
+            $heading = "View recent loan disbursement";
 
             return view('apply.report.loan_disbursement',compact('loan','heading'));
 
@@ -35,7 +35,7 @@ class ReportsController extends Controller
                 ->whereBetween('loans.date_loan_disbursed',[$start_date,$end_date])
                 ->get();
 
-            $heading = "Showing loans disbursed in ".Carbon::now()->format('F, Y');
+            $heading = "View loan disbursements in ".Carbon::now()->format('F, Y');
 
             return view('apply.report.loan_disbursement',compact('loan','heading'));
 
@@ -55,7 +55,7 @@ class ReportsController extends Controller
                 ->whereBetween('loans.date_loan_disbursed',[$start_date,$end_date])
                 ->get();
 
-        $heading = "Showing loans disbursed from ".date('F d, Y',strtotime($start_date))." to ".date('F d, Y',strtotime($end_date));
+        $heading = "View loan disbursements from ".date('F d, Y',strtotime($start_date))." to ".date('F d, Y',strtotime($end_date));
 
         return view('apply.report.loan_disbursement',compact('loan','heading'));
 
@@ -69,13 +69,14 @@ class ReportsController extends Controller
 
             $recovery = DB::table('loans')->join('clients','loans.id_client','clients.id')
                 ->join('transactions','transactions.id_loan','loans.id')
-                ->select('clients.name','loans.loan_number','loans.loan_status','transactions.amount','transactions.transaction_date')
+                ->join('ledgers','ledgers.id_loan','loans.id')
+                ->select('clients.name','loans.loan_number','loans.loan_status','transactions.amount','transactions.transaction_date','ledgers.*')
                 ->where('transactions.transaction_detail','like','%Loan Repayment%')
                 ->orderBy('transactions.transaction_date','desc')
-                ->limit(100)
+                ->limit(500)
                 ->get();
 
-            $heading = "Showing recent loan recovery";
+            $heading = "View recent loan recovery";
 
             return view('apply.report.loan_recovery',compact('recovery','heading'));
 
@@ -86,12 +87,14 @@ class ReportsController extends Controller
 
             $recovery = DB::table('loans')->join('clients','loans.id_client','clients.id')
                 ->join('transactions','transactions.id_loan','loans.id')
-                ->select('clients.name','loans.loan_number','loans.loan_status','transactions.amount','transactions.transaction_date')
+                ->join('ledgers','ledgers.id_loan','loans.id')
+                ->select('clients.name','loans.loan_number','loans.loan_status','transactions.amount','transactions.transaction_date','ledgers.*')
                 ->where('transactions.transaction_detail','like','%Loan Repayment%')
                 ->whereBetween('transactions.transaction_date',[$start_date,$end_date])
+                ->orderBy('transactions.transaction_date','desc')
                 ->get();
 
-            $heading = 'Showing loan recovery in '.Carbon::now()->format('F, Y');
+            $heading = 'View loan recovery in '.Carbon::now()->format('F, Y');
 
             return view('apply.report.loan_recovery',compact('recovery','heading'));
         }
@@ -107,18 +110,20 @@ class ReportsController extends Controller
 
         $recovery = DB::table('loans')->join('clients','loans.id_client','clients.id')
                 ->join('transactions','transactions.id_loan','loans.id')
-                ->select('clients.name','loans.loan_number','loans.loan_status','transactions.amount','transactions.transaction_date')
+                ->join('ledgers','ledgers.id_loan','loans.id')
+                ->select('clients.name','loans.loan_number','loans.loan_status','transactions.amount','transactions.transaction_date','ledgers.*')
                 ->where('transactions.transaction_detail','like','%Loan Repayment%')
                 ->whereBetween('transactions.transaction_date',[$start_date,$end_date])
+                ->orderBy('transactions.transaction_date','desc')
                 ->get();
 
-        $heading = "Showing loan recovery from ".date('F d, Y',strtotime($start_date))." to ".date('F d, Y',strtotime($end_date));
+        $heading = "View loan recovery from ".date('F d, Y',strtotime($start_date))." to ".date('F d, Y',strtotime($end_date));
 
         return view('apply.report.loan_recovery',compact('recovery','heading'));
 
     }
 
-    public function report_loans_fully_settled(Request $request){
+    public function report_loans_completed(Request $request){
 
         $period = $request->id;
 
@@ -129,7 +134,7 @@ class ReportsController extends Controller
                     ->where('loans.loan_status','Completed')
                     ->orderBy('loans.loan_number','desc')
                     ->get();
-            $heading = 'Showing loans fully settled recently';
+            $heading = 'View loans completed recently';
 
         }else{
 
@@ -143,11 +148,11 @@ class ReportsController extends Controller
                     ->orderBy('loans.loan_number','desc')
                     ->get();
 
-            $heading = 'Showing loan fully settled in '.Carbon::now()->format('F, Y');
+            $heading = 'View loans completed in '.Carbon::now()->format('F, Y');
 
         }
 
-        return view('apply.report.loans_fully_settled',compact('loan','heading'));
+        return view('apply.report.loans_completed',compact('loan','heading'));
     }
 
     public function query_report_loans_fully_settled(Request $request){
@@ -165,7 +170,7 @@ class ReportsController extends Controller
 
         $heading = "Showing loan fully settled from ".date('F d, Y',strtotime($start_date))." to ".date('F d, Y',strtotime($end_date));
 
-        return view('apply.report.loans_fully_settled',compact('loan','heading'));
+        return view('apply.report.loans_completed',compact('loan','heading'));
 
     }
 
@@ -176,7 +181,7 @@ class ReportsController extends Controller
                     ->where('loans.loan_status','Defaulted')
                     ->orderBy('loans.loan_end_date','desc')
                     ->get();
-            $heading = 'Showing loans defaulted';
+            $heading = 'View loans defaulted';
 
         return view('apply.report.loans_defaulted',compact('loan','heading'));
     }
@@ -185,9 +190,9 @@ class ReportsController extends Controller
 
         $trans = DB::table('transactions')->where('created_at','like','%'.date('Y-m-d').'%')->orderBy('id','desc')->get();
 
-        $heading = "Showing cash transactions of today";
+        $heading = "View cashbook statement";
 
-        return view('apply.report.cashbook',compact('trans','heading'));
+        return view('apply.report.teller.cashbook',compact('trans','heading'));
     } 
 
     public function query_report_cashbook(Request $request){

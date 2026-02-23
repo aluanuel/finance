@@ -35,43 +35,69 @@
                 <div class="card-tools">
                   <form action="/apply/report/loan-recovery" method="post">
                     @csrf
-                    <div class="row">
-                      <input type="date" class="form-control col-4 mr-1" name="start_date" placeholder="start date">
-                      <input type="date" class="form-control col-4" name="end_date" placeholder="end date">
-                      <input type="submit" name="submit" class="btn btn-sm btn-default ml-1" value="Search">
+                    <div class="input-group">
+                        <div class="input-group-prepend" id="button-addon3">
+                          <input type="date" name="start_date" class="form-control" placeholder="Select date" required>
+                        </div>
+                        <input type="date" name="end_date" class="form-control" placeholder="Select date" required>
+                        <div class="input-group-append">
+                          <button type="submit" name="submit" class="btn btn-default">
+                            <i class="fa fa-search"></i>
+                          </button>
+                        </div>
                     </div>
                   </form>
                 </div>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table id="example2" class="table table-bordered table-hover">
+                  <table id="example9" class="table table-bordered table-hover">
                     <thead>
                       <tr>
-                        <th width="150">Date</th>
-                        <th>loan_status</th>
-                        <th>loan_number</th>
-                        <th>Client_details</th>
-                        <th>deposit_amount</th>
+                        <th>Date</th>
+                        <th>status</th>
+                        <th>loan</th>
+                        <th>name</th>
+                        <th>total_loan</th>
+                        <th>recovered</th>
+                        <th>outstanding</th>
+                        <th>deposit</th>
                       </tr>
                     </thead>
                     <tbody>
-                      @php $total = 0 @endphp
+                      @php 
+
+                        $sum_amount = 0;
+                        $sum_recovered = 0;
+                        $sum_outstanding = 0;
+
+                      @endphp
                       @foreach($recovery as $loan)
                         <tr>
                           <td>{{ $loan->transaction_date }}</td>
                           <td>{{ $loan->loan_status }}</td>
                           <td>{{ $loan->loan_number }}</td>
                           <td>{{ $loan->name }}</td>
+                          <td>{{ number_format($loan->total_loan) }}</td>
+                          <td>{{ number_format($loan->loan_recovered) }}</td>
+                          <td>{{ number_format($loan->loan_outstanding) }}</td>
                           <td>{{ number_format($loan->amount) }}</td>
                         </tr>
-                        @php $total += $loan->amount @endphp
+                        @php 
+
+                          $sum_amount += $loan->amount;
+                          $sum_recovered += $loan->loan_recovered;
+                          $sum_outstanding += $loan->loan_outstanding;
+
+                        @endphp
                       @endforeach
                     </tbody>
                     <tfoot>
                       <tr>
-                        <th colspan="4">Total</th>
-                        <th>{{ number_format($total) }}</th>
+                        <th colspan="5">Total</th>
+                        <th>{{ number_format($sum_recovered) }}</th>
+                        <th>{{ number_format($sum_outstanding) }}</th>
+                        <th>{{ number_format($sum_amount) }}</th>
                       </tr>
                     </tfoot>
                   </table>

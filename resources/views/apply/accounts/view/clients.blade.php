@@ -8,12 +8,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Client Accounts</h1>
+            <h1 class="m-0">Accounts</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/home">Home</a></li>
-              <li class="breadcrumb-item active">Client Accounts</li>
+              <li class="breadcrumb-item active">Accounts</li>
             </ol>
           </div>
           <!-- /.col -->
@@ -30,9 +30,22 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Showing Client Accounts</h3>
+                  <h3 class="card-title">View all client accounts</h3>
                   <div class="card-tools">
-                    <a href="" class="btn btn-xs btn-outline-primary" data-toggle="modal" data-target="#new-account">NEW CLIENT</a>
+                    <form action="/apply/accounts/search" method="post">
+                      @csrf
+                      <div class="input-group">
+                        <div class="input-group-prepend" id="button-addon3">
+                          <a href="" class="btn btn-flat btn-outline-default" data-toggle="modal" data-target="#new-account">Add</a>
+                        </div>
+                        <input type="text" name="name" class="form-control" placeholder="Client name | group name" required>
+                        <div class="input-group-append">
+                          <button type="submit" name="submit" class="btn btn-default">
+                            <i class="fa fa-search"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </form>
                   </div>
                 </div>
                 <div class="card-body">
@@ -67,8 +80,8 @@
                             @break
                             @case(1)
                             <td class="text-primary">Active</td>
-                            <td><a href="" class="btn btn-xs btn-outline-primary" data-toggle="modal" data-target="#groupLoanApplication{{$ac->id}}">New Loan</a></td>
-                              <div class="modal fade" id="groupLoanApplication{{$ac->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                            <td><a href="" class="btn btn-xs btn-outline-primary" data-toggle="modal" data-target="#new_loan_application{{$ac->id}}">Apply</a></td>
+                              <div class="modal fade" id="new_loan_application{{$ac->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-xl" role="document">
                                   <div class="modal-content">
                                     <div class="modal-header">
@@ -78,10 +91,10 @@
                                       </button>
                                     </div>
                                     <div class="modal-body">
-                                      <form action="/apply/grp/{{$ac->id}}" method="POST">
+                                      <form action="/apply/loan/{{$ac->id}}" method="POST">
                                         @csrf
                                         <div class="row form-group">
-                                          <div class="col-md-4">
+                                          <div class="col-lg-4 col-md-12">
                                             <div class="card">
                                               <div class="card-body box-profile">
                                                     <div class="text-center">
@@ -104,64 +117,64 @@
                                             </div> 
                                           </div>
 
-                                          <div class="col-md-8">
+                                          <div class="col-lg-8 col-md-12">
                                             <!-- row -->
                                             <div class="row form-group">
-                                              <div class="col-3">
-                                                <label>Loan Request</label>
+                                              <div class="col-lg-4 col-md-12">
+                                                <label>Loan product</label>
+                                                <div class="form-group">
+                                                  <select id="id_loan_product" class="form-control select2bs4" name="id_loan_product" data-placeholder="Select" style="width: 100%;">
+                                                    <option></option>
+                                                    @foreach($rates as $rate)
+                                                      <option value="{{ $rate->id }}" label="{{ $rate->interest_rate.','.$rate->loan_processing_rate.','.$rate->interest_on_defaulting }}">{{ $rate->product_name }}</option>
+                                                    @endforeach
+                                                  </select>
+                                                </div>
+                                              </div>
+                                              <!-- col-3 -->
+                                              <div class="col-lg-4 col-md-12">
+                                                <label>Interest rate (%)</label>
+                                                <input id="interest_rate" type="text" name="interest_rate" class="form-control" placeholder="Interest rate" value="" readonly>
+                                              </div>
+                                              <!-- col-3 -->
+                                              <div class="col-lg-4 col-md-12">
+                                                <label>Loan processing rate (%)</label>
+                                                <input id="loan_processing_rate" name="loan_processing_rate" class="form-control" readonly>
+                                              </div>
+                                              <!-- col-3 -->
+                                              <input type="hidden" id="interest_on_defaulting" name="interest_on_defaulting" class="form-control" readonly>
+                                            </div>
+                                            <!-- row -->
+                                            <div class="row form-group">
+                                              <div class="col-lg-4 col-md-12">
+                                                <label>Loan request</label>
                                                 <input type="text" name="loan_request_amount" class="form-control" required="required" placeholder="Loan request" autocomplete="off">
                                               </div>
                                               <!-- col-3 -->
-                                              <div class="col-3">
-                                                <label>Loan Period (Weeks)</label>
+                                              <div class="col-lg-4 col-md-12">
+                                                <label>Loan period (Weeks)</label>
                                                 <input type="text" name="loan_period" class="form-control" required="required" placeholder="Loan period in weeks" autocomplete="off">
                                               </div>
                                               <!-- col-3 -->
-                                              <div class="col-3">
-                                                <label>Interest Rate (%)</label>
-                                                <input type="text" name="interest_rate" class="form-control" placeholder="Interest rate" value="{{ $interest->rate }}" readonly>
-                                              </div>
-                                              <!-- col-3 -->
-                                              <div class="col-3">
-                                                <label>Application Date</label>
+                                              <div class="col-lg-4 col-md-12">
+                                                <label>Application date</label>
                                                 <input type="date" name="date_loan_application" class="form-control" placeholder="Date" required>
                                               </div>
                                               <!-- col-3 -->
-                                              <input type="hidden" name="loan_processing_rate" value="{{ $processing->rate }}">
                                             </div>
                                             <!-- row -->
                                             <div class="row form-group">
                                               <div class="col-12">
-                                                <label>Borrowing Purpose</label>
+                                                <label>Borrowing purpose</label>
                                                 <textarea class="form-control" name="borrowing_purpose" required placeholder="Purpose for borrowing" autocomplete="off"></textarea>
                                               </div>
                                             </div>
                                             <!-- row -->
-                                            <!-- <div class="row form-group">
-                                              <div class="col-6">
-                                                <label>Primary Source of Income</label>
-                                                <input type="text" class="form-control" name="main_income_source" required placeholder="Primary source of income" autocomplete="off">
-                                              </div>
-                                              <div class="col-6">
-                                                <label>Other Sources of Income</label>
-                                                <input type="text" class="form-control" name="other_income_sources" required placeholder="Other sources of income" autocomplete="off">
-                                              </div>
-                                            </div> -->
-                                            <!-- row -->
-                                            <!-- <div class="row form-group">
-                                              <div class="col-6">
-                                                <label>Total Monthly Income</label>
-                                                <input type="text" class="form-control" name="total_monthly_income" required placeholder="Monthly income" autocomplete="off">
-                                              </div>
-                                              <div class="col-6">
-                                                <label>Total Monthly Expenditure</label>
-                                                <input type="text" class="form-control" name="total_monthly_expenditure" required placeholder="Monthly expenditure" autocomplete="off">
-                                              </div>
-                                            </div> -->
-                                            <!-- row -->
                                             <div class="row form-group">
-                                              <label>Collateral Security</label>
-                                              <textarea class="form-control" name="collateral_security" required placeholder="List collateral security" autocomplete="off"></textarea>
+                                              <div class="col-12">
+                                                <label>Collateral security</label>
+                                                <textarea class="form-control" name="collateral_security" required placeholder="List collateral security" autocomplete="off"></textarea>
+                                              </div>
                                             </div>
                                             <!-- row -->
                                             <div class="row form-group">
@@ -198,116 +211,119 @@
                   <div class="modal fade" id="new-account" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                     <div class="modal-dialog modal-xl" role="document">
                       <div class="modal-content">
-                        <div class="modal-header">
-                          <h6 class="modal-title justify-content-center text-uppercase" id="exampleModalLongTitle">Client Registration Form</h6>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
                         <div class="modal-body">
-                          <form action="/apply/accounts/new" method="post">
-                            @csrf
-                            <div class="row form-group">
-                              <div class="col-6">
-                                <label>Full Name</label>
-                                <input type="text" name="name" autocomplete="off" class="form-control" placeholder="Full Name" required="required">
-                              </div>
-                              <div class="col-3">
-                                <label>Gender</label>
-                                <div class="form-group">
-                                  <select class="form-control select2bs4" name="gender" data-placeholder="Select" style="width: 100%;" required="required">
-                                    <option></option>
-                                    <option>Male</option>
-                                    <option>Female</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="col-3">
-                                <label>Date of Birth</label>
-                                <input type="date" name="dob" autocomplete="off" class="form-control" placeholder="Date of Birth" required="required">
-                              </div>
-
+                          <div class="box box-default">
+                            <div class="alert alert-dismissible text-center">
+                             <h5 class="text-uppercase text-primary">client Registration Form</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
                             </div>
-                            <!-- <div class="row form-group">
-                              <div class="col-3">
-                                <label>District of Residence</label>
-                                <input type="text" name="resident_district" autocomplete="off" class="form-control" placeholder="District of Residence" required="required">
+                            <form action="/apply/accounts/new" method="post">
+                              @csrf
+                              <div class="row form-group">
+                                <div class="col-lg-6 col-md-12">
+                                  <label>Full Name</label>
+                                  <input type="text" name="name" autocomplete="off" class="form-control" placeholder="Full Name" required="required">
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                  <label>Gender</label>
+                                  <div class="form-group">
+                                    <select class="form-control select2bs4" name="gender" data-placeholder="Select" style="width: 100%;" required="required">
+                                      <option></option>
+                                      <option>Male</option>
+                                      <option>Female</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                  <label>Date of Birth</label>
+                                  <input type="date" name="dob" autocomplete="off" class="form-control" placeholder="Date of Birth" required="required">
+                                </div>
+
                               </div>
-                              <div class="col-3">
-                                <label>Division of Residence</label>
-                                <input type="text" name="resident_division" autocomplete="off" class="form-control" placeholder="Division of Residence" required="required">
+                              <!-- <div class="row form-group">
+                                <div class="col-3">
+                                  <label>District of Residence</label>
+                                  <input type="text" name="resident_district" autocomplete="off" class="form-control" placeholder="District of Residence" required="required">
+                                </div>
+                                <div class="col-3">
+                                  <label>Division of Residence</label>
+                                  <input type="text" name="resident_division" autocomplete="off" class="form-control" placeholder="Division of Residence" required="required">
+                                </div>
+                                <div class="col-3">
+                                  <label>Parish/Ward of Residence</label>
+                                  <input type="text" name="resident_parish" autocomplete="off" class="form-control" placeholder="Parish of Residence" required="required">
+                                </div>
+                                <div class="col-3">
+                                  <label>Village/Cell of Residence</label>
+                                  <input type="text" name="resident_village" autocomplete="off" class="form-control" placeholder="Village of Residence" required="required">
+                                </div>
+                              </div> -->
+                              
+                              <div class="row form-group">
+                                <div class="col-lg-3 col-md-6">
+                                  <label>Telephone Number</label>
+                                  <input type="text" name="telephone" autocomplete="off" class="form-control" placeholder="Telephone Number" required="required">
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                  <label>Nationality</label>
+                                  <input type="text" name="nationality" autocomplete="off" class="form-control" value="Ugandan" readonly>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                  <label>Identity Type</label>
+                                  <input type="text" name="id_type" autocomplete="off" class="form-control" value="National ID" readonly>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                  <label>ID Number</label>
+                                  <input type="text" name="id_number" autocomplete="off" class="form-control" placeholder="Identity Number" required="required">
+                                </div>
+                                
                               </div>
-                              <div class="col-3">
-                                <label>Parish/Ward of Residence</label>
-                                <input type="text" name="resident_parish" autocomplete="off" class="form-control" placeholder="Parish of Residence" required="required">
-                              </div>
-                              <div class="col-3">
-                                <label>Village/Cell of Residence</label>
-                                <input type="text" name="resident_village" autocomplete="off" class="form-control" placeholder="Village of Residence" required="required">
-                              </div>
-                            </div> -->
-                            
-                            <div class="row form-group">
-                              <div class="col-3">
-                                <label>Telephone Number</label>
-                                <input type="text" name="telephone" autocomplete="off" class="form-control" placeholder="Telephone Number" required="required">
-                              </div>
-                              <div class="col-3">
-                                <label>Nationality</label>
-                                <input type="text" name="nationality" autocomplete="off" class="form-control" value="Ugandan" readonly>
-                              </div>
-                              <div class="col-3">
-                                <label>Identity Type</label>
-                                <input type="text" name="id_type" autocomplete="off" class="form-control" value="National ID" readonly>
-                              </div>
-                              <div class="col-3">
-                                <label>ID Number</label>
-                                <input type="text" name="id_number" autocomplete="off" class="form-control" placeholder="Identity Number" required="required">
+                              <div class="row form-group">
+                                <div class="col-12">
+                                  <label>Residence Address</label>
+                                  <textarea class="form-control" style="line-height: 11px;" autocomplete="off" placeholder="Residence Address" name="permanent_address" required></textarea>
+                                </div>
                               </div>
                               
-                            </div>
-                            <div class="row form-group">
-                              <div class="col-12">
-                                <label>Residence Address</label>
-                                <textarea class="form-control" style="line-height: 11px;" autocomplete="off" placeholder="Residence Address" name="permanent_address" required></textarea>
-                              </div>
-                            </div>
-                            
-                            <div class="row form-group">
-                              <div class="col-3">
-                                <label>Copy of National ID</label>
-                                <div class="custom-file">
-                                    <input type="file" name="photo_id" class="form-control custom-file-input" id="exampleInputFile" required="required">
-                                    <label class="custom-file-label" for="exampleInputFile">Upload ID</label>
+                              <div class="row form-group">
+                                <div class="col-lg-3 col-md-6">
+                                  <label>Copy of National ID</label>
+                                  <div class="custom-file">
+                                      <input type="file" name="photo_id" class="form-control custom-file-input" id="exampleInputFile" required="required">
+                                      <label class="custom-file-label" for="exampleInputFile">Upload ID</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                  <label>Passport Photo</label>
+                                  <div class="custom-file">
+                                      <input type="file" name="photo_client" class="form-control custom-file-input" id="exampleInputFile">
+                                      <label class="custom-file-label" for="exampleInputFile">Upload ID</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                  <label>Loan Group</label>
+                                  <div class="form-group">
+                                    <select class="form-control select2bs4" name="id_loan_group" data-placeholder="Select" style="width: 100%;">
+                                      <option></option>
+                                      @foreach($groups as $grp)
+                                        <option value="{{ $grp->id }}">{{ $grp->group_name }}</option>
+                                      @endforeach
+                                    </select>
                                   </div>
-                              </div>
-                              <div class="col-3">
-                                <label>Passport Photo</label>
-                                <div class="custom-file">
-                                    <input type="file" name="photo_client" class="form-control custom-file-input" id="exampleInputFile">
-                                    <label class="custom-file-label" for="exampleInputFile">Upload ID</label>
-                                  </div>
-                              </div>
-                              <div class="col-3">
-                                <label>Loan Group</label>
-                                <div class="form-group">
-                                  <select class="form-control select2bs4" name="id_loan_group" data-placeholder="Select" style="width: 100%;">
-                                    <option></option>
-                                    @foreach($groups as $grp)
-                                      <option value="{{ $grp->id }}">{{ $grp->group_name }}</option>
-                                    @endforeach
-                                  </select>
+                                </div>
+                                <div class="col-lg-3 col-md">
+                                  <label>Registration Fee</label>
+                                  <input type="text" name="registration_fee" autocomplete="off" class="form-control" value="{{ number_format($fees->amount)}}" readonly>
                                 </div>
                               </div>
-                              <div class="col-3">
-                                <label>Registration Fee</label>
-                                <input type="text" name="registration_fee" autocomplete="off" class="form-control" value="{{ number_format($fees->amount)}}" readonly>
+                              <div class="row form-group d-flex justify-content-center">
+                                <button class="btn btn-primary ml-2">Submit</button>
                               </div>
-                            </div>
-                            <div class="row form-group d-flex justify-content-center">
-                              <button class="btn btn-primary ml-2">Submit</button>
-                            </div>
-                        </form>
+                            </form>
+                          </div>
+                          <!-- box -->
                         </div>
                         <!-- modal-body -->
                       </div>

@@ -13,7 +13,8 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/home">Home</a></li>
-              <li class="breadcrumb-item active">Transactions</li>
+              <li class="breadcrumb-item"><a href="#">Transactions</a></li>
+              <li class="breadcrumb-item active">View transactions</li>
             </ol>
           </div>
           <!-- /.col -->
@@ -30,9 +31,30 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Showing Recent Transactions</h3>
-                <div class="card-tools">
-                  <a class="btn btn-xs btn-outline-primary" data-toggle="modal" data-target="#new_transaction">NEW TRANSACTION</a>
+                <h3 class="card-title">View transactions</h3>
+                <div class="card-tools sm-hidden">
+                  <form action="/apply/loans/all" method="POST">
+                    @csrf
+                    <div class="input-group">
+                      <div class="input-group-prepend" id="button-addon3">
+                        <a href="" class="btn btn-flat btn-outline-default" data-toggle="modal" data-target="#new_transaction">Add</a>
+                      </div>
+                      <select class="form-control select2bs4" style="width: auto;" id="inputGroupSelect04" data-placeholder="Select" name="id" required>
+                        <!-- <option selected>Choose...</option> -->
+                        <option></option>
+                        <option >Loan disbursement</option>
+                        <option >Loan repayment</option>
+                        <option >Penalties</option>
+                        <option >Expenses</option>
+                        <option >Incomes</option>
+                      </select>
+                      <div class="input-group-append">
+                        <button type="submit" name="submit" class="btn btn-default">
+                          <i class="fa fa-search"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
                 </div>
               </div>
               <!-- /.card-header -->

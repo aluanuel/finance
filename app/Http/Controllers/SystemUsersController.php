@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\BranchOffice;
 use Auth;
 
 class SystemUsersController extends Controller
 {
     
     public function system_users(){
+
+        $branches = BranchOffice::all();
 
         if(Auth::user()->usertype == 'admin'){
 
@@ -21,7 +24,7 @@ class SystemUsersController extends Controller
             $user = User::where('usertype','!=','admin')->get();
         }
 
-        return view('apply.settings.users.index',compact('user'));
+        return view('apply.settings.users.index',compact('user','branches'));
     }
 
     public function create_system_user(Request $request){
@@ -54,6 +57,28 @@ class SystemUsersController extends Controller
         return view('apply.view.user_profile',compact('user'));
     }
 
+    public function update_user_information(Request $request){
+
+        $user = User::where('id',$request->id)->first();
+
+        $user->name = strtoupper($request->name);
+        $user->email = $request->email;
+        $user->telephone = $request->telephone;
+        $user->usertype = $request->usertype;
+        $user->role = $request->role;
+        $user->category = $request->category;
+        $user->user_status = $request->user_status;
+
+        if($user->save()){
+
+            return redirect()->back()->with('sucess','Success');
+
+        }
+
+        return redirect()->back()->with('error','Some error occurred');
+
+    }
+
     public function update_user_password(Request $request){
 
         $password = $request->password;
@@ -78,7 +103,7 @@ class SystemUsersController extends Controller
         return $request->photo;
     }
 
-    public function TemporaryPassword(Request $request){
+    public function temporary_password(Request $request){
 
         $password = $this->random_password(6);
 

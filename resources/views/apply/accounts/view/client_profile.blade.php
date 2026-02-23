@@ -28,7 +28,7 @@
       <div class="container-fluid">
         @include('layouts.flash')
           <div class="row">
-            <div class="col-md-4 col-sm-12">
+            <div class="col-lg-4 col-md-12">
               <!-- card -->
               <div class="card">
                 <div class="card-body box-profile">
@@ -64,89 +64,98 @@
                       <b>Group Code</b> <a class="float-right">{{ $client->group_code }}</a>
                     </li>
                   </ul>
-                  <a class="text-center btn btn-sm btn-default" data-toggle="modal" data-target="#edit_client_profile">EDIT</a>
+                  <a class="text-center btn btn-sm btn-default" data-toggle="modal" data-target="#update_client_profile">UPDATE</a>
 
-                  <div class="modal fade" id="edit_client_profile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-lg" role="document">
+                  <div class="modal fade" id="update_client_profile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-xl" role="document">
                       <div class="modal-content">
-                        <div class="modal-header">
+                        <!-- <div class="modal-header">
                           <h6 class="modal-title justify-content-center text-uppercase" id="exampleModalLongTitle">edit client information</h6>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
-                        </div>
+                        </div> -->
                         <div class="modal-body">
-                          <form action="/apply/account/profile/{{ $client->id }}" method="post">
-                            @csrf
-                            <div class="row form-group">
-                              <div class="col-6">
-                                <label>Name</label>
-                                <input class="form-control" readonly value="{{ $client->name}}">
-                              </div>
-                              <div class="col-3">
-                                <label>Gender</label>
-                                <input class="form-control" readonly value="{{ $client->gender}}">
-                              </div>
-                              <div class="col-3">
-                                <label>Date of Birth</label>
-                                <input type="date" class="form-control" name="dob" 
-                                 value="{{ $client->dob}}" required>
-                              </div>
+                          <div class="box box-default">
+                            <div class="alert alert-dismissible text-center">
+                              <h5 class="text-uppercase text-primary">update client information</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
                             </div>
-                            <!-- row -->
-                            <div class="row form-group">
-                              <div class="col-3">
-                                <label>Nationality</label>
-                                <input class="form-control" readonly value="{{ $client->nationality}}">
-                              </div>
-                              <div class="col-3">
-                                <label>NIN</label>
-                                <input class="form-control" name="id_number" value="{{ $client->id_number}}" required>
-                              </div>
-                              <div class="col-3">
-                                <label>Telephone</label>
-                                <input class="form-control" name="telephone" value="{{ $client->telephone}}" placeholder="Telephone" required>
-                              </div>
-                              <div class="col-3">
-                                <label>Alt Telephone</label>
-                                <input class="form-control" name="alt_telephone" value="{{ $client->alt_telephone}}" placeholder="Telephone">
-                              </div>
-                            </div>
-                            <!-- row -->
-                            <div class="row form-group"> 
-                              <div class="col-6">
-                                <label>Physical Address</label>
-                                <input class="form-control" name="permanent_address" value="{{ $client->permanent_address}}" required placeholder="Physical Address">
-                              </div>
-                              <div class="col-3">
-                                <label>Profile Photo</label>
-                                <div class="custom-file">
-                                  <input type="file" name="photo_client" class="form-control custom-file-input" id="exampleInputFile">
-                                  <label class="custom-file-label" for="exampleInputFile">Upload photo</label>
+                            <form action="/apply/account/profile/{{ $client->id }}" method="post">
+                              @csrf
+                              <div class="row form-group">
+                                <div class="col-lg-6 col-md-12">
+                                  <label>Name</label>
+                                  <input class="form-control" readonly value="{{ $client->name}}">
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                  <label>Gender</label>
+                                  <input class="form-control" readonly value="{{ $client->gender}}">
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                  <label>Date of Birth</label>
+                                  <input type="date" class="form-control" name="dob" 
+                                   value="{{ $client->dob}}" required>
                                 </div>
                               </div>
-                              <div class="col-3">
-                                <label>Loan Group</label>
-                                <div class="form-group">
-                                  <select class="form-control select2bs4" name="id_loan_group" data-placeholder="Select" style="width: 100%;">
-                                    <option>{{ $client->group_name }}</option>
-                                    @foreach($groups as $grp)
-                                      <option value="{{ $grp->id }}">{{ $grp->group_name }}</option>
-                                    @endforeach
-                                      <option value="None">None</option>
-                                  </select>
+                              <!-- row -->
+                              <div class="row form-group">
+                                <div class="col-lg-3 col-md-6">
+                                  <label>Nationality</label>
+                                  <input class="form-control" readonly value="{{ $client->nationality}}">
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                  <label>NIN</label>
+                                  <input class="form-control" name="id_number" value="{{ $client->id_number}}" required>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                  <label>Telephone</label>
+                                  <input class="form-control" name="telephone" value="{{ $client->telephone}}" placeholder="Telephone" required>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                  <label>Alt Telephone</label>
+                                  <input class="form-control" name="alt_telephone" value="{{ $client->alt_telephone}}" placeholder="Telephone">
                                 </div>
                               </div>
-                            </div>
-                            <!-- row -->
-                            <div class="row form-group">
-                              <div class="col-12 text-center">         
-                                <button type="submit" class="btn btn-sm btn-outline-primary">Update</button>
-                                <button type="submit" class="btn btn-sm btn-outline-danger" data-dismiss="modal">Cancel</button>
+                              <!-- row -->
+                              <div class="row form-group"> 
+                                <div class="col-lg-6 col-md-12">
+                                  <label>Physical Address</label>
+                                  <input class="form-control" name="permanent_address" value="{{ $client->permanent_address}}" required placeholder="Physical Address">
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                  <label>Profile Photo</label>
+                                  <div class="custom-file">
+                                    <input type="file" name="photo_client" class="form-control custom-file-input" id="exampleInputFile">
+                                    <label class="custom-file-label" for="exampleInputFile">Upload photo</label>
+                                  </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                  <label>Loan Group</label>
+                                  <div class="form-group">
+                                    <select class="form-control select2bs4" name="id_loan_group" data-placeholder="Select" style="width: 100%;">
+                                      <option>{{ $client->group_name }}</option>
+                                      @foreach($groups as $grp)
+                                        <option value="{{ $grp->id }}">{{ $grp->group_name }}</option>
+                                      @endforeach
+                                        <option value="None">None</option>
+                                    </select>
+                                  </div>
+                                </div>
                               </div>
-                            </div>
-                            <!-- row -->
-                          </form>
+                              <!-- row -->
+                              <div class="row form-group">
+                                <div class="col-12 text-center">         
+                                  <button type="submit" class="btn btn-sm btn-outline-primary">Update</button>
+                                  <button type="submit" class="btn btn-sm btn-outline-danger" data-dismiss="modal">Cancel</button>
+                                </div>
+                              </div>
+                              <!-- row -->
+                            </form>
+                          </div>
+                          <!-- box -->
                         </div>
                       </div>
                     </div>
@@ -159,7 +168,7 @@
               <!-- card   -->                
             </div>
             <!-- col-md-4 -->
-            <div class="col-md-8 col-sm-12">
+            <div class="col-lg-8 col-md-12">
               <div class="card">
                 <div class="card-header text-uppercase">
                   <ul class="nav nav-pills" id="myTab">
@@ -230,6 +239,10 @@
                                 <tr>
                                   <td>Date loan disbursed </td>
                                   <td>{{ $last_loan->date_loan_disbursed }}</td>
+                                </tr>
+                                <tr>
+                                  <td>Loan due date </td>
+                                  <td>{{ $last_loan->loan_end_date }}</td>
                                 </tr>
                                 <tr>
                                   <td>Date loan fully recovered </td>
@@ -319,62 +332,65 @@
                               <div class="modal fade" id="loan_history_{{$loan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-md" role="document">
                                   <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h6 class="modal-title justify-content-center text-uppercase" id="exampleModalLongTitle">View details of loan number {{ $loan->loan_number }}</h6>
-                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                      </button>
-                                    </div>
                                     <div class="modal-body">
-                                      <!-- <div class="card"> -->
-                                        <ul class="list-group list-group-unbordered mb-3">
-                                        <li class="list-group-item">
-                                          <b>Loan application date</b><span class="float-right">{{ $loan->date_loan_application }}</span>
-                                        </li>
-                                        <li class="list-group-item">
-                                          <b>Loan request amount</b><span class="float-right">{{ number_format($loan->loan_request_amount) }}</span>
-                                        </li>
-                                        <li class="list-group-item">
-                                          <b>Purpose for borrowing</b><span class="float-right">{{ $loan->borrowing_purpose }}</span>
-                                        </li>
-                                        <li class="list-group-item">
-                                          <b>Loan interest rate (%)</b><span class="float-right">{{ $loan->interest_rate }}</span>
-                                        </li>
-                                        <li class="list-group-item">
-                                          <b>Loan processing rate (%)</b><span class="float-right">{{ $loan->loan_processing_rate }}</span>
-                                        </li>
-                                        <li class="list-group-item">
-                                          <b>Loan period (weeks)</b><span class="float-right">{{ $loan->loan_period }}</span>
-                                        </li>
-                                        <li class="list-group-item">
-                                          <b>Loan approved</b><span class="float-right">{{ number_format($loan->loan_approved) }}</span>
-                                        </li>
-                                        <li class="list-group-item">
-                                          <b>Total loan</b><span class="float-right">{{ number_format($loan->total_loan) }}</span>
-                                        </li>
-                                        <li class="list-group-item">
-                                          <b>Loan recovered</b><span class="float-right">{{ number_format($loan->loan_recovered) }}</span>
-                                        </li>
-                                        <li class="list-group-item">
-                                          <b>Loan outstanding</b><span class="float-right">{{ number_format($loan->loan_outstanding) }}</span>
-                                        </li>
-                                        <li class="list-group-item">
-                                          <b>Date loan approved</b><span class="float-right">{{ $loan->date_loan_approved }}</span>
-                                        </li>
-                                        <li class="list-group-item">
-                                          <b>Date loan disbursed</b><span class="float-right">{{ $loan->date_loan_disbursed }}</span>
-                                        </li>
-                                        <li class="list-group-item">
-                                          <b>Date loan fully recovered</b><span class="float-right">{{ $loan->date_loan_fully_recovered }}</span>
-                                        </li>
-                                        <li class="list-group-item">
-                                          <b>Collateral security</b><span class="float-right">{{ $loan->collateral_security }}</span>
-                                        </li>
-                                        <li class="list-group-item">
-                                          <b>Loan status</b><span class="float-right">{{ $loan->loan_status }}</span>
-                                        </li>
-                                      </ul>
-                                      <!-- </div> -->
+                                      <div class="box box-default">
+                                        <div class="alert alert-dismissible text-center">
+                                          <h5 class="text-uppercase text-primary">details of loan number {{ $loan->loan_number }}</h5>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <!-- <div class="card"> -->
+                                          <ul class="list-group list-group-unbordered mb-3">
+                                          <li class="list-group-item">
+                                            <b>Loan application date</b><span class="float-right">{{ $loan->date_loan_application }}</span>
+                                          </li>
+                                          <li class="list-group-item">
+                                            <b>Loan request amount</b><span class="float-right">{{ number_format($loan->loan_request_amount) }}</span>
+                                          </li>
+                                          <li class="list-group-item">
+                                            <b>Purpose for borrowing</b><span class="float-right">{{ $loan->borrowing_purpose }}</span>
+                                          </li>
+                                          <li class="list-group-item">
+                                            <b>Loan interest rate (%)</b><span class="float-right">{{ $loan->interest_rate }}</span>
+                                          </li>
+                                          <li class="list-group-item">
+                                            <b>Loan processing rate (%)</b><span class="float-right">{{ $loan->loan_processing_rate }}</span>
+                                          </li>
+                                          <li class="list-group-item">
+                                            <b>Loan period (weeks)</b><span class="float-right">{{ $loan->loan_period }}</span>
+                                          </li>
+                                          <li class="list-group-item">
+                                            <b>Loan approved</b><span class="float-right">{{ number_format($loan->loan_approved) }}</span>
+                                          </li>
+                                          <li class="list-group-item">
+                                            <b>Total loan</b><span class="float-right">{{ number_format($loan->total_loan) }}</span>
+                                          </li>
+                                          <li class="list-group-item">
+                                            <b>Loan recovered</b><span class="float-right">{{ number_format($loan->loan_recovered) }}</span>
+                                          </li>
+                                          <li class="list-group-item">
+                                            <b>Loan outstanding</b><span class="float-right">{{ number_format($loan->loan_outstanding) }}</span>
+                                          </li>
+                                          <li class="list-group-item">
+                                            <b>Date loan approved</b><span class="float-right">{{ $loan->date_loan_approved }}</span>
+                                          </li>
+                                          <li class="list-group-item">
+                                            <b>Date loan disbursed</b><span class="float-right">{{ $loan->date_loan_disbursed }}</span>
+                                          </li>
+                                          <li class="list-group-item">
+                                            <b>Date loan fully recovered</b><span class="float-right">{{ $loan->date_loan_fully_recovered }}</span>
+                                          </li>
+                                          <li class="list-group-item">
+                                            <b>Collateral security</b><span class="float-right">{{ $loan->collateral_security }}</span>
+                                          </li>
+                                          <li class="list-group-item">
+                                            <b>Loan status</b><span class="float-right">{{ $loan->loan_status }}</span>
+                                          </li>
+                                        </ul>
+                                        <!-- </div> -->
+                                      </div>
+                                      <!-- box -->
                                     </div>
                                   </div>
                                 </div>

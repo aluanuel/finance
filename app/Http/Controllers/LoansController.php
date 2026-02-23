@@ -30,7 +30,7 @@ class LoansController extends Controller
 
         $loan = DB::table('loans')
                 ->join('clients','loans.id_client','clients.id')
-                ->select('loans.*','clients.name')
+                ->select('loans.*','clients.name','clients.telephone')
                 ->where('loans.loan_status','!=','Completed')
                 ->orderBy('date_loan_application','desc')
                 ->get();
@@ -43,7 +43,7 @@ class LoansController extends Controller
 
         $loan = DB::table('loans')
                 ->join('clients','loans.id_client','clients.id')
-                ->select('loans.*','clients.name')
+                ->select('loans.*','clients.name','clients.telephone')
                 ->where('loans.loan_status',$request->id)
                 ->orderBy('date_loan_application','desc')
                 ->get();
@@ -87,7 +87,7 @@ class LoansController extends Controller
 
         $loan = DB::table('loans')
                 ->join('clients','loans.id_client','clients.id')
-                ->select('loans.*','clients.name')
+                ->select('loans.*','clients.name','clients.telephone')
                 ->where('loans.loan_status','!=','Completed')
                 ->whereNull('clients.id_loan_group')
                 ->orderBy('date_loan_application','desc')
@@ -103,7 +103,7 @@ class LoansController extends Controller
 
         $loan = DB::table('loans')
                 ->join('clients','loans.id_client','clients.id')
-                ->select('loans.*','clients.name')
+                ->select('loans.*','clients.name','clients.telephone')
                 ->where('loans.loan_status',$request->id)
                 ->whereNull('clients.id_loan_group')
                 ->orderBy('date_loan_application','desc')
@@ -122,12 +122,12 @@ class LoansController extends Controller
         $loan = DB::table('loans')
                 ->join('clients','loans.id_client','clients.id')
                 ->join('loan_groups','clients.id_loan_group','loan_groups.id')
-                ->select('loans.*','clients.name','loan_groups.group_name','loan_groups.group_code')
+                ->select('loans.*','clients.name','clients.telephone','loan_groups.group_name','loan_groups.group_code')
                 ->where('loans.loan_status','!=','Completed')
                 ->orderBy('date_loan_application','desc')
                 ->get();
 
-        $heading = "View all loans"; 
+        $heading = "View group loans"; 
 
         return view('apply.loans.view_group_loans',compact('loan','heading'));
 
@@ -138,7 +138,7 @@ class LoansController extends Controller
         $loan = DB::table('loans')
                 ->join('clients','loans.id_client','clients.id')
                 ->join('loan_groups','clients.id_loan_group','loan_groups.id')
-                ->select('loans.*','clients.name','loan_groups.group_name','loan_groups.group_code')
+                ->select('loans.*','clients.name','clients.telephone','loan_groups.group_name','loan_groups.group_code')
                 ->where('loans.loan_status',$request->id)
                 ->orderBy('date_loan_application','desc')
                 ->get();
@@ -155,10 +155,6 @@ class LoansController extends Controller
 
         if(is_null($check) || $check->loan_status == "Completed"){
 
-            $rates = Rates::where('rate_type','Interest on Loan Defaulting')->latest()->first();
-
-            if($rates){
-
                 $loan_request = str_replace(',','',$request->loan_request_amount);
 
                 $loan_interest = $request->interest_rate/100 * $loan_request;
@@ -166,6 +162,8 @@ class LoansController extends Controller
                 $new_loan = new Loans();
 
                 $new_loan->id_client = $request->id;
+
+                $new_loan->id_loan_product = $request->id_loan_product;
 
                 $new_loan->loan_number = $this->generate_loan_number();
 
@@ -177,7 +175,7 @@ class LoansController extends Controller
 
                 $new_loan->loan_processing_rate = $request->loan_processing_rate;
 
-                $new_loan->interest_on_defaulting = $rates->rate;
+                $new_loan->interest_on_defaulting = $request->interest_on_defaulting;
 
                 $new_loan->date_loan_application = $request->date_loan_application;
 
@@ -190,13 +188,6 @@ class LoansController extends Controller
                 $new_loan->save();
 
                 return redirect()->back()->with('success','Success');
-
-            }else{
-
-                return redirect()->back()->with('error',"Interest on loan defaulting not found, please set");
-
-            }
-
             
 
         }elseif($check->loan_status == "Pending Assessment"){

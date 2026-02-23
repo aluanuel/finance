@@ -11,7 +11,7 @@ class FeesController extends Controller
 
         $fees = Fees::all();
 
-        return view('apply.settings.fees.index',compact('fees'));
+        return view('apply.settings.loans.index',compact('fees'));
     }
 
     public function create_new_fees(Request $request){

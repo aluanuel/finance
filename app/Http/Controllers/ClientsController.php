@@ -15,35 +15,19 @@ class ClientsController extends Controller
 
     public function index(){
 
-        $interest = DB::table('rates')
-                    ->where('rate_type','Interest on Loan Borrowing')
-                    ->latest()
-                    ->first();
-
-        $processing = DB::table('rates')
-                    ->where('rate_type','Loan Processing')
-                    ->latest()
-                    ->first();
-
-        $groups = DB::table('loan_groups')->get();
+        $rates = DB::table('loan_products')->get();
 
         $fees = DB::table('fees')->first();
 
-        if(is_null($interest)){
+        $groups = DB::table('loan_groups')->get();
+
+        if(is_null($rates)){
 
             return redirect('/home')->with('error',"Interest on borrowing not found, please set");
-
-        }elseif(is_null($processing)){
-
-            return redirect('/home')->with('error',"Loan processing fee not found, please set");
 
         }elseif(is_null($fees)){
 
             return redirect('/home')->with('error',"Registration fees not found, please set");
-
-        }elseif(is_null($groups)){
-
-            return redirect('/home')->with('error',"Loan groups not found, please add");
 
         }
 
@@ -54,7 +38,7 @@ class ClientsController extends Controller
                 ->limit(100)
                 ->get();
 
-        return view('apply.accounts.view.clients',compact('accounts','interest','groups','fees','processing'));
+        return view('apply.accounts.view.clients',compact('accounts','rates','groups','fees'));
     }
 
     public function create_client_account(Request $request){
@@ -194,74 +178,32 @@ class ClientsController extends Controller
 
     }
 
-    public function view_inactive_new_client_accounts(){
-
-        $accounts = Clients::where('account_status',0)->get();
-
-        return view('apply.accounts.view.teller.applications',compact('accounts'));
-
-    }
-
-    public function activate_new_client_account(Request $request){
-
-        $hashedPassword = Auth::user()->password;
-
-        if (Hash::check($request->user_password, $hashedPassword)) {
-
-            $client = Clients::where('id',$request->id)->first();
-
-            $client->account_status = 1;
-
-            $client->save();
-
-            $record = new Transactions();
-
-            $record->transaction_date = date('Y-m-d');
-
-            $record->transaction_detail = "Registration Fee - ".$client->account_number;
-
-            $record->transaction_type = "Income";
-
-            $record->id_client = $request->id;
-
-            $record->amount = $request->registration_fee;
-
-            $record->created_by = Auth::user()->id;
-
-            $record->save();
-
-            return redirect()->back()->with('success','Success');
-
-        }
-
-        return redirect()->back()->with('error','Password mismatch');
-    }
-
 
     public function search_client_account(Request $request){
+
         $accounts = DB::table('clients')
                 ->leftJoin('loan_groups','clients.id_loan_group','loan_groups.id')
                 ->select('clients.*','loan_groups.group_name','loan_groups.group_code')
-                ->where('clients.name',$request->name)
+                ->where('clients.name','like','%'.$request->name.'%')
                 ->orWhere('loan_groups.group_name','like','%'.$request->name.'%')
                 ->orderBy('clients.id','desc')
                 ->get();
 
-        $interest = DB::table('rates')
-                    ->where('rate_type','Interest on Loan Borrowing')
-                    ->latest()
-                    ->first();
-
-        $processing = DB::table('rates')
-                    ->where('rate_type','Loan Processing')
-                    ->latest()
-                    ->first();
-
-        $groups = DB::table('loan_groups')->get();
+        $rates = DB::table('loan_products')->get();
 
         $fees = DB::table('fees')->first();
 
-        return view('apply.accounts.view.clients',compact('accounts','interest','groups','fees','processing'));
+        $groups = DB::table('loan_groups')->get();
+
+        if($accounts){
+
+            return view('apply.accounts.view.clients',compact('accounts','rates','groups','fees'));
+
+        }
+
+        return redirect()->back()->with('error','Error');
+
+
     }
 
     public function generate_account_number(){

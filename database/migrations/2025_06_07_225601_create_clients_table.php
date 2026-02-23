@@ -35,7 +35,7 @@ class CreateClientsTable extends Migration
             $table->string('country')->nullable();
             $table->string('photo_id');
             $table->string('photo_client')->nullable();
-            $table->unsignedBigInteger('id_loan_group');
+            $table->unsignedBigInteger('id_loan_group')->nullable();
             $table->string('role_group')->default('Member');
             $table->float('registration_fee');
             $table->string('account_number');

@@ -25,20 +25,16 @@
             <i class="fas fa-angle-right"></i>Users
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-angle-right"></i>Loans
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
+          <a href="/apply/settings/branches/" class="dropdown-item">
             <i class="fas fa-angle-right"></i>Branches
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-angle-right"></i>Borrowers
+          <a href="/apply/settings/loans/" class="dropdown-item">
+            <i class="fas fa-angle-right"></i>Loans
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-angle-right"></i>Repayments
+          <a href="/apply/settings/loan-groups/" class="dropdown-item">
+            <i class="fas fa-angle-right"></i>Loan groups
           </a>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
@@ -49,9 +45,9 @@
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item">
         <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell" title="Notifications"></i>
-          <!-- <span class="badge badge-warning navbar-badge">15</span> -->
+          <i class="far fa-bell text-warning" title="Notifications"></i>
           <span class="hidden-xs">Notifications</span>
+
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <span class="dropdown-item dropdown-header">Notifications</span>
@@ -84,7 +80,7 @@
             <a href="{{ route('logout') }}" class="nav-link"
               onclick="event.preventDefault();
                   document.getElementById('logout-form').submit();">
-                <i class="fas fa-power-off nav-icon" title="Sign out"></i>
+                <i class="fas fa-power-off nav-icon text-danger" title="Sign out"></i>
                 <span class="hidden-xs">Sign out</span>
             </a>
 

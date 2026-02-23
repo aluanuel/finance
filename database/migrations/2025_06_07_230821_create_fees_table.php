@@ -19,6 +19,8 @@ class CreateFeesTable extends Migration
             $table->integer('amount');
             $table->timestamps();
         });
+
+        DB::table('fees')->insert(['fees_type'=>'Registration','amount'=>5000]);
     }
 
     /**

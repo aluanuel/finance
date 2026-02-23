@@ -27,7 +27,7 @@
     <div class="content">
       <div class="container-fluid">
         @include('layouts.flash')
-        <div class="row" style="overflow-x: scroll;">
+        <div class="row">
           <div class="col-12">
             <div class="card" id="printArea">
               <div class="card-header">
@@ -35,25 +35,31 @@
                 <div class="card-tools">
                   <form action="/apply/report/disbursements" method="post">
                     @csrf
-                    <div class="row">
-                      <input type="date" class="form-control col-4 mr-1" name="start_date" placeholder="start date">
-                      <input type="date" class="form-control col-4" name="end_date" placeholder="end date">
-                      <input type="submit" name="submit" class="btn btn-sm btn-default ml-1" value="Search">
+                    <div class="input-group">
+                        <div class="input-group-prepend" id="button-addon3">
+                          <input type="date" name="start_date" class="form-control" placeholder="Select date" required>
+                        </div>
+                        <input type="date" name="end_date" class="form-control" placeholder="Select date" required>
+                        <div class="input-group-append">
+                          <button type="submit" name="submit" class="btn btn-default">
+                            <i class="fa fa-search"></i>
+                          </button>
+                        </div>
                     </div>
                   </form>
                 </div>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table id="example2" class="table table-bordered table-hover">
+                  <table id="example9" class="table table-bordered table-hover">
                     <thead>
                       <tr>
-                        <th width="100">Date</th>
-                        <th>loan_status</th>
-                        <th>loan_number</th>
+                        <th>Date</th>
+                        <th>status</th>
+                        <th>loan</th>
                         <th>client_details</th>
-                        <th>amount_disbursed</th>
-                        <th>processing_fee</th>
+                        <th>disbursed</th>
+                        <th>processing</th>
                         <th>total_loan</th>              
                       </tr>
                     </thead>
