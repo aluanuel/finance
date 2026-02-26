@@ -21,7 +21,7 @@ class User extends Authenticatable
         'telephone',
         'email',
         'usertype',
-        'role',
+        'id_role',
         'category',
         'user_status',
         'password',

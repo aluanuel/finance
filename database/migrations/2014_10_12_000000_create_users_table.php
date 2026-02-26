@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration {
 			$table->string('email');
 			$table->string('telephone');
 			$table->string('usertype')->default('admin');
-			$table->string('role')->nullable();
+			$table->unsignedBigInteger('id_role');
 			$table->string('category')->nullable();
 			$table->boolean('user_status')->default(1);
 			$table->timestamp('email_verified_at')->nullable();

@@ -110,9 +110,10 @@
                               <div class="form-group">
                                 <select class="form-control select2bs4" name="usertype" data-placeholder="Select" style="width: 100%;" required="required">
                                   <option>{{ $user->usertype }}</option>
-                                  <option value="Loan Officer">Loan Officer</option>
-                                  <option value="Teller">Teller</option>
+                                  <option value="Administrator">Administrator</option>
                                   <option value="Manager">Manager</option>
+                                  <option value="Credit Officer">Credit Officer</option>
+                                  <option value="Accountant">Accountant</option>
                                 </select>
                               </div>
                             </div>
@@ -120,11 +121,11 @@
                             <div class="col-lg-3 col-md-12">
                               <label>User role</label>
                               <div class="form-group">
-                                <select class="form-control select2bs4" name="role" data-placeholder="Select" style="width: 100%;" required="required">
+                                <select class="form-control select2bs4" name="id_role" data-placeholder="Select" style="width: 100%;" required="required">
                                   <option>{{ $user->role }}</option>
-                                  <option value="None">None</option>
-                                  <option value="Supervisor">Supervisor</option>
-                                  <option value="Manager">Manager</option>
+                                  @foreach($roles as $role)
+                                    <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                  @endforeach
                                 </select>
                               </div>
                             </div>
@@ -160,11 +161,11 @@
                             <!-- row -->
                           <div class="form-group row">
                               <div class="col-12">
-                              </div>                          
+                              </div>
                           </div>
                           <!-- row -->
                           <div class="row form-group">
-                            <div class="col-12 text-center">         
+                            <div class="col-12 text-center">
                               <button type="submit" class="btn btn-sm btn-outline-primary">Update</button>
                               <button type="submit" class="btn btn-sm btn-outline-danger" data-dismiss="modal">Cancel</button>
                             </div>
@@ -231,9 +232,10 @@
                                   <div class="form-group">
                                     <select class="form-control select2bs4" name="usertype" data-placeholder="Select" style="width: 100%;" required="required">
                                       <option></option>
-                                      <option value="Loan Officer">Loan Officer</option>
-                                      <option value="Teller">Teller</option>
+                                      <option value="Administrator">Administrator</option>
                                       <option value="Manager">Manager</option>
+                                      <option value="Credit Officer">Credit Officer</option>
+                                      <option value="Accountant">Accountant</option>
                                     </select>
                                   </div>
                             </div>
@@ -241,11 +243,11 @@
                             <div class="col-lg-4 col-md-12">
                                   <label>User role</label>
                                   <div class="form-group">
-                                    <select class="form-control select2bs4" name="role" data-placeholder="Select" style="width: 100%;" required="required">
+                                    <select class="form-control select2bs4" name="id_role" data-placeholder="Select" style="width: 100%;" required="required">
                                       <option></option>
-                                      <option value="None">None</option>
-                                      <option value="Supervisor">Supervisor</option>
-                                      <option value="Manager">Manager</option>
+                                      @foreach($roles as $role)
+                                        <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                      @endforeach
                                     </select>
                                   </div>
                               </div>
@@ -271,11 +273,11 @@
                                     <!-- </span> -->
                                   </div>
                                 </div>
-                              </div>                          
+                              </div>
                           </div>
                           <!-- row -->
                           <div class="row form-group">
-                            <div class="col-12 text-center">         
+                            <div class="col-12 text-center">
                               <button type="submit" class="btn btn-sm btn-outline-primary">Submit</button>
                               <button type="submit" class="btn btn-sm btn-outline-danger" data-dismiss="modal">Cancel</button>
                             </div>

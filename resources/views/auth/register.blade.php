@@ -60,10 +60,10 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-6">
-                        <input type="hidden" name="usertype" value="admin">
+                        <input type="hidden" name="usertype" value="Developer">
                     </div>
                     <div class="col-6">
-                        <input type="hidden" name="role" value="system">
+                        <input type="hidden" name="id_role" value="{{ 1 }}">
                     </div>
                 </div>
 

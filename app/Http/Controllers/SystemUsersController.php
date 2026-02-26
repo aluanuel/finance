@@ -6,41 +6,57 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\BranchOffice;
+use DB;
 use Auth;
 
 class SystemUsersController extends Controller
 {
-    
     public function system_users(){
 
         $branches = BranchOffice::all();
 
-        if(Auth::user()->usertype == 'admin'){
+        $roles = DB::table('roles')->where('name','!=','Developer')->get();
 
-             $user = User::all();
+        if(Auth::user()->usertype == 'Developer'){
+
+             $user = DB::table('users')->join('roles','users.id_role','roles.id')
+                      ->select('users.*','roles.name as role')
+                      ->get();
 
         }else{
 
-            $user = User::where('usertype','!=','admin')->get();
+          $user = DB::table('users')->join('roles','users.id_role','roles.id')
+                    ->Where('users.usertype','!=','Developer')
+                    ->select('users.*','roles.name as role')
+                    ->get();
         }
 
-        return view('apply.settings.users.index',compact('user','branches'));
+        return view('apply.settings.users.index',compact('user','branches','roles'));
     }
 
-    public function create_system_user(Request $request){
+    protected function create_system_user(Request $request){
 
-        $user = new User();
+      $validated = $request->validateke( [
+          'name' => ['required', 'string', 'max:255'],
+          'telephone' => ['required','string','max:12'],
+          'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+          'usertype' => ['required','string'],
+          'id_role' => ['required','unique:users'],
+          'password' => ['required', 'string', 'min:8', 'confirmed'],
+      ]);
 
-        $user->name = strtoupper($request->name);
-        $user->email = $request->email;
-        $user->telephone = $request->telephone;
-        $user->usertype = $request->usertype;
-        $user->role = $request->role;
-        $user->category = $request->category;
-        $user->password = Hash::make($request->password);
-        $result = $user->save();
+        // $user = new User();
+        //
+        // $user->name = strtoupper($request->name);
+        // $user->email = $request->email;
+        // $user->telephone = $request->telephone;
+        // $user->usertype = $request->usertype;
+        // $user->id_role = $request->id_role;
+        // $user->category = $request->category;
+        // $user->password = Hash::make($request->password);
+        // $result = $user->save();
 
-        if($result){
+        if(User::create($validated)){
 
             return redirect()->back()->with('sucess','Success');
 
@@ -65,7 +81,7 @@ class SystemUsersController extends Controller
         $user->email = $request->email;
         $user->telephone = $request->telephone;
         $user->usertype = $request->usertype;
-        $user->role = $request->role;
+        $user->id_role = $request->id_role;
         $user->category = $request->category;
         $user->user_status = $request->user_status;
 
