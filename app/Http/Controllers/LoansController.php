@@ -210,7 +210,7 @@ class LoansController extends Controller
 
     } 
 
-    public function loan_assessment(Request $request){
+    public function assess_loan(Request $request){
 
         $loan_request = Loans::where('id',$request->id)->first();
 
@@ -260,7 +260,7 @@ class LoansController extends Controller
         return redirect()->back()->with('error','Error');
     }
 
-    public function loan_disbursement(Request $request){
+    public function disburse_loan(Request $request){
 
         $last_instalment_date = LoanSchedule::where('id_loan',$request->id)->select('instalment_date')->latest()->first();
 

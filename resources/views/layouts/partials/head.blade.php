@@ -4,8 +4,8 @@
   <title>{{ config('app.name', 'Laravel') }}</title>
   <link rel="shortcut icon" href="{{ asset('theme/dist/img/logo.png') }}" type="image/x-icon">
   <!-- Font Awesome -->
-  <!-- <link rel="stylesheet" href="{{ asset('theme/plugins/fontawesome-free/css/all.min.css') }}"> -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="{{ asset('theme/plugins/fontawesome-free/css/all.min.css') }}">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
   <!-- Ekko Lightbox -->
   <link rel="stylesheet" href="{{ asset('theme/plugins/ekko-lightbox/ekko-lightbox.css') }}">
   <!-- Theme style -->
@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="{{ asset('theme/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
   
   <style type="text/css">
-    #business_type,#formChangePassword,#formChangePhoto,#addGroupMemberRole,#auth_user,#submit_input,#ever_borrowed_money_1,#ever_borrowed_money_2,#nav-savings,#sv_history,#business_license,#business_account_statement,#leader_recommendation,#appointment_letter,#bank_statement,#supervisor_recommendation,#transaction_inflow_sub_category,#transaction_outflow_sub_category,#new_inflow_category,#new_outflow_category{
+    #business_type,#formChangePassword,#formChangePhoto,#addGroupMemberRole,#auth_user,#submit_input{
       display: none;
     }
     table th{

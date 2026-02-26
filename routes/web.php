@@ -56,9 +56,95 @@ Route::post('/apply/account/profile/{id}', [App\Http\Controllers\ClientsControll
 
 	Route::post('/apply/sheets/view-collections',[App\Http\Controllers\CollectionSheetsController::class, 'search_collection_sheet']);
 
+	Route::post('/apply/loan/assess/{id}',[App\Http\Controllers\LoansController::class, 'assess_loan']);
+
+	Route::post('/apply/loan/disburse/{id}',[App\Http\Controllers\LoansController::class, 'disburse_loan']);
+
+	Route::post('apply/loan/repayment/{id}',[App\Http\Controllers\TransactionsController::class,'create_loan_repayment_entry']);
+
+	Route::post('apply/loan/reinstate/{id}',[App\Http\Controllers\TransactionsController::class,'reinstate_loan']);
 
 
 
+/********************************* Transactions *********************************/
+
+	Route::get('/apply/teller/transaction/', [App\Http\Controllers\TransactionsController::class, 'index'])->name('transaction_form')->name('transactions');
+
+	Route::post('/apply/teller/transaction', [App\Http\Controllers\TransactionsController::class, 'create_new_transaction_entry']);
+
+	Route::post('/apply/teller/transaction/{id}', [App\Http\Controllers\TransactionsController::class, 'update_transaction_entry']);
+
+
+
+
+/**********************************Reports******************************************/
+	Route::get('/apply/report/disbursements/',[App\Http\Controllers\ReportsController::class,'report_loan_disbursements']);
+
+	Route::get('/apply/report/disbursements/{id}',[App\Http\Controllers\ReportsController::class,'report_loan_disbursements']);
+
+	Route::post('/apply/report/disbursements',[App\Http\Controllers\ReportsController::class,'query_report_loan_disbursements']);
+
+	Route::get('/apply/report/loan-recovery/',[App\Http\Controllers\ReportsController::class,'report_loan_recovery']);
+
+	Route::get('/apply/report/loan-recovery/{id}',[App\Http\Controllers\ReportsController::class,'report_loan_recovery']);
+
+	Route::post('/apply/report/loan-recovery',[App\Http\Controllers\ReportsController::class,'query_report_loan_recovery']);
+
+	Route::get('/apply/report/loans-completed/',[App\Http\Controllers\ReportsController::class,'report_loans_completed']);
+
+	Route::post('/apply/report/loans-fully-settled/',[App\Http\Controllers\ReportsController::class,'query_report_loans_completed']);
+
+	Route::get('/apply/report/loans-defaulted/',[App\Http\Controllers\ReportsController::class,'report_loans_defaulted']);
+
+	Route::get('/apply/report/teller/cashbook/',[App\Http\Controllers\ReportsController::class,'report_cashbook']);
+
+	Route::post('/apply/report/teller/cashbook',[App\Http\Controllers\ReportsController::class,'query_report_cashbook']);
+
+	Route::get('/apply/report/balance_sheet',[App\Http\Controllers\ReportsController::class,'report_balance_sheet']);
+
+	Route::get('/apply/report/cash_inflow',[App\Http\Controllers\ReportsController::class,'report_cash_inflow']);
+
+	Route::get('/apply/report/cash_outflow',[App\Http\Controllers\ReportsController::class,'report_cash_outflow']);
+
+
+
+/************************************* System **************************************/
+
+Route::get('/apply/system/backup/',[App\Http\Controllers\ArtisanController::class,'backup']);
+
+Route::post('/apply/system/backup',[App\Http\Controllers\ArtisanController::class,'run_backup']);
+
+Route::get('/apply/system/restore/',[App\Http\Controllers\ArtisanController::class,'restore']);
+
+Route::post('/apply/system/restore',[App\Http\Controllers\ArtisanController::class,'run_restore']);
+
+
+
+
+/******************************************Settings*********************************/
+
+
+Route::get('/apply/settings/loan/group/members/{id}', [App\Http\Controllers\LoanGroupsController::class, 'view_loan_group_members']);
+
+Route::post('/apply/settings/loan/group/members/{id}', [App\Http\Controllers\LoanGroupsController::class, 'update_loan_group_member_role']);
+
+Route::get('/apply/settings/users/', [App\Http\Controllers\SystemUsersController::class, 'system_users']);
+
+Route::post('/apply/settings/user', [App\Http\Controllers\SystemUsersController::class, 'create_system_user']);
+
+Route::post('/apply/settings/user/{id}', [App\Http\Controllers\SystemUsersController::class, 'update_user_information']);
+
+Route::get('/apply/settings/manage/{id}', [App\Http\Controllers\SystemUsersController::class, 'temporary_password']);
+
+Route::get('/apply/settings/branches/', [App\Http\Controllers\BranchOfficeController::class, 'index']);
+
+Route::post('/apply/settings/branches', [App\Http\Controllers\BranchOfficeController::class, 'create_branch_office']);
+
+Route::post('/apply/settings/branches/{id}', [App\Http\Controllers\BranchOfficeController::class, 'update_branch_office']);
+
+Route::get('/apply/settings/accounts/',[App\Http\Controllers\FeesController::class, 'index']);
+
+Route::post('/apply/settings/accounts',[App\Http\Controllers\FeesController::class, 'create_new_fees']);
 
 
 
@@ -66,25 +152,23 @@ Route::post('/apply/account/profile/{id}', [App\Http\Controllers\ClientsControll
 
 	
 
-	Route::post('/apply/loan/new', [App\Http\Controllers\LoansController::class, 'create_new_loan']);
+	// Route::post('/apply/loan/new', [App\Http\Controllers\LoansController::class, 'create_new_loan']);
 
-	Route::get('/apply/ind/loan/{id}', [App\Http\Controllers\LoansController::class, 'view_individual_loan_details']);
+	// Route::get('/apply/ind/loan/{id}', [App\Http\Controllers\LoansController::class, 'view_individual_loan_details']);
 
-	Route::post('/apply/ind/loan/{id}', [App\Http\Controllers\LoansController::class, 'update_individual_loan_application']);
+	// Route::post('/apply/ind/loan/{id}', [App\Http\Controllers\LoansController::class, 'update_individual_loan_application']);
 
-	Route::post('/apply/admin/ind/loan/{id}', [App\Http\Controllers\LoansController::class, 'admin_update_individual_loan_application']);
+	// Route::post('/apply/admin/ind/loan/{id}', [App\Http\Controllers\LoansController::class, 'admin_update_individual_loan_application']);
 
-	Route::get('/apply/grp/loan/{id}', [App\Http\Controllers\LoansController::class, 'view_group_loan_details']);
+	// Route::get('/apply/grp/loan/{id}', [App\Http\Controllers\LoansController::class, 'view_group_loan_details']);
 
-	Route::post('/apply/grp/loan/{id}', [App\Http\Controllers\LoansController::class, 'update_group_loan_application']);
+	// Route::post('/apply/grp/loan/{id}', [App\Http\Controllers\LoansController::class, 'update_group_loan_application']);
 
-	Route::post('/apply/admin/grp/loan/{id}', [App\Http\Controllers\LoansController::class, 'admin_update_group_loan_application']);
+	// Route::post('/apply/admin/grp/loan/{id}', [App\Http\Controllers\LoansController::class, 'admin_update_group_loan_application']);
 
-	Route::get('apply/loan/repayment',[App\Http\Controllers\TransactionsController::class,'view_loan_repayments']);
+	// Route::get('apply/loan/repayment',[App\Http\Controllers\TransactionsController::class,'view_loan_repayments']);
 
-	Route::post('apply/loan/repayment/{id}',[App\Http\Controllers\TransactionsController::class,'create_loan_repayment_entry']);
-
-	Route::post('apply/loan/reinstate/{id}',[App\Http\Controllers\TransactionsController::class,'reinstate_loan']);
+	
 
 
 
@@ -105,8 +189,7 @@ Route::post('/apply/account/profile/{id}', [App\Http\Controllers\ClientsControll
 
 	Route::get('/apply/grp/teller/', [App\Http\Controllers\LoansController::class, 'view_group_loans_list']);
 
-	Route::post('/apply/loan/disburse/{id}',[App\Http\Controllers\LoansController::class, 'disburse_approved_loan']);
-
+	
 	Route::get('/apply/teller/grp/processed/', [App\Http\Controllers\LoansController::class, 'viewGroupProcessedLoans']);
 
 	Route::post('/apply/teller/ind/{id}', [App\Http\Controllers\ClientsController::class, 'updateIndividualApplication']);
@@ -114,11 +197,7 @@ Route::post('/apply/account/profile/{id}', [App\Http\Controllers\ClientsControll
 	Route::post('/apply/teller/process/{id}', [App\Http\Controllers\LoansController::class, 'startIndividualProcessedLoans']);
 	Route::get('/apply/teller/trans/process/{id}', [App\Http\Controllers\LoansController::class, 'ViewLoanProcessingForm']);
 
-	Route::get('/apply/teller/transaction/', [App\Http\Controllers\TransactionsController::class, 'index'])->name('transaction_form')->name('transactions');
 
-	Route::post('/apply/teller/transaction', [App\Http\Controllers\TransactionsController::class, 'create_new_transaction_entry']);
-
-	Route::post('/apply/teller/transaction/{id}', [App\Http\Controllers\TransactionsController::class, 'update_transaction_entry']);
 
 
 	
@@ -127,8 +206,7 @@ Route::post('/apply/account/profile/{id}', [App\Http\Controllers\ClientsControll
 
 	Route::post('/apply/teller/trans/security/{id}', [App\Http\Controllers\LoansController::class, 'TellerIssueLoanSecurity']);
 
-	Route::get('/apply/settings/loan/group/members/{id}', [App\Http\Controllers\LoanGroupsController::class, 'view_loan_group_members']);
-	Route::post('/apply/settings/loan/group/members/{id}', [App\Http\Controllers\LoanGroupsController::class, 'update_loan_group_member_role']);
+	
 
 
 	Route::get('/apply/view/ind/processed', [App\Http\Controllers\LoansController::class, 'viewIndividualProcessedLoan'])->name('tellerSingleProcessedLoans');
@@ -146,34 +224,7 @@ Route::post('/apply/account/profile/{id}', [App\Http\Controllers\ClientsControll
 	Route::post('/apply/trans/accounts/{id}', [App\Http\Controllers\ClientsController::class, 'RecordAppraisalFeePayment']);
 
 
-/**********************************Reports******************************************/
-	Route::get('/apply/report/disbursements/',[App\Http\Controllers\ReportsController::class,'report_loan_disbursements']);
 
-	Route::get('/apply/report/disbursements/{id}',[App\Http\Controllers\ReportsController::class,'report_loan_disbursements']);
-
-	Route::post('/apply/report/disbursements',[App\Http\Controllers\ReportsController::class,'query_report_loan_disbursements']);
-
-	Route::get('/apply/report/loan-recovery/',[App\Http\Controllers\ReportsController::class,'report_loan_recovery']);
-
-	Route::get('/apply/report/loan-recovery/{id}',[App\Http\Controllers\ReportsController::class,'report_loan_recovery']);
-
-	Route::post('/apply/report/loan-recovery',[App\Http\Controllers\ReportsController::class,'query_report_loan_recovery']);
-
-	Route::get('/apply/report/loans-completed/',[App\Http\Controllers\ReportsController::class,'report_loans_completed']);
-
-	Route::get('/apply/report/loans-fully-settled/{id}',[App\Http\Controllers\ReportsController::class,'report_loans_fully_settled']);
-
-	Route::post('/apply/report/loans-fully-settled/',[App\Http\Controllers\ReportsController::class,'query_report_loans_fully_settled']);
-
-	Route::get('/apply/report/loans-defaulted/',[App\Http\Controllers\ReportsController::class,'report_loans_defaulted']);
-
-	Route::get('/apply/report/teller/cashbook/',[App\Http\Controllers\ReportsController::class,'report_cashbook']);
-
-	Route::get('/apply/report/balance_sheet',[App\Http\Controllers\ReportsController::class,'report_balance_sheet']);
-
-	Route::get('/apply/report/cash_inflow',[App\Http\Controllers\ReportsController::class,'report_cash_inflow']);
-
-	Route::get('/apply/report/cash_outflow',[App\Http\Controllers\ReportsController::class,'report_cash_outflow']);
 
 	/*=================== Reports accessible by loan officers ==============*/
 
@@ -189,10 +240,7 @@ Route::post('/apply/account/profile/{id}', [App\Http\Controllers\ClientsControll
 	Route::post('/apply/restore/previous/loan',[App\Http\Controllers\LoansController::class,'record_previous_loan']);
 
 
-	Route::get('/apply/system/backup/',[App\Http\Controllers\ArtisanController::class,'backup']);
-	Route::post('/apply/system/backup',[App\Http\Controllers\ArtisanController::class,'run_backup']);
-	Route::get('/apply/system/restore/',[App\Http\Controllers\ArtisanController::class,'restore']);
-	Route::post('/apply/system/restore',[App\Http\Controllers\ArtisanController::class,'run_restore']);
+	
 
 
 	/*=================== Reports accessible by loan officers ==============*/
@@ -214,20 +262,7 @@ Route::post('/apply/account/profile/{id}', [App\Http\Controllers\ClientsControll
 
 	
 
-	Route::post('/apply/loan/assess/{id}',[App\Http\Controllers\LoansController::class, 'loan_assessment']);
 
-	Route::post('/apply/loan/disburse/{id}',[App\Http\Controllers\LoansController::class, 'loan_disbursement']);
-
-	Route::get('/apply/settings/users/', [App\Http\Controllers\SystemUsersController::class, 'system_users']);
-	Route::post('/apply/settings/user', [App\Http\Controllers\SystemUsersController::class, 'create_system_user']);
-	Route::post('/apply/settings/user/{id}', [App\Http\Controllers\SystemUsersController::class, 'update_user_information']);
-	Route::get('/apply/settings/manage/{id}', [App\Http\Controllers\SystemUsersController::class, 'temporary_password']);
-
-	Route::get('/apply/settings/branches/', [App\Http\Controllers\BranchOfficeController::class, 'index']);
-
-	Route::post('/apply/settings/branches', [App\Http\Controllers\BranchOfficeController::class, 'create_branch_office']);
-
-	Route::post('/apply/settings/branches/{id}', [App\Http\Controllers\BranchOfficeController::class, 'update_branch_office']);
 
 
 
@@ -242,9 +277,7 @@ Route::post('/apply/account/profile/{id}', [App\Http\Controllers\ClientsControll
 
 	Route::post('/apply/settings/loans/{id}',[App\Http\Controllers\LoanProductsController::class, 'update_loan_product']);
 
-	Route::get('/apply/settings/fees/',[App\Http\Controllers\FeesController::class, 'index']);
-
-	Route::post('/apply/settings/fees',[App\Http\Controllers\FeesController::class, 'create_new_fees']);
+	
 
 	Route::get('/apply/settings/rates/',[App\Http\Controllers\RatesController::class, 'index']);
 	Route::post('/apply/settings/rates',[App\Http\Controllers\RatesController::class, 'create_new_rate']);
@@ -262,13 +295,13 @@ Route::post('/apply/account/profile/{id}', [App\Http\Controllers\ClientsControll
 	// register a new client by the loan officer
 	
 
-	Route::get('/apply/accounts/applications/',[App\Http\Controllers\ClientsController::class,'view_inactive_new_client_accounts']);
+	// Route::get('/apply/accounts/applications/',[App\Http\Controllers\ClientsController::class,'view_inactive_new_client_accounts']);
 
-	Route::post('/apply/accounts/applications/{id}',[App\Http\Controllers\ClientsController::class,'activate_new_client_account']);
+	// Route::post('/apply/accounts/applications/{id}',[App\Http\Controllers\ClientsController::class,'activate_new_client_account']);
 
-	Route::get('/apply/admin/accounts',[App\Http\Controllers\ClientsController::class,'view_client_accounts']);
-	Route::get('/apply/admin/ind/accounts',[App\Http\Controllers\ClientsController::class,'adminViewIndividualAccounts']);
-	Route::get('/apply/admin/grp/accounts',[App\Http\Controllers\ClientsController::class,'adminViewGroupAccounts']);
+	// Route::get('/apply/admin/accounts',[App\Http\Controllers\ClientsController::class,'view_client_accounts']);
+	// Route::get('/apply/admin/ind/accounts',[App\Http\Controllers\ClientsController::class,'adminViewIndividualAccounts']);
+	// Route::get('/apply/admin/grp/accounts',[App\Http\Controllers\ClientsController::class,'adminViewGroupAccounts']);
 
 	Route::get('/admin/download/collateral/{file}', function ($file='') {
     	return response()->file(storage_path('app/public/'.$file));

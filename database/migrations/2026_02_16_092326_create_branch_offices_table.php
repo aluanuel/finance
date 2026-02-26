@@ -24,7 +24,7 @@ class CreateBranchOfficesTable extends Migration
             $table->timestamps();
         });
 
-        DB::table('branch_offices')->insert(['branch_name' => 'Main','location' => 'Head office']);
+        DB::table('branch_offices')->insert(['branch_name' => 'MAIN','location' => 'Head Office']);
     }
 
     /**

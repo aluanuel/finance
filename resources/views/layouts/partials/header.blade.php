@@ -21,25 +21,34 @@
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <span class="dropdown-item dropdown-header">Settings</span>
           <div class="dropdown-divider"></div>
-          <a href="/apply/settings/users" class="dropdown-item">
-            <i class="fas fa-angle-right"></i>Users
+
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-angle-right"></i>System configuration
           </a>
           <div class="dropdown-divider"></div>
+
+          <a href="/apply/settings/users" class="dropdown-item">
+            <i class="fas fa-angle-right"></i>System users
+          </a>
+          <div class="dropdown-divider"></div>
+
           <a href="/apply/settings/branches/" class="dropdown-item">
             <i class="fas fa-angle-right"></i>Branches
+          </a>
+          <div class="dropdown-divider"></div>
+
+          <a href="/apply/settings/loan-groups/" class="dropdown-item">
+            <i class="fas fa-angle-right"></i>Loan groups
           </a>
           <div class="dropdown-divider"></div>
           <a href="/apply/settings/loans/" class="dropdown-item">
             <i class="fas fa-angle-right"></i>Loans
           </a>
           <div class="dropdown-divider"></div>
-          <a href="/apply/settings/loan-groups/" class="dropdown-item">
-            <i class="fas fa-angle-right"></i>Loan groups
+          <a href="/apply/settings/accounts/" class="dropdown-item">
+            <i class="fas fa-angle-right"></i>Accounts
           </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-angle-right"></i>System configuration
-          </a>
+
         </div>
       </li>
       <!-- Notifications Dropdown Menu -->

@@ -155,7 +155,7 @@ class ReportsController extends Controller
         return view('apply.report.loans_completed',compact('loan','heading'));
     }
 
-    public function query_report_loans_fully_settled(Request $request){
+    public function query_report_loans_completed(Request $request){
 
         $start_date = $request->start_date;
 
@@ -168,7 +168,7 @@ class ReportsController extends Controller
                     ->orderBy('loans.loan_number','desc')
                     ->get();
 
-        $heading = "Showing loan fully settled from ".date('F d, Y',strtotime($start_date))." to ".date('F d, Y',strtotime($end_date));
+        $heading = "View loans completed from ".date('F d, Y',strtotime($start_date))." to ".date('F d, Y',strtotime($end_date));
 
         return view('apply.report.loans_completed',compact('loan','heading'));
 
@@ -205,9 +205,9 @@ class ReportsController extends Controller
 
         $trans = DB::table('transactions')->whereBetween('created_at',[$start_date,$end_date])->orderBy('id','desc')->get();
 
-        $heading = "Showing cash transactions from ".date('Y-m-d',strtotime($start_date))." to ".date('Y-m-d',strtotime($end_date));
+        $heading = "View cashbook statement from ".date('F d, Y',strtotime($start_date))." to ".date('F d, Y',strtotime($end_date));
 
-        return view('apply.report.cashbook',compact('trans','heading'));
+        return view('apply.report.teller.cashbook',compact('trans','heading'));
     } 
 
 }

@@ -33,7 +33,20 @@
               <div class="card-header">
                 <h3 class="card-title">{{$heading}}</h3>
                 <div class="card-tools">
-            
+                  <form action="/apply/report/teller/cashbook" method="post">
+                    @csrf
+                    <div class="input-group">
+                        <div class="input-group-prepend" id="button-addon3">
+                          <input type="date" name="start_date" class="form-control" placeholder="Select date" required>
+                        </div>
+                        <input type="date" name="end_date" class="form-control" placeholder="Select date" required>
+                        <div class="input-group-append">
+                          <button type="submit" name="submit" class="btn btn-default">
+                            <i class="fa fa-search"></i>
+                          </button>
+                        </div>
+                    </div>
+                  </form>
                 </div>
               </div>
               <div class="card-body">
@@ -43,8 +56,8 @@
                       <tr>
                         <th width="150">Date</th>
                         <th>Particulars</th>
-                        <th width="120">Debit</th>
-                        <th width="120">Credit</th>
+                        <th>Debit</th>
+                        <th>Credit</th>
                       </tr>
                     </thead>
                     @php
