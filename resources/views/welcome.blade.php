@@ -28,6 +28,9 @@
   </div>
   <div class="card-footer">
     <small>POWERED BY&nbsp;<a href="https://codestoreinvestments.com" target="blank">CSI Limited</a></small>
+    <div class="float-right d-none d-sm-inline-block">
+      <small class="text-info"><i class="nav-icon fas fa-phone-alt"></i>&nbsp;+256 759 255732</small>
+    </div>
   </div>
 </div>
 <!-- /.center -->

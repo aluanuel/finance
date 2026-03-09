@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\QueryException;
+use PDOException;
+use Illuminate\Support\Facades\Log;
+
 use App\Models\User;
 use App\Models\BranchOffice;
 use DB;
@@ -34,35 +38,27 @@ class SystemUsersController extends Controller
         return view('apply.settings.users.index',compact('user','branches','roles'));
     }
 
-    protected function create_system_user(Request $request){
+    public function create_system_user(Request $request){
 
-      $validated = $request->validateke( [
-          'name' => ['required', 'string', 'max:255'],
-          'telephone' => ['required','string','max:12'],
-          'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-          'usertype' => ['required','string'],
-          'id_role' => ['required','unique:users'],
-          'password' => ['required', 'string', 'min:8', 'confirmed'],
-      ]);
+        $user = new User();
+        
+        try{
 
-        // $user = new User();
-        //
-        // $user->name = strtoupper($request->name);
-        // $user->email = $request->email;
-        // $user->telephone = $request->telephone;
-        // $user->usertype = $request->usertype;
-        // $user->id_role = $request->id_role;
-        // $user->category = $request->category;
-        // $user->password = Hash::make($request->password);
-        // $result = $user->save();
+        $user->name = strtoupper($request->name);
+        $user->email = $request->email;
+        $user->telephone = $request->telephone;
+        $user->usertype = $request->usertype;
+        $user->id_role = $request->id_role;
+        $user->category = $request->category;
+        $user->password = Hash::make($request->password);
+    
+        }catch(Exception $e){
 
-        if(User::create($validated)){
+            Log::error('Database error: '.$e->getMessage());
 
-            return redirect()->back()->with('sucess','Success');
+            return redirect()->back()->with('error','Some error occurred');
 
         }
-
-        return redirect()->back()->with('error','Some error occurred');
 
     }
 
